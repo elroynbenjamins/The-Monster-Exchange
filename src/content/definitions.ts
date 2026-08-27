@@ -86,6 +86,15 @@ export interface ZoneDefinition {
   nodeWeights: Readonly<Record<"encounter" | "resource" | "choice" | "rest" | "discovery", number>>;
 }
 
+export interface HazardDefinition {
+  id: string;
+  name: string;
+  protectedTypes?: readonly GameType[];
+  protectedTags?: readonly string[];
+  riskReduction: number;
+  description: string;
+}
+
 export interface BuildingDefinition {
   id: string;
   name: string;
@@ -107,5 +116,6 @@ export interface GameContent {
   evolutions: readonly EvolutionDefinition[];
   regions: readonly RegionDefinition[];
   zones: readonly ZoneDefinition[];
+  hazards: readonly HazardDefinition[];
   buildings: readonly BuildingDefinition[];
 }

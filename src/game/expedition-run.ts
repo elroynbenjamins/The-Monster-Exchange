@@ -3,12 +3,43 @@ import type { RandomSource } from "../core/random.ts";
 import type { GameState } from "./state.ts";
 import type { ExpeditionNodeType } from "../systems/exploration.ts";
 import { createExpedition, resolveCurrentNode } from "../systems/exploration.ts";
-import type { EquipmentDefinition, ZoneDefinition } from "../content/definitions.ts";
+import type { EquipmentDefinition, HazardDefinition, ZoneDefinition } from "../content/definitions.ts";
+import type { SpeciesDefinition } from "../core/types.ts";
 
 export interface NodeOutcome {
   state: GameState;
-  event: DomainEvent<{ nodeType: ExpeditionNodeType; message: string }>;
+  event: DomainEvent<{ nodeType: ExpeditionNodeType; approach: ExpeditionApproach; message: string }>;
   defeated: boolean;
+}
+
+export type ExpeditionApproach = "cautious" | "balanced" | "bold";
+
+export const EXPEDITION_APPROACHES = [
+  { id: "cautious", name: "Cautious", description: "Spend less stamina and reduce risk, but secure fewer rewards." },
+  { id: "balanced", name: "Balanced", description: "Accept the normal route risk and reward." },
+  { id: "bold", name: "Bold", description: "Spend more stamina for larger rewards and greater mishap risk." },
+] as const;
+
+const APPROACH_RULES: Readonly<Record<ExpeditionApproach, { routeStamina: number; rewardMultiplier: number; mishapChance: number }>> = {
+  cautious: { routeStamina: 7, rewardMultiplier: 0.75, mishapChance: 0.05 },
+  balanced: { routeStamina: 10, rewardMultiplier: 1, mishapChance: 0.18 },
+  bold: { routeStamina: 14, rewardMultiplier: 1.5, mishapChance: 0.35 },
+};
+
+export interface ExpeditionPreparation {
+  riskReduction: number;
+  protectedHazardIds: readonly string[];
+}
+
+export function calculateExpeditionPreparation(state: GameState, zone: ZoneDefinition, species: readonly SpeciesDefinition[], hazards: readonly HazardDefinition[]): ExpeditionPreparation {
+  const teamSpecies = state.player.activeTeamIds.map((id) => species.find(({ id: speciesId }) => speciesId === state.monsters[id]?.speciesId)).filter((entry): entry is SpeciesDefinition => Boolean(entry));
+  const protectedHazards = zone.hazards.filter((hazardId) => {
+    const hazard = hazards.find(({ id }) => id === hazardId);
+    if (!hazard) return false;
+    return teamSpecies.some((monsterSpecies) => monsterSpecies.types.some((type) => type !== undefined && hazard.protectedTypes?.includes(type)) || monsterSpecies.tags.some((tag) => hazard.protectedTags?.includes(tag)));
+  });
+  const riskReduction = protectedHazards.reduce((sum, id) => sum + (hazards.find((hazard) => hazard.id === id)?.riskReduction ?? 0), 0);
+  return { riskReduction: Math.min(0.25, riskReduction), protectedHazardIds: protectedHazards };
 }
 
 export function startExpeditionRun(state: GameState, zone: ZoneDefinition, rng: RandomSource, nodeCount = 6): GameState {
@@ -36,25 +67,29 @@ function addReward(state: GameState, itemId: string, amount: number): GameState 
   return { ...state, activeExpedition: { ...expedition, rewards: { ...expedition.rewards, [itemId]: (expedition.rewards[itemId] ?? 0) + amount } } };
 }
 
-export function resolveExpeditionNode(state: GameState, rng: RandomSource, equipment: readonly EquipmentDefinition[] = []): NodeOutcome {
+export function resolveExpeditionNode(state: GameState, rng: RandomSource, equipment: readonly EquipmentDefinition[] = [], approach: ExpeditionApproach = "balanced", preparationRiskReduction = 0): NodeOutcome {
   if (!state.activeExpedition) throw new Error("No active expedition.");
   const node = state.activeExpedition.route.nodes[state.activeExpedition.route.currentNode];
   if (!node) throw new Error("The expedition route is complete.");
   let next = state;
   let message = "";
+  const rules = APPROACH_RULES[approach];
+  if (!rules) throw new Error("Unknown expedition approach.");
+  const reward = (amount: number) => Math.max(1, Math.round(amount * rules.rewardMultiplier));
   switch (node.type) {
     case "encounter": {
-      next = spendTeamCondition(next, 0, rng.int(8, 14), equipment);
-      next = addReward(next, "crowns", rng.int(25, 60));
+      next = spendTeamCondition(next, 0, reward(rng.int(8, 14)), equipment);
+      next = addReward(next, "crowns", reward(rng.int(25, 60)));
       message = "The team clears the encounter and secures its field-contract reward.";
       break;
     }
     case "resource": {
       const item = rng.pick(["herbs", "timber", "stone"] as const);
-      const amount = rng.int(2, 5);
-      next = spendTeamCondition(next, 0, 5, equipment);
+      const amount = reward(rng.int(2, 5));
+      const mishap = rng.float() < Math.max(0, rules.mishapChance - preparationRiskReduction);
+      next = spendTeamCondition(next, mishap ? 0.04 : 0, reward(5), equipment);
       next = addReward(next, item, amount);
-      message = `The team gathers ${amount} ${item}.`;
+      message = mishap ? `The team gathers ${amount} ${item}, but rough terrain causes minor injuries.` : `The team gathers ${amount} ${item}.`;
       break;
     }
     case "rest": {
@@ -68,20 +103,26 @@ export function resolveExpeditionNode(state: GameState, rng: RandomSource, equip
       break;
     }
     case "choice": {
-      const safe = rng.float() < 0.65;
-      next = safe ? addReward(spendTeamCondition(next, 0, 4, equipment), "crowns", 45) : spendTeamCondition(next, 0.08, 9, equipment);
-      message = safe ? "A risky shortcut reveals an abandoned 45-Crown cache." : "The shortcut collapses and injures the team.";
+      const successChance = Math.min(0.95, (approach === "cautious" ? 0.85 : approach === "balanced" ? 0.65 : 0.5) + preparationRiskReduction);
+      const success = rng.float() < successChance;
+      const crowns = reward(45);
+      next = success ? addReward(spendTeamCondition(next, 0, reward(4), equipment), "crowns", crowns) : spendTeamCondition(next, approach === "bold" ? 0.12 : 0.08, reward(9), equipment);
+      message = success ? `The chosen route reveals an abandoned ${crowns}-Crown cache.` : "The route collapses and injures the team.";
       break;
     }
-    case "discovery":
-      next = addReward(spendTeamCondition(next, 0, 3, equipment), "research-notes", 1);
-      message = "The team records a valuable ecological discovery.";
+    case "discovery": {
+      const notes = approach === "bold" ? 2 : 1;
+      const mishap = rng.float() < Math.max(0, rules.mishapChance - preparationRiskReduction);
+      next = addReward(spendTeamCondition(next, mishap ? 0.03 : 0, reward(3), equipment), "research-notes", notes);
+      message = mishap ? `The team records ${notes} research notes despite a hazardous survey.` : `The team records ${notes} valuable ecological research ${notes === 1 ? "note" : "notes"}.`;
       break;
+    }
   }
   const defeated = next.activeExpedition!.route.teamIds.every((id) => (next.conditions[id]?.hpRatio ?? 0) <= 0);
-  const route = resolveCurrentNode(next.activeExpedition!.route, Math.min(10, next.activeExpedition!.route.stamina));
+  const routeCost = Math.min(rules.routeStamina, next.activeExpedition!.route.stamina);
+  const route = resolveCurrentNode(next.activeExpedition!.route, routeCost);
   next = { ...next, activeExpedition: { ...next.activeExpedition!, route: defeated ? { ...route, status: "abandoned" } : route } };
-  return { state: next, event: { type: `expedition.${node.type}`, day: state.world.day, payload: { nodeType: node.type, message } }, defeated };
+  return { state: next, event: { type: `expedition.${node.type}`, day: state.world.day, payload: { nodeType: node.type, approach, message } }, defeated };
 }
 
 export function finishExpedition(state: GameState, retreat = false): GameState {

@@ -3,10 +3,10 @@ import { createInterface } from "node:readline/promises";
 import { stdin as input, stdout as output } from "node:process";
 import { join } from "node:path";
 import {
-  SeededRandom, activeTeamCaptureBonus, addMonsterToPlayer, appraiseMonster, attemptCapture, byId, changeInventory, content, createMonster,
-  advanceWorldDay, applyBattleAction, chooseAiAction, claimBreedingJob, constructBuilding, createBattle, createNewGame, depositHomebaseResource, finishExpedition, generateWildEncounter, listPlayerMonster, loadGame, nextActor, resolveExpeditionNode,
+  EXPEDITION_APPROACHES, SeededRandom, activeTeamCaptureBonus, addMonsterToPlayer, appraiseMonster, attemptCapture, byId, changeInventory, content, createMonster,
+  advanceWorldDay, applyBattleAction, calculateExpeditionPreparation, chooseAiAction, claimBreedingJob, constructBuilding, createBattle, createNewGame, depositHomebaseResource, finishExpedition, generateWildEncounter, listPlayerMonster, loadGame, nextActor, resolveExpeditionNode,
   equipMonsterItems, recordSpeciesResearch, saveGame, settleBattleProgression, startBreeding, startExpeditionRun, upgradeBuilding, type GameState,
-  validActions, type BattleAction, type WildEncounter,
+  validActions, type BattleAction, type ExpeditionApproach, type WildEncounter,
 } from "./index.ts";
 
 const savePath = join(process.cwd(), ".local", "save.json");
@@ -123,8 +123,14 @@ async function wildBattle(state: GameState, rng: SeededRandom): Promise<{ state:
 
 async function expedition(state: GameState): Promise<GameState> {
   const rng = new SeededRandom(state.world.seed + state.world.nextRandomOffset + 101);
-  let next = state.activeExpedition ? state : startExpeditionRun(state, byId(content.zones, state.world.unlockedZoneIds[0]!), rng);
+  const zone = byId(content.zones, state.activeExpedition?.route.zoneId ?? state.world.unlockedZoneIds[0]!);
+  let next = state.activeExpedition ? state : startExpeditionRun(state, zone, rng);
   console.log(next.activeExpedition === state.activeExpedition ? "\nResuming expedition." : "\nThe team enters Greenreach Meadow.");
+  const preparation = calculateExpeditionPreparation(next, zone, content.species, content.hazards);
+  if (preparation.protectedHazardIds.length) {
+    const names = preparation.protectedHazardIds.map((id) => byId(content.hazards, id).name);
+    console.log(`Team preparation protects against ${names.join(", ")} and reduces field risk by ${Math.round(preparation.riskReduction * 100)}%.`);
+  }
   while (next.activeExpedition) {
     const route = next.activeExpedition.route;
     if (route.status === "completed") {
@@ -152,7 +158,13 @@ async function expedition(state: GameState): Promise<GameState> {
       }
       next = await captureAfterEncounter(next, rng, battle.encounter, Math.max(0.05, battle.enemyHpRatio));
     }
-    const outcome = resolveExpeditionNode(next, rng, content.equipment);
+    let approach: ExpeditionApproach = "balanced";
+    if (["resource", "choice", "discovery"].includes(node.type)) {
+      console.log("\nChoose an approach:");
+      EXPEDITION_APPROACHES.forEach((option, index) => console.log(`${index + 1}. ${option.name} — ${option.description}`));
+      approach = EXPEDITION_APPROACHES[(await askNumber("> ", 1, EXPEDITION_APPROACHES.length)) - 1]!.id;
+    }
+    const outcome = resolveExpeditionNode(next, rng, content.equipment, approach, preparation.riskReduction);
     next = outcome.state;
     console.log(outcome.event.payload.message);
     await saveGame(savePath, next);

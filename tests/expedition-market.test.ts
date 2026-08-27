@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 import {
-  SeededRandom, addMonsterToPlayer, byId, content, createMonster, createNewGame, finishExpedition,
+  SeededRandom, addMonsterToPlayer, byId, calculateExpeditionPreparation, content, createMonster, createNewGame, finishExpedition,
   listPlayerMonster, resolveExpeditionNode, resolvePlayerListingSales, restTeam, startExpeditionRun,
 } from "../src/index.ts";
 
@@ -33,6 +33,33 @@ test("retreat keeps only sixty percent of expedition rewards", () => {
   state = finishExpedition(state, true);
   assert.equal(state.player.crowns, 810);
   assert.equal(state.player.inventory.herbs, 8);
+});
+
+test("expedition approaches trade route stamina and risk for reward", () => {
+  const zone = byId(content.zones, "greenreach-meadow");
+  const base = startExpeditionRun(gameWithTeam(), zone, new SeededRandom(2), 1);
+  const resourceRoute = { ...base.activeExpedition!.route, nodes: [{ type: "resource" as const, resolved: false }] };
+  const prepared = { ...base, activeExpedition: { ...base.activeExpedition!, route: resourceRoute } };
+  const cautious = resolveExpeditionNode(prepared, new SeededRandom(12), content.equipment, "cautious").state;
+  const bold = resolveExpeditionNode(prepared, new SeededRandom(12), content.equipment, "bold").state;
+  const cautiousRewards = Object.values(cautious.activeExpedition!.rewards).reduce((sum, amount) => sum + amount, 0);
+  const boldRewards = Object.values(bold.activeExpedition!.rewards).reduce((sum, amount) => sum + amount, 0);
+  assert.ok(boldRewards > cautiousRewards);
+  assert.equal(cautious.activeExpedition!.route.stamina, 93);
+  assert.equal(bold.activeExpedition!.route.stamina, 86);
+});
+
+test("node outcome events remember the player's approach", () => {
+  const base = startExpeditionRun(gameWithTeam(), byId(content.zones, "greenreach-meadow"), new SeededRandom(3), 1);
+  const outcome = resolveExpeditionNode(base, new SeededRandom(8), content.equipment, "bold");
+  assert.equal(outcome.event.payload.approach, "bold");
+});
+
+test("team types and tags provide data-driven protection from zone hazards", () => {
+  const state = gameWithTeam();
+  const preparation = calculateExpeditionPreparation(state, byId(content.zones, "greenreach-meadow"), content.species, content.hazards);
+  assert.deepEqual(preparation.protectedHazardIds, ["heavy-rain"]);
+  assert.equal(preparation.riskReduction, 0.12);
 });
 
 test("rest recovers condition and advances the day", () => {

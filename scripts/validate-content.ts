@@ -3,7 +3,7 @@ import { content } from "../src/content/index.ts";
 
 const errors: string[] = [];
 const idPattern = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
-const groups = [content.species, content.traits, content.skills, content.statuses, content.passives, content.synergies, content.equipment, content.evolutions, content.regions, content.zones, content.buildings];
+const groups = [content.species, content.traits, content.skills, content.statuses, content.passives, content.synergies, content.equipment, content.evolutions, content.regions, content.zones, content.hazards, content.buildings];
 const allIds = new Set<string>();
 
 for (const group of groups) {
@@ -21,6 +21,7 @@ const statusIds = new Set(content.statuses.map(({ id }) => id));
 const passiveIds = new Set(content.passives.map(({ id }) => id));
 const evolutionIds = new Set(content.evolutions.map(({ id }) => id));
 const zoneIds = new Set(content.zones.map(({ id }) => id));
+const hazardIds = new Set(content.hazards.map(({ id }) => id));
 
 for (const species of content.species) {
   for (const type of species.types) if (type && !GAME_TYPES.includes(type)) errors.push(`${species.id}: unknown type ${type}`);
@@ -46,7 +47,14 @@ for (const equipment of content.equipment) {
   if ((equipment.captureBonus ?? 0) < 0 || (equipment.captureBonus ?? 0) > 0.2) errors.push(`${equipment.id}: capture bonus must be between 0 and 20%`);
 }
 for (const region of content.regions) for (const id of region.zoneIds) if (!zoneIds.has(id)) errors.push(`${region.id}: unknown zone ${id}`);
-for (const zone of content.zones) for (const entry of zone.speciesPool) if (!speciesIds.has(entry.speciesId)) errors.push(`${zone.id}: unknown species ${entry.speciesId}`);
+for (const zone of content.zones) {
+  for (const entry of zone.speciesPool) if (!speciesIds.has(entry.speciesId)) errors.push(`${zone.id}: unknown species ${entry.speciesId}`);
+  for (const id of zone.hazards) if (!hazardIds.has(id)) errors.push(`${zone.id}: unknown hazard ${id}`);
+}
+for (const hazard of content.hazards) {
+  for (const type of hazard.protectedTypes ?? []) if (!GAME_TYPES.includes(type)) errors.push(`${hazard.id}: unknown protected type ${type}`);
+  if (hazard.riskReduction < 0 || hazard.riskReduction > 0.25) errors.push(`${hazard.id}: risk reduction must be between 0 and 25%`);
+}
 
 if (errors.length) {
   console.error(errors.join("\n"));

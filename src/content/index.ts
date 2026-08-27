@@ -83,6 +83,11 @@ export const content: GameContent = {
     { id: "greenreach-deepwood", regionId: "greenreach", levelRange: [10, 18], speciesPool: [{ speciesId: "mossveil", weight: 80 }, { speciesId: "canopyre", weight: 20 }], hazards: ["toxic-spores"], nodeWeights: { encounter: 50, resource: 18, choice: 15, rest: 7, discovery: 10 } },
     { id: "stormpeak-foothills", regionId: "stormpeak", levelRange: [8, 14], speciesPool: [{ speciesId: "voltgrazer", weight: 100 }], hazards: ["thunderstorm"], nodeWeights: { encounter: 48, resource: 20, choice: 14, rest: 8, discovery: 10 } },
   ],
+  hazards: [
+    { id: "heavy-rain", name: "Heavy Rain", protectedTypes: ["water", "grass"], protectedTags: ["amphibious"], riskReduction: 0.12, description: "Water- and Grass-adapted teams navigate flooded ground more safely." },
+    { id: "toxic-spores", name: "Toxic Spores", protectedTypes: ["poison", "steel"], protectedTags: ["plantlike"], riskReduction: 0.12, description: "Poison-resistant or plantlike monsters can identify safe paths." },
+    { id: "thunderstorm", name: "Thunderstorm", protectedTypes: ["electric", "ground"], protectedTags: ["burrowing"], riskReduction: 0.12, description: "Conductive and grounded monsters sense or divert dangerous strikes." },
+  ],
   buildings: [
     { id: "breeding-nest", name: "Breeding Nest", maxLevel: 5, baseBuildDays: 2, baseCost: { timber: 30, stone: 15 }, capability: "breeding" },
     { id: "field-clinic", name: "Field Clinic", maxLevel: 5, baseBuildDays: 1, baseCost: { timber: 20, herbs: 15 }, capability: "healing" },
