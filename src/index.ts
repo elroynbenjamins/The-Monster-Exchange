@@ -19,3 +19,4 @@ export * from "./game/save.ts";
 export * from "./game/expedition-run.ts";
 export * from "./game/commands.ts";
 export * from "./game/world-tick.ts";
+export * from "./ui/theme.ts";

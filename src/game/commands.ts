@@ -1,13 +1,22 @@
 import type { EvolutionDefinition, GameContent } from "../content/definitions.ts";
 import type { RandomSource } from "../core/random.ts";
 import { createId } from "../core/id.ts";
-import type { GameState } from "./state.ts";
+import type { GameState, ThemePreference } from "./state.ts";
 import { addMonsterToPlayer } from "./state.ts";
 import { breed, canBreed } from "../systems/breeding.ts";
 import { evaluateEvolution, evolve } from "../systems/evolution.ts";
 import type { BuildingDefinition } from "../content/definitions.ts";
 import { startBuildingUpgrade, startConstruction } from "../systems/homebase.ts";
 import type { BattleState } from "../systems/battle-engine.ts";
+
+export function setThemePreference(state: GameState, theme: ThemePreference): GameState {
+  if (!["system", "light", "dark"].includes(theme)) throw new Error("Unknown theme preference.");
+  return { ...state, uiPreferences: { ...state.uiPreferences, theme } };
+}
+
+export function setReducedMotion(state: GameState, reducedMotion: boolean): GameState {
+  return { ...state, uiPreferences: { ...state.uiPreferences, reducedMotion } };
+}
 
 export function setActiveTeam(state: GameState, monsterIds: readonly string[]): GameState {
   if (monsterIds.length < 1 || monsterIds.length > 5) throw new Error("A team requires 1–5 monsters.");

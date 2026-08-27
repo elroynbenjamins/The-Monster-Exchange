@@ -20,3 +20,5 @@ Examples:
 - `greenreach--meadow--320x180.png`
 
 Rules: integer canvas sizes, nearest-neighbor scaling, transparent PNG for sprites/icons, no spaces, no version numbers in filenames, and no copyrighted lookalikes. Palette/source files may sit beside exports but runtime code references only final asset IDs.
+
+UI colors must use the semantic variables in `styles/theme.css`; do not place light- or dark-specific colors directly in components. Pixel art should be checked against both palettes, while game information must never rely on color alone.

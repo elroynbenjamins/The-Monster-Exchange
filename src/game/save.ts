@@ -20,6 +20,9 @@ function migrateSave(raw: GameState & { saveVersion: number }): GameState {
   if (migrated.saveVersion === 3) {
     migrated = { ...migrated, saveVersion: 4, player: { ...migrated.player, researchBySpecies: {} } };
   }
+  if (migrated.saveVersion === 4) {
+    migrated = { ...migrated, saveVersion: 5, uiPreferences: { theme: "system", reducedMotion: false } };
+  }
   return migrated;
 }
 

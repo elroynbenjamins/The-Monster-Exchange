@@ -5,7 +5,7 @@ import { join } from "node:path";
 import {
   EXPEDITION_APPROACHES, SeededRandom, activeTeamCaptureBonus, addMonsterToPlayer, appraiseMonster, attemptCapture, byId, changeInventory, content, createMonster,
   advanceWorldDay, applyBattleAction, calculateExpeditionPreparation, chooseAiAction, claimBreedingJob, conductSpeciesStudy, constructBuilding, createBattle, createNewGame, depositHomebaseResource, finishExpedition, gainSpeciesResearch, generateBossEncounter, generateWildEncounter, listPlayerMonster, loadGame, nextActor, resolveExpeditionNode,
-  equipMonsterItems, researchLabLevel, saveGame, settleBattleProgression, startBreeding, startExpeditionRun, upgradeBuilding, type GameState,
+  equipMonsterItems, researchLabLevel, saveGame, setReducedMotion, setThemePreference, settleBattleProgression, startBreeding, startExpeditionRun, upgradeBuilding, type GameState,
   validActions, type BattleAction, type ExpeditionApproach, type WildEncounter,
 } from "./index.ts";
 
@@ -300,14 +300,27 @@ async function manageHomebase(state: GameState): Promise<GameState> {
   return state;
 }
 
+async function manageAppearance(state: GameState): Promise<GameState> {
+  console.log(`\nAppearance · Theme: ${state.uiPreferences.theme} · Reduced motion: ${state.uiPreferences.reducedMotion ? "on" : "off"}`);
+  console.log("1. Follow device  2. Light  3. Dark  4. Toggle reduced motion  5. Back");
+  const action = await askNumber("> ", 1, 5);
+  if (action >= 1 && action <= 3) {
+    const theme = (["system", "light", "dark"] as const)[action - 1]!;
+    console.log(`Theme set to ${theme}. The future visual client will apply this preference automatically.`);
+    return setThemePreference(state, theme);
+  }
+  if (action === 4) return setReducedMotion(state, !state.uiPreferences.reducedMotion);
+  return state;
+}
+
 async function run(): Promise<void> {
   let state = await exists(savePath) ? await loadGame(savePath, content.contentVersion) : await newGame();
   console.log(`\nWelcome, ${state.player.name}.`);
   while (true) {
     console.log(`\nDay ${state.world.day} · ${state.player.crowns} Crowns · ${state.player.inventory["field-capsule"] ?? 0} Capsules`);
     console.log(`Season: ${state.world.season} · Greenreach weather: ${state.world.weatherByRegion.greenreach ?? "unknown"}`);
-    console.log("1. Expedition  2. View roster  3. End day  4. Sell a monster  5. Homebase  6. Equipment  7. Save and quit");
-    const action = await askNumber("> ", 1, 7);
+    console.log("1. Expedition  2. View roster  3. End day  4. Sell a monster  5. Homebase  6. Equipment  7. Appearance  8. Save and quit");
+    const action = await askNumber("> ", 1, 8);
     if (action === 1) state = await expedition(state);
     if (action === 2) roster(state);
     if (action === 3) {
@@ -322,8 +335,9 @@ async function run(): Promise<void> {
     if (action === 4) state = await sellMonster(state);
     if (action === 5) state = await manageHomebase(state);
     if (action === 6) state = await manageEquipment(state);
+    if (action === 7) state = await manageAppearance(state);
     await saveGame(savePath, state);
-    if (action === 7) break;
+    if (action === 8) break;
   }
 }
 

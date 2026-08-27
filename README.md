@@ -19,6 +19,8 @@ npm run play
 
 The client also exposes the first homebase management loop: construct and upgrade facilities, deposit gathered resources, start breeding jobs, end days to advance construction and recovery, and claim offspring when their Nest timer completes. An Expedition Lodge increases route stamina and improves reward recovery during retreats. Fixed, data-driven equipment can be assigned to two monster slots and affects combat, expedition endurance, or capture work. Species research earned from battles and captures gradually narrows potential estimates and eventually reveals traits and exact potential. A Research Lab boosts those gains and converts expedition notes into focused species studies. Zone hazards are authored data, and suitable team types or tags provide visible preparation bonuses that reduce field risk.
 
+Appearance settings persist a Light, Dark, or Follow Device preference plus reduced-motion accessibility. The future visual client should consume the shared palettes in `src/ui/theme.ts` and the matching semantic CSS variables in `assets/styles/theme.css`, rather than hard-coded component colors.
+
 ## Architecture
 
 ```text
@@ -26,6 +28,7 @@ src/
   content/       editable game definitions (species, traits, regions, buildings)
   core/          shared domain types, IDs, seeded randomness
   systems/       pure simulation modules
+  ui/            shared visual preferences and semantic theme palettes
   demo.ts        runnable vertical-slice example
 tests/           behavior tests across system boundaries
 scripts/         content validation
