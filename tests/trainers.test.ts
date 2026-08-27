@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { SeededRandom, addMonsterToPlayer, advanceWorldDay, byId, challengeTrainer, content, createMonster, createNewGame, initializeTrainers } from "../src/index.ts";
+import { SeededRandom, addMonsterToPlayer, advanceWorldDay, byId, challengeTrainer, content, createMonster, createNewGame, estimateTrainerDifficulty, initializeTrainers, trainerRelationshipTier } from "../src/index.ts";
 
 function gameWithTrainers() {
   let state = createNewGame("Pia", 601, content.contentVersion);
@@ -38,4 +38,11 @@ test("trainer challenges update relationships, records, conditions, and daily li
   assert.equal(trainer.lastChallengeDay, state.world.day);
   assert.ok(result.turns > 0);
   assert.throws(() => challengeTrainer(result.state, "friend-tessa", content, new SeededRandom(604)), /already battled/);
+});
+
+test("trainer relationship and difficulty summaries use centralized thresholds", () => {
+  const state = gameWithTrainers();
+  assert.equal(trainerRelationshipTier(0), "new");
+  assert.equal(trainerRelationshipTier(10), "trusted");
+  assert.ok(["easy", "even", "hard", "severe"].includes(estimateTrainerDifficulty(state, "rival-rowan")));
 });

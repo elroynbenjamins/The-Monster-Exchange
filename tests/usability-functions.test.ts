@@ -1,8 +1,8 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 import {
-  SeededRandom, addMonsterToPlayer, browseMarketListings, byId, content, craftRecipe, createListing,
-  createMonster, createNewGame, provideFieldCare, renameOwnedMonster,
+  SeededRandom, addMonsterToPlayer, availableRecipes, browseMarketListings, byId, content, craftRecipe, createListing,
+  createMonster, createNewGame, listingValueLabel, maximumCraftableQuantity, provideFieldCare, renameOwnedMonster,
 } from "../src/index.ts";
 
 function ownedMonster() {
@@ -21,6 +21,15 @@ test("owned monsters can be nicknamed and reset to their species name", () => {
   assert.throws(() => renameOwnedMonster(state, setup.monster.id, "x".repeat(25)), /24 characters/);
 });
 
+test("nicknames normalize whitespace and remain unique within the roster", () => {
+  const setup = ownedMonster();
+  const second = createMonster(byId(content.species, "mossveil"), new SeededRandom(503), { day: 1 });
+  let state = addMonsterToPlayer(setup.state, second);
+  state = renameOwnedMonster(state, setup.monster.id, "Forest   Scout");
+  assert.equal(state.monsters[setup.monster.id]?.nickname, "Forest Scout");
+  assert.throws(() => renameOwnedMonster(state, second.id, "forest scout"), /already uses/);
+});
+
 test("field care consumes herbs and the Clinic improves recovery", () => {
   const setup = ownedMonster();
   let state = {
@@ -37,6 +46,8 @@ test("field care consumes herbs and the Clinic improves recovery", () => {
 test("Workshop recipes consume inputs and produce exact quantities", () => {
   const setup = ownedMonster();
   const state = { ...setup.state, homebase: { ...setup.state.homebase, buildings: [{ buildingId: "field-workshop", level: 1, status: "active" as const }] } };
+  assert.deepEqual(availableRecipes(state, content).map(({ id }) => id), ["craft-field-capsule"]);
+  assert.equal(maximumCraftableQuantity(state, "craft-field-capsule", content), 2);
   const crafted = craftRecipe(state, "craft-field-capsule", 2, content);
   assert.equal(crafted.player.inventory.herbs, 1);
   assert.equal(crafted.player.inventory.stone, 23);
@@ -57,4 +68,9 @@ test("market browsing filters the player's listings and sorts affordable NPC sto
   assert.deepEqual(browseMarketListings(state, { speciesId: "voltgrazer", maximumPrice: 250 }).map(({ id }) => id), [cheap.id]);
   assert.deepEqual(browseMarketListings(state, { sortBy: "potential" }).map(({ monster }) => monster.potential), [costly.monster.potential, cheap.monster.potential].sort((a, b) => b - a));
   assert.deepEqual(browseMarketListings(state, { sortBy: "level" }).map(({ monster }) => monster.level), [costly.monster.level, cheap.monster.level].sort((a, b) => b - a));
+  assert.deepEqual(browseMarketListings(state, { minimumPotential: 101 }), []);
+  assert.deepEqual(browseMarketListings(state, { minimumLevel: 51 }), []);
+  assert.equal(listingValueLabel(80, 100), "bargain");
+  assert.equal(listingValueLabel(100, 100), "fair");
+  assert.equal(listingValueLabel(120, 100), "premium");
 });

@@ -31,6 +31,8 @@ Marketplace discovery supports species, affordability, and maximum-price filters
 
 The Trainer Network introduces persistent named characters. Rival Rowan Vale and research friend Tessa Reed own actual monster rosters, train them on world ticks, remember challenge records, build relationships through repeat battles, and award authored victory purses.
 
+Recent usability rules are centralized rather than embedded in menus: nicknames normalize safely and stay unique, field care avoids wasting herbs, crafting reports exact available quantities, market searches support quality thresholds and value labels, contracts expose percentage progress, and trainer profiles show relationship tiers plus estimated challenge difficulty.
+
 ## Architecture
 
 ```text

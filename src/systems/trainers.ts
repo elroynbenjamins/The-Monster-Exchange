@@ -33,6 +33,21 @@ export function progressTrainers(state: GameState, content: GameContent): GameSt
 
 export interface TrainerChallengeResult { state: GameState; playerWon: boolean; rewardCrowns: number; turns: number }
 
+export function trainerRelationshipTier(relationship: number): "new" | "familiar" | "trusted" | "close" {
+  return relationship >= 20 ? "close" : relationship >= 10 ? "trusted" : relationship >= 4 ? "familiar" : "new";
+}
+
+export function estimateTrainerDifficulty(state: GameState, trainerId: string): "easy" | "even" | "hard" | "severe" {
+  const trainer = state.trainers[trainerId];
+  if (!trainer) throw new Error("Unknown trainer.");
+  const playerLevels = state.player.activeTeamIds.map((id) => state.monsters[id]?.level ?? 0);
+  const trainerLevels = trainer.monsterIds.map((id) => state.monsters[id]?.level ?? 0);
+  const playerPower = playerLevels.reduce((sum, level) => sum + level, 0) / Math.max(1, playerLevels.length);
+  const trainerPower = trainerLevels.reduce((sum, level) => sum + level, 0) / Math.max(1, trainerLevels.length);
+  const difference = trainerPower - playerPower;
+  return difference >= 6 ? "severe" : difference >= 2 ? "hard" : difference > -3 ? "even" : "easy";
+}
+
 export function challengeTrainer(state: GameState, trainerId: string, content: GameContent, rng: RandomSource): TrainerChallengeResult {
   if (state.activeExpedition) throw new Error("Trainer challenges are unavailable during an expedition.");
   const trainer = state.trainers[trainerId];

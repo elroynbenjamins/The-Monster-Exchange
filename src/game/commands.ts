@@ -21,8 +21,10 @@ export function setReducedMotion(state: GameState, reducedMotion: boolean): Game
 export function renameOwnedMonster(state: GameState, monsterId: string, nickname?: string): GameState {
   const monster = state.monsters[monsterId];
   if (!monster || monster.ownerId !== state.player.id) throw new Error("You do not own this monster.");
-  const trimmed = nickname?.trim();
+  const trimmed = nickname?.trim().replace(/\s+/g, " ");
   if (trimmed && trimmed.length > 24) throw new Error("Nicknames can contain at most 24 characters.");
+  if (trimmed && /[\u0000-\u001f\u007f]/.test(trimmed)) throw new Error("Nicknames cannot contain control characters.");
+  if (trimmed && state.player.monsterIds.some((id) => id !== monsterId && state.monsters[id]?.nickname?.toLocaleLowerCase() === trimmed.toLocaleLowerCase())) throw new Error("Another roster monster already uses this nickname.");
   return { ...state, monsters: { ...state.monsters, [monsterId]: { ...monster, nickname: trimmed || undefined } } };
 }
 
@@ -36,11 +38,26 @@ export function provideFieldCare(state: GameState, monsterId: string, herbCount:
   if (current.hpRatio >= 1 && current.stamina >= 100) throw new Error("This monster does not need field care.");
   const clinicLevel = state.homebase.buildings.find(({ buildingId, status }) => buildingId === "field-clinic" && status === "active")?.level ?? 0;
   const healingPerHerb = 0.2 + clinicLevel * 0.05;
+  const staminaPerHerb = 10 + clinicLevel * 2;
+  const usefulHerbs = Math.min(herbCount, Math.max(Math.ceil((1 - current.hpRatio) / healingPerHerb), Math.ceil((100 - current.stamina) / staminaPerHerb)));
   return {
     ...state,
-    player: { ...state.player, inventory: { ...state.player.inventory, herbs: state.player.inventory.herbs! - herbCount } },
-    conditions: { ...state.conditions, [monsterId]: { hpRatio: Math.min(1, current.hpRatio + healingPerHerb * herbCount), stamina: Math.min(100, current.stamina + (10 + clinicLevel * 2) * herbCount) } },
+    player: { ...state.player, inventory: { ...state.player.inventory, herbs: state.player.inventory.herbs! - usefulHerbs } },
+    conditions: { ...state.conditions, [monsterId]: { hpRatio: Math.min(1, current.hpRatio + healingPerHerb * usefulHerbs), stamina: Math.min(100, current.stamina + staminaPerHerb * usefulHerbs) } },
   };
+}
+
+export function availableRecipes(state: GameState, content: GameContent) {
+  return content.recipes.filter((recipe) => {
+    const building = state.homebase.buildings.find(({ buildingId, status }) => buildingId === recipe.requiredBuildingId && status === "active");
+    return Boolean(building && building.level >= recipe.requiredBuildingLevel);
+  });
+}
+
+export function maximumCraftableQuantity(state: GameState, recipeId: string, content: GameContent): number {
+  const recipe = content.recipes.find(({ id }) => id === recipeId);
+  if (!recipe || !availableRecipes(state, content).some(({ id }) => id === recipeId)) return 0;
+  return Math.min(...Object.entries(recipe.inputs).map(([id, amount]) => Math.floor((state.player.inventory[id] ?? 0) / amount)));
 }
 
 export function craftRecipe(state: GameState, recipeId: string, quantity: number, content: GameContent): GameState {
@@ -50,6 +67,8 @@ export function craftRecipe(state: GameState, recipeId: string, quantity: number
   if (!recipe) throw new Error("Unknown recipe.");
   const workshop = state.homebase.buildings.find(({ buildingId, status }) => buildingId === recipe.requiredBuildingId && status === "active");
   if (!workshop || workshop.level < recipe.requiredBuildingLevel) throw new Error(`${recipe.name} requires ${recipe.requiredBuildingId} level ${recipe.requiredBuildingLevel}.`);
+  const maximum = maximumCraftableQuantity(state, recipeId, content);
+  if (quantity > maximum) throw new Error(`Only ${maximum} can currently be crafted.`);
   for (const [id, amount] of Object.entries(recipe.inputs)) if ((state.player.inventory[id] ?? 0) < amount * quantity) throw new Error(`Not enough ${id}.`);
   const inventory = { ...state.player.inventory };
   for (const [id, amount] of Object.entries(recipe.inputs)) inventory[id] = (inventory[id] ?? 0) - amount * quantity;

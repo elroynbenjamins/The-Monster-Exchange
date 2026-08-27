@@ -4,7 +4,7 @@ import { stdin as input, stdout as output } from "node:process";
 import { join } from "node:path";
 import {
   EXPEDITION_APPROACHES, SeededRandom, activeTeamCaptureBonus, addMonsterToPlayer, appraiseMonster, attemptCapture, byId, changeInventory, content, createMonster,
-  abandonContract, acceptContract, advanceWorldDay, applyBattleAction, browseMarketListings, buyListing, calculateExpeditionPreparation, challengeTrainer, chooseAiAction, claimBreedingJob, claimContract, completedContractNames, conductSpeciesStudy, constructBuilding, craftRecipe, createBattle, createNewGame, depositHomebaseResource, evolveOwnedMonster, finishExpedition, gainSpeciesResearch, generateBossEncounter, generateWildEncounter, initializeTrainers, listPlayerMonster, loadGame, nextActor, provideFieldCare, recordContractProgress, renameOwnedMonster, resolveExpeditionNode,
+  abandonContract, acceptContract, advanceWorldDay, applyBattleAction, availableRecipes, browseMarketListings, buyListing, calculateExpeditionPreparation, challengeTrainer, chooseAiAction, claimBreedingJob, claimContract, completedContractNames, conductSpeciesStudy, constructBuilding, contractProgressPercent, craftRecipe, createBattle, createNewGame, depositHomebaseResource, estimateTrainerDifficulty, evolveOwnedMonster, finishExpedition, gainSpeciesResearch, generateBossEncounter, generateWildEncounter, initializeTrainers, listPlayerMonster, listingValueLabel, loadGame, maximumCraftableQuantity, nextActor, provideFieldCare, recordContractProgress, renameOwnedMonster, resolveExpeditionNode, trainerRelationshipTier,
   equipMonsterItems, equipMonsterSkills, researchLabLevel, saveGame, setActiveTeam, setReducedMotion, setThemePreference, settleBattleProgression, startBreeding, startExpeditionRun, upgradeBuilding, type GameState,
   validActions, type BattleAction, type ExpeditionApproach, type WildEncounter,
 } from "./index.ts";
@@ -304,7 +304,11 @@ async function manageMarketplace(state: GameState): Promise<GameState> {
   const sortBy = (["price", "potential", "level"] as const)[(await askNumber("> ", 1, 3)) - 1]!;
   console.log("1. Show all matching  2. Affordable only");
   const affordableOnly = await askNumber("> ", 1, 2) === 2;
-  const listings = browseMarketListings(state, { speciesId, maximumPrice, affordableOnly, sortBy });
+  console.log("1. Any quality  2. Set minimum Potential and level");
+  const qualityFilter = await askNumber("> ", 1, 2);
+  const minimumPotential = qualityFilter === 2 ? await askNumber("Minimum Potential: ", 0, 100) : undefined;
+  const minimumLevel = qualityFilter === 2 ? await askNumber("Minimum level: ", 1, 50) : undefined;
+  const listings = browseMarketListings(state, { speciesId, maximumPrice, affordableOnly, sortBy, minimumPotential, minimumLevel });
   if (!listings.length) { console.log("No matching NPC listings are currently available. End a day to refresh the market."); return state; }
   listings.forEach((listing, index) => {
     const species = byId(content.species, listing.monster.speciesId);
@@ -318,7 +322,7 @@ async function manageMarketplace(state: GameState): Promise<GameState> {
   const appraisal = appraiseMonster(listing.monster, species, content.traits, state.market.indices[species.id]);
   const difference = listing.askingPrice - appraisal;
   console.log(`Traits: ${listing.monster.traitIds.map((id) => byId(content.traits, id).name).join(", ") || "none"} · Record ${listing.monster.wins}W–${listing.monster.losses}L`);
-  console.log(`Exchange appraisal: ${appraisal} Crowns · Asking price is ${Math.abs(difference)} Crowns ${difference <= 0 ? "below" : "above"} appraisal.`);
+  console.log(`Exchange appraisal: ${appraisal} Crowns · ${listingValueLabel(listing.askingPrice, appraisal).toUpperCase()} · Asking price is ${Math.abs(difference)} Crowns ${difference <= 0 ? "below" : "above"} appraisal.`);
   console.log("1. Purchase  2. Back");
   if (await askNumber("> ", 1, 2) === 2) return state;
   try { return buyListing(state, listing.id); } catch (error) { console.log(error instanceof Error ? error.message : error); return state; }
@@ -399,13 +403,10 @@ async function manageResearch(state: GameState): Promise<GameState> {
 }
 
 async function manageCrafting(state: GameState): Promise<GameState> {
-  const available = content.recipes.filter((recipe) => {
-    const building = state.homebase.buildings.find(({ buildingId, status }) => buildingId === recipe.requiredBuildingId && status === "active");
-    return building && building.level >= recipe.requiredBuildingLevel;
-  });
+  const available = availableRecipes(state, content);
   if (!available.length) { console.log("Build or upgrade the Field Workshop to unlock recipes."); return state; }
   console.log("\nField Workshop");
-  available.forEach((recipe, index) => console.log(`${index + 1}. ${recipe.name} — ${Object.entries(recipe.inputs).map(([id, amount]) => `${amount} ${id}`).join(", ")}`));
+  available.forEach((recipe, index) => console.log(`${index + 1}. ${recipe.name} — ${Object.entries(recipe.inputs).map(([id, amount]) => `${amount} ${id}`).join(", ")} · can craft ${maximumCraftableQuantity(state, recipe.id, content)}`));
   const recipe = available[(await askNumber("> ", 1, available.length)) - 1]!;
   const quantity = await askNumber("Quantity: ", 1, 99);
   try {
@@ -466,7 +467,7 @@ async function manageContracts(state: GameState): Promise<GameState> {
   console.log("\nContract Board");
   for (const contract of state.contracts) {
     const definition = byId(content.contracts, contract.definitionId);
-    console.log(`- ${definition.name} · ${contract.status} · ${contract.progress}/${definition.objective.required}${contract.status === "active" ? ` · expires Day ${contract.expiresOnDay}` : ""}`);
+    console.log(`- ${definition.name} · ${contract.status} · ${contract.progress}/${definition.objective.required} (${contractProgressPercent(contract.progress, definition.objective.required)}%)${contract.status === "active" ? ` · expires Day ${contract.expiresOnDay}` : ""}`);
   }
   const claimable = state.contracts.filter(({ status }) => status === "complete");
   const active = state.contracts.filter(({ status }) => status === "active");
@@ -505,7 +506,7 @@ async function manageTrainers(state: GameState): Promise<GameState> {
   definitions.forEach((definition, index) => {
     const trainer = state.trainers[definition.id]!;
     const team = trainer.monsterIds.map((id) => `${byId(content.species, state.monsters[id]!.speciesId).name} Lv.${state.monsters[id]!.level}`).join(", ");
-    console.log(`${index + 1}. ${definition.name} · ${definition.role} · Relationship ${trainer.relationship} · Record ${trainer.wins}W–${trainer.losses}L\n   ${definition.description}\n   Team: ${team}`);
+    console.log(`${index + 1}. ${definition.name} · ${definition.role} · ${trainerRelationshipTier(trainer.relationship)} relationship (${trainer.relationship}) · ${estimateTrainerDifficulty(state, definition.id)} challenge · Record ${trainer.wins}W–${trainer.losses}L\n   ${definition.description}\n   Team: ${team}`);
   });
   console.log(`${definitions.length + 1}. Back`);
   const selection = await askNumber("Challenge: ", 1, definitions.length + 1);

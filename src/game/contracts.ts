@@ -3,6 +3,11 @@ import type { GameState } from "./state.ts";
 
 export interface ContractProgressEvent { type: ContractEventType; targetId?: string; amount?: number }
 
+export function contractProgressPercent(progress: number, required: number): number {
+  if (required < 1) return 100;
+  return Math.round(Math.max(0, Math.min(1, progress / required)) * 100);
+}
+
 export function acceptContract(state: GameState, definitionId: string, content: GameContent): GameState {
   const definition = content.contracts.find(({ id }) => id === definitionId);
   if (!definition) throw new Error("Unknown contract.");

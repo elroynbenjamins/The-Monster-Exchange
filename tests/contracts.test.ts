@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { abandonContract, acceptContract, claimContract, completedContractNames, content, createNewGame, expireContracts, recordContractProgress } from "../src/index.ts";
+import { abandonContract, acceptContract, claimContract, completedContractNames, content, contractProgressPercent, createNewGame, expireContracts, recordContractProgress } from "../src/index.ts";
 
 test("contracts are accepted, progressed by matching events, and claimed once", () => {
   let state = createNewGame("Niko", 81, content.contentVersion);
@@ -30,6 +30,12 @@ test("unfinished contracts expire on their deadline", () => {
   state = { ...state, world: { ...state.world, day: state.contracts[0]!.expiresOnDay } };
   state = expireContracts(state);
   assert.equal(state.contracts[0]?.status, "expired");
+});
+
+test("contract progress percentages are clamped and readable", () => {
+  assert.equal(contractProgressPercent(1, 4), 25);
+  assert.equal(contractProgressPercent(9, 4), 100);
+  assert.equal(contractProgressPercent(-1, 4), 0);
 });
 
 test("claimed and expired contracts can be accepted again", () => {

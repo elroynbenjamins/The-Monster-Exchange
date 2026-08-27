@@ -7,6 +7,8 @@ export interface MarketBrowseOptions {
   speciesId?: string;
   maximumPrice?: number;
   affordableOnly?: boolean;
+  minimumPotential?: number;
+  minimumLevel?: number;
   sortBy?: "price" | "potential" | "level";
 }
 
@@ -14,9 +16,16 @@ export function browseMarketListings(state: GameState, options: MarketBrowseOpti
   const listings = state.market.listings.filter((listing) => listing.sellerId !== state.player.id)
     .filter((listing) => !options.speciesId || listing.monster.speciesId === options.speciesId)
     .filter((listing) => options.maximumPrice === undefined || listing.askingPrice <= options.maximumPrice)
+    .filter((listing) => options.minimumPotential === undefined || listing.monster.potential >= options.minimumPotential)
+    .filter((listing) => options.minimumLevel === undefined || listing.monster.level >= options.minimumLevel)
     .filter((listing) => !options.affordableOnly || listing.askingPrice <= state.player.crowns);
   const sortBy = options.sortBy ?? "price";
   return [...listings].sort((a, b) => sortBy === "potential" ? b.monster.potential - a.monster.potential : sortBy === "level" ? b.monster.level - a.monster.level : a.askingPrice - b.askingPrice);
+}
+
+export function listingValueLabel(askingPrice: number, appraisal: number): "bargain" | "fair" | "premium" {
+  const ratio = askingPrice / Math.max(1, appraisal);
+  return ratio <= 0.9 ? "bargain" : ratio <= 1.12 ? "fair" : "premium";
 }
 
 export function buyListing(state: GameState, listingId: string): GameState {
