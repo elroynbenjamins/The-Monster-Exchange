@@ -84,7 +84,7 @@ export interface ZoneDefinition {
   speciesPool: readonly { speciesId: string; weight: number }[];
   hazards: readonly string[];
   nodeWeights: Readonly<Record<"encounter" | "resource" | "choice" | "rest" | "discovery", number>>;
-  boss?: { speciesId: string; level: number; rewardCrowns: number; researchNotes: number };
+  boss?: { speciesId: string; level: number; rewardCrowns: number; researchNotes: number; unlocksZoneId?: string };
 }
 
 export interface HazardDefinition {

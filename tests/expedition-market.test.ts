@@ -79,6 +79,19 @@ test("boss resolution awards the zone's authored bounty", () => {
   assert.equal(outcome.event.payload.nodeType, "boss");
   assert.equal(outcome.state.activeExpedition?.rewards.crowns, zone.boss?.rewardCrowns);
   assert.equal(outcome.state.activeExpedition?.rewards["research-notes"], zone.boss?.researchNotes);
+  assert.ok(outcome.state.world.unlockedZoneIds.includes("greenreach-deepwood"));
+});
+
+test("the Expedition Lodge increases route stamina and retreat recovery", () => {
+  const zone = byId(content.zones, "greenreach-meadow");
+  const base = gameWithTeam();
+  const prepared = { ...base, homebase: { ...base.homebase, buildings: [{ buildingId: "expedition-lodge", level: 2, status: "active" as const }] } };
+  let state = startExpeditionRun(prepared, zone, new SeededRandom(37), 2);
+  assert.equal(state.activeExpedition?.route.stamina, 110);
+  state = { ...state, activeExpedition: { ...state.activeExpedition!, rewards: { crowns: 100 } } };
+  const crownsBefore = state.player.crowns;
+  state = finishExpedition(state, true);
+  assert.equal(state.player.crowns, crownsBefore + 70);
 });
 
 test("rest recovers condition and advances the day", () => {

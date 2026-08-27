@@ -123,9 +123,18 @@ async function wildBattle(state: GameState, rng: SeededRandom, preparedEncounter
 
 async function expedition(state: GameState): Promise<GameState> {
   const rng = new SeededRandom(state.world.seed + state.world.nextRandomOffset + 101);
-  const zone = byId(content.zones, state.activeExpedition?.route.zoneId ?? state.world.unlockedZoneIds[0]!);
+  let zone = state.activeExpedition ? byId(content.zones, state.activeExpedition.route.zoneId) : undefined;
+  if (!zone) {
+    const available = state.world.unlockedZoneIds.map((id) => byId(content.zones, id));
+    console.log("\nChoose an expedition zone:");
+    available.forEach((candidate, index) => {
+      const boss = candidate.boss ? ` · Alpha Lv.${candidate.boss.level}` : "";
+      console.log(`${index + 1}. ${candidate.id} · Levels ${candidate.levelRange[0]}–${candidate.levelRange[1]}${boss}`);
+    });
+    zone = available[(await askNumber("> ", 1, available.length)) - 1]!;
+  }
   let next = state.activeExpedition ? state : startExpeditionRun(state, zone, rng);
-  console.log(next.activeExpedition === state.activeExpedition ? "\nResuming expedition." : "\nThe team enters Greenreach Meadow.");
+  console.log(next.activeExpedition === state.activeExpedition ? `\nResuming expedition in ${zone.id}.` : `\nThe team enters ${zone.id} with ${next.activeExpedition!.route.stamina} route stamina.`);
   const preparation = calculateExpeditionPreparation(next, zone, content.species, content.hazards);
   if (preparation.protectedHazardIds.length) {
     const names = preparation.protectedHazardIds.map((id) => byId(content.hazards, id).name);

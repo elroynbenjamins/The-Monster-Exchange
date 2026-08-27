@@ -42,12 +42,18 @@ export function calculateExpeditionPreparation(state: GameState, zone: ZoneDefin
   return { riskReduction: Math.min(0.25, riskReduction), protectedHazardIds: protectedHazards };
 }
 
+export function expeditionLodgeLevel(state: GameState): number {
+  return state.homebase.buildings.find(({ buildingId, status }) => buildingId === "expedition-lodge" && status === "active")?.level ?? 0;
+}
+
 export function startExpeditionRun(state: GameState, zone: ZoneDefinition, rng: RandomSource, nodeCount = 6): GameState {
   if (state.activeExpedition) throw new Error("An expedition is already active.");
   if (state.player.activeTeamIds.length === 0) throw new Error("Choose at least one active monster.");
   const unavailable = state.player.activeTeamIds.filter((id) => (state.conditions[id]?.stamina ?? 0) < 20 || (state.conditions[id]?.hpRatio ?? 0) <= 0);
   if (unavailable.length) throw new Error("Every team member needs health and at least 20 stamina.");
-  return { ...state, activeExpedition: { route: createExpedition(zone, state.player.activeTeamIds, rng, nodeCount), startedOnDay: state.world.day, rewards: {} } };
+  const route = createExpedition(zone, state.player.activeTeamIds, rng, nodeCount);
+  const preparedRoute = { ...route, stamina: route.stamina + expeditionLodgeLevel(state) * 5 };
+  return { ...state, activeExpedition: { route: preparedRoute, startedOnDay: state.world.day, rewards: {} } };
 }
 
 function spendTeamCondition(state: GameState, hpLoss: number, staminaLoss: number, equipment: readonly EquipmentDefinition[]): GameState {
@@ -90,7 +96,10 @@ export function resolveExpeditionNode(state: GameState, rng: RandomSource, equip
       next = spendTeamCondition(next, 0, 15, equipment);
       next = addReward(next, "crowns", rewardCrowns);
       next = addReward(next, "research-notes", researchNotes);
-      message = `The alpha is defeated. The Exchange secures a ${rewardCrowns}-Crown boss bounty and ${researchNotes} research ${researchNotes === 1 ? "note" : "notes"}.`;
+      const unlockZoneId = boss?.unlocksZoneId;
+      const unlocks = Boolean(unlockZoneId && !next.world.unlockedZoneIds.includes(unlockZoneId));
+      if (unlocks && unlockZoneId) next = { ...next, world: { ...next.world, unlockedZoneIds: [...next.world.unlockedZoneIds, unlockZoneId] } };
+      message = `The alpha is defeated. The Exchange secures a ${rewardCrowns}-Crown boss bounty and ${researchNotes} research ${researchNotes === 1 ? "note" : "notes"}.${unlocks ? ` A route to ${unlockZoneId} is now open.` : ""}`;
       break;
     }
     case "resource": {
@@ -139,7 +148,7 @@ export function finishExpedition(state: GameState, retreat = false): GameState {
   if (!state.activeExpedition) throw new Error("No active expedition.");
   const { route, rewards } = state.activeExpedition;
   if (!retreat && route.status !== "completed") throw new Error("The route is not complete.");
-  const retainedFactor = retreat ? 0.6 : 1;
+  const retainedFactor = retreat ? Math.min(0.85, 0.6 + expeditionLodgeLevel(state) * 0.05) : 1;
   const inventory = { ...state.player.inventory };
   let crowns = state.player.crowns;
   for (const [id, value] of Object.entries(rewards)) {
