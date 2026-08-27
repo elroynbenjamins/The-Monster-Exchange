@@ -1,0 +1,42 @@
+import { GAME_TYPES } from "../src/core/types.ts";
+import { content } from "../src/content/index.ts";
+
+const errors: string[] = [];
+const idPattern = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
+const groups = [content.species, content.traits, content.skills, content.evolutions, content.regions, content.zones, content.buildings];
+const allIds = new Set<string>();
+
+for (const group of groups) {
+  for (const item of group) {
+    if (!idPattern.test(item.id)) errors.push(`Invalid kebab-case id: ${item.id}`);
+    if (allIds.has(item.id)) errors.push(`Duplicate global id: ${item.id}`);
+    allIds.add(item.id);
+  }
+}
+
+const speciesIds = new Set(content.species.map(({ id }) => id));
+const traitIds = new Set(content.traits.map(({ id }) => id));
+const skillIds = new Set(content.skills.map(({ id }) => id));
+const evolutionIds = new Set(content.evolutions.map(({ id }) => id));
+const zoneIds = new Set(content.zones.map(({ id }) => id));
+
+for (const species of content.species) {
+  for (const type of species.types) if (type && !GAME_TYPES.includes(type)) errors.push(`${species.id}: unknown type ${type}`);
+  for (const id of species.traitPool) if (!traitIds.has(id)) errors.push(`${species.id}: unknown trait ${id}`);
+  for (const id of species.skillPool) if (!skillIds.has(id)) errors.push(`${species.id}: unknown skill ${id}`);
+  for (const id of species.evolutionIds) if (!evolutionIds.has(id)) errors.push(`${species.id}: unknown evolution ${id}`);
+  for (const id of species.habitats) if (!zoneIds.has(id)) errors.push(`${species.id}: unknown habitat ${id}`);
+  if (!species.artId.startsWith(`monsters/${species.id}/${species.id}--`)) errors.push(`${species.id}: artId violates asset convention`);
+}
+for (const evolution of content.evolutions) {
+  if (!speciesIds.has(evolution.fromSpeciesId) || !speciesIds.has(evolution.toSpeciesId)) errors.push(`${evolution.id}: unknown species reference`);
+}
+for (const region of content.regions) for (const id of region.zoneIds) if (!zoneIds.has(id)) errors.push(`${region.id}: unknown zone ${id}`);
+for (const zone of content.zones) for (const entry of zone.speciesPool) if (!speciesIds.has(entry.speciesId)) errors.push(`${zone.id}: unknown species ${entry.speciesId}`);
+
+if (errors.length) {
+  console.error(errors.join("\n"));
+  process.exitCode = 1;
+} else {
+  console.log(`Content v${content.contentVersion} valid: ${allIds.size} definitions checked.`);
+}
