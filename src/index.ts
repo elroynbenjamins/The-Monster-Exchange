@@ -16,3 +16,5 @@ export * from "./systems/transactions.ts";
 export * from "./game/state.ts";
 export * from "./game/save.ts";
 export * from "./game/expedition-run.ts";
+export * from "./game/commands.ts";
+export * from "./game/world-tick.ts";

@@ -4,11 +4,20 @@ import type { GameState } from "./state.ts";
 import { SAVE_VERSION } from "./state.ts";
 
 function migrateSave(raw: GameState & { saveVersion: number }): GameState {
-  if (raw.saveVersion === 1) {
+  let migrated = raw;
+  if (migrated.saveVersion === 1) {
     const conditions = Object.fromEntries(Object.keys(raw.monsters).map((id) => [id, { hpRatio: 1, stamina: 100 }]));
-    return { ...raw, saveVersion: 2, conditions };
+    migrated = { ...migrated, saveVersion: 2, conditions };
   }
-  return raw;
+  if (migrated.saveVersion === 2) {
+    migrated = {
+      ...migrated,
+      saveVersion: 3,
+      breedingJobs: [],
+      world: { ...migrated.world, season: "spring", weatherByRegion: { greenreach: "clear", stormpeak: "windy" }, populations: {} },
+    };
+  }
+  return migrated;
 }
 
 export async function saveGame(path: string, state: GameState): Promise<void> {

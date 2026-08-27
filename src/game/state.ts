@@ -3,7 +3,7 @@ import type { MarketState } from "../systems/market.ts";
 import type { MonsterIndividual } from "../core/types.ts";
 import type { ExpeditionState } from "../systems/exploration.ts";
 
-export const SAVE_VERSION = 2;
+export const SAVE_VERSION = 3;
 
 export interface MonsterCondition {
   hpRatio: number;
@@ -31,6 +31,17 @@ export interface WorldState {
   seed: number;
   nextRandomOffset: number;
   unlockedZoneIds: readonly string[];
+  season: "spring" | "summer" | "autumn" | "winter";
+  weatherByRegion: Readonly<Record<string, string>>;
+  populations: Readonly<Record<string, number>>;
+}
+
+export interface BreedingJob {
+  id: string;
+  parentIds: readonly [string, string];
+  startedOnDay: number;
+  completesOnDay: number;
+  status: "active" | "ready";
 }
 
 export interface GameState {
@@ -43,6 +54,7 @@ export interface GameState {
   activeExpedition?: ActiveExpedition;
   market: MarketState;
   homebase: HomebaseState;
+  breedingJobs: readonly BreedingJob[];
 }
 
 export function createNewGame(playerName: string, seed: number, contentVersion: number): GameState {
@@ -56,11 +68,12 @@ export function createNewGame(playerName: string, seed: number, contentVersion: 
       inventory: { "field-capsule": 5, herbs: 5, timber: 50, stone: 25 },
       monsterIds: [], activeTeamIds: [], reputation: 0,
     },
-    world: { day: 1, seed, nextRandomOffset: 0, unlockedZoneIds: ["greenreach-meadow"] },
+    world: { day: 1, seed, nextRandomOffset: 0, unlockedZoneIds: ["greenreach-meadow"], season: "spring", weatherByRegion: { greenreach: "clear", stormpeak: "windy" }, populations: {} },
     monsters: {},
     conditions: {},
     market: { day: 1, indices: {}, listings: [], events: [] },
     homebase: { slotCount: 3, buildings: [], resources: { timber: 50, stone: 25, herbs: 5 } },
+    breedingJobs: [],
   };
 }
 

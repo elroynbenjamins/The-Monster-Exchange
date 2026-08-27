@@ -4,8 +4,8 @@ import { stdin as input, stdout as output } from "node:process";
 import { join } from "node:path";
 import {
   SeededRandom, addMonsterToPlayer, appraiseMonster, attemptCapture, byId, changeInventory, content, createMonster,
-  applyBattleAction, chooseAiAction, createBattle, createNewGame, finishExpedition, generateWildEncounter, listPlayerMonster, loadGame, nextActor, resolveExpeditionNode,
-  resolvePlayerListingSales, restTeam, returnExpiredPlayerListings, saveGame, startExpeditionRun, tickMarket, type GameState,
+  advanceWorldDay, applyBattleAction, chooseAiAction, claimBreedingJob, constructBuilding, createBattle, createNewGame, depositHomebaseResource, finishExpedition, generateWildEncounter, listPlayerMonster, loadGame, nextActor, resolveExpeditionNode,
+  saveGame, startBreeding, startExpeditionRun, upgradeBuilding, type GameState,
   validActions, type BattleAction, type WildEncounter,
 } from "./index.ts";
 
@@ -164,14 +164,57 @@ async function sellMonster(state: GameState): Promise<GameState> {
   } catch (error) { console.log(error instanceof Error ? error.message : error); return state; }
 }
 
-function advanceDay(state: GameState): GameState {
-  let next = restTeam(state);
-  const expiring = next.market.listings.filter((listing) => listing.expiresOnDay <= state.market.day + 1);
-  next = { ...next, market: tickMarket({ ...next.market, day: state.market.day }) };
-  next = returnExpiredPlayerListings(next, expiring);
-  const sales = resolvePlayerListingSales(next, new SeededRandom(next.world.seed + next.world.day * 97));
-  if (sales.soldListingIds.length) console.log(`${sales.soldListingIds.length} marketplace listing sold.`);
-  return sales.state;
+async function manageBreeding(state: GameState): Promise<GameState> {
+  const ready = state.breedingJobs.filter(({ status }) => status === "ready");
+  if (ready.length) {
+    console.log(`${ready.length} offspring ${ready.length === 1 ? "is" : "are"} ready.`);
+    console.log("1. Claim first offspring  2. Start another pairing  3. Back");
+    const action = await askNumber("> ", 1, 3);
+    if (action === 1) return claimBreedingJob(state, ready[0]!.id, content, new SeededRandom(state.world.seed + state.world.nextRandomOffset + 700));
+    if (action === 3) return state;
+  }
+  if (state.player.monsterIds.length < 2) { console.log("Two compatible monsters are required."); return state; }
+  roster(state);
+  console.log("Choose the first parent, then the second.");
+  const first = state.player.monsterIds[(await askNumber("First: ", 1, state.player.monsterIds.length)) - 1]!;
+  const second = state.player.monsterIds[(await askNumber("Second: ", 1, state.player.monsterIds.length)) - 1]!;
+  try {
+    const next = startBreeding(state, [first, second], content, new SeededRandom(state.world.seed + state.world.nextRandomOffset + 701));
+    console.log("Breeding started. The Nest will report when the offspring is ready.");
+    return next;
+  } catch (error) { console.log(error instanceof Error ? error.message : error); return state; }
+}
+
+async function manageHomebase(state: GameState): Promise<GameState> {
+  console.log("\nHomebase");
+  if (!state.homebase.buildings.length) console.log("No facilities built yet.");
+  for (const building of state.homebase.buildings) console.log(`- ${byId(content.buildings, building.buildingId).name} Lv.${building.level} · ${building.status}`);
+  console.log(`Stores: ${Object.entries(state.homebase.resources).map(([id, amount]) => `${amount} ${id}`).join(", ")}`);
+  console.log("1. Construct facility  2. Upgrade facility  3. Deposit resources  4. Breeding Nest  5. Back");
+  const action = await askNumber("> ", 1, 5);
+  try {
+    if (action === 1) {
+      const available = content.buildings.filter((definition) => !state.homebase.buildings.some(({ buildingId }) => buildingId === definition.id));
+      if (!available.length) { console.log("Every available facility has been built."); return state; }
+      available.forEach((building, index) => console.log(`${index + 1}. ${building.name} — ${Object.entries(building.baseCost).map(([id, amount]) => `${amount} ${id}`).join(", ")}`));
+      return constructBuilding(state, available[(await askNumber("> ", 1, available.length)) - 1]!);
+    }
+    if (action === 2) {
+      const available = state.homebase.buildings.filter(({ status, level, buildingId }) => status === "active" && level < byId(content.buildings, buildingId).maxLevel);
+      if (!available.length) { console.log("No facility can currently be upgraded."); return state; }
+      available.forEach((building, index) => console.log(`${index + 1}. ${byId(content.buildings, building.buildingId).name} Lv.${building.level}`));
+      const selected = available[(await askNumber("> ", 1, available.length)) - 1]!;
+      return upgradeBuilding(state, byId(content.buildings, selected.buildingId));
+    }
+    if (action === 3) {
+      const resources = ["timber", "stone", "herbs"];
+      resources.forEach((id, index) => console.log(`${index + 1}. ${id} (${state.player.inventory[id] ?? 0} carried)`));
+      const id = resources[(await askNumber("> ", 1, resources.length)) - 1]!;
+      return depositHomebaseResource(state, id, await askNumber("Amount: ", 1, state.player.inventory[id] ?? 1));
+    }
+    if (action === 4) return manageBreeding(state);
+  } catch (error) { console.log(error instanceof Error ? error.message : error); }
+  return state;
 }
 
 async function run(): Promise<void> {
@@ -179,17 +222,24 @@ async function run(): Promise<void> {
   console.log(`\nWelcome, ${state.player.name}.`);
   while (true) {
     console.log(`\nDay ${state.world.day} · ${state.player.crowns} Crowns · ${state.player.inventory["field-capsule"] ?? 0} Capsules`);
-    console.log("1. Expedition  2. View roster  3. Rest until tomorrow  4. Sell a monster  5. Save and quit");
-    const action = await askNumber("> ", 1, 5);
+    console.log(`Season: ${state.world.season} · Greenreach weather: ${state.world.weatherByRegion.greenreach ?? "unknown"}`);
+    console.log("1. Expedition  2. View roster  3. End day  4. Sell a monster  5. Homebase  6. Save and quit");
+    const action = await askNumber("> ", 1, 6);
     if (action === 1) state = await expedition(state);
     if (action === 2) roster(state);
     if (action === 3) {
-      try { state = advanceDay(state); console.log("The team recovers and a new market day begins."); }
+      try {
+        const result = advanceWorldDay(state, content);
+        state = result.state;
+        for (const event of result.events) if (event.type === "market.player-listing-sold") console.log("One of your marketplace listings sold.");
+        console.log("The world advances: teams recover, construction progresses, and the market refreshes.");
+      }
       catch (error) { console.log(error instanceof Error ? error.message : error); }
     }
     if (action === 4) state = await sellMonster(state);
+    if (action === 5) state = await manageHomebase(state);
     await saveGame(savePath, state);
-    if (action === 5) break;
+    if (action === 6) break;
   }
 }
 

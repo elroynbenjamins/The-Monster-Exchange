@@ -17,6 +17,8 @@ npm run play
 
 `npm run play` starts the terminal-based development client. It creates an autosave under `.local/`, lets you choose a partner, run or resume multi-node Greenreach expeditions, manage health and stamina, capture wild individuals, secure or risk route rewards, list monsters for sale, and advance the living market by resting. The terminal is a temporary development client, not the intended final interface.
 
+The client also exposes the first homebase management loop: construct and upgrade facilities, deposit gathered resources, start breeding jobs, end days to advance construction and recovery, and claim offspring when their Nest timer completes.
+
 ## Architecture
 
 ```text
@@ -46,9 +48,9 @@ Systems accept state and return new state or explicit events. They do not know a
 ## Roadmap
 
 1. **Foundation (complete)** — definitions, deterministic generation, lineage-aware breeding, evolution eligibility, market ticks, buildings, expeditions, and timeline combat primitives.
-2. **Playable loop (in progress)** — versioned/migrated autosaves, inventory/currency, resumable expedition nodes, health/stamina, retreat/defeat, capture, marketplace purchases and player selling are connected. Next: clinic/homebase interaction, NPC listings, and richer node choices.
+2. **Playable loop (in progress)** — versioned/migrated autosaves, inventory/currency, resumable expedition nodes, health/stamina, retreat/defeat, capture, marketplace purchases/player selling, NPC listings, roster commands, timed breeding, evolution, and homebase construction/upgrades are connected. Next: richer node choices and a visual client.
 3. **Combat depth (in progress)** — deterministic speed-timeline battles, basic attacks, equipped skills, Energy, cooldowns, centralized type effectiveness, status application events, up to 3 active monsters, and weighted AI actions are connected to expeditions. Next: status ticking, support effects, switching/reserves, XP, rewards, and battle records.
-4. **Living world** — NPC portfolios, rival/friend progression, regional populations, seasons/weather, tournaments, contracts, and market news.
+4. **Living world (foundation in progress)** — one coordinated day tick now advances recovery, construction, breeding, listing expiry/sales, NPC listings, regional weather, seasons, and species populations. Next: persistent NPC portfolios, rival/friend progression, tournaments, contracts, and market news.
 5. **Content pipeline** — JSON import/export, schema versioning/migrations, editor tooling, localization, balance simulations, and pixel-art integration.
 6. **Production client** — choose the rendering shell after the simulation loop is proven; add audio, accessibility, tutorials, telemetry, packaging, and save migration tests.
 
