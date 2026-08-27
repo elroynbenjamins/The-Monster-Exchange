@@ -4,7 +4,7 @@ import { stdin as input, stdout as output } from "node:process";
 import { join } from "node:path";
 import {
   EXPEDITION_APPROACHES, SeededRandom, activeTeamCaptureBonus, addMonsterToPlayer, appraiseMonster, attemptCapture, byId, changeInventory, content, createMonster,
-  advanceWorldDay, applyBattleAction, calculateExpeditionPreparation, chooseAiAction, claimBreedingJob, conductSpeciesStudy, constructBuilding, createBattle, createNewGame, depositHomebaseResource, finishExpedition, gainSpeciesResearch, generateBossEncounter, generateWildEncounter, listPlayerMonster, loadGame, nextActor, resolveExpeditionNode,
+  acceptContract, advanceWorldDay, applyBattleAction, calculateExpeditionPreparation, chooseAiAction, claimBreedingJob, claimContract, conductSpeciesStudy, constructBuilding, createBattle, createNewGame, depositHomebaseResource, finishExpedition, gainSpeciesResearch, generateBossEncounter, generateWildEncounter, listPlayerMonster, loadGame, nextActor, recordContractProgress, resolveExpeditionNode,
   equipMonsterItems, researchLabLevel, saveGame, setReducedMotion, setThemePreference, settleBattleProgression, startBreeding, startExpeditionRun, upgradeBuilding, type GameState,
   validActions, type BattleAction, type ExpeditionApproach, type WildEncounter,
 } from "./index.ts";
@@ -63,6 +63,7 @@ async function captureAfterEncounter(state: GameState, rng: SeededRandom, encoun
     if (result.captured) {
       next = addMonsterToPlayer(next, encounter.monster, next.player.activeTeamIds.length < 5);
       next = gainSpeciesResearch(next, encounter.species.id, 8);
+      next = recordContractProgress(next, { type: "capture-species", targetId: encounter.species.id }, content);
       console.log(`Captured ${encounter.species.name}! Its true Potential is ${encounter.monster.potential}.`);
     } else console.log(`${encounter.species.name} escaped the capsule.`);
   }
@@ -115,7 +116,8 @@ async function wildBattle(state: GameState, rng: SeededRandom, preparedEncounter
   }
   const enemy = battle.units.find(({ side }) => side === "enemy")!;
   const progression = settleBattleProgression({ ...state, conditions }, battle, content);
-  const progressedState = battle.result === "player-victory" ? gainSpeciesResearch(progression.state, encounter.species.id, encounter.isBoss ? 10 : 3) : progression.state;
+  let progressedState = battle.result === "player-victory" ? gainSpeciesResearch(progression.state, encounter.species.id, encounter.isBoss ? 10 : 3) : progression.state;
+  if (battle.result === "player-victory" && encounter.isBoss) progressedState = recordContractProgress(progressedState, { type: "defeat-boss", targetId: zone.id }, content);
   console.log(battle.result === "player-victory" ? "Victory!" : "Your expedition team was defeated.");
   if (battle.result === "player-victory") console.log(`Participating monsters gain ${progression.xpAwarded} XP; reserves gain 25%.`);
   return { state: progressedState, encounter, won: battle.result === "player-victory", enemyHpRatio: enemy.hp / enemy.maxHp };
@@ -143,6 +145,7 @@ async function expedition(state: GameState): Promise<GameState> {
   while (next.activeExpedition) {
     const route = next.activeExpedition.route;
     if (route.status === "completed") {
+      next = recordContractProgress(next, { type: "complete-expedition", targetId: route.zoneId }, content);
       next = finishExpedition(next);
       console.log("Expedition complete. All secured rewards were added to your inventory.");
       break;
@@ -313,14 +316,42 @@ async function manageAppearance(state: GameState): Promise<GameState> {
   return state;
 }
 
+async function manageContracts(state: GameState): Promise<GameState> {
+  console.log("\nContract Board");
+  for (const contract of state.contracts) {
+    const definition = byId(content.contracts, contract.definitionId);
+    console.log(`- ${definition.name} · ${contract.status} · ${contract.progress}/${definition.objective.required}${contract.status === "active" ? ` · expires Day ${contract.expiresOnDay}` : ""}`);
+  }
+  const claimable = state.contracts.filter(({ status }) => status === "complete");
+  const available = content.contracts.filter((definition) => !state.contracts.some(({ definitionId }) => definitionId === definition.id));
+  console.log("1. Accept contract  2. Claim completed contract  3. Back");
+  const action = await askNumber("> ", 1, 3);
+  try {
+    if (action === 1) {
+      if (!available.length) { console.log("No new contracts are currently available."); return state; }
+      available.forEach((definition, index) => console.log(`${index + 1}. ${definition.name} — ${definition.description} Reward: ${definition.reward.crowns} Crowns`));
+      return acceptContract(state, available[(await askNumber("> ", 1, available.length)) - 1]!.id, content);
+    }
+    if (action === 2) {
+      if (!claimable.length) { console.log("No completed contracts are ready to claim."); return state; }
+      claimable.forEach((contract, index) => console.log(`${index + 1}. ${byId(content.contracts, contract.definitionId).name}`));
+      const selected = claimable[(await askNumber("> ", 1, claimable.length)) - 1]!;
+      const definition = byId(content.contracts, selected.definitionId);
+      console.log(`Claimed ${definition.reward.crowns} Crowns.`);
+      return claimContract(state, selected.definitionId, content);
+    }
+  } catch (error) { console.log(error instanceof Error ? error.message : error); }
+  return state;
+}
+
 async function run(): Promise<void> {
   let state = await exists(savePath) ? await loadGame(savePath, content.contentVersion) : await newGame();
   console.log(`\nWelcome, ${state.player.name}.`);
   while (true) {
     console.log(`\nDay ${state.world.day} · ${state.player.crowns} Crowns · ${state.player.inventory["field-capsule"] ?? 0} Capsules`);
     console.log(`Season: ${state.world.season} · Greenreach weather: ${state.world.weatherByRegion.greenreach ?? "unknown"}`);
-    console.log("1. Expedition  2. View roster  3. End day  4. Sell a monster  5. Homebase  6. Equipment  7. Appearance  8. Save and quit");
-    const action = await askNumber("> ", 1, 8);
+    console.log("1. Expedition  2. View roster  3. End day  4. Sell a monster  5. Homebase  6. Equipment  7. Appearance  8. Contracts  9. Save and quit");
+    const action = await askNumber("> ", 1, 9);
     if (action === 1) state = await expedition(state);
     if (action === 2) roster(state);
     if (action === 3) {
@@ -336,8 +367,9 @@ async function run(): Promise<void> {
     if (action === 5) state = await manageHomebase(state);
     if (action === 6) state = await manageEquipment(state);
     if (action === 7) state = await manageAppearance(state);
+    if (action === 8) state = await manageContracts(state);
     await saveGame(savePath, state);
-    if (action === 8) break;
+    if (action === 9) break;
   }
 }
 

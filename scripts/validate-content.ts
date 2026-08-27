@@ -3,7 +3,7 @@ import { content } from "../src/content/index.ts";
 
 const errors: string[] = [];
 const idPattern = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
-const groups = [content.species, content.traits, content.skills, content.statuses, content.passives, content.synergies, content.equipment, content.evolutions, content.regions, content.zones, content.hazards, content.buildings];
+const groups = [content.species, content.traits, content.skills, content.statuses, content.passives, content.synergies, content.equipment, content.evolutions, content.regions, content.zones, content.hazards, content.buildings, content.contracts];
 const allIds = new Set<string>();
 
 for (const group of groups) {
@@ -57,6 +57,11 @@ for (const zone of content.zones) {
 for (const hazard of content.hazards) {
   for (const type of hazard.protectedTypes ?? []) if (!GAME_TYPES.includes(type)) errors.push(`${hazard.id}: unknown protected type ${type}`);
   if (hazard.riskReduction < 0 || hazard.riskReduction > 0.25) errors.push(`${hazard.id}: risk reduction must be between 0 and 25%`);
+}
+for (const contract of content.contracts) {
+  if (contract.objective.required < 1 || contract.durationDays < 1 || contract.reward.crowns < 0) errors.push(`${contract.id}: invalid objective, duration, or reward`);
+  if (contract.objective.event === "capture-species" && contract.objective.targetId && !speciesIds.has(contract.objective.targetId)) errors.push(`${contract.id}: unknown target species ${contract.objective.targetId}`);
+  if (contract.objective.event === "complete-expedition" && contract.objective.targetId && !zoneIds.has(contract.objective.targetId)) errors.push(`${contract.id}: unknown target zone ${contract.objective.targetId}`);
 }
 
 if (errors.length) {

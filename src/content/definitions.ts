@@ -105,6 +105,16 @@ export interface BuildingDefinition {
   capability: "breeding" | "healing" | "storage" | "research" | "production" | "expedition";
 }
 
+export type ContractEventType = "capture-species" | "complete-expedition" | "defeat-boss" | "sell-monster";
+export interface ContractDefinition {
+  id: string;
+  name: string;
+  description: string;
+  objective: { event: ContractEventType; targetId?: string; required: number };
+  durationDays: number;
+  reward: { crowns: number; reputation?: number; items?: Readonly<Record<string, number>> };
+}
+
 export interface GameContent {
   contentVersion: number;
   species: readonly SpeciesDefinition[];
@@ -119,4 +129,5 @@ export interface GameContent {
   zones: readonly ZoneDefinition[];
   hazards: readonly HazardDefinition[];
   buildings: readonly BuildingDefinition[];
+  contracts: readonly ContractDefinition[];
 }

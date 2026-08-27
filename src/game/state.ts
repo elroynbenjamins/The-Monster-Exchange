@@ -3,7 +3,7 @@ import type { MarketState } from "../systems/market.ts";
 import type { MonsterIndividual } from "../core/types.ts";
 import type { ExpeditionState } from "../systems/exploration.ts";
 
-export const SAVE_VERSION = 5;
+export const SAVE_VERSION = 6;
 
 export type ThemePreference = "system" | "light" | "dark";
 export interface UiPreferences { theme: ThemePreference; reducedMotion: boolean }
@@ -50,6 +50,14 @@ export interface BreedingJob {
   status: "active" | "ready";
 }
 
+export interface ContractState {
+  definitionId: string;
+  acceptedOnDay: number;
+  expiresOnDay: number;
+  progress: number;
+  status: "active" | "complete" | "claimed" | "expired";
+}
+
 export interface GameState {
   saveVersion: number;
   contentVersion: number;
@@ -62,6 +70,7 @@ export interface GameState {
   homebase: HomebaseState;
   breedingJobs: readonly BreedingJob[];
   uiPreferences: UiPreferences;
+  contracts: readonly ContractState[];
 }
 
 export function createNewGame(playerName: string, seed: number, contentVersion: number): GameState {
@@ -82,6 +91,7 @@ export function createNewGame(playerName: string, seed: number, contentVersion: 
     homebase: { slotCount: 3, buildings: [], resources: { timber: 50, stone: 25, herbs: 5 } },
     breedingJobs: [],
     uiPreferences: { theme: "system", reducedMotion: false },
+    contracts: [],
   };
 }
 

@@ -23,6 +23,7 @@ function migrateSave(raw: GameState & { saveVersion: number }): GameState {
   if (migrated.saveVersion === 4) {
     migrated = { ...migrated, saveVersion: 5, uiPreferences: { theme: "system", reducedMotion: false } };
   }
+  if (migrated.saveVersion === 5) migrated = { ...migrated, saveVersion: 6, contracts: [] };
   return migrated;
 }
 
