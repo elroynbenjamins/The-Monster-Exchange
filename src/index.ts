@@ -21,3 +21,4 @@ export * from "./game/commands.ts";
 export * from "./game/world-tick.ts";
 export * from "./game/contracts.ts";
 export * from "./ui/theme.ts";
+export * from "./config/app.ts";

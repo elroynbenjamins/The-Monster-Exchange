@@ -1,0 +1,11 @@
+{
+  "name": "The Monster Exchange",
+  "slug": "the-monster-exchange",
+  "packageId": "com.elroybenjamins.themonsterexchange",
+  "android": {
+    "applicationId": "com.elroybenjamins.themonsterexchange"
+  },
+  "ios": {
+    "bundleIdentifier": "com.elroybenjamins.themonsterexchange"
+  }
+}
