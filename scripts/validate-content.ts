@@ -3,7 +3,7 @@ import { content } from "../src/content/index.ts";
 
 const errors: string[] = [];
 const idPattern = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
-const groups = [content.species, content.traits, content.skills, content.statuses, content.passives, content.synergies, content.evolutions, content.regions, content.zones, content.buildings];
+const groups = [content.species, content.traits, content.skills, content.statuses, content.passives, content.synergies, content.equipment, content.evolutions, content.regions, content.zones, content.buildings];
 const allIds = new Set<string>();
 
 for (const group of groups) {
@@ -39,6 +39,11 @@ for (const synergy of content.synergies) {
   for (const type of Object.keys(synergy.requiredTypes ?? {})) if (!GAME_TYPES.includes(type as (typeof GAME_TYPES)[number])) errors.push(`${synergy.id}: unknown required type ${type}`);
   const totalStatBonus = Object.values(synergy.statModifiers ?? {}).reduce((sum, value) => sum + (value ?? 0), 0);
   if (totalStatBonus > 0.15) errors.push(`${synergy.id}: individual synergy stat bonuses exceed the 15% cap`);
+}
+for (const equipment of content.equipment) {
+  for (const modifier of Object.values(equipment.statModifiers ?? {})) if (Math.abs(modifier ?? 0) > 0.25) errors.push(`${equipment.id}: stat modifier exceeds 25%`);
+  if ((equipment.expeditionStaminaModifier ?? 0) < -0.5 || (equipment.expeditionStaminaModifier ?? 0) > 0) errors.push(`${equipment.id}: expedition stamina modifier must be between -50% and 0`);
+  if ((equipment.captureBonus ?? 0) < 0 || (equipment.captureBonus ?? 0) > 0.2) errors.push(`${equipment.id}: capture bonus must be between 0 and 20%`);
 }
 for (const region of content.regions) for (const id of region.zoneIds) if (!zoneIds.has(id)) errors.push(`${region.id}: unknown zone ${id}`);
 for (const zone of content.zones) for (const entry of zone.speciesPool) if (!speciesIds.has(entry.speciesId)) errors.push(`${zone.id}: unknown species ${entry.speciesId}`);

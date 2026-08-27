@@ -25,6 +25,44 @@ export function equipMonsterSkills(state: GameState, monsterId: string, skillIds
   return { ...state, monsters: { ...state.monsters, [monsterId]: { ...monster, equippedSkillIds: [...skillIds] } } };
 }
 
+export function equipMonsterItems(state: GameState, monsterId: string, equipmentIds: readonly string[], content: GameContent): GameState {
+  const monster = state.monsters[monsterId];
+  if (!monster || monster.ownerId !== state.player.id) throw new Error("You do not own this monster.");
+  if (state.activeExpedition?.route.teamIds.includes(monsterId)) throw new Error("Equipment cannot change during an expedition.");
+  if (equipmentIds.length > 2 || new Set(equipmentIds).size !== equipmentIds.length) throw new Error("Equip up to two different items.");
+  if (equipmentIds.some((id) => !content.equipment.some((item) => item.id === id))) throw new Error("Unknown equipment item.");
+  const current = monster.equipmentIds ?? [];
+  const available = { ...state.player.inventory };
+  for (const id of current) available[id] = (available[id] ?? 0) + 1;
+  for (const id of equipmentIds) {
+    if ((available[id] ?? 0) < 1) throw new Error(`Equipment not available: ${id}.`);
+    available[id] = (available[id] ?? 0) - 1;
+  }
+  return {
+    ...state,
+    player: { ...state.player, inventory: available },
+    monsters: { ...state.monsters, [monsterId]: { ...monster, equipmentIds: [...equipmentIds] } },
+  };
+}
+
+export function activeTeamCaptureBonus(state: GameState, content: GameContent): number {
+  return Math.min(0.2, state.player.activeTeamIds.reduce((sum, monsterId) => {
+    const monster = state.monsters[monsterId];
+    return sum + (monster?.equipmentIds ?? []).reduce((itemSum, id) => itemSum + (content.equipment.find((item) => item.id === id)?.captureBonus ?? 0), 0);
+  }, 0));
+}
+
+const RESEARCH_THRESHOLDS = [0, 10, 30, 65, 110, 170] as const;
+
+export function recordSpeciesResearch(state: GameState, speciesId: string, points: number): GameState {
+  if (points < 0) throw new Error("Research points cannot be negative.");
+  const current = state.player.researchBySpecies[speciesId] ?? { level: 0, points: 0 };
+  const total = current.points + points;
+  let level = 0;
+  for (let index = 0; index < RESEARCH_THRESHOLDS.length; index++) if (total >= RESEARCH_THRESHOLDS[index]!) level = index;
+  return { ...state, player: { ...state.player, researchBySpecies: { ...state.player.researchBySpecies, [speciesId]: { level, points: total } } } };
+}
+
 export function xpForNextLevel(level: number): number { return 60 + level * level * 12; }
 
 export function grantMonsterXp(state: GameState, monsterId: string, amount: number, content: GameContent): { state: GameState; levelsGained: number; learnedSkillIds: readonly string[] } {

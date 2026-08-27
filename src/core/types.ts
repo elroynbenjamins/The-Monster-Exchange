@@ -53,6 +53,7 @@ export interface MonsterIndividual {
   fame: number;
   wins: number;
   losses: number;
+  equipmentIds?: readonly string[];
 }
 
 export interface DomainEvent<T = unknown> {

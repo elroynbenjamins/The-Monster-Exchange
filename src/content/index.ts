@@ -37,6 +37,14 @@ export const content: GameContent = {
     { id: "grounded-circuit", name: "Grounded Circuit", minimumMembers: 2, requiredTypes: { electric: 1, ground: 1 }, statModifiers: { energy: 0.05 }, displayText: "An Electric and Ground formation gains +5% Energy." },
     { id: "toxic-canopy", name: "Toxic Canopy", minimumMembers: 2, requiredTypes: { grass: 1, poison: 1 }, teamShieldPercent: 0.04, displayText: "A Grass and Poison formation begins with a 4% HP shield." },
   ],
+  equipment: [
+    { id: "training-band", name: "Training Band", statModifiers: { attack: 0.08 }, description: "A weighted band that improves Attack." },
+    { id: "guard-plate", name: "Guard Plate", statModifiers: { defense: 0.1, speed: -0.04 }, description: "Protective plating that trades a little Speed for Defense." },
+    { id: "vital-charm", name: "Vital Charm", statModifiers: { hp: 0.1 }, description: "A stabilizing charm that raises maximum HP." },
+    { id: "focus-coil", name: "Focus Coil", statModifiers: { energy: 0.1 }, description: "A conductive coil that increases battle Energy." },
+    { id: "trail-harness", name: "Trail Harness", expeditionStaminaModifier: -0.15, description: "A balanced harness that reduces expedition Stamina use." },
+    { id: "capture-lens", name: "Capture Lens", captureBonus: 0.08, description: "A field lens that improves capture calibration." },
+  ],
   species: [
     {
       id: "mossveil", name: "Mossveil", types: ["grass", "poison"], tags: ["plantlike", "mollusk"], rarity: "common",

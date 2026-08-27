@@ -29,7 +29,7 @@ export function breed(a: MonsterIndividual, b: MonsterIndividual, speciesA: Spec
       genes, potential: calculatePotential(genes, childSpecies.geneCaps), traitIds, knownSkillIds,
       equippedSkillIds: knownSkillIds.slice(0, 3), ownerId, bornOnDay: day,
       lineage: { parentIds: [a.id, b.id], generation: Math.max(a.lineage.generation, b.lineage.generation) + 1 },
-      variantId: "base", fame: 0, wins: 0, losses: 0,
+      variantId: "base", fame: 0, wins: 0, losses: 0, equipmentIds: [],
     },
     inheritedFrom: Object.fromEntries(knownSkillIds.map((skill) => [skill, a.knownSkillIds.includes(skill) ? a.id : b.id])),
   };

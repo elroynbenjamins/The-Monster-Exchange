@@ -18,6 +18,6 @@ export function createMonster(species: SpeciesDefinition, rng: RandomSource, opt
     id: createId("mon", rng), speciesId: species.id, sex: rng.pick(["female", "male"] as const),
     level: options.level ?? 1, xp: 0, genes, potential: calculatePotential(genes, species.geneCaps),
     traitIds, knownSkillIds, equippedSkillIds: knownSkillIds.slice(0, 3), ownerId: options.ownerId,
-    bornOnDay: options.day, lineage: { parentIds: [], generation: 0 }, variantId: "base", fame: 0, wins: 0, losses: 0,
+    bornOnDay: options.day, lineage: { parentIds: [], generation: 0 }, variantId: "base", fame: 0, wins: 0, losses: 0, equipmentIds: [],
   };
 }

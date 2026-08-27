@@ -1,18 +1,19 @@
 import type { GameType, MonsterIndividual, SpeciesDefinition, Stats } from "../core/types.ts";
-import type { TraitDefinition } from "../content/definitions.ts";
+import type { EquipmentDefinition, TraitDefinition } from "../content/definitions.ts";
 
 export interface CombatantState { monsterId: string; stats: Stats; hp: number; energy: number; nextActionAt: number; statuses: readonly string[] }
 
-export function calculateCombatStats(monster: MonsterIndividual, species: SpeciesDefinition, traits: readonly TraitDefinition[]): Stats {
+export function calculateCombatStats(monster: MonsterIndividual, species: SpeciesDefinition, traits: readonly TraitDefinition[], equipment: readonly EquipmentDefinition[] = []): Stats {
   const growth = 1 + (monster.level - 1) * 0.035;
   const gene = (id: "hp" | "attack" | "defense" | "speed") => 1 + monster.genes[id] / species.geneCaps[id] * 0.2;
   const modifier = (id: keyof Stats) => 1 + monster.traitIds.reduce((sum, traitId) => sum + (traits.find((trait) => trait.id === traitId)?.statModifiers?.[id] ?? 0), 0);
+  const equipmentModifier = (id: keyof Stats) => 1 + (monster.equipmentIds ?? []).reduce((sum, equipmentId) => sum + (equipment.find((item) => item.id === equipmentId)?.statModifiers?.[id] ?? 0), 0);
   return {
-    hp: Math.round(species.baseStats.hp * growth * gene("hp") * modifier("hp")),
-    attack: Math.round(species.baseStats.attack * growth * gene("attack") * modifier("attack")),
-    defense: Math.round(species.baseStats.defense * growth * gene("defense") * modifier("defense")),
-    speed: Math.round(species.baseStats.speed * growth * gene("speed") * modifier("speed")),
-    energy: Math.round(species.baseStats.energy * modifier("energy")),
+    hp: Math.round(species.baseStats.hp * growth * gene("hp") * modifier("hp") * equipmentModifier("hp")),
+    attack: Math.round(species.baseStats.attack * growth * gene("attack") * modifier("attack") * equipmentModifier("attack")),
+    defense: Math.round(species.baseStats.defense * growth * gene("defense") * modifier("defense") * equipmentModifier("defense")),
+    speed: Math.round(species.baseStats.speed * growth * gene("speed") * modifier("speed") * equipmentModifier("speed")),
+    energy: Math.round(species.baseStats.energy * modifier("energy") * equipmentModifier("energy")),
   };
 }
 
@@ -48,7 +49,7 @@ export function calculateDamage(power: number, attacker: CombatantState, defende
   return Math.max(1, Math.round(power * (attacker.stats.attack / 50) * mitigation * multiplier));
 }
 
-export function createCombatant(monster: MonsterIndividual, species: SpeciesDefinition, traits: readonly TraitDefinition[]): CombatantState {
-  const stats = calculateCombatStats(monster, species, traits);
+export function createCombatant(monster: MonsterIndividual, species: SpeciesDefinition, traits: readonly TraitDefinition[], equipment: readonly EquipmentDefinition[] = []): CombatantState {
+  const stats = calculateCombatStats(monster, species, traits, equipment);
   return { monsterId: monster.id, stats, hp: stats.hp, energy: stats.energy, nextActionAt: 1000 / Math.max(1, stats.speed), statuses: [] };
 }

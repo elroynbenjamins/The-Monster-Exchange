@@ -17,7 +17,7 @@ npm run play
 
 `npm run play` starts the terminal-based development client. It creates an autosave under `.local/`, lets you choose a partner, run or resume multi-node Greenreach expeditions, manage health and stamina, capture wild individuals, secure or risk route rewards, list monsters for sale, and advance the living market by resting. The terminal is a temporary development client, not the intended final interface.
 
-The client also exposes the first homebase management loop: construct and upgrade facilities, deposit gathered resources, start breeding jobs, end days to advance construction and recovery, and claim offspring when their Nest timer completes.
+The client also exposes the first homebase management loop: construct and upgrade facilities, deposit gathered resources, start breeding jobs, end days to advance construction and recovery, and claim offspring when their Nest timer completes. Fixed, data-driven equipment can be assigned to two monster slots and affects combat, expedition endurance, or capture work. Species research earned from battles and captures gradually narrows potential estimates and eventually reveals traits and exact potential.
 
 ## Architecture
 
@@ -48,8 +48,8 @@ Systems accept state and return new state or explicit events. They do not know a
 ## Roadmap
 
 1. **Foundation (complete)** — definitions, deterministic generation, lineage-aware breeding, evolution eligibility, market ticks, buildings, expeditions, and timeline combat primitives.
-2. **Playable loop (in progress)** — versioned/migrated autosaves, inventory/currency, resumable expedition nodes, health/stamina, retreat/defeat, capture, marketplace purchases/player selling, NPC listings, roster commands, timed breeding, evolution, and homebase construction/upgrades are connected. Next: richer node choices and a visual client.
-3. **Combat depth (in progress)** — deterministic speed-timeline battles now support the complete centralized 18-type chart, three active/two reserve teams, action-cost switching, Energy, cooldowns, data-defined stackable statuses, damage-over-time, control, healing, cleansing, shields, species passives, capped team synergies, Wet/Electric and other status combinations, weighted AI, XP, reputation, fame, and persistent battle records. Next: equipment, manual reserve replacement, boss triggers, and battle rewards beyond XP.
+2. **Playable loop (in progress)** — versioned/migrated autosaves, inventory/currency, resumable expedition nodes, health/stamina, retreat/defeat, capture, marketplace purchases/player selling, NPC listings, roster commands, equipment loadouts, species research, timed breeding, evolution, and homebase construction/upgrades are connected. Next: richer node choices, research-facility bonuses, and a visual client.
+3. **Combat depth (in progress)** — deterministic speed-timeline battles now support the complete centralized 18-type chart, three active/two reserve teams, action-cost switching, Energy, cooldowns, data-defined stackable statuses, damage-over-time, control, healing, cleansing, shields, fixed equipment, species passives, capped team synergies, Wet/Electric and other status combinations, weighted AI, XP, reputation, fame, and persistent battle records. Next: manual reserve replacement, boss triggers, and battle rewards beyond XP.
 4. **Living world (foundation in progress)** — one coordinated day tick now advances recovery, construction, breeding, listing expiry/sales, NPC listings, regional weather, seasons, and species populations. Next: persistent NPC portfolios, rival/friend progression, tournaments, contracts, and market news.
 5. **Content pipeline** — JSON import/export, schema versioning/migrations, editor tooling, localization, balance simulations, and pixel-art integration.
 6. **Production client** — choose the rendering shell after the simulation loop is proven; add audio, accessibility, tutorials, telemetry, packaging, and save migration tests.

@@ -3,9 +3,9 @@ import { createInterface } from "node:readline/promises";
 import { stdin as input, stdout as output } from "node:process";
 import { join } from "node:path";
 import {
-  SeededRandom, addMonsterToPlayer, appraiseMonster, attemptCapture, byId, changeInventory, content, createMonster,
+  SeededRandom, activeTeamCaptureBonus, addMonsterToPlayer, appraiseMonster, attemptCapture, byId, changeInventory, content, createMonster,
   advanceWorldDay, applyBattleAction, chooseAiAction, claimBreedingJob, constructBuilding, createBattle, createNewGame, depositHomebaseResource, finishExpedition, generateWildEncounter, listPlayerMonster, loadGame, nextActor, resolveExpeditionNode,
-  saveGame, settleBattleProgression, startBreeding, startExpeditionRun, upgradeBuilding, type GameState,
+  equipMonsterItems, recordSpeciesResearch, saveGame, settleBattleProgression, startBreeding, startExpeditionRun, upgradeBuilding, type GameState,
   validActions, type BattleAction, type WildEncounter,
 } from "./index.ts";
 
@@ -30,7 +30,9 @@ function roster(state: GameState): void {
     const monster = state.monsters[id]!;
     const species = byId(content.species, monster.speciesId);
     const condition = state.conditions[id] ?? { hpRatio: 1, stamina: 100 };
-    console.log(`- ${monster.nickname ?? species.name} · Lv.${monster.level} · Potential ${monster.potential} · HP ${Math.round(condition.hpRatio * 100)}% · Stamina ${condition.stamina}`);
+    const equipment = (monster.equipmentIds ?? []).map((itemId) => byId(content.equipment, itemId).name).join(", ") || "none";
+    const research = state.player.researchBySpecies[species.id] ?? { level: 0, points: 0 };
+    console.log(`- ${monster.nickname ?? species.name} · Lv.${monster.level} · Potential ${monster.potential} · HP ${Math.round(condition.hpRatio * 100)}% · Stamina ${condition.stamina} · Gear ${equipment} · Research Lv.${research.level}`);
   }
 }
 
@@ -50,15 +52,17 @@ async function newGame(): Promise<GameState> {
 
 async function captureAfterEncounter(state: GameState, rng: SeededRandom, encounter: WildEncounter, remainingHp: number): Promise<GameState> {
   console.log(`\nThe encounter included a Lv.${encounter.monster.level} ${encounter.species.name}, now at ${Math.round(remainingHp * 100)}% HP.`);
-  console.log(`Estimated Potential: ${encounter.estimatedPotential[0]}–${encounter.estimatedPotential[1]}`);
+  console.log(encounter.exactPotential === undefined ? `Estimated Potential: ${encounter.estimatedPotential[0]}–${encounter.estimatedPotential[1]}` : `Known Potential: ${encounter.exactPotential}`);
+  if (encounter.revealedTraitIds.length) console.log(`Observed traits: ${encounter.revealedTraitIds.map((id) => byId(content.traits, id).name).join(", ") || "none"}`);
   let next = { ...state, world: { ...state.world, nextRandomOffset: state.world.nextRandomOffset + 1 } };
   if ((next.player.inventory["field-capsule"] ?? 0) < 1) { console.log("You have no Field Capsules."); return next; }
   console.log("1. Use a Field Capsule  2. Leave it behind");
   if (await askNumber("> ", 1, 2) === 1) {
     next = changeInventory(next, "field-capsule", -1);
-    const result = attemptCapture(encounter, remainingHp, rng);
+    const result = attemptCapture(encounter, remainingHp, rng, activeTeamCaptureBonus(next, content));
     if (result.captured) {
       next = addMonsterToPlayer(next, encounter.monster, next.player.activeTeamIds.length < 5);
+      next = recordSpeciesResearch(next, encounter.species.id, 8);
       console.log(`Captured ${encounter.species.name}! Its true Potential is ${encounter.monster.potential}.`);
     } else console.log(`${encounter.species.name} escaped the capsule.`);
   }
@@ -76,7 +80,8 @@ function actionLabel(action: BattleAction, state: ReturnType<typeof createBattle
 
 async function wildBattle(state: GameState, rng: SeededRandom): Promise<{ state: GameState; encounter: WildEncounter; won: boolean; enemyHpRatio: number }> {
   const zone = byId(content.zones, state.activeExpedition!.route.zoneId);
-  const encounter = generateWildEncounter(zone, content.species, rng, state.world.day);
+  const researchLevels = Object.fromEntries(Object.entries(state.player.researchBySpecies).map(([id, research]) => [id, research.level]));
+  const encounter = generateWildEncounter(zone, content.species, rng, state.world.day, researchLevels);
   const playerMonsters = state.activeExpedition!.route.teamIds.slice(0, 3).map((id) => state.monsters[id]!).filter(Boolean);
   let battle = createBattle(playerMonsters, [encounter.monster], content, Object.fromEntries(playerMonsters.map((monster) => [monster.id, state.conditions[monster.id]?.hpRatio ?? 1])));
   console.log(`\nBattle: ${encounter.species.name} Lv.${encounter.monster.level}`);
@@ -110,9 +115,10 @@ async function wildBattle(state: GameState, rng: SeededRandom): Promise<{ state:
   }
   const enemy = battle.units.find(({ side }) => side === "enemy")!;
   const progression = settleBattleProgression({ ...state, conditions }, battle, content);
+  const progressedState = battle.result === "player-victory" ? recordSpeciesResearch(progression.state, encounter.species.id, 3) : progression.state;
   console.log(battle.result === "player-victory" ? "Victory!" : "Your expedition team was defeated.");
   if (battle.result === "player-victory") console.log(`Participating monsters gain ${progression.xpAwarded} XP; reserves gain 25%.`);
-  return { state: progression.state, encounter, won: battle.result === "player-victory", enemyHpRatio: enemy.hp / enemy.maxHp };
+  return { state: progressedState, encounter, won: battle.result === "player-victory", enemyHpRatio: enemy.hp / enemy.maxHp };
 }
 
 async function expedition(state: GameState): Promise<GameState> {
@@ -146,7 +152,7 @@ async function expedition(state: GameState): Promise<GameState> {
       }
       next = await captureAfterEncounter(next, rng, battle.encounter, Math.max(0.05, battle.enemyHpRatio));
     }
-    const outcome = resolveExpeditionNode(next, rng);
+    const outcome = resolveExpeditionNode(next, rng, content.equipment);
     next = outcome.state;
     console.log(outcome.event.payload.message);
     await saveGame(savePath, next);
@@ -168,6 +174,28 @@ async function sellMonster(state: GameState): Promise<GameState> {
   try {
     return listPlayerMonster(state, selectedId, price, 3, new SeededRandom(state.world.seed + state.world.nextRandomOffset + 500));
   } catch (error) { console.log(error instanceof Error ? error.message : error); return state; }
+}
+
+async function manageEquipment(state: GameState): Promise<GameState> {
+  if (state.activeExpedition) { console.log("Equipment cannot change during an expedition."); return state; }
+  roster(state);
+  console.log("\nChoose a monster:");
+  state.player.monsterIds.forEach((id, index) => console.log(`${index + 1}. ${byId(content.species, state.monsters[id]!.speciesId).name}`));
+  const monsterId = state.player.monsterIds[(await askNumber("> ", 1, state.player.monsterIds.length)) - 1]!;
+  console.log("1. Unequip all  2. Equip one item  3. Equip two items  4. Back");
+  const action = await askNumber("> ", 1, 4);
+  if (action === 4) return state;
+  if (action === 1) return equipMonsterItems(state, monsterId, [], content);
+  const monster = state.monsters[monsterId]!;
+  const available = content.equipment.filter(({ id }) => (state.player.inventory[id] ?? 0) > 0 || (monster.equipmentIds ?? []).includes(id));
+  if (available.length < action - 1) { console.log("You do not have enough different equipment items."); return state; }
+  available.forEach((item, index) => console.log(`${index + 1}. ${item.name} — ${item.description}`));
+  const first = available[(await askNumber("First item: ", 1, available.length)) - 1]!.id;
+  if (action === 2) return equipMonsterItems(state, monsterId, [first], content);
+  const secondOptions = available.filter(({ id }) => id !== first);
+  secondOptions.forEach((item, index) => console.log(`${index + 1}. ${item.name}`));
+  const second = secondOptions[(await askNumber("Second item: ", 1, secondOptions.length)) - 1]!.id;
+  return equipMonsterItems(state, monsterId, [first, second], content);
 }
 
 async function manageBreeding(state: GameState): Promise<GameState> {
@@ -229,8 +257,8 @@ async function run(): Promise<void> {
   while (true) {
     console.log(`\nDay ${state.world.day} · ${state.player.crowns} Crowns · ${state.player.inventory["field-capsule"] ?? 0} Capsules`);
     console.log(`Season: ${state.world.season} · Greenreach weather: ${state.world.weatherByRegion.greenreach ?? "unknown"}`);
-    console.log("1. Expedition  2. View roster  3. End day  4. Sell a monster  5. Homebase  6. Save and quit");
-    const action = await askNumber("> ", 1, 6);
+    console.log("1. Expedition  2. View roster  3. End day  4. Sell a monster  5. Homebase  6. Equipment  7. Save and quit");
+    const action = await askNumber("> ", 1, 7);
     if (action === 1) state = await expedition(state);
     if (action === 2) roster(state);
     if (action === 3) {
@@ -244,8 +272,9 @@ async function run(): Promise<void> {
     }
     if (action === 4) state = await sellMonster(state);
     if (action === 5) state = await manageHomebase(state);
+    if (action === 6) state = await manageEquipment(state);
     await saveGame(savePath, state);
-    if (action === 6) break;
+    if (action === 7) break;
   }
 }
 

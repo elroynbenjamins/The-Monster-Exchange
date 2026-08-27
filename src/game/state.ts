@@ -3,7 +3,9 @@ import type { MarketState } from "../systems/market.ts";
 import type { MonsterIndividual } from "../core/types.ts";
 import type { ExpeditionState } from "../systems/exploration.ts";
 
-export const SAVE_VERSION = 3;
+export const SAVE_VERSION = 4;
+
+export interface SpeciesResearch { level: number; points: number }
 
 export interface MonsterCondition {
   hpRatio: number;
@@ -24,6 +26,7 @@ export interface PlayerState {
   monsterIds: readonly string[];
   activeTeamIds: readonly string[];
   reputation: number;
+  researchBySpecies: Readonly<Record<string, SpeciesResearch>>;
 }
 
 export interface WorldState {
@@ -65,8 +68,8 @@ export function createNewGame(playerName: string, seed: number, contentVersion: 
     contentVersion,
     player: {
       id: "player", name: trimmedName, crowns: 750,
-      inventory: { "field-capsule": 5, herbs: 5, timber: 50, stone: 25 },
-      monsterIds: [], activeTeamIds: [], reputation: 0,
+      inventory: { "field-capsule": 5, "training-band": 1, "trail-harness": 1, herbs: 5, timber: 50, stone: 25 },
+      monsterIds: [], activeTeamIds: [], reputation: 0, researchBySpecies: {},
     },
     world: { day: 1, seed, nextRandomOffset: 0, unlockedZoneIds: ["greenreach-meadow"], season: "spring", weatherByRegion: { greenreach: "clear", stormpeak: "windy" }, populations: {} },
     monsters: {},

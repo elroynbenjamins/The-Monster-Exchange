@@ -1,6 +1,6 @@
 import type { DomainEvent, GameType, MonsterIndividual, SpeciesDefinition } from "../core/types.ts";
 import type { RandomSource } from "../core/random.ts";
-import type { PassiveDefinition, SkillDefinition, StatusDefinition, SynergyDefinition, TraitDefinition } from "../content/definitions.ts";
+import type { EquipmentDefinition, PassiveDefinition, SkillDefinition, StatusDefinition, SynergyDefinition, TraitDefinition } from "../content/definitions.ts";
 import { calculateDamage, createCombatant, typeMultiplier } from "./combat.ts";
 import { evaluateTeamSynergies, passiveForMonster } from "./team-effects.ts";
 
@@ -55,6 +55,7 @@ export interface BattleContent {
   statuses: readonly StatusDefinition[];
   passives: readonly PassiveDefinition[];
   synergies: readonly SynergyDefinition[];
+  equipment: readonly EquipmentDefinition[];
 }
 
 function refreshTeamStats(units: BattleUnit[], content: BattleContent): Readonly<Record<BattleSide, readonly string[]>> {
@@ -91,7 +92,7 @@ export function createBattle(
   const makeUnits = (monsters: readonly MonsterIndividual[], side: BattleSide): BattleUnit[] => monsters.slice(0, 5).map((monster, index) => {
     const species = content.species.find(({ id }) => id === monster.speciesId);
     if (!species) throw new Error(`Unknown species ${monster.speciesId}.`);
-    const combatant = createCombatant(monster, species, content.traits);
+    const combatant = createCombatant(monster, species, content.traits, content.equipment);
     const ratio = Math.max(0.01, Math.min(1, initialHpRatios[monster.id] ?? 1));
     return {
       id: monster.id, side, monster, species, hp: Math.max(1, Math.round(combatant.stats.hp * ratio)), maxHp: combatant.stats.hp,

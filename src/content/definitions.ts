@@ -54,6 +54,15 @@ export interface SynergyDefinition {
   displayText: string;
 }
 
+export interface EquipmentDefinition {
+  id: string;
+  name: string;
+  statModifiers?: Partial<Record<StatId, number>>;
+  expeditionStaminaModifier?: number;
+  captureBonus?: number;
+  description: string;
+}
+
 export interface EvolutionDefinition {
   id: string;
   fromSpeciesId: string;
@@ -94,6 +103,7 @@ export interface GameContent {
   statuses: readonly StatusDefinition[];
   passives: readonly PassiveDefinition[];
   synergies: readonly SynergyDefinition[];
+  equipment: readonly EquipmentDefinition[];
   evolutions: readonly EvolutionDefinition[];
   regions: readonly RegionDefinition[];
   zones: readonly ZoneDefinition[];

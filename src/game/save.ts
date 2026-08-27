@@ -17,6 +17,9 @@ function migrateSave(raw: GameState & { saveVersion: number }): GameState {
       world: { ...migrated.world, season: "spring", weatherByRegion: { greenreach: "clear", stormpeak: "windy" }, populations: {} },
     };
   }
+  if (migrated.saveVersion === 3) {
+    migrated = { ...migrated, saveVersion: 4, player: { ...migrated.player, researchBySpecies: {} } };
+  }
   return migrated;
 }
 

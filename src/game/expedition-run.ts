@@ -3,7 +3,7 @@ import type { RandomSource } from "../core/random.ts";
 import type { GameState } from "./state.ts";
 import type { ExpeditionNodeType } from "../systems/exploration.ts";
 import { createExpedition, resolveCurrentNode } from "../systems/exploration.ts";
-import type { ZoneDefinition } from "../content/definitions.ts";
+import type { EquipmentDefinition, ZoneDefinition } from "../content/definitions.ts";
 
 export interface NodeOutcome {
   state: GameState;
@@ -19,11 +19,14 @@ export function startExpeditionRun(state: GameState, zone: ZoneDefinition, rng: 
   return { ...state, activeExpedition: { route: createExpedition(zone, state.player.activeTeamIds, rng, nodeCount), startedOnDay: state.world.day, rewards: {} } };
 }
 
-function spendTeamCondition(state: GameState, hpLoss: number, staminaLoss: number): GameState {
+function spendTeamCondition(state: GameState, hpLoss: number, staminaLoss: number, equipment: readonly EquipmentDefinition[]): GameState {
   const conditions = { ...state.conditions };
   for (const id of state.activeExpedition!.route.teamIds) {
     const current = conditions[id] ?? { hpRatio: 1, stamina: 100 };
-    conditions[id] = { hpRatio: Math.max(0, current.hpRatio - hpLoss), stamina: Math.max(0, current.stamina - staminaLoss) };
+    const monster = state.monsters[id];
+    const staminaModifier = (monster?.equipmentIds ?? []).reduce((sum, equipmentId) => sum + (equipment.find(({ id }) => id === equipmentId)?.expeditionStaminaModifier ?? 0), 0);
+    const adjustedStaminaLoss = Math.ceil(staminaLoss * Math.max(0.5, 1 + staminaModifier));
+    conditions[id] = { hpRatio: Math.max(0, current.hpRatio - hpLoss), stamina: Math.max(0, current.stamina - adjustedStaminaLoss) };
   }
   return { ...state, conditions };
 }
@@ -33,7 +36,7 @@ function addReward(state: GameState, itemId: string, amount: number): GameState 
   return { ...state, activeExpedition: { ...expedition, rewards: { ...expedition.rewards, [itemId]: (expedition.rewards[itemId] ?? 0) + amount } } };
 }
 
-export function resolveExpeditionNode(state: GameState, rng: RandomSource): NodeOutcome {
+export function resolveExpeditionNode(state: GameState, rng: RandomSource, equipment: readonly EquipmentDefinition[] = []): NodeOutcome {
   if (!state.activeExpedition) throw new Error("No active expedition.");
   const node = state.activeExpedition.route.nodes[state.activeExpedition.route.currentNode];
   if (!node) throw new Error("The expedition route is complete.");
@@ -41,7 +44,7 @@ export function resolveExpeditionNode(state: GameState, rng: RandomSource): Node
   let message = "";
   switch (node.type) {
     case "encounter": {
-      next = spendTeamCondition(next, 0, rng.int(8, 14));
+      next = spendTeamCondition(next, 0, rng.int(8, 14), equipment);
       next = addReward(next, "crowns", rng.int(25, 60));
       message = "The team clears the encounter and secures its field-contract reward.";
       break;
@@ -49,7 +52,7 @@ export function resolveExpeditionNode(state: GameState, rng: RandomSource): Node
     case "resource": {
       const item = rng.pick(["herbs", "timber", "stone"] as const);
       const amount = rng.int(2, 5);
-      next = spendTeamCondition(next, 0, 5);
+      next = spendTeamCondition(next, 0, 5, equipment);
       next = addReward(next, item, amount);
       message = `The team gathers ${amount} ${item}.`;
       break;
@@ -66,12 +69,12 @@ export function resolveExpeditionNode(state: GameState, rng: RandomSource): Node
     }
     case "choice": {
       const safe = rng.float() < 0.65;
-      next = safe ? addReward(spendTeamCondition(next, 0, 4), "crowns", 45) : spendTeamCondition(next, 0.08, 9);
+      next = safe ? addReward(spendTeamCondition(next, 0, 4, equipment), "crowns", 45) : spendTeamCondition(next, 0.08, 9, equipment);
       message = safe ? "A risky shortcut reveals an abandoned 45-Crown cache." : "The shortcut collapses and injures the team.";
       break;
     }
     case "discovery":
-      next = addReward(spendTeamCondition(next, 0, 3), "research-notes", 1);
+      next = addReward(spendTeamCondition(next, 0, 3, equipment), "research-notes", 1);
       message = "The team records a valuable ecological discovery.";
       break;
   }
