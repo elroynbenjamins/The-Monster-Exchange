@@ -1,7 +1,8 @@
 import type { DomainEvent, GameType, MonsterIndividual, SpeciesDefinition } from "../core/types.ts";
 import type { RandomSource } from "../core/random.ts";
-import type { SkillDefinition, StatusDefinition, TraitDefinition } from "../content/definitions.ts";
+import type { PassiveDefinition, SkillDefinition, StatusDefinition, SynergyDefinition, TraitDefinition } from "../content/definitions.ts";
 import { calculateDamage, createCombatant, typeMultiplier } from "./combat.ts";
+import { evaluateTeamSynergies, passiveForMonster } from "./team-effects.ts";
 
 export type BattleSide = "player" | "enemy";
 export type BattleResult = "player-victory" | "enemy-victory" | "ongoing";
@@ -15,6 +16,11 @@ export interface BattleUnit {
   maxHp: number;
   energy: number;
   maxEnergy: number;
+  baseMaxHp: number;
+  baseMaxEnergy: number;
+  baseAttack: number;
+  baseDefense: number;
+  baseSpeed: number;
   speed: number;
   attack: number;
   defense: number;
@@ -33,6 +39,7 @@ export interface BattleState {
   units: readonly BattleUnit[];
   result: BattleResult;
   events: readonly DomainEvent[];
+  activeSynergies: Readonly<Record<BattleSide, readonly string[]>>;
 }
 
 export type BattleAction =
@@ -46,6 +53,32 @@ export interface BattleContent {
   traits: readonly TraitDefinition[];
   skills: readonly SkillDefinition[];
   statuses: readonly StatusDefinition[];
+  passives: readonly PassiveDefinition[];
+  synergies: readonly SynergyDefinition[];
+}
+
+function refreshTeamStats(units: BattleUnit[], content: BattleContent): Readonly<Record<BattleSide, readonly string[]>> {
+  const activeSynergies = {} as Record<BattleSide, readonly string[]>;
+  for (const side of ["player", "enemy"] as const) {
+    const sideUnits = units.filter((unit) => unit.side === side);
+    const activeMonsters = sideUnits.filter(({ active, hp }) => active && hp > 0).map(({ monster }) => monster);
+    const effects = evaluateTeamSynergies(activeMonsters, content.species, content.synergies);
+    activeSynergies[side] = effects.synergyIds;
+    for (const unit of sideUnits) {
+      const passive = passiveForMonster(unit.monster, content.species, content.passives);
+      const synergy = unit.active && unit.hp > 0 ? effects.statModifiers : {};
+      const oldMaxHp = unit.maxHp || unit.baseMaxHp;
+      const hpRatio = oldMaxHp > 0 ? unit.hp / oldMaxHp : 1;
+      unit.maxHp = Math.max(1, Math.round(unit.baseMaxHp * (1 + (passive.statModifiers?.hp ?? 0) + (synergy.hp ?? 0))));
+      unit.maxEnergy = Math.max(1, Math.round(unit.baseMaxEnergy * (1 + (passive.statModifiers?.energy ?? 0) + (synergy.energy ?? 0))));
+      unit.attack = Math.max(1, Math.round(unit.baseAttack * (1 + (passive.statModifiers?.attack ?? 0) + (synergy.attack ?? 0))));
+      unit.defense = Math.max(1, Math.round(unit.baseDefense * (1 + (passive.statModifiers?.defense ?? 0) + (synergy.defense ?? 0))));
+      unit.speed = Math.max(1, Math.round(unit.baseSpeed * (1 + (passive.statModifiers?.speed ?? 0) + (synergy.speed ?? 0))));
+      unit.hp = Math.min(unit.maxHp, Math.max(unit.hp > 0 ? 1 : 0, Math.round(unit.maxHp * hpRatio)));
+      unit.energy = Math.min(unit.maxEnergy, unit.energy);
+    }
+  }
+  return activeSynergies;
 }
 
 export function createBattle(
@@ -62,12 +95,25 @@ export function createBattle(
     const ratio = Math.max(0.01, Math.min(1, initialHpRatios[monster.id] ?? 1));
     return {
       id: monster.id, side, monster, species, hp: Math.max(1, Math.round(combatant.stats.hp * ratio)), maxHp: combatant.stats.hp,
-      energy: combatant.stats.energy, maxEnergy: combatant.stats.energy, speed: combatant.stats.speed,
+      energy: combatant.stats.energy, maxEnergy: combatant.stats.energy, baseMaxHp: combatant.stats.hp, baseMaxEnergy: combatant.stats.energy,
+      baseAttack: combatant.stats.attack, baseDefense: combatant.stats.defense, baseSpeed: combatant.stats.speed, speed: combatant.stats.speed,
       attack: combatant.stats.attack, defense: combatant.stats.defense, readyAt: combatant.nextActionAt,
       cooldowns: {}, active: index < 3, shield: 0, statuses: [],
     };
   });
-  return { tick: 0, round: 0, units: [...makeUnits(playerMonsters, "player"), ...makeUnits(enemyMonsters, "enemy")], result: "ongoing", events: [] };
+  const units = [...makeUnits(playerMonsters, "player"), ...makeUnits(enemyMonsters, "enemy")];
+  const activeSynergies = refreshTeamStats(units, content);
+  for (const side of ["player", "enemy"] as const) {
+    const active = units.filter((unit) => unit.side === side && unit.active);
+    const teamEffects = evaluateTeamSynergies(active.map(({ monster }) => monster), content.species, content.synergies);
+    const passiveShield = active.reduce((sum, unit) => sum + (passiveForMonster(unit.monster, content.species, content.passives).teamShieldPercent ?? 0), 0);
+    const shieldPercent = Math.min(0.25, teamEffects.teamShieldPercent + passiveShield);
+    for (const unit of active) unit.shield = Math.round(unit.maxHp * shieldPercent);
+  }
+  const synergyEvents: DomainEvent[] = Object.entries(activeSynergies).flatMap(([side, ids]) => ids.map((synergyId) => ({ type: "battle.synergy-activated", day: 0, payload: { side, synergyId } })));
+  const passiveEvents: DomainEvent[] = units.filter(({ active }) => active).map((unit) => ({ type: "battle.passive-activated", day: 0, payload: { side: unit.side, monsterId: unit.id, passiveId: unit.species.passiveId } }));
+  const events = [...synergyEvents, ...passiveEvents];
+  return { tick: 0, round: 0, units, result: "ongoing", events, activeSynergies };
 }
 
 export function nextActor(state: BattleState): BattleUnit | undefined {
@@ -134,7 +180,18 @@ export function applyBattleAction(state: BattleState, action: BattleAction, cont
   for (const targetSnapshot of targets) {
     const target = units.find(({ id }) => id === targetSnapshot.id)!;
     if (power > 0 && target.side !== acting.side) {
-      const multiplier = typeMultiplier(skill?.type ?? acting.species.types[0], target.species.types.filter(Boolean) as GameType[]);
+      const attackType = skill?.type ?? acting.species.types[0];
+      let multiplier = typeMultiplier(attackType, target.species.types.filter(Boolean) as GameType[]);
+      const wet = target.statuses.some(({ id }) => id === "wet");
+      const burning = target.statuses.some(({ id }) => id === "burn");
+      const poison = target.statuses.find(({ id }) => id === "poison");
+      if (wet && attackType === "electric") { multiplier *= 1.15; events.push({ type: "battle.combo-triggered", day, payload: { comboId: "wet-electric", targetId: target.id } }); }
+      if (burning && attackType === "fire") { multiplier *= 1.1; events.push({ type: "battle.combo-triggered", day, payload: { comboId: "burn-fire", targetId: target.id } }); }
+      if (poison && attackType === "bug") {
+        multiplier *= 1.15;
+        target.statuses = poison.stacks > 1 ? target.statuses.map((active) => active.id === "poison" ? { ...active, stacks: active.stacks - 1 } : active) : target.statuses.filter(({ id }) => id !== "poison");
+        events.push({ type: "battle.combo-triggered", day, payload: { comboId: "poison-bug", targetId: target.id } });
+      }
       const attackModifier = acting.statuses.reduce((value, status) => value + (content.statuses.find(({ id }) => id === status.id)?.attackModifier ?? 0) * status.stacks, 1);
       const damage = calculateDamage(power, { monsterId: acting.id, stats: { hp: acting.maxHp, attack: Math.max(1, acting.attack * attackModifier), defense: acting.defense, speed: acting.speed, energy: acting.maxEnergy }, hp: acting.hp, energy: acting.energy, nextActionAt: acting.readyAt, statuses: [] }, { monsterId: target.id, stats: { hp: target.maxHp, attack: target.attack, defense: target.defense, speed: target.speed, energy: target.maxEnergy }, hp: target.hp, energy: target.energy, nextActionAt: target.readyAt, statuses: [] }, multiplier);
       const absorbed = Math.min(target.shield, damage);
@@ -155,7 +212,8 @@ export function applyBattleAction(state: BattleState, action: BattleAction, cont
       events.push({ type: "battle.shielded", day, payload: { actorId: acting.id, targetId: target.id, shield } });
     }
     if (skill?.cleanseCount && target.side === acting.side) target.statuses = target.statuses.slice(skill.cleanseCount);
-    if (skill?.statusId && target.hp > 0 && rng.float() < (skill.statusChance ?? 1)) {
+    const comboStatusBonus = skill?.statusId === "shock" && target.statuses.some(({ id }) => id === "wet") ? 0.25 : 0;
+    if (skill?.statusId && target.hp > 0 && rng.float() < Math.min(1, (skill.statusChance ?? 1) + comboStatusBonus)) {
       const definition = content.statuses.find(({ id }) => id === skill.statusId);
       if (!definition) throw new Error(`Unknown status ${skill.statusId}.`);
       const existing = target.statuses.find(({ id }) => id === skill.statusId);
@@ -192,12 +250,13 @@ export function applyBattleAction(state: BattleState, action: BattleAction, cont
       events.push({ type: "battle.reserve-entered", day, payload: { monsterId: reserve.id } });
     }
   }
+  const activeSynergies = refreshTeamStats(units, content);
   const playerAlive = units.some((unit) => unit.side === "player" && unit.hp > 0);
   const enemyAlive = units.some((unit) => unit.side === "enemy" && unit.hp > 0);
   const result: BattleResult = !enemyAlive ? "player-victory" : !playerAlive ? "enemy-victory" : "ongoing";
   if (result !== "ongoing") events.push({ type: "battle.finished", day, payload: { result } });
   const aliveTimes = units.filter(({ hp }) => hp > 0).map(({ readyAt }) => readyAt);
-  return { tick: aliveTimes.length ? Math.min(...aliveTimes) : state.tick, round: state.round + 1, units, result, events: [...state.events, ...events] };
+  return { tick: aliveTimes.length ? Math.min(...aliveTimes) : state.tick, round: state.round + 1, units, result, events: [...state.events, ...events], activeSynergies };
 }
 
 export function chooseAiAction(state: BattleState, actorId: string, content: BattleContent): BattleAction {

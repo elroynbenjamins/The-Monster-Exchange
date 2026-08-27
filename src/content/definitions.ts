@@ -36,6 +36,24 @@ export interface StatusDefinition {
   breaksOnDamage?: boolean;
 }
 
+export interface PassiveDefinition {
+  id: string;
+  name: string;
+  statModifiers?: Partial<Record<StatId, number>>;
+  teamShieldPercent?: number;
+}
+
+export interface SynergyDefinition {
+  id: string;
+  name: string;
+  minimumMembers: number;
+  requiredTypes?: Partial<Record<GameType, number>>;
+  requiredTags?: Readonly<Record<string, number>>;
+  statModifiers?: Partial<Record<StatId, number>>;
+  teamShieldPercent?: number;
+  displayText: string;
+}
+
 export interface EvolutionDefinition {
   id: string;
   fromSpeciesId: string;
@@ -74,6 +92,8 @@ export interface GameContent {
   traits: readonly TraitDefinition[];
   skills: readonly SkillDefinition[];
   statuses: readonly StatusDefinition[];
+  passives: readonly PassiveDefinition[];
+  synergies: readonly SynergyDefinition[];
   evolutions: readonly EvolutionDefinition[];
   regions: readonly RegionDefinition[];
   zones: readonly ZoneDefinition[];

@@ -3,7 +3,7 @@ import { content } from "../src/content/index.ts";
 
 const errors: string[] = [];
 const idPattern = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
-const groups = [content.species, content.traits, content.skills, content.statuses, content.evolutions, content.regions, content.zones, content.buildings];
+const groups = [content.species, content.traits, content.skills, content.statuses, content.passives, content.synergies, content.evolutions, content.regions, content.zones, content.buildings];
 const allIds = new Set<string>();
 
 for (const group of groups) {
@@ -18,6 +18,7 @@ const speciesIds = new Set(content.species.map(({ id }) => id));
 const traitIds = new Set(content.traits.map(({ id }) => id));
 const skillIds = new Set(content.skills.map(({ id }) => id));
 const statusIds = new Set(content.statuses.map(({ id }) => id));
+const passiveIds = new Set(content.passives.map(({ id }) => id));
 const evolutionIds = new Set(content.evolutions.map(({ id }) => id));
 const zoneIds = new Set(content.zones.map(({ id }) => id));
 
@@ -25,6 +26,7 @@ for (const species of content.species) {
   for (const type of species.types) if (type && !GAME_TYPES.includes(type)) errors.push(`${species.id}: unknown type ${type}`);
   for (const id of species.traitPool) if (!traitIds.has(id)) errors.push(`${species.id}: unknown trait ${id}`);
   for (const id of species.skillPool) if (!skillIds.has(id)) errors.push(`${species.id}: unknown skill ${id}`);
+  if (!passiveIds.has(species.passiveId)) errors.push(`${species.id}: unknown passive ${species.passiveId}`);
   for (const id of species.evolutionIds) if (!evolutionIds.has(id)) errors.push(`${species.id}: unknown evolution ${id}`);
   for (const id of species.habitats) if (!zoneIds.has(id)) errors.push(`${species.id}: unknown habitat ${id}`);
   if (!species.artId.startsWith(`monsters/${species.id}/${species.id}--`)) errors.push(`${species.id}: artId violates asset convention`);
@@ -33,6 +35,11 @@ for (const evolution of content.evolutions) {
   if (!speciesIds.has(evolution.fromSpeciesId) || !speciesIds.has(evolution.toSpeciesId)) errors.push(`${evolution.id}: unknown species reference`);
 }
 for (const skill of content.skills) if (skill.statusId && !statusIds.has(skill.statusId)) errors.push(`${skill.id}: unknown status ${skill.statusId}`);
+for (const synergy of content.synergies) {
+  for (const type of Object.keys(synergy.requiredTypes ?? {})) if (!GAME_TYPES.includes(type as (typeof GAME_TYPES)[number])) errors.push(`${synergy.id}: unknown required type ${type}`);
+  const totalStatBonus = Object.values(synergy.statModifiers ?? {}).reduce((sum, value) => sum + (value ?? 0), 0);
+  if (totalStatBonus > 0.15) errors.push(`${synergy.id}: individual synergy stat bonuses exceed the 15% cap`);
+}
 for (const region of content.regions) for (const id of region.zoneIds) if (!zoneIds.has(id)) errors.push(`${region.id}: unknown zone ${id}`);
 for (const zone of content.zones) for (const entry of zone.speciesPool) if (!speciesIds.has(entry.speciesId)) errors.push(`${zone.id}: unknown species ${entry.speciesId}`);
 

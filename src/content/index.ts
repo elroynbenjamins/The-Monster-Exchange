@@ -26,6 +26,17 @@ export const content: GameContent = {
     { id: "fear", name: "Fear", duration: 2, maxStacks: 1, tick: "after-action", attackModifier: -0.15 },
     { id: "confusion", name: "Confusion", duration: 2, maxStacks: 1, tick: "after-action" },
   ],
+  passives: [
+    { id: "dew-fed", name: "Dew Fed", statModifiers: { defense: 0.08 } },
+    { id: "living-canopy", name: "Living Canopy", teamShieldPercent: 0.06 },
+    { id: "storm-fed", name: "Storm Fed", statModifiers: { speed: 0.08 } },
+  ],
+  synergies: [
+    { id: "pack-instinct", name: "Pack Instinct", minimumMembers: 2, requiredTags: { beast: 2 }, statModifiers: { speed: 0.05 }, displayText: "Two active Beast monsters gain +5% Speed." },
+    { id: "verdant-harmony", name: "Verdant Harmony", minimumMembers: 2, requiredTypes: { grass: 1, fairy: 1 }, statModifiers: { defense: 0.04 }, displayText: "Active Grass and Fairy members gain +4% Defense." },
+    { id: "grounded-circuit", name: "Grounded Circuit", minimumMembers: 2, requiredTypes: { electric: 1, ground: 1 }, statModifiers: { energy: 0.05 }, displayText: "An Electric and Ground formation gains +5% Energy." },
+    { id: "toxic-canopy", name: "Toxic Canopy", minimumMembers: 2, requiredTypes: { grass: 1, poison: 1 }, teamShieldPercent: 0.04, displayText: "A Grass and Poison formation begins with a 4% HP shield." },
+  ],
   species: [
     {
       id: "mossveil", name: "Mossveil", types: ["grass", "poison"], tags: ["plantlike", "mollusk"], rarity: "common",

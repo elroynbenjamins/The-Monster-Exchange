@@ -80,6 +80,8 @@ async function wildBattle(state: GameState, rng: SeededRandom): Promise<{ state:
   const playerMonsters = state.activeExpedition!.route.teamIds.slice(0, 3).map((id) => state.monsters[id]!).filter(Boolean);
   let battle = createBattle(playerMonsters, [encounter.monster], content, Object.fromEntries(playerMonsters.map((monster) => [monster.id, state.conditions[monster.id]?.hpRatio ?? 1])));
   console.log(`\nBattle: ${encounter.species.name} Lv.${encounter.monster.level}`);
+  const synergies = battle.activeSynergies.player.map((id) => byId(content.synergies, id).name);
+  if (synergies.length) console.log(`Active synergies: ${synergies.join(", ")}`);
   while (battle.result === "ongoing") {
     const actor = nextActor(battle)!;
     let action: BattleAction;
