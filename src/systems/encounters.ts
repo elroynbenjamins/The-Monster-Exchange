@@ -11,6 +11,7 @@ export interface WildEncounter {
   researchLevel: number;
   revealedTraitIds: readonly string[];
   exactPotential?: number;
+  isBoss: boolean;
 }
 
 function weightedSpecies(zone: ZoneDefinition, species: readonly SpeciesDefinition[], rng: RandomSource): SpeciesDefinition {
@@ -40,10 +41,32 @@ export function generateWildEncounter(zone: ZoneDefinition, species: readonly Sp
     researchLevel,
     revealedTraitIds: researchLevel >= 4 ? monster.traitIds : [],
     exactPotential: researchLevel >= 5 ? monster.potential : undefined,
+    isBoss: false,
+  };
+}
+
+export function generateBossEncounter(zone: ZoneDefinition, species: readonly SpeciesDefinition[], rng: RandomSource, day: number, research: number | Readonly<Record<string, number>> = 0): WildEncounter {
+  if (!zone.boss) throw new Error(`Zone ${zone.id} has no boss encounter.`);
+  const definition = species.find(({ id }) => id === zone.boss!.speciesId);
+  if (!definition) throw new Error(`Zone ${zone.id} references unknown boss species ${zone.boss.speciesId}.`);
+  const monster = createMonster(definition, rng, { day, level: zone.boss.level, qualityBias: 0.3, ownerId: "wild" });
+  const researchLevel = typeof research === "number" ? research : (research[definition.id] ?? 0);
+  const baseUncertainty = [18, 14, 10, 6, 3, 0][Math.max(0, Math.min(5, researchLevel))]!;
+  const uncertainty = researchLevel >= 5 ? 0 : baseUncertainty + rng.int(0, 4);
+  return {
+    monster,
+    species: definition,
+    estimatedPotential: [Math.max(0, monster.potential - uncertainty), Math.min(100, monster.potential + uncertainty)],
+    captureDifficulty: 1,
+    researchLevel,
+    revealedTraitIds: researchLevel >= 4 ? monster.traitIds : [],
+    exactPotential: researchLevel >= 5 ? monster.potential : undefined,
+    isBoss: true,
   };
 }
 
 export function captureChance(encounter: WildEncounter, remainingHpRatio: number, capsuleBonus = 0): number {
+  if (encounter.isBoss) return 0;
   const weakenedBonus = (1 - Math.max(0, Math.min(1, remainingHpRatio))) * 0.58;
   return Math.max(0.05, Math.min(0.95, 0.42 + weakenedBonus + capsuleBonus - encounter.captureDifficulty));
 }

@@ -50,6 +50,8 @@ for (const region of content.regions) for (const id of region.zoneIds) if (!zone
 for (const zone of content.zones) {
   for (const entry of zone.speciesPool) if (!speciesIds.has(entry.speciesId)) errors.push(`${zone.id}: unknown species ${entry.speciesId}`);
   for (const id of zone.hazards) if (!hazardIds.has(id)) errors.push(`${zone.id}: unknown hazard ${id}`);
+  if (zone.boss && !speciesIds.has(zone.boss.speciesId)) errors.push(`${zone.id}: unknown boss species ${zone.boss.speciesId}`);
+  if (zone.boss && (zone.boss.level < zone.levelRange[1] || zone.boss.rewardCrowns < 1 || zone.boss.researchNotes < 0)) errors.push(`${zone.id}: invalid boss level or rewards`);
 }
 for (const hazard of content.hazards) {
   for (const type of hazard.protectedTypes ?? []) if (!GAME_TYPES.includes(type)) errors.push(`${hazard.id}: unknown protected type ${type}`);

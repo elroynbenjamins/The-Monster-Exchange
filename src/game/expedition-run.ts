@@ -67,7 +67,7 @@ function addReward(state: GameState, itemId: string, amount: number): GameState 
   return { ...state, activeExpedition: { ...expedition, rewards: { ...expedition.rewards, [itemId]: (expedition.rewards[itemId] ?? 0) + amount } } };
 }
 
-export function resolveExpeditionNode(state: GameState, rng: RandomSource, equipment: readonly EquipmentDefinition[] = [], approach: ExpeditionApproach = "balanced", preparationRiskReduction = 0): NodeOutcome {
+export function resolveExpeditionNode(state: GameState, rng: RandomSource, equipment: readonly EquipmentDefinition[] = [], approach: ExpeditionApproach = "balanced", preparationRiskReduction = 0, zone?: ZoneDefinition): NodeOutcome {
   if (!state.activeExpedition) throw new Error("No active expedition.");
   const node = state.activeExpedition.route.nodes[state.activeExpedition.route.currentNode];
   if (!node) throw new Error("The expedition route is complete.");
@@ -81,6 +81,16 @@ export function resolveExpeditionNode(state: GameState, rng: RandomSource, equip
       next = spendTeamCondition(next, 0, reward(rng.int(8, 14)), equipment);
       next = addReward(next, "crowns", reward(rng.int(25, 60)));
       message = "The team clears the encounter and secures its field-contract reward.";
+      break;
+    }
+    case "boss": {
+      const boss = zone?.id === state.activeExpedition.route.zoneId ? zone.boss : undefined;
+      const rewardCrowns = boss?.rewardCrowns ?? 100;
+      const researchNotes = boss?.researchNotes ?? 1;
+      next = spendTeamCondition(next, 0, 15, equipment);
+      next = addReward(next, "crowns", rewardCrowns);
+      next = addReward(next, "research-notes", researchNotes);
+      message = `The alpha is defeated. The Exchange secures a ${rewardCrowns}-Crown boss bounty and ${researchNotes} research ${researchNotes === 1 ? "note" : "notes"}.`;
       break;
     }
     case "resource": {

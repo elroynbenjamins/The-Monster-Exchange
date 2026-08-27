@@ -4,7 +4,7 @@ import { stdin as input, stdout as output } from "node:process";
 import { join } from "node:path";
 import {
   EXPEDITION_APPROACHES, SeededRandom, activeTeamCaptureBonus, addMonsterToPlayer, appraiseMonster, attemptCapture, byId, changeInventory, content, createMonster,
-  advanceWorldDay, applyBattleAction, calculateExpeditionPreparation, chooseAiAction, claimBreedingJob, conductSpeciesStudy, constructBuilding, createBattle, createNewGame, depositHomebaseResource, finishExpedition, gainSpeciesResearch, generateWildEncounter, listPlayerMonster, loadGame, nextActor, resolveExpeditionNode,
+  advanceWorldDay, applyBattleAction, calculateExpeditionPreparation, chooseAiAction, claimBreedingJob, conductSpeciesStudy, constructBuilding, createBattle, createNewGame, depositHomebaseResource, finishExpedition, gainSpeciesResearch, generateBossEncounter, generateWildEncounter, listPlayerMonster, loadGame, nextActor, resolveExpeditionNode,
   equipMonsterItems, researchLabLevel, saveGame, settleBattleProgression, startBreeding, startExpeditionRun, upgradeBuilding, type GameState,
   validActions, type BattleAction, type ExpeditionApproach, type WildEncounter,
 } from "./index.ts";
@@ -78,13 +78,13 @@ function actionLabel(action: BattleAction, state: ReturnType<typeof createBattle
   return `${skill.name} (${skill.energyCost} Energy)${target ? ` → ${target.species.name}` : ""}`;
 }
 
-async function wildBattle(state: GameState, rng: SeededRandom): Promise<{ state: GameState; encounter: WildEncounter; won: boolean; enemyHpRatio: number }> {
+async function wildBattle(state: GameState, rng: SeededRandom, preparedEncounter?: WildEncounter): Promise<{ state: GameState; encounter: WildEncounter; won: boolean; enemyHpRatio: number }> {
   const zone = byId(content.zones, state.activeExpedition!.route.zoneId);
   const researchLevels = Object.fromEntries(Object.entries(state.player.researchBySpecies).map(([id, research]) => [id, research.level]));
-  const encounter = generateWildEncounter(zone, content.species, rng, state.world.day, researchLevels);
+  const encounter = preparedEncounter ?? generateWildEncounter(zone, content.species, rng, state.world.day, researchLevels);
   const playerMonsters = state.activeExpedition!.route.teamIds.slice(0, 3).map((id) => state.monsters[id]!).filter(Boolean);
   let battle = createBattle(playerMonsters, [encounter.monster], content, Object.fromEntries(playerMonsters.map((monster) => [monster.id, state.conditions[monster.id]?.hpRatio ?? 1])));
-  console.log(`\nBattle: ${encounter.species.name} Lv.${encounter.monster.level}`);
+  console.log(`\n${encounter.isBoss ? "ALPHA BATTLE" : "Battle"}: ${encounter.species.name} Lv.${encounter.monster.level}`);
   const synergies = battle.activeSynergies.player.map((id) => byId(content.synergies, id).name);
   if (synergies.length) console.log(`Active synergies: ${synergies.join(", ")}`);
   while (battle.result === "ongoing") {
@@ -115,7 +115,7 @@ async function wildBattle(state: GameState, rng: SeededRandom): Promise<{ state:
   }
   const enemy = battle.units.find(({ side }) => side === "enemy")!;
   const progression = settleBattleProgression({ ...state, conditions }, battle, content);
-  const progressedState = battle.result === "player-victory" ? gainSpeciesResearch(progression.state, encounter.species.id, 3) : progression.state;
+  const progressedState = battle.result === "player-victory" ? gainSpeciesResearch(progression.state, encounter.species.id, encounter.isBoss ? 10 : 3) : progression.state;
   console.log(battle.result === "player-victory" ? "Victory!" : "Your expedition team was defeated.");
   if (battle.result === "player-victory") console.log(`Participating monsters gain ${progression.xpAwarded} XP; reserves gain 25%.`);
   return { state: progressedState, encounter, won: battle.result === "player-victory", enemyHpRatio: enemy.hp / enemy.maxHp };
@@ -149,14 +149,17 @@ async function expedition(state: GameState): Promise<GameState> {
     const choice = await askNumber("> ", 1, 3);
     if (choice === 2) { next = finishExpedition(next, true); console.log("The team retreats safely."); break; }
     if (choice === 3) break;
-    if (node.type === "encounter") {
-      const battle = await wildBattle(next, rng);
+    if (node.type === "encounter" || node.type === "boss") {
+      const researchLevels = Object.fromEntries(Object.entries(next.player.researchBySpecies).map(([id, research]) => [id, research.level]));
+      const bossEncounter = node.type === "boss" ? generateBossEncounter(zone, content.species, rng, next.world.day, researchLevels) : undefined;
+      const battle = await wildBattle(next, rng, bossEncounter);
       next = battle.state;
       if (!battle.won) {
         next = { ...next, activeExpedition: { ...next.activeExpedition!, route: { ...next.activeExpedition!.route, status: "abandoned" } } };
         continue;
       }
-      next = await captureAfterEncounter(next, rng, battle.encounter, Math.max(0.05, battle.enemyHpRatio));
+      if (node.type === "encounter") next = await captureAfterEncounter(next, rng, battle.encounter, Math.max(0.05, battle.enemyHpRatio));
+      else console.log("Alpha monsters are protected research targets and cannot be captured during the boss encounter.");
     }
     let approach: ExpeditionApproach = "balanced";
     if (["resource", "choice", "discovery"].includes(node.type)) {
@@ -164,7 +167,7 @@ async function expedition(state: GameState): Promise<GameState> {
       EXPEDITION_APPROACHES.forEach((option, index) => console.log(`${index + 1}. ${option.name} — ${option.description}`));
       approach = EXPEDITION_APPROACHES[(await askNumber("> ", 1, EXPEDITION_APPROACHES.length)) - 1]!.id;
     }
-    const outcome = resolveExpeditionNode(next, rng, content.equipment, approach, preparation.riskReduction);
+    const outcome = resolveExpeditionNode(next, rng, content.equipment, approach, preparation.riskReduction, zone);
     next = outcome.state;
     console.log(outcome.event.payload.message);
     await saveGame(savePath, next);

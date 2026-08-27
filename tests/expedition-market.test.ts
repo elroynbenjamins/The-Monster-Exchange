@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 import {
-  SeededRandom, addMonsterToPlayer, byId, calculateExpeditionPreparation, content, createMonster, createNewGame, finishExpedition,
+  SeededRandom, addMonsterToPlayer, byId, calculateExpeditionPreparation, captureChance, content, createExpedition, createMonster, createNewGame, finishExpedition, generateBossEncounter,
   listPlayerMonster, resolveExpeditionNode, resolvePlayerListingSales, restTeam, startExpeditionRun,
 } from "../src/index.ts";
 
@@ -60,6 +60,25 @@ test("team types and tags provide data-driven protection from zone hazards", () 
   const preparation = calculateExpeditionPreparation(state, byId(content.zones, "greenreach-meadow"), content.species, content.hazards);
   assert.deepEqual(preparation.protectedHazardIds, ["heavy-rain"]);
   assert.equal(preparation.riskReduction, 0.12);
+});
+
+test("authored bosses occupy the route finale and cannot be captured", () => {
+  const zone = byId(content.zones, "greenreach-meadow");
+  const route = createExpedition(zone, ["mon_a"], new SeededRandom(33), 4);
+  assert.equal(route.nodes.at(-1)?.type, "boss");
+  const boss = generateBossEncounter(zone, content.species, new SeededRandom(34), 1);
+  assert.equal(boss.isBoss, true);
+  assert.equal(boss.monster.level, zone.boss?.level);
+  assert.equal(captureChance(boss, 0.01, 1), 0);
+});
+
+test("boss resolution awards the zone's authored bounty", () => {
+  const zone = byId(content.zones, "greenreach-meadow");
+  const base = startExpeditionRun(gameWithTeam(), zone, new SeededRandom(35), 1);
+  const outcome = resolveExpeditionNode(base, new SeededRandom(36), content.equipment, "balanced", 0, zone);
+  assert.equal(outcome.event.payload.nodeType, "boss");
+  assert.equal(outcome.state.activeExpedition?.rewards.crowns, zone.boss?.rewardCrowns);
+  assert.equal(outcome.state.activeExpedition?.rewards["research-notes"], zone.boss?.researchNotes);
 });
 
 test("rest recovers condition and advances the day", () => {

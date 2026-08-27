@@ -79,9 +79,9 @@ export const content: GameContent = {
     { id: "stormpeak", name: "Stormpeak Isles", types: ["electric", "flying"], zoneIds: ["stormpeak-foothills"] },
   ],
   zones: [
-    { id: "greenreach-meadow", regionId: "greenreach", levelRange: [2, 7], speciesPool: [{ speciesId: "mossveil", weight: 100 }], hazards: ["heavy-rain"], nodeWeights: { encounter: 45, resource: 25, choice: 12, rest: 10, discovery: 8 } },
-    { id: "greenreach-deepwood", regionId: "greenreach", levelRange: [10, 18], speciesPool: [{ speciesId: "mossveil", weight: 80 }, { speciesId: "canopyre", weight: 20 }], hazards: ["toxic-spores"], nodeWeights: { encounter: 50, resource: 18, choice: 15, rest: 7, discovery: 10 } },
-    { id: "stormpeak-foothills", regionId: "stormpeak", levelRange: [8, 14], speciesPool: [{ speciesId: "voltgrazer", weight: 100 }], hazards: ["thunderstorm"], nodeWeights: { encounter: 48, resource: 20, choice: 14, rest: 8, discovery: 10 } },
+    { id: "greenreach-meadow", regionId: "greenreach", levelRange: [2, 7], speciesPool: [{ speciesId: "mossveil", weight: 100 }], hazards: ["heavy-rain"], nodeWeights: { encounter: 45, resource: 25, choice: 12, rest: 10, discovery: 8 }, boss: { speciesId: "mossveil", level: 8, rewardCrowns: 150, researchNotes: 1 } },
+    { id: "greenreach-deepwood", regionId: "greenreach", levelRange: [10, 18], speciesPool: [{ speciesId: "mossveil", weight: 80 }, { speciesId: "canopyre", weight: 20 }], hazards: ["toxic-spores"], nodeWeights: { encounter: 50, resource: 18, choice: 15, rest: 7, discovery: 10 }, boss: { speciesId: "canopyre", level: 20, rewardCrowns: 400, researchNotes: 3 } },
+    { id: "stormpeak-foothills", regionId: "stormpeak", levelRange: [8, 14], speciesPool: [{ speciesId: "voltgrazer", weight: 100 }], hazards: ["thunderstorm"], nodeWeights: { encounter: 48, resource: 20, choice: 14, rest: 8, discovery: 10 }, boss: { speciesId: "voltgrazer", level: 16, rewardCrowns: 300, researchNotes: 2 } },
   ],
   hazards: [
     { id: "heavy-rain", name: "Heavy Rain", protectedTypes: ["water", "grass"], protectedTags: ["amphibious"], riskReduction: 0.12, description: "Water- and Grass-adapted teams navigate flooded ground more safely." },
