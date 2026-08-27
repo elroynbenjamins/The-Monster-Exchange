@@ -4,6 +4,7 @@ import {
   SeededRandom, addMonsterToPlayer, advanceWorldDay, byId, claimBreedingJob, constructBuilding, content,
   createMonster, createNewGame, depositHomebaseResource, equipMonsterSkills, evolveOwnedMonster,
   grantMonsterXp, setActiveTeam, startBreeding, upgradeBuilding,
+  applyBattleAction, chooseAiAction, createBattle, nextActor, settleBattleProgression,
 } from "../src/index.ts";
 
 function ownedPair() {
@@ -77,4 +78,21 @@ test("world ticks update season systems, recovery, market indices, NPC supply, a
   assert.ok(Object.keys(result.state.market.indices).length === content.species.length);
   assert.ok(result.state.market.listings.some(({ sellerId }) => sellerId !== "player"));
   assert.equal(result.events.at(-1)?.type, "world.day-advanced");
+});
+
+test("settled battles update XP, records, fame, and manager reputation", () => {
+  let { state, a } = ownedPair();
+  const enemySpecies = byId(content.species, "voltgrazer");
+  const enemy = createMonster(enemySpecies, new SeededRandom(91), { day: 1, level: 3, ownerId: "wild" });
+  let battle = createBattle([state.monsters[a.id]!], [enemy], content);
+  const rng = new SeededRandom(92);
+  for (let turn = 0; battle.result === "ongoing" && turn < 100; turn++) {
+    const actor = nextActor(battle)!;
+    battle = applyBattleAction(battle, chooseAiAction(battle, actor.id, content), content, rng, 1);
+  }
+  const beforeXp = state.monsters[a.id]!.xp;
+  const settled = settleBattleProgression(state, battle, content).state;
+  assert.ok(settled.monsters[a.id]!.xp >= beforeXp);
+  assert.equal(settled.monsters[a.id]!.wins + settled.monsters[a.id]!.losses, 1);
+  assert.equal(settled.player.reputation, battle.result === "player-victory" ? 1 : 0);
 });

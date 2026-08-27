@@ -3,7 +3,7 @@ import { content } from "../src/content/index.ts";
 
 const errors: string[] = [];
 const idPattern = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
-const groups = [content.species, content.traits, content.skills, content.evolutions, content.regions, content.zones, content.buildings];
+const groups = [content.species, content.traits, content.skills, content.statuses, content.evolutions, content.regions, content.zones, content.buildings];
 const allIds = new Set<string>();
 
 for (const group of groups) {
@@ -17,6 +17,7 @@ for (const group of groups) {
 const speciesIds = new Set(content.species.map(({ id }) => id));
 const traitIds = new Set(content.traits.map(({ id }) => id));
 const skillIds = new Set(content.skills.map(({ id }) => id));
+const statusIds = new Set(content.statuses.map(({ id }) => id));
 const evolutionIds = new Set(content.evolutions.map(({ id }) => id));
 const zoneIds = new Set(content.zones.map(({ id }) => id));
 
@@ -31,6 +32,7 @@ for (const species of content.species) {
 for (const evolution of content.evolutions) {
   if (!speciesIds.has(evolution.fromSpeciesId) || !speciesIds.has(evolution.toSpeciesId)) errors.push(`${evolution.id}: unknown species reference`);
 }
+for (const skill of content.skills) if (skill.statusId && !statusIds.has(skill.statusId)) errors.push(`${skill.id}: unknown status ${skill.statusId}`);
 for (const region of content.regions) for (const id of region.zoneIds) if (!zoneIds.has(id)) errors.push(`${region.id}: unknown zone ${id}`);
 for (const zone of content.zones) for (const entry of zone.speciesPool) if (!speciesIds.has(entry.speciesId)) errors.push(`${zone.id}: unknown species ${entry.speciesId}`);
 

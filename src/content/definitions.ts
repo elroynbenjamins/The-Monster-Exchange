@@ -18,6 +18,22 @@ export interface SkillDefinition {
   target: "enemy" | "all-enemies" | "self" | "ally" | "all-allies";
   statusId?: string;
   statusChance?: number;
+  healingPower?: number;
+  shieldPower?: number;
+  cleanseCount?: number;
+}
+
+export interface StatusDefinition {
+  id: string;
+  name: string;
+  duration: number;
+  maxStacks: number;
+  tick: "after-action" | "none";
+  damagePercentMaxHp?: number;
+  speedModifier?: number;
+  attackModifier?: number;
+  preventsAction?: boolean;
+  breaksOnDamage?: boolean;
 }
 
 export interface EvolutionDefinition {
@@ -57,6 +73,7 @@ export interface GameContent {
   species: readonly SpeciesDefinition[];
   traits: readonly TraitDefinition[];
   skills: readonly SkillDefinition[];
+  statuses: readonly StatusDefinition[];
   evolutions: readonly EvolutionDefinition[];
   regions: readonly RegionDefinition[];
   zones: readonly ZoneDefinition[];

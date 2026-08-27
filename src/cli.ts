@@ -5,7 +5,7 @@ import { join } from "node:path";
 import {
   SeededRandom, addMonsterToPlayer, appraiseMonster, attemptCapture, byId, changeInventory, content, createMonster,
   advanceWorldDay, applyBattleAction, chooseAiAction, claimBreedingJob, constructBuilding, createBattle, createNewGame, depositHomebaseResource, finishExpedition, generateWildEncounter, listPlayerMonster, loadGame, nextActor, resolveExpeditionNode,
-  saveGame, startBreeding, startExpeditionRun, upgradeBuilding, type GameState,
+  saveGame, settleBattleProgression, startBreeding, startExpeditionRun, upgradeBuilding, type GameState,
   validActions, type BattleAction, type WildEncounter,
 } from "./index.ts";
 
@@ -68,6 +68,8 @@ async function captureAfterEncounter(state: GameState, rng: SeededRandom, encoun
 function actionLabel(action: BattleAction, state: ReturnType<typeof createBattle>): string {
   const target = action.targetId ? state.units.find(({ id }) => id === action.targetId) : undefined;
   if (action.kind === "basic") return `Basic attack → ${target?.species.name}`;
+  if (action.kind === "switch") return `Switch → ${target?.species.name}`;
+  if (action.kind === "wait") return "Unable to act (status effect)";
   const skill = byId(content.skills, action.skillId);
   return `${skill.name} (${skill.energyCost} Energy)${target ? ` → ${target.species.name}` : ""}`;
 }
@@ -83,7 +85,7 @@ async function wildBattle(state: GameState, rng: SeededRandom): Promise<{ state:
     let action: BattleAction;
     if (actor.side === "enemy") action = chooseAiAction(battle, actor.id, content);
     else {
-      const actions = validActions(battle, actor.id, content.skills);
+      const actions = validActions(battle, actor.id, content);
       console.log(`\n${actor.species.name}: ${actor.hp}/${actor.maxHp} HP · ${actor.energy} Energy`);
       actions.forEach((candidate, index) => console.log(`${index + 1}. ${actionLabel(candidate, battle)}`));
       action = actions[(await askNumber("> ", 1, actions.length)) - 1]!;
@@ -105,8 +107,10 @@ async function wildBattle(state: GameState, rng: SeededRandom): Promise<{ state:
     conditions[unit.id] = { ...current, hpRatio: unit.hp / unit.maxHp };
   }
   const enemy = battle.units.find(({ side }) => side === "enemy")!;
+  const progression = settleBattleProgression({ ...state, conditions }, battle, content);
   console.log(battle.result === "player-victory" ? "Victory!" : "Your expedition team was defeated.");
-  return { state: { ...state, conditions }, encounter, won: battle.result === "player-victory", enemyHpRatio: enemy.hp / enemy.maxHp };
+  if (battle.result === "player-victory") console.log(`Participating monsters gain ${progression.xpAwarded} XP; reserves gain 25%.`);
+  return { state: progression.state, encounter, won: battle.result === "player-victory", enemyHpRatio: enemy.hp / enemy.maxHp };
 }
 
 async function expedition(state: GameState): Promise<GameState> {

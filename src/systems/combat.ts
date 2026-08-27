@@ -17,11 +17,24 @@ export function calculateCombatStats(monster: MonsterIndividual, species: Specie
 }
 
 export const TYPE_CHART: Partial<Record<GameType, Partial<Record<GameType, number>>>> = {
+  normal: { rock: 0.67, ghost: 0, steel: 0.67 },
   fire: { grass: 1.5, bug: 1.5, ice: 1.5, steel: 1.5, water: 0.67, fire: 0.67, rock: 0.67 },
   water: { fire: 1.5, rock: 1.5, ground: 1.5, water: 0.67, grass: 0.67 },
   grass: { water: 1.5, rock: 1.5, ground: 1.5, fire: 0.67, grass: 0.67, flying: 0.67, poison: 0.67 },
   electric: { water: 1.5, flying: 1.5, electric: 0.67, grass: 0.67, ground: 0 },
+  ice: { grass: 1.5, ground: 1.5, flying: 1.5, dragon: 1.5, fire: 0.67, water: 0.67, ice: 0.67, steel: 0.67 },
+  fighting: { normal: 1.5, ice: 1.5, rock: 1.5, dark: 1.5, steel: 1.5, poison: 0.67, flying: 0.67, psychic: 0.67, bug: 0.67, fairy: 0.67, ghost: 0 },
+  poison: { grass: 1.5, fairy: 1.5, poison: 0.67, ground: 0.67, rock: 0.67, ghost: 0.67, steel: 0 },
   ground: { electric: 1.5, fire: 1.5, poison: 1.5, rock: 1.5, steel: 1.5, flying: 0 },
+  flying: { grass: 1.5, fighting: 1.5, bug: 1.5, electric: 0.67, rock: 0.67, steel: 0.67 },
+  psychic: { fighting: 1.5, poison: 1.5, psychic: 0.67, steel: 0.67, dark: 0 },
+  bug: { grass: 1.5, psychic: 1.5, dark: 1.5, fire: 0.67, fighting: 0.67, poison: 0.67, flying: 0.67, ghost: 0.67, steel: 0.67, fairy: 0.67 },
+  rock: { fire: 1.5, ice: 1.5, flying: 1.5, bug: 1.5, fighting: 0.67, ground: 0.67, steel: 0.67 },
+  ghost: { psychic: 1.5, ghost: 1.5, dark: 0.67, normal: 0 },
+  dragon: { dragon: 1.5, steel: 0.67, fairy: 0 },
+  dark: { psychic: 1.5, ghost: 1.5, fighting: 0.67, dark: 0.67, fairy: 0.67 },
+  steel: { ice: 1.5, rock: 1.5, fairy: 1.5, fire: 0.67, water: 0.67, electric: 0.67, steel: 0.67 },
+  fairy: { fighting: 1.5, dragon: 1.5, dark: 1.5, fire: 0.67, poison: 0.67, steel: 0.67 },
 };
 
 export function typeMultiplier(attackType: GameType, defenderTypes: readonly GameType[]): number {

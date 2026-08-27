@@ -7,6 +7,7 @@ import { breed, canBreed } from "../systems/breeding.ts";
 import { evaluateEvolution, evolve } from "../systems/evolution.ts";
 import type { BuildingDefinition } from "../content/definitions.ts";
 import { startBuildingUpgrade, startConstruction } from "../systems/homebase.ts";
+import type { BattleState } from "../systems/battle-engine.ts";
 
 export function setActiveTeam(state: GameState, monsterIds: readonly string[]): GameState {
   if (monsterIds.length < 1 || monsterIds.length > 5) throw new Error("A team requires 1–5 monsters.");
@@ -107,4 +108,31 @@ export function constructBuilding(state: GameState, definition: BuildingDefiniti
 export function upgradeBuilding(state: GameState, definition: BuildingDefinition): GameState {
   if (state.activeExpedition) throw new Error("Construction cannot be managed during an expedition.");
   return { ...state, homebase: startBuildingUpgrade(state.homebase, definition, state.world.day) };
+}
+
+export function settleBattleProgression(state: GameState, battle: BattleState, content: GameContent): { state: GameState; xpAwarded: number } {
+  if (battle.result === "ongoing") throw new Error("An unfinished battle cannot award progression.");
+  const playerWon = battle.result === "player-victory";
+  const enemyLevelTotal = battle.units.filter(({ side }) => side === "enemy").reduce((sum, { monster }) => sum + monster.level, 0);
+  const xpAwarded = Math.max(15, 20 + enemyLevelTotal * 12);
+  let next = state;
+  for (const unit of battle.units.filter(({ side }) => side === "player")) {
+    const current = next.monsters[unit.id];
+    if (!current || current.ownerId !== next.player.id) continue;
+    next = grantMonsterXp(next, unit.id, unit.active ? xpAwarded : Math.floor(xpAwarded * 0.25), content).state;
+    const progressed = next.monsters[unit.id]!;
+    next = {
+      ...next,
+      monsters: {
+        ...next.monsters,
+        [unit.id]: {
+          ...progressed,
+          wins: progressed.wins + (playerWon ? 1 : 0),
+          losses: progressed.losses + (playerWon ? 0 : 1),
+          fame: progressed.fame + (playerWon && unit.hp > 0 ? 1 : 0),
+        },
+      },
+    };
+  }
+  return { state: { ...next, player: { ...next.player, reputation: Math.max(0, next.player.reputation + (playerWon ? 1 : 0)) } }, xpAwarded };
 }

@@ -11,8 +11,20 @@ export const content: GameContent = {
     { id: "root-lash", name: "Root Lash", type: "grass", power: 42, energyCost: 20, cooldown: 0, target: "enemy" },
     { id: "spore-veil", name: "Spore Veil", type: "poison", power: 12, energyCost: 35, cooldown: 2, target: "all-enemies", statusId: "poison", statusChance: 0.35 },
     { id: "static-prance", name: "Static Prance", type: "electric", power: 48, energyCost: 25, cooldown: 0, target: "enemy", statusId: "shock", statusChance: 0.2 },
-    { id: "grounding-hum", name: "Grounding Hum", type: "ground", power: 0, energyCost: 30, cooldown: 2, target: "all-allies" },
+    { id: "grounding-hum", name: "Grounding Hum", type: "ground", power: 0, energyCost: 30, cooldown: 2, target: "all-allies", shieldPower: 24 },
     { id: "canopy-surge", name: "Canopy Surge", type: "grass", power: 65, energyCost: 55, cooldown: 3, target: "enemy" },
+  ],
+  statuses: [
+    { id: "burn", name: "Burn", duration: 3, maxStacks: 1, tick: "after-action", damagePercentMaxHp: 0.04, attackModifier: -0.08 },
+    { id: "poison", name: "Poison", duration: 3, maxStacks: 3, tick: "after-action", damagePercentMaxHp: 0.025 },
+    { id: "shock", name: "Shock", duration: 2, maxStacks: 1, tick: "after-action", speedModifier: -0.2 },
+    { id: "freeze", name: "Freeze", duration: 1, maxStacks: 1, tick: "after-action", speedModifier: -0.35 },
+    { id: "sleep", name: "Sleep", duration: 2, maxStacks: 1, tick: "after-action", preventsAction: true, breaksOnDamage: true },
+    { id: "stun", name: "Stun", duration: 1, maxStacks: 1, tick: "after-action", preventsAction: true },
+    { id: "bleed", name: "Bleed", duration: 3, maxStacks: 2, tick: "after-action", damagePercentMaxHp: 0.035 },
+    { id: "wet", name: "Wet", duration: 2, maxStacks: 1, tick: "after-action" },
+    { id: "fear", name: "Fear", duration: 2, maxStacks: 1, tick: "after-action", attackModifier: -0.15 },
+    { id: "confusion", name: "Confusion", duration: 2, maxStacks: 1, tick: "after-action" },
   ],
   species: [
     {
