@@ -23,9 +23,11 @@ The client also exposes the first homebase management loop: construct and upgrad
 
 Appearance settings persist a Light, Dark, or Follow Device preference plus reduced-motion accessibility. The future visual client should consume the shared palettes in `src/ui/theme.ts` and the matching semantic CSS variables in `assets/styles/theme.css`, rather than hard-coded component colors.
 
-The Contract Board offers authored, time-limited objectives for captures, expedition completions, alpha victories, and completed marketplace sales. Up to three may be active at once; matching play advances them and completed work pays explicit Crown, item, and reputation rewards.
+The Contract Board offers authored, time-limited objectives for captures, expedition completions, alpha victories, and completed marketplace sales. Up to three may be active at once; matching play advances them and completed work pays explicit Crown, item, and reputation rewards. Contracts can be abandoned, and claimed or expired work returns to the board for repeat play.
 
 The terminal client now exposes the core management tools needed for regular play: detailed individual records, nicknames, active-team and skill editing, evolution, marketplace browsing and purchasing, inventory review, herb-based field care, and data-driven Workshop crafting.
+
+Marketplace discovery supports species, affordability, and maximum-price filters; price, potential, and level sorting; and appraisal comparisons before purchase. Expedition briefings show authored zone descriptions, current weather, hazards, team-level readiness, and protection. Wild-species weights respond to population, season, and weather, making the ecology affect actual encounters.
 
 ## Architecture
 
@@ -59,7 +61,7 @@ Systems accept state and return new state or explicit events. They do not know a
 1. **Foundation (complete)** — definitions, deterministic generation, lineage-aware breeding, evolution eligibility, market ticks, buildings, expeditions, and timeline combat primitives.
 2. **Playable loop (in progress)** — versioned/migrated autosaves, inventory/currency, selectable and unlockable expedition zones, health/stamina and field care, retreat/defeat, capture, full marketplace browsing/purchasing/player selling, NPC listings, time-limited contracts, detailed roster/team/skill/evolution commands, equipment loadouts, species research and focused Lab studies, timed breeding, data-driven Workshop crafting, functional homebase facilities, risk/reward expedition approaches, team-based hazard protection, and authored route bosses are connected. Next: repeatable contract generation, more regional content, and a visual client.
 3. **Combat depth (in progress)** — deterministic speed-timeline battles now support the complete centralized 18-type chart, three active/two reserve teams, action-cost switching, Energy, cooldowns, data-defined stackable statuses, damage-over-time, control, healing, cleansing, shields, fixed equipment, species passives, capped team synergies, Wet/Electric and other status combinations, weighted AI, XP, reputation, fame, and persistent battle records. Next: manual reserve replacement, boss triggers, and battle rewards beyond XP.
-4. **Living world (foundation in progress)** — one coordinated day tick now advances recovery, construction, breeding, listing expiry/sales, NPC listings, regional weather, seasons, and species populations. Next: persistent NPC portfolios, rival/friend progression, tournaments, contracts, and market news.
+4. **Living world (foundation in progress)** — one coordinated day tick now advances recovery, construction, breeding, contract expiry, listing expiry/sales, NPC listings, regional weather, seasons, and species populations. Encounter frequency now responds to population, season, and weather. Next: persistent NPC portfolios, rival/friend progression, tournaments, and market news.
 5. **Content pipeline** — JSON import/export, schema versioning/migrations, editor tooling, localization, balance simulations, and pixel-art integration.
 6. **Production client** — choose the rendering shell after the simulation loop is proven; add audio, accessibility, tutorials, telemetry, packaging, and save migration tests.
 

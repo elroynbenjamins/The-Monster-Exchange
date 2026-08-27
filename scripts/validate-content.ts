@@ -49,6 +49,7 @@ for (const equipment of content.equipment) {
 }
 for (const region of content.regions) for (const id of region.zoneIds) if (!zoneIds.has(id)) errors.push(`${region.id}: unknown zone ${id}`);
 for (const zone of content.zones) {
+  if (!zone.name.trim() || !zone.description.trim()) errors.push(`${zone.id}: zone name and description are required`);
   for (const entry of zone.speciesPool) if (!speciesIds.has(entry.speciesId)) errors.push(`${zone.id}: unknown species ${entry.speciesId}`);
   for (const id of zone.hazards) if (!hazardIds.has(id)) errors.push(`${zone.id}: unknown hazard ${id}`);
   if (zone.boss && !speciesIds.has(zone.boss.speciesId)) errors.push(`${zone.id}: unknown boss species ${zone.boss.speciesId}`);

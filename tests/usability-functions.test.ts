@@ -54,4 +54,7 @@ test("market browsing filters the player's listings and sorts affordable NPC sto
   const state = { ...setup.state, market: { ...setup.state.market, listings: [costly, mine, cheap] } };
   assert.deepEqual(browseMarketListings(state).map(({ id }) => id), [cheap.id, costly.id]);
   assert.deepEqual(browseMarketListings(state, { affordableOnly: true }).map(({ id }) => id), [cheap.id]);
+  assert.deepEqual(browseMarketListings(state, { speciesId: "voltgrazer", maximumPrice: 250 }).map(({ id }) => id), [cheap.id]);
+  assert.deepEqual(browseMarketListings(state, { sortBy: "potential" }).map(({ monster }) => monster.potential), [costly.monster.potential, cheap.monster.potential].sort((a, b) => b - a));
+  assert.deepEqual(browseMarketListings(state, { sortBy: "level" }).map(({ monster }) => monster.level), [costly.monster.level, cheap.monster.level].sort((a, b) => b - a));
 });

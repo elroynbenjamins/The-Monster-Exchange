@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { acceptContract, claimContract, content, createNewGame, expireContracts, recordContractProgress } from "../src/index.ts";
+import { abandonContract, acceptContract, claimContract, completedContractNames, content, createNewGame, expireContracts, recordContractProgress } from "../src/index.ts";
 
 test("contracts are accepted, progressed by matching events, and claimed once", () => {
   let state = createNewGame("Niko", 81, content.contentVersion);
@@ -30,4 +30,18 @@ test("unfinished contracts expire on their deadline", () => {
   state = { ...state, world: { ...state.world, day: state.contracts[0]!.expiresOnDay } };
   state = expireContracts(state);
   assert.equal(state.contracts[0]?.status, "expired");
+});
+
+test("claimed and expired contracts can be accepted again", () => {
+  let state = acceptContract(createNewGame("Niko", 81, content.contentVersion), "alpha-control", content);
+  const before = state;
+  state = recordContractProgress(state, { type: "defeat-boss" }, content);
+  assert.deepEqual(completedContractNames(before, state, content), ["Alpha Control"]);
+  state = claimContract(state, "alpha-control", content);
+  state = acceptContract(state, "alpha-control", content);
+  assert.equal(state.contracts.find(({ definitionId }) => definitionId === "alpha-control")?.status, "active");
+  state = abandonContract(state, "alpha-control");
+  assert.equal(state.contracts.find(({ definitionId }) => definitionId === "alpha-control")?.status, "expired");
+  state = acceptContract(state, "alpha-control", content);
+  assert.equal(state.contracts.find(({ definitionId }) => definitionId === "alpha-control")?.progress, 0);
 });

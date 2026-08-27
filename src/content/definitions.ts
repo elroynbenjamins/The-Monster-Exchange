@@ -79,6 +79,8 @@ export interface RegionDefinition {
 
 export interface ZoneDefinition {
   id: string;
+  name: string;
+  description: string;
   regionId: string;
   levelRange: readonly [number, number];
   speciesPool: readonly { speciesId: string; weight: number }[];

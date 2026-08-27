@@ -6,10 +6,23 @@ export interface ContractProgressEvent { type: ContractEventType; targetId?: str
 export function acceptContract(state: GameState, definitionId: string, content: GameContent): GameState {
   const definition = content.contracts.find(({ id }) => id === definitionId);
   if (!definition) throw new Error("Unknown contract.");
-  if (state.contracts.some((contract) => contract.definitionId === definitionId)) throw new Error("This contract has already been accepted.");
+  const previous = state.contracts.find((contract) => contract.definitionId === definitionId);
+  if (previous && (previous.status === "active" || previous.status === "complete")) throw new Error("This contract is already active.");
   if (state.contracts.filter(({ status }) => status === "active" || status === "complete").length >= 3) throw new Error("Only three contracts can be active at once.");
   if (definition.objective.event === "complete-expedition" && definition.objective.targetId && !state.world.unlockedZoneIds.includes(definition.objective.targetId)) throw new Error("The contract's zone is still locked.");
-  return { ...state, contracts: [...state.contracts, { definitionId, acceptedOnDay: state.world.day, expiresOnDay: state.world.day + definition.durationDays, progress: 0, status: "active" }] };
+  const accepted = { definitionId, acceptedOnDay: state.world.day, expiresOnDay: state.world.day + definition.durationDays, progress: 0, status: "active" as const };
+  return { ...state, contracts: previous ? state.contracts.map((contract) => contract === previous ? accepted : contract) : [...state.contracts, accepted] };
+}
+
+export function abandonContract(state: GameState, definitionId: string): GameState {
+  const contract = state.contracts.find((entry) => entry.definitionId === definitionId);
+  if (!contract || contract.status !== "active") throw new Error("Only an active contract can be abandoned.");
+  return { ...state, contracts: state.contracts.map((entry) => entry === contract ? { ...entry, status: "expired" as const } : entry) };
+}
+
+export function completedContractNames(before: GameState, after: GameState, content: GameContent): readonly string[] {
+  return after.contracts.filter((contract) => contract.status === "complete" && before.contracts.find(({ definitionId }) => definitionId === contract.definitionId)?.status !== "complete")
+    .map((contract) => content.contracts.find(({ id }) => id === contract.definitionId)?.name ?? contract.definitionId);
 }
 
 export function recordContractProgress(state: GameState, event: ContractProgressEvent, content: GameContent): GameState {
