@@ -5,6 +5,7 @@
   "type": "module",
   "description": "Data-driven monster collecting, breeding, battling, and market simulation.",
   "scripts": {
+    "play": "node --experimental-strip-types src/cli.ts",
     "dev": "node --watch --experimental-strip-types src/demo.ts",
     "start": "node --experimental-strip-types src/demo.ts",
     "test": "node --test --experimental-strip-types tests/*.test.ts",

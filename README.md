@@ -10,9 +10,12 @@ Requirements: Node.js 22.6 or newer. No package download is required for the cur
 npm test
 npm run check
 npm start
+npm run play
 ```
 
 `npm start` runs a small reproducible world tick: it creates monsters, breeds an offspring, advances the market, starts an expedition, and resolves a combat action.
+
+`npm run play` starts the first terminal-based playable loop. It creates an autosave under `.local/`, lets you choose a partner, explore Greenreach, weaken and capture wild individuals, inspect their true potential, and advance the world day. The terminal is a temporary development client, not the intended final interface.
 
 ## Architecture
 
@@ -42,8 +45,8 @@ Systems accept state and return new state or explicit events. They do not know a
 
 ## Roadmap
 
-1. **Foundation (current)** — definitions, deterministic generation, lineage-aware breeding, evolution eligibility, market ticks, buildings, expeditions, and timeline combat primitives.
-2. **Playable loop** — persistent save format, inventory/currency, capture, expedition node resolution, healing/stamina, marketplace transactions, and a basic terminal or web UI.
+1. **Foundation (complete)** — definitions, deterministic generation, lineage-aware breeding, evolution eligibility, market ticks, buildings, expeditions, and timeline combat primitives.
+2. **Playable loop (in progress)** — versioned autosaves, inventory/currency, wild encounters, capture, marketplace purchases, and a terminal development UI are connected. Next: full expedition node resolution, healing/stamina, selling, and defeat states.
 3. **Combat depth** — status manager, skill resolver, switching, 3-active/2-reserve teams, weighted AI profiles, rewards, and battle records.
 4. **Living world** — NPC portfolios, rival/friend progression, regional populations, seasons/weather, tournaments, contracts, and market news.
 5. **Content pipeline** — JSON import/export, schema versioning/migrations, editor tooling, localization, balance simulations, and pixel-art integration.
