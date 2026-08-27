@@ -46,8 +46,8 @@ Systems accept state and return new state or explicit events. They do not know a
 ## Roadmap
 
 1. **Foundation (complete)** — definitions, deterministic generation, lineage-aware breeding, evolution eligibility, market ticks, buildings, expeditions, and timeline combat primitives.
-2. **Playable loop (in progress)** — versioned/migrated autosaves, inventory/currency, resumable expedition nodes, health/stamina, retreat/defeat, capture, marketplace purchases and player selling are connected. Next: tactical battle turns, clinic/homebase interaction, NPC listings, and richer node choices.
-3. **Combat depth** — status manager, skill resolver, switching, 3-active/2-reserve teams, weighted AI profiles, rewards, and battle records.
+2. **Playable loop (in progress)** — versioned/migrated autosaves, inventory/currency, resumable expedition nodes, health/stamina, retreat/defeat, capture, marketplace purchases and player selling are connected. Next: clinic/homebase interaction, NPC listings, and richer node choices.
+3. **Combat depth (in progress)** — deterministic speed-timeline battles, basic attacks, equipped skills, Energy, cooldowns, centralized type effectiveness, status application events, up to 3 active monsters, and weighted AI actions are connected to expeditions. Next: status ticking, support effects, switching/reserves, XP, rewards, and battle records.
 4. **Living world** — NPC portfolios, rival/friend progression, regional populations, seasons/weather, tournaments, contracts, and market news.
 5. **Content pipeline** — JSON import/export, schema versioning/migrations, editor tooling, localization, balance simulations, and pixel-art integration.
 6. **Production client** — choose the rendering shell after the simulation loop is proven; add audio, accessibility, tutorials, telemetry, packaging, and save migration tests.

@@ -41,10 +41,9 @@ export function resolveExpeditionNode(state: GameState, rng: RandomSource): Node
   let message = "";
   switch (node.type) {
     case "encounter": {
-      const hpLoss = rng.int(8, 20) / 100;
-      next = spendTeamCondition(next, hpLoss, rng.int(8, 14));
+      next = spendTeamCondition(next, 0, rng.int(8, 14));
       next = addReward(next, "crowns", rng.int(25, 60));
-      message = `The team wins a wild encounter but loses ${Math.round(hpLoss * 100)}% health.`;
+      message = "The team clears the encounter and secures its field-contract reward.";
       break;
     }
     case "resource": {

@@ -4,8 +4,9 @@ import { stdin as input, stdout as output } from "node:process";
 import { join } from "node:path";
 import {
   SeededRandom, addMonsterToPlayer, appraiseMonster, attemptCapture, byId, changeInventory, content, createMonster,
-  createNewGame, finishExpedition, generateWildEncounter, listPlayerMonster, loadGame, resolveExpeditionNode,
+  applyBattleAction, chooseAiAction, createBattle, createNewGame, finishExpedition, generateWildEncounter, listPlayerMonster, loadGame, nextActor, resolveExpeditionNode,
   resolvePlayerListingSales, restTeam, returnExpiredPlayerListings, saveGame, startExpeditionRun, tickMarket, type GameState,
+  validActions, type BattleAction, type WildEncounter,
 } from "./index.ts";
 
 const savePath = join(process.cwd(), ".local", "save.json");
@@ -47,10 +48,7 @@ async function newGame(): Promise<GameState> {
   return state;
 }
 
-async function captureAfterEncounter(state: GameState, rng: SeededRandom): Promise<GameState> {
-  const zone = byId(content.zones, state.activeExpedition!.route.zoneId);
-  const encounter = generateWildEncounter(zone, content.species, rng, state.world.day);
-  const remainingHp = rng.int(18, 48) / 100;
+async function captureAfterEncounter(state: GameState, rng: SeededRandom, encounter: WildEncounter, remainingHp: number): Promise<GameState> {
   console.log(`\nThe encounter included a Lv.${encounter.monster.level} ${encounter.species.name}, now at ${Math.round(remainingHp * 100)}% HP.`);
   console.log(`Estimated Potential: ${encounter.estimatedPotential[0]}–${encounter.estimatedPotential[1]}`);
   let next = { ...state, world: { ...state.world, nextRandomOffset: state.world.nextRandomOffset + 1 } };
@@ -65,6 +63,50 @@ async function captureAfterEncounter(state: GameState, rng: SeededRandom): Promi
     } else console.log(`${encounter.species.name} escaped the capsule.`);
   }
   return next;
+}
+
+function actionLabel(action: BattleAction, state: ReturnType<typeof createBattle>): string {
+  const target = action.targetId ? state.units.find(({ id }) => id === action.targetId) : undefined;
+  if (action.kind === "basic") return `Basic attack → ${target?.species.name}`;
+  const skill = byId(content.skills, action.skillId);
+  return `${skill.name} (${skill.energyCost} Energy)${target ? ` → ${target.species.name}` : ""}`;
+}
+
+async function wildBattle(state: GameState, rng: SeededRandom): Promise<{ state: GameState; encounter: WildEncounter; won: boolean; enemyHpRatio: number }> {
+  const zone = byId(content.zones, state.activeExpedition!.route.zoneId);
+  const encounter = generateWildEncounter(zone, content.species, rng, state.world.day);
+  const playerMonsters = state.activeExpedition!.route.teamIds.slice(0, 3).map((id) => state.monsters[id]!).filter(Boolean);
+  let battle = createBattle(playerMonsters, [encounter.monster], content, Object.fromEntries(playerMonsters.map((monster) => [monster.id, state.conditions[monster.id]?.hpRatio ?? 1])));
+  console.log(`\nBattle: ${encounter.species.name} Lv.${encounter.monster.level}`);
+  while (battle.result === "ongoing") {
+    const actor = nextActor(battle)!;
+    let action: BattleAction;
+    if (actor.side === "enemy") action = chooseAiAction(battle, actor.id, content);
+    else {
+      const actions = validActions(battle, actor.id, content.skills);
+      console.log(`\n${actor.species.name}: ${actor.hp}/${actor.maxHp} HP · ${actor.energy} Energy`);
+      actions.forEach((candidate, index) => console.log(`${index + 1}. ${actionLabel(candidate, battle)}`));
+      action = actions[(await askNumber("> ", 1, actions.length)) - 1]!;
+    }
+    const previousEvents = battle.events.length;
+    battle = applyBattleAction(battle, action, content, rng, state.world.day);
+    for (const event of battle.events.slice(previousEvents)) {
+      if (event.type === "battle.damage") {
+        const payload = event.payload as { targetId: string; damage: number; multiplier: number; remainingHp: number };
+        const target = battle.units.find(({ id }) => id === payload.targetId)!;
+        const effectiveness = payload.multiplier > 1 ? " Super effective!" : payload.multiplier < 1 ? " Resisted." : "";
+        console.log(`${target.species.name} takes ${payload.damage} damage.${effectiveness}`);
+      }
+    }
+  }
+  const conditions = { ...state.conditions };
+  for (const unit of battle.units.filter(({ side }) => side === "player")) {
+    const current = conditions[unit.id] ?? { hpRatio: 1, stamina: 100 };
+    conditions[unit.id] = { ...current, hpRatio: unit.hp / unit.maxHp };
+  }
+  const enemy = battle.units.find(({ side }) => side === "enemy")!;
+  console.log(battle.result === "player-victory" ? "Victory!" : "Your expedition team was defeated.");
+  return { state: { ...state, conditions }, encounter, won: battle.result === "player-victory", enemyHpRatio: enemy.hp / enemy.maxHp };
 }
 
 async function expedition(state: GameState): Promise<GameState> {
@@ -89,10 +131,18 @@ async function expedition(state: GameState): Promise<GameState> {
     const choice = await askNumber("> ", 1, 3);
     if (choice === 2) { next = finishExpedition(next, true); console.log("The team retreats safely."); break; }
     if (choice === 3) break;
+    if (node.type === "encounter") {
+      const battle = await wildBattle(next, rng);
+      next = battle.state;
+      if (!battle.won) {
+        next = { ...next, activeExpedition: { ...next.activeExpedition!, route: { ...next.activeExpedition!.route, status: "abandoned" } } };
+        continue;
+      }
+      next = await captureAfterEncounter(next, rng, battle.encounter, Math.max(0.05, battle.enemyHpRatio));
+    }
     const outcome = resolveExpeditionNode(next, rng);
     next = outcome.state;
     console.log(outcome.event.payload.message);
-    if (node.type === "encounter" && !outcome.defeated) next = await captureAfterEncounter(next, rng);
     await saveGame(savePath, next);
   }
   return next;
