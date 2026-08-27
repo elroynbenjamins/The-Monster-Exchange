@@ -1,10 +1,10 @@
-# Monstermarket design bible — recovered foundation
+# The Monster Exchange design bible — recovered foundation
 
 This is the implementation-facing digest of the accessible “Monster Market Design” conversation. It preserves current decisions while the original conversation remains the long-form source.
 
 ## Vision and pillars
 
-Monstermarket combines monster collecting with a simulated economy. A creature is valuable not only because it wins fights, but because of genetics, traits, pedigree, rarity, appearance, learned skills, records, and shifting demand. Exploration supplies the ecology, breeding creates new individuals, homebase turns time and resources into progress, combat changes reputation and demand, and the market connects every loop.
+The Monster Exchange combines monster collecting with a simulated economy. A creature is valuable not only because it wins fights, but because of genetics, traits, pedigree, rarity, appearance, learned skills, records, and shifting demand. Exploration supplies the ecology, breeding creates new individuals, homebase turns time and resources into progress, combat changes reputation and demand, and the market connects every loop.
 
 The tone is adventurous rather than lethal: monsters are knocked out, captured, trained, traded, bred, and remembered. Species must be clearly original in name, silhouette, anatomy, palette, evolution, abilities, and lore.
 

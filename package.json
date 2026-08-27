@@ -1,9 +1,9 @@
 {
-  "name": "monstermarket",
+  "name": "the-monster-exchange",
   "version": "0.1.0",
   "private": true,
   "type": "module",
-  "description": "Data-driven monster collecting, breeding, battling, and market simulation.",
+  "description": "The Monster Exchange: data-driven monster collecting, breeding, battling, and market simulation.",
   "scripts": {
     "play": "node --experimental-strip-types src/cli.ts",
     "dev": "node --watch --experimental-strip-types src/demo.ts",

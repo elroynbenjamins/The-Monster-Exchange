@@ -1,6 +1,6 @@
-# Monstermarket
+# The Monster Exchange
 
-Monstermarket is a pixel-art monster management game where collecting, breeding, exploration, combat, and a living marketplace feed one another. This repository is the simulation-first starter: the rules are usable without a UI, deterministic under a seed, and driven by content definitions rather than species-specific code.
+The Monster Exchange is a pixel-art monster management game where collecting, breeding, exploration, combat, and a living marketplace feed one another. This repository is the simulation-first starter: the rules are usable without a UI, deterministic under a seed, and driven by content definitions rather than species-specific code.
 
 ## Start here
 

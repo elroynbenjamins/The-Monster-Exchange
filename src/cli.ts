@@ -35,7 +35,7 @@ function roster(state: GameState): void {
 }
 
 async function newGame(): Promise<GameState> {
-  console.log("\nMONSTERMARKET — Greenreach Field Office\n");
+  console.log("\nTHE MONSTER EXCHANGE — Greenreach Field Office\n");
   const name = await ui.question("Manager name: ");
   let state = createNewGame(name, Date.now() & 0xffff_ffff, content.contentVersion);
   const choices = [byId(content.species, "mossveil"), byId(content.species, "voltgrazer")];
