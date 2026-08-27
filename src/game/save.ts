@@ -24,6 +24,7 @@ function migrateSave(raw: GameState & { saveVersion: number }): GameState {
     migrated = { ...migrated, saveVersion: 5, uiPreferences: { theme: "system", reducedMotion: false } };
   }
   if (migrated.saveVersion === 5) migrated = { ...migrated, saveVersion: 6, contracts: [] };
+  if (migrated.saveVersion === 6) migrated = { ...migrated, saveVersion: 7, trainers: {} };
   return migrated;
 }
 

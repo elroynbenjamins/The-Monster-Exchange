@@ -3,7 +3,7 @@ import { content } from "../src/content/index.ts";
 
 const errors: string[] = [];
 const idPattern = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
-const groups = [content.species, content.traits, content.skills, content.statuses, content.passives, content.synergies, content.equipment, content.evolutions, content.regions, content.zones, content.hazards, content.buildings, content.contracts, content.recipes];
+const groups = [content.species, content.traits, content.skills, content.statuses, content.passives, content.synergies, content.equipment, content.evolutions, content.regions, content.zones, content.hazards, content.buildings, content.contracts, content.recipes, content.trainers];
 const allIds = new Set<string>();
 
 for (const group of groups) {
@@ -69,6 +69,10 @@ for (const recipe of content.recipes) {
   if (!buildingIds.has(recipe.requiredBuildingId)) errors.push(`${recipe.id}: unknown required building ${recipe.requiredBuildingId}`);
   if (recipe.requiredBuildingLevel < 1 || !Object.keys(recipe.inputs).length || !Object.keys(recipe.outputs).length) errors.push(`${recipe.id}: invalid recipe requirements`);
   for (const amount of [...Object.values(recipe.inputs), ...Object.values(recipe.outputs)]) if (!Number.isInteger(amount) || amount < 1) errors.push(`${recipe.id}: recipe amounts must be positive whole numbers`);
+}
+for (const trainer of content.trainers) {
+  for (const id of trainer.teamSpeciesIds) if (!speciesIds.has(id)) errors.push(`${trainer.id}: unknown team species ${id}`);
+  if (!trainer.teamSpeciesIds.length || trainer.startingLevel < 1 || trainer.trainingXpPerDay < 0 || trainer.challengeRewardCrowns < 0) errors.push(`${trainer.id}: invalid trainer progression values`);
 }
 
 if (errors.length) {

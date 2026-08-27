@@ -13,6 +13,7 @@ export * from "./systems/combat.ts";
 export * from "./systems/battle-engine.ts";
 export * from "./systems/encounters.ts";
 export * from "./systems/transactions.ts";
+export * from "./systems/trainers.ts";
 export * from "./systems/team-effects.ts";
 export * from "./game/state.ts";
 export * from "./game/save.ts";

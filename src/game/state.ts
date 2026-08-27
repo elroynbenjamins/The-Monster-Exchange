@@ -3,7 +3,7 @@ import type { MarketState } from "../systems/market.ts";
 import type { MonsterIndividual } from "../core/types.ts";
 import type { ExpeditionState } from "../systems/exploration.ts";
 
-export const SAVE_VERSION = 6;
+export const SAVE_VERSION = 7;
 
 export type ThemePreference = "system" | "light" | "dark";
 export interface UiPreferences { theme: ThemePreference; reducedMotion: boolean }
@@ -58,6 +58,15 @@ export interface ContractState {
   status: "active" | "complete" | "claimed" | "expired";
 }
 
+export interface TrainerState {
+  definitionId: string;
+  monsterIds: readonly string[];
+  relationship: number;
+  wins: number;
+  losses: number;
+  lastChallengeDay?: number;
+}
+
 export interface GameState {
   saveVersion: number;
   contentVersion: number;
@@ -71,6 +80,7 @@ export interface GameState {
   breedingJobs: readonly BreedingJob[];
   uiPreferences: UiPreferences;
   contracts: readonly ContractState[];
+  trainers: Readonly<Record<string, TrainerState>>;
 }
 
 export function createNewGame(playerName: string, seed: number, contentVersion: number): GameState {
@@ -92,6 +102,7 @@ export function createNewGame(playerName: string, seed: number, contentVersion: 
     breedingJobs: [],
     uiPreferences: { theme: "system", reducedMotion: false },
     contracts: [],
+    trainers: {},
   };
 }
 

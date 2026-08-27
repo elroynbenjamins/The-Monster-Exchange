@@ -107,6 +107,10 @@ export const content: GameContent = {
     { id: "craft-trail-harness", name: "Trail Harness", inputs: { timber: 4, herbs: 2 }, outputs: { "trail-harness": 1 }, requiredBuildingId: "field-workshop", requiredBuildingLevel: 2 },
     { id: "craft-capture-lens", name: "Capture Lens", inputs: { stone: 5, "research-notes": 2 }, outputs: { "capture-lens": 1 }, requiredBuildingId: "field-workshop", requiredBuildingLevel: 3 },
   ],
+  trainers: [
+    { id: "rival-rowan", name: "Rowan Vale", role: "rival", specialty: "Competitive battling and market timing", teamSpeciesIds: ["voltgrazer", "mossveil"], startingLevel: 5, trainingXpPerDay: 28, challengeRewardCrowns: 120, description: "An ambitious trader-trainer who wants to reach the Exchange rankings before you." },
+    { id: "friend-tessa", name: "Tessa Reed", role: "friend", specialty: "Ecology, field research, and unusual traits", teamSpeciesIds: ["mossveil"], startingLevel: 4, trainingXpPerDay: 20, challengeRewardCrowns: 80, description: "A patient field researcher who shares discoveries and tests new teams with you." },
+  ],
 };
 
 export function byId<T extends { id: string }>(definitions: readonly T[], id: string): T {

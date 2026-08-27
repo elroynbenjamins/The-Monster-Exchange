@@ -7,6 +7,7 @@ import { createMonster } from "../systems/monsters.ts";
 import { tickHomebase } from "../systems/homebase.ts";
 import { resolvePlayerListingSales, returnExpiredPlayerListings } from "../systems/transactions.ts";
 import { expireContracts, recordContractProgress } from "./contracts.ts";
+import { progressTrainers } from "../systems/trainers.ts";
 
 export interface WorldTickResult { state: GameState; events: readonly DomainEvent[] }
 
@@ -70,6 +71,7 @@ export function advanceWorldDay(state: GameState, content: GameContent): WorldTi
   next = { ...next, market: tickMarket({ ...next.market, day: day - 1, indices: nextIndices(next, content) }) };
   next = returnExpiredPlayerListings(next, expiring);
   next = generateNpcListings(next, content, rng);
+  next = progressTrainers(next, content);
   next = expireContracts(next);
   for (const job of next.breedingJobs.filter(({ status, completesOnDay }) => status === "ready" && completesOnDay === day)) events.push({ type: "breeding.ready", day, payload: { jobId: job.id } });
   events.push({ type: "world.day-advanced", day, payload: { season, weatherByRegion } });

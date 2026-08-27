@@ -126,6 +126,18 @@ export interface RecipeDefinition {
   requiredBuildingLevel: number;
 }
 
+export interface TrainerDefinition {
+  id: string;
+  name: string;
+  role: "rival" | "friend";
+  specialty: string;
+  teamSpeciesIds: readonly string[];
+  startingLevel: number;
+  trainingXpPerDay: number;
+  challengeRewardCrowns: number;
+  description: string;
+}
+
 export interface GameContent {
   contentVersion: number;
   species: readonly SpeciesDefinition[];
@@ -142,4 +154,5 @@ export interface GameContent {
   buildings: readonly BuildingDefinition[];
   contracts: readonly ContractDefinition[];
   recipes: readonly RecipeDefinition[];
+  trainers: readonly TrainerDefinition[];
 }
