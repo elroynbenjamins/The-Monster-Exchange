@@ -92,6 +92,7 @@ export const content: GameContent = {
     { id: "breeding-nest", name: "Breeding Nest", maxLevel: 5, baseBuildDays: 2, baseCost: { timber: 30, stone: 15 }, capability: "breeding" },
     { id: "field-clinic", name: "Field Clinic", maxLevel: 5, baseBuildDays: 1, baseCost: { timber: 20, herbs: 15 }, capability: "healing" },
     { id: "expedition-lodge", name: "Expedition Lodge", maxLevel: 5, baseBuildDays: 3, baseCost: { timber: 40, stone: 20 }, capability: "expedition" },
+    { id: "research-lab", name: "Research Lab", maxLevel: 5, baseBuildDays: 2, baseCost: { timber: 25, stone: 20, herbs: 10 }, capability: "research" },
   ],
 };
 

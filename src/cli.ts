@@ -4,8 +4,8 @@ import { stdin as input, stdout as output } from "node:process";
 import { join } from "node:path";
 import {
   EXPEDITION_APPROACHES, SeededRandom, activeTeamCaptureBonus, addMonsterToPlayer, appraiseMonster, attemptCapture, byId, changeInventory, content, createMonster,
-  advanceWorldDay, applyBattleAction, calculateExpeditionPreparation, chooseAiAction, claimBreedingJob, constructBuilding, createBattle, createNewGame, depositHomebaseResource, finishExpedition, generateWildEncounter, listPlayerMonster, loadGame, nextActor, resolveExpeditionNode,
-  equipMonsterItems, recordSpeciesResearch, saveGame, settleBattleProgression, startBreeding, startExpeditionRun, upgradeBuilding, type GameState,
+  advanceWorldDay, applyBattleAction, calculateExpeditionPreparation, chooseAiAction, claimBreedingJob, conductSpeciesStudy, constructBuilding, createBattle, createNewGame, depositHomebaseResource, finishExpedition, gainSpeciesResearch, generateWildEncounter, listPlayerMonster, loadGame, nextActor, resolveExpeditionNode,
+  equipMonsterItems, researchLabLevel, saveGame, settleBattleProgression, startBreeding, startExpeditionRun, upgradeBuilding, type GameState,
   validActions, type BattleAction, type ExpeditionApproach, type WildEncounter,
 } from "./index.ts";
 
@@ -62,7 +62,7 @@ async function captureAfterEncounter(state: GameState, rng: SeededRandom, encoun
     const result = attemptCapture(encounter, remainingHp, rng, activeTeamCaptureBonus(next, content));
     if (result.captured) {
       next = addMonsterToPlayer(next, encounter.monster, next.player.activeTeamIds.length < 5);
-      next = recordSpeciesResearch(next, encounter.species.id, 8);
+      next = gainSpeciesResearch(next, encounter.species.id, 8);
       console.log(`Captured ${encounter.species.name}! Its true Potential is ${encounter.monster.potential}.`);
     } else console.log(`${encounter.species.name} escaped the capsule.`);
   }
@@ -115,7 +115,7 @@ async function wildBattle(state: GameState, rng: SeededRandom): Promise<{ state:
   }
   const enemy = battle.units.find(({ side }) => side === "enemy")!;
   const progression = settleBattleProgression({ ...state, conditions }, battle, content);
-  const progressedState = battle.result === "player-victory" ? recordSpeciesResearch(progression.state, encounter.species.id, 3) : progression.state;
+  const progressedState = battle.result === "player-victory" ? gainSpeciesResearch(progression.state, encounter.species.id, 3) : progression.state;
   console.log(battle.result === "player-victory" ? "Victory!" : "Your expedition team was defeated.");
   if (battle.result === "player-victory") console.log(`Participating monsters gain ${progression.xpAwarded} XP; reserves gain 25%.`);
   return { state: progressedState, encounter, won: battle.result === "player-victory", enemyHpRatio: enemy.hp / enemy.maxHp };
@@ -231,13 +231,37 @@ async function manageBreeding(state: GameState): Promise<GameState> {
   } catch (error) { console.log(error instanceof Error ? error.message : error); return state; }
 }
 
+async function manageResearch(state: GameState): Promise<GameState> {
+  const labLevel = researchLabLevel(state);
+  if (!labLevel) { console.log("Build and activate a Research Lab before conducting studies."); return state; }
+  const notes = state.player.inventory["research-notes"] ?? 0;
+  console.log(`\nResearch Lab Lv.${labLevel} · ${notes} research notes · +${labLevel * 15}% research gains`);
+  if (!notes) { console.log("Discoveries during expeditions can yield research notes."); return state; }
+  const knownIds = [...new Set([
+    ...Object.keys(state.player.researchBySpecies),
+    ...state.player.monsterIds.map((id) => state.monsters[id]!.speciesId),
+  ])];
+  if (!knownIds.length) { console.log("Observe or own a species before studying it."); return state; }
+  knownIds.forEach((id, index) => {
+    const research = state.player.researchBySpecies[id] ?? { level: 0, points: 0 };
+    console.log(`${index + 1}. ${byId(content.species, id).name} — Research Lv.${research.level} (${research.points} points)`);
+  });
+  const speciesId = knownIds[(await askNumber("Species: ", 1, knownIds.length)) - 1]!;
+  const count = await askNumber("Notes to use: ", 1, notes);
+  const before = state.player.researchBySpecies[speciesId] ?? { level: 0, points: 0 };
+  const next = conductSpeciesStudy(state, speciesId, count, content);
+  const after = next.player.researchBySpecies[speciesId]!;
+  console.log(`${byId(content.species, speciesId).name} gains ${after.points - before.points} research points${after.level > before.level ? ` and reaches Research Lv.${after.level}` : ""}.`);
+  return next;
+}
+
 async function manageHomebase(state: GameState): Promise<GameState> {
   console.log("\nHomebase");
   if (!state.homebase.buildings.length) console.log("No facilities built yet.");
   for (const building of state.homebase.buildings) console.log(`- ${byId(content.buildings, building.buildingId).name} Lv.${building.level} · ${building.status}`);
   console.log(`Stores: ${Object.entries(state.homebase.resources).map(([id, amount]) => `${amount} ${id}`).join(", ")}`);
-  console.log("1. Construct facility  2. Upgrade facility  3. Deposit resources  4. Breeding Nest  5. Back");
-  const action = await askNumber("> ", 1, 5);
+  console.log("1. Construct facility  2. Upgrade facility  3. Deposit resources  4. Breeding Nest  5. Research Lab  6. Back");
+  const action = await askNumber("> ", 1, 6);
   try {
     if (action === 1) {
       const available = content.buildings.filter((definition) => !state.homebase.buildings.some(({ buildingId }) => buildingId === definition.id));
@@ -259,6 +283,7 @@ async function manageHomebase(state: GameState): Promise<GameState> {
       return depositHomebaseResource(state, id, await askNumber("Amount: ", 1, state.player.inventory[id] ?? 1));
     }
     if (action === 4) return manageBreeding(state);
+    if (action === 5) return manageResearch(state);
   } catch (error) { console.log(error instanceof Error ? error.message : error); }
   return state;
 }

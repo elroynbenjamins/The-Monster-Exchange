@@ -63,6 +63,28 @@ export function recordSpeciesResearch(state: GameState, speciesId: string, point
   return { ...state, player: { ...state.player, researchBySpecies: { ...state.player.researchBySpecies, [speciesId]: { level, points: total } } } };
 }
 
+export function researchLabLevel(state: GameState): number {
+  return state.homebase.buildings.find(({ buildingId, status }) => buildingId === "research-lab" && status === "active")?.level ?? 0;
+}
+
+export function gainSpeciesResearch(state: GameState, speciesId: string, basePoints: number): GameState {
+  if (basePoints < 0) throw new Error("Research points cannot be negative.");
+  const awarded = Math.ceil(basePoints * (1 + researchLabLevel(state) * 0.15));
+  return recordSpeciesResearch(state, speciesId, awarded);
+}
+
+export function conductSpeciesStudy(state: GameState, speciesId: string, noteCount: number, content: GameContent): GameState {
+  if (state.activeExpedition) throw new Error("Research studies cannot be conducted during an expedition.");
+  if (researchLabLevel(state) < 1) throw new Error("An active Research Lab is required.");
+  if (!Number.isInteger(noteCount) || noteCount < 1) throw new Error("Use at least one whole research note.");
+  if ((state.player.inventory["research-notes"] ?? 0) < noteCount) throw new Error("Not enough research notes.");
+  if (!content.species.some(({ id }) => id === speciesId)) throw new Error("Unknown species.");
+  const known = state.player.researchBySpecies[speciesId] || state.player.monsterIds.some((id) => state.monsters[id]?.speciesId === speciesId);
+  if (!known) throw new Error("Observe or own this species before studying it.");
+  const spent = { ...state, player: { ...state.player, inventory: { ...state.player.inventory, "research-notes": state.player.inventory["research-notes"]! - noteCount } } };
+  return gainSpeciesResearch(spent, speciesId, noteCount * 10);
+}
+
 export function xpForNextLevel(level: number): number { return 60 + level * level * 12; }
 
 export function grantMonsterXp(state: GameState, monsterId: string, amount: number, content: GameContent): { state: GameState; levelsGained: number; learnedSkillIds: readonly string[] } {

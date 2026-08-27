@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 import test from "node:test";
 import {
   SeededRandom, activeTeamCaptureBonus, addMonsterToPlayer, byId, calculateCombatStats, content,
-  createMonster, createNewGame, equipMonsterItems, generateWildEncounter, recordSpeciesResearch,
+  conductSpeciesStudy, createMonster, createNewGame, equipMonsterItems, gainSpeciesResearch, generateWildEncounter, recordSpeciesResearch,
   resolveExpeditionNode, startExpeditionRun,
 } from "../src/index.ts";
 
@@ -59,4 +59,27 @@ test("capture equipment bonuses stack but remain capped", () => {
     monsters: { ...setup.state.monsters, [setup.monsterId]: { ...setup.state.monsters[setup.monsterId]!, equipmentIds: ["capture-lens", "capture-lens", "capture-lens"] } },
   };
   assert.equal(activeTeamCaptureBonus(state, content), 0.2);
+});
+
+test("an active Research Lab boosts field gains and converts notes into species knowledge", () => {
+  const setup = gameWithMonster();
+  let state = {
+    ...setup.state,
+    homebase: { ...setup.state.homebase, buildings: [{ buildingId: "research-lab", level: 2, status: "active" as const }] },
+    player: { ...setup.state.player, inventory: { ...setup.state.player.inventory, "research-notes": 2 } },
+  };
+  state = gainSpeciesResearch(state, "mossveil", 8);
+  assert.equal(state.player.researchBySpecies.mossveil?.points, 11);
+  state = conductSpeciesStudy(state, "mossveil", 2, content);
+  assert.equal(state.player.inventory["research-notes"], 0);
+  assert.equal(state.player.researchBySpecies.mossveil?.points, 37);
+  assert.equal(state.player.researchBySpecies.mossveil?.level, 2);
+});
+
+test("studies require an active lab, notes, and prior species knowledge", () => {
+  const setup = gameWithMonster();
+  const withNotes = { ...setup.state, player: { ...setup.state.player, inventory: { ...setup.state.player.inventory, "research-notes": 1 } } };
+  assert.throws(() => conductSpeciesStudy(withNotes, "mossveil", 1, content), /Research Lab/);
+  const withLab = { ...withNotes, homebase: { ...withNotes.homebase, buildings: [{ buildingId: "research-lab", level: 1, status: "active" as const }] } };
+  assert.throws(() => conductSpeciesStudy(withLab, "voltgrazer", 1, content), /Observe or own/);
 });
