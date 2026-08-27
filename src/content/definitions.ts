@@ -115,6 +115,15 @@ export interface ContractDefinition {
   reward: { crowns: number; reputation?: number; items?: Readonly<Record<string, number>> };
 }
 
+export interface RecipeDefinition {
+  id: string;
+  name: string;
+  inputs: Readonly<Record<string, number>>;
+  outputs: Readonly<Record<string, number>>;
+  requiredBuildingId: string;
+  requiredBuildingLevel: number;
+}
+
 export interface GameContent {
   contentVersion: number;
   species: readonly SpeciesDefinition[];
@@ -130,4 +139,5 @@ export interface GameContent {
   hazards: readonly HazardDefinition[];
   buildings: readonly BuildingDefinition[];
   contracts: readonly ContractDefinition[];
+  recipes: readonly RecipeDefinition[];
 }

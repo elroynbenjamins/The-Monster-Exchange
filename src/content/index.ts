@@ -93,12 +93,19 @@ export const content: GameContent = {
     { id: "field-clinic", name: "Field Clinic", maxLevel: 5, baseBuildDays: 1, baseCost: { timber: 20, herbs: 15 }, capability: "healing" },
     { id: "expedition-lodge", name: "Expedition Lodge", maxLevel: 5, baseBuildDays: 3, baseCost: { timber: 40, stone: 20 }, capability: "expedition" },
     { id: "research-lab", name: "Research Lab", maxLevel: 5, baseBuildDays: 2, baseCost: { timber: 25, stone: 20, herbs: 10 }, capability: "research" },
+    { id: "field-workshop", name: "Field Workshop", maxLevel: 5, baseBuildDays: 2, baseCost: { timber: 35, stone: 15 }, capability: "production" },
   ],
   contracts: [
     { id: "meadow-survey", name: "Meadow Survey", description: "Complete an expedition through Greenreach Meadow.", objective: { event: "complete-expedition", targetId: "greenreach-meadow", required: 1 }, durationDays: 5, reward: { crowns: 120, reputation: 1, items: { "field-capsule": 1 } } },
     { id: "mossveil-census", name: "Mossveil Census", description: "Capture two Mossveil for the regional population census.", objective: { event: "capture-species", targetId: "mossveil", required: 2 }, durationDays: 8, reward: { crowns: 180, reputation: 2 } },
     { id: "alpha-control", name: "Alpha Control", description: "Defeat a protected alpha at the end of an expedition.", objective: { event: "defeat-boss", required: 1 }, durationDays: 7, reward: { crowns: 250, reputation: 2, items: { "research-notes": 1 } } },
     { id: "market-liquidity", name: "Market Liquidity", description: "Complete a player monster sale on the Exchange.", objective: { event: "sell-monster", required: 1 }, durationDays: 10, reward: { crowns: 150, reputation: 1 } },
+  ],
+  recipes: [
+    { id: "craft-field-capsule", name: "Field Capsule", inputs: { herbs: 2, stone: 1 }, outputs: { "field-capsule": 1 }, requiredBuildingId: "field-workshop", requiredBuildingLevel: 1 },
+    { id: "craft-training-band", name: "Training Band", inputs: { timber: 3, stone: 2 }, outputs: { "training-band": 1 }, requiredBuildingId: "field-workshop", requiredBuildingLevel: 2 },
+    { id: "craft-trail-harness", name: "Trail Harness", inputs: { timber: 4, herbs: 2 }, outputs: { "trail-harness": 1 }, requiredBuildingId: "field-workshop", requiredBuildingLevel: 2 },
+    { id: "craft-capture-lens", name: "Capture Lens", inputs: { stone: 5, "research-notes": 2 }, outputs: { "capture-lens": 1 }, requiredBuildingId: "field-workshop", requiredBuildingLevel: 3 },
   ],
 };
 

@@ -4,8 +4,8 @@ import { stdin as input, stdout as output } from "node:process";
 import { join } from "node:path";
 import {
   EXPEDITION_APPROACHES, SeededRandom, activeTeamCaptureBonus, addMonsterToPlayer, appraiseMonster, attemptCapture, byId, changeInventory, content, createMonster,
-  acceptContract, advanceWorldDay, applyBattleAction, calculateExpeditionPreparation, chooseAiAction, claimBreedingJob, claimContract, conductSpeciesStudy, constructBuilding, createBattle, createNewGame, depositHomebaseResource, finishExpedition, gainSpeciesResearch, generateBossEncounter, generateWildEncounter, listPlayerMonster, loadGame, nextActor, recordContractProgress, resolveExpeditionNode,
-  equipMonsterItems, researchLabLevel, saveGame, setReducedMotion, setThemePreference, settleBattleProgression, startBreeding, startExpeditionRun, upgradeBuilding, type GameState,
+  acceptContract, advanceWorldDay, applyBattleAction, browseMarketListings, buyListing, calculateExpeditionPreparation, chooseAiAction, claimBreedingJob, claimContract, conductSpeciesStudy, constructBuilding, craftRecipe, createBattle, createNewGame, depositHomebaseResource, evolveOwnedMonster, finishExpedition, gainSpeciesResearch, generateBossEncounter, generateWildEncounter, listPlayerMonster, loadGame, nextActor, provideFieldCare, recordContractProgress, renameOwnedMonster, resolveExpeditionNode,
+  equipMonsterItems, equipMonsterSkills, researchLabLevel, saveGame, setActiveTeam, setReducedMotion, setThemePreference, settleBattleProgression, startBreeding, startExpeditionRun, upgradeBuilding, type GameState,
   validActions, type BattleAction, type ExpeditionApproach, type WildEncounter,
 } from "./index.ts";
 
@@ -34,6 +34,68 @@ function roster(state: GameState): void {
     const research = state.player.researchBySpecies[species.id] ?? { level: 0, points: 0 };
     console.log(`- ${monster.nickname ?? species.name} · Lv.${monster.level} · Potential ${monster.potential} · HP ${Math.round(condition.hpRatio * 100)}% · Stamina ${condition.stamina} · Gear ${equipment} · Research Lv.${research.level}`);
   }
+}
+
+function monsterDetails(state: GameState, monsterId: string): void {
+  const monster = state.monsters[monsterId]!;
+  const species = byId(content.species, monster.speciesId);
+  const condition = state.conditions[monsterId] ?? { hpRatio: 1, stamina: 100 };
+  console.log(`\n${monster.nickname ?? species.name} · ${species.name} · ${species.types.filter(Boolean).join(" / ")}`);
+  console.log(`Level ${monster.level} · XP ${monster.xp} · Potential ${monster.potential} · ${monster.sex}`);
+  console.log(`Genes: ${Object.entries(monster.genes).map(([id, value]) => `${id} ${value}`).join(" · ")}`);
+  console.log(`Traits: ${monster.traitIds.map((id) => byId(content.traits, id).name).join(", ") || "none"}`);
+  console.log(`Skills: ${monster.equippedSkillIds.map((id) => byId(content.skills, id).name).join(", ") || "none equipped"}`);
+  console.log(`Record: ${monster.wins}W–${monster.losses}L · Fame ${monster.fame} · HP ${Math.round(condition.hpRatio * 100)}% · Stamina ${condition.stamina}`);
+  console.log(`Lineage: generation ${monster.lineage.generation} · ${monster.lineage.parentIds.length ? monster.lineage.parentIds.join(", ") : "wild origin"}`);
+}
+
+async function manageRoster(state: GameState): Promise<GameState> {
+  roster(state);
+  console.log("\n1. Monster details  2. Rename monster  3. Edit active team  4. Edit skill loadout  5. Evolve monster  6. Field care  7. Back");
+  const action = await askNumber("> ", 1, 7);
+  if (action === 7) return state;
+  const chooseMonster = async () => {
+    state.player.monsterIds.forEach((id, index) => console.log(`${index + 1}. ${state.monsters[id]!.nickname ?? byId(content.species, state.monsters[id]!.speciesId).name}`));
+    return state.player.monsterIds[(await askNumber("> ", 1, state.player.monsterIds.length)) - 1]!;
+  };
+  try {
+    if (action === 1) { monsterDetails(state, await chooseMonster()); return state; }
+    if (action === 2) {
+      const id = await chooseMonster();
+      const nickname = await ui.question("New nickname (blank restores species name): ");
+      return renameOwnedMonster(state, id, nickname);
+    }
+    if (action === 3) {
+      const count = await askNumber("Team size: ", 1, Math.min(5, state.player.monsterIds.length));
+      console.log("Choose each team member in order:");
+      const ids: string[] = [];
+      for (let index = 0; index < count; index++) ids.push(await chooseMonster());
+      return setActiveTeam(state, ids);
+    }
+    if (action === 4) {
+      const id = await chooseMonster();
+      const monster = state.monsters[id]!;
+      monster.knownSkillIds.forEach((skillId, index) => console.log(`${index + 1}. ${byId(content.skills, skillId).name}`));
+      console.log("1. Unequip all  2. Equip skills");
+      if (await askNumber("> ", 1, 2) === 1) return equipMonsterSkills(state, id, []);
+      const count = await askNumber("Number of skills: ", 1, Math.min(3, monster.knownSkillIds.length));
+      const skillIds: string[] = [];
+      for (let index = 0; index < count; index++) skillIds.push(monster.knownSkillIds[(await askNumber(`Skill ${index + 1}: `, 1, monster.knownSkillIds.length)) - 1]!);
+      return equipMonsterSkills(state, id, skillIds);
+    }
+    if (action === 5) {
+      const id = await chooseMonster();
+      const options = content.evolutions.filter(({ fromSpeciesId }) => fromSpeciesId === state.monsters[id]!.speciesId);
+      if (!options.length) { console.log("This monster has no known evolution."); return state; }
+      options.forEach((evolution, index) => console.log(`${index + 1}. ${byId(content.species, evolution.toSpeciesId).name} — ${Object.entries(evolution.requirements).map(([key, value]) => `${key} ${value}`).join(", ")}`));
+      return evolveOwnedMonster(state, id, options[(await askNumber("> ", 1, options.length)) - 1]!, content);
+    }
+    if (action === 6) {
+      const id = await chooseMonster();
+      return provideFieldCare(state, id, await askNumber("Herbs to use: ", 1, Math.max(1, state.player.inventory.herbs ?? 0)));
+    }
+  } catch (error) { console.log(error instanceof Error ? error.message : error); }
+  return state;
 }
 
 async function newGame(): Promise<GameState> {
@@ -203,6 +265,34 @@ async function sellMonster(state: GameState): Promise<GameState> {
   } catch (error) { console.log(error instanceof Error ? error.message : error); return state; }
 }
 
+async function manageMarketplace(state: GameState): Promise<GameState> {
+  console.log("\nMarketplace\n1. Browse all listings  2. Browse affordable listings  3. Sell a monster  4. Back");
+  const action = await askNumber("> ", 1, 4);
+  if (action === 3) return sellMonster(state);
+  if (action === 4) return state;
+  const listings = browseMarketListings(state, { affordableOnly: action === 2, sortBy: "price" });
+  if (!listings.length) { console.log("No matching NPC listings are currently available. End a day to refresh the market."); return state; }
+  listings.forEach((listing, index) => {
+    const species = byId(content.species, listing.monster.speciesId);
+    console.log(`${index + 1}. ${species.name} · Lv.${listing.monster.level} · Potential ${listing.monster.potential} · ${listing.askingPrice} Crowns`);
+  });
+  console.log(`${listings.length + 1}. Back`);
+  const selection = await askNumber("Inspect/purchase: ", 1, listings.length + 1);
+  if (selection > listings.length) return state;
+  const listing = listings[selection - 1]!;
+  console.log(`Traits: ${listing.monster.traitIds.map((id) => byId(content.traits, id).name).join(", ") || "none"} · Record ${listing.monster.wins}W–${listing.monster.losses}L`);
+  console.log("1. Purchase  2. Back");
+  if (await askNumber("> ", 1, 2) === 2) return state;
+  try { return buyListing(state, listing.id); } catch (error) { console.log(error instanceof Error ? error.message : error); return state; }
+}
+
+function showInventory(state: GameState): void {
+  console.log("\nInventory");
+  const entries = Object.entries(state.player.inventory).filter(([, amount]) => amount > 0).sort(([a], [b]) => a.localeCompare(b));
+  for (const [id, amount] of entries) console.log(`- ${id}: ${amount}`);
+  if (!entries.length) console.log("Inventory is empty.");
+}
+
 async function manageEquipment(state: GameState): Promise<GameState> {
   if (state.activeExpedition) { console.log("Equipment cannot change during an expedition."); return state; }
   roster(state);
@@ -270,13 +360,30 @@ async function manageResearch(state: GameState): Promise<GameState> {
   return next;
 }
 
+async function manageCrafting(state: GameState): Promise<GameState> {
+  const available = content.recipes.filter((recipe) => {
+    const building = state.homebase.buildings.find(({ buildingId, status }) => buildingId === recipe.requiredBuildingId && status === "active");
+    return building && building.level >= recipe.requiredBuildingLevel;
+  });
+  if (!available.length) { console.log("Build or upgrade the Field Workshop to unlock recipes."); return state; }
+  console.log("\nField Workshop");
+  available.forEach((recipe, index) => console.log(`${index + 1}. ${recipe.name} — ${Object.entries(recipe.inputs).map(([id, amount]) => `${amount} ${id}`).join(", ")}`));
+  const recipe = available[(await askNumber("> ", 1, available.length)) - 1]!;
+  const quantity = await askNumber("Quantity: ", 1, 99);
+  try {
+    const next = craftRecipe(state, recipe.id, quantity, content);
+    console.log(`Crafted ${quantity} × ${recipe.name}.`);
+    return next;
+  } catch (error) { console.log(error instanceof Error ? error.message : error); return state; }
+}
+
 async function manageHomebase(state: GameState): Promise<GameState> {
   console.log("\nHomebase");
   if (!state.homebase.buildings.length) console.log("No facilities built yet.");
   for (const building of state.homebase.buildings) console.log(`- ${byId(content.buildings, building.buildingId).name} Lv.${building.level} · ${building.status}`);
   console.log(`Stores: ${Object.entries(state.homebase.resources).map(([id, amount]) => `${amount} ${id}`).join(", ")}`);
-  console.log("1. Construct facility  2. Upgrade facility  3. Deposit resources  4. Breeding Nest  5. Research Lab  6. Back");
-  const action = await askNumber("> ", 1, 6);
+  console.log("1. Construct facility  2. Upgrade facility  3. Deposit resources  4. Breeding Nest  5. Research Lab  6. Field Workshop  7. Back");
+  const action = await askNumber("> ", 1, 7);
   try {
     if (action === 1) {
       const available = content.buildings.filter((definition) => !state.homebase.buildings.some(({ buildingId }) => buildingId === definition.id));
@@ -299,6 +406,7 @@ async function manageHomebase(state: GameState): Promise<GameState> {
     }
     if (action === 4) return manageBreeding(state);
     if (action === 5) return manageResearch(state);
+    if (action === 6) return manageCrafting(state);
   } catch (error) { console.log(error instanceof Error ? error.message : error); }
   return state;
 }
@@ -350,11 +458,13 @@ async function run(): Promise<void> {
   while (true) {
     console.log(`\nDay ${state.world.day} · ${state.player.crowns} Crowns · ${state.player.inventory["field-capsule"] ?? 0} Capsules`);
     console.log(`Season: ${state.world.season} · Greenreach weather: ${state.world.weatherByRegion.greenreach ?? "unknown"}`);
-    console.log("1. Expedition  2. View roster  3. End day  4. Sell a monster  5. Homebase  6. Equipment  7. Appearance  8. Contracts  9. Save and quit");
-    const action = await askNumber("> ", 1, 9);
+    console.log("1. Expedition  2. Roster  3. Marketplace  4. Inventory  5. End day  6. Homebase  7. Equipment  8. Appearance  9. Contracts  10. Save and quit");
+    const action = await askNumber("> ", 1, 10);
     if (action === 1) state = await expedition(state);
-    if (action === 2) roster(state);
-    if (action === 3) {
+    if (action === 2) state = await manageRoster(state);
+    if (action === 3) state = await manageMarketplace(state);
+    if (action === 4) showInventory(state);
+    if (action === 5) {
       try {
         const result = advanceWorldDay(state, content);
         state = result.state;
@@ -363,13 +473,12 @@ async function run(): Promise<void> {
       }
       catch (error) { console.log(error instanceof Error ? error.message : error); }
     }
-    if (action === 4) state = await sellMonster(state);
-    if (action === 5) state = await manageHomebase(state);
-    if (action === 6) state = await manageEquipment(state);
-    if (action === 7) state = await manageAppearance(state);
-    if (action === 8) state = await manageContracts(state);
+    if (action === 6) state = await manageHomebase(state);
+    if (action === 7) state = await manageEquipment(state);
+    if (action === 8) state = await manageAppearance(state);
+    if (action === 9) state = await manageContracts(state);
     await saveGame(savePath, state);
-    if (action === 9) break;
+    if (action === 10) break;
   }
 }
 

@@ -3,6 +3,22 @@ import type { MarketplaceListing } from "./market.ts";
 import type { RandomSource } from "../core/random.ts";
 import { createListing } from "./market.ts";
 
+export interface MarketBrowseOptions {
+  speciesId?: string;
+  maximumPrice?: number;
+  affordableOnly?: boolean;
+  sortBy?: "price" | "potential" | "level";
+}
+
+export function browseMarketListings(state: GameState, options: MarketBrowseOptions = {}): readonly MarketplaceListing[] {
+  const listings = state.market.listings.filter((listing) => listing.sellerId !== state.player.id)
+    .filter((listing) => !options.speciesId || listing.monster.speciesId === options.speciesId)
+    .filter((listing) => options.maximumPrice === undefined || listing.askingPrice <= options.maximumPrice)
+    .filter((listing) => !options.affordableOnly || listing.askingPrice <= state.player.crowns);
+  const sortBy = options.sortBy ?? "price";
+  return [...listings].sort((a, b) => sortBy === "potential" ? b.monster.potential - a.monster.potential : sortBy === "level" ? b.monster.level - a.monster.level : a.askingPrice - b.askingPrice);
+}
+
 export function buyListing(state: GameState, listingId: string): GameState {
   const listing = state.market.listings.find(({ id }) => id === listingId);
   if (!listing) throw new Error("Listing is no longer available.");

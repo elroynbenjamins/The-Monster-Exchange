@@ -3,7 +3,7 @@ import { content } from "../src/content/index.ts";
 
 const errors: string[] = [];
 const idPattern = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
-const groups = [content.species, content.traits, content.skills, content.statuses, content.passives, content.synergies, content.equipment, content.evolutions, content.regions, content.zones, content.hazards, content.buildings, content.contracts];
+const groups = [content.species, content.traits, content.skills, content.statuses, content.passives, content.synergies, content.equipment, content.evolutions, content.regions, content.zones, content.hazards, content.buildings, content.contracts, content.recipes];
 const allIds = new Set<string>();
 
 for (const group of groups) {
@@ -22,6 +22,7 @@ const passiveIds = new Set(content.passives.map(({ id }) => id));
 const evolutionIds = new Set(content.evolutions.map(({ id }) => id));
 const zoneIds = new Set(content.zones.map(({ id }) => id));
 const hazardIds = new Set(content.hazards.map(({ id }) => id));
+const buildingIds = new Set(content.buildings.map(({ id }) => id));
 
 for (const species of content.species) {
   for (const type of species.types) if (type && !GAME_TYPES.includes(type)) errors.push(`${species.id}: unknown type ${type}`);
@@ -62,6 +63,11 @@ for (const contract of content.contracts) {
   if (contract.objective.required < 1 || contract.durationDays < 1 || contract.reward.crowns < 0) errors.push(`${contract.id}: invalid objective, duration, or reward`);
   if (contract.objective.event === "capture-species" && contract.objective.targetId && !speciesIds.has(contract.objective.targetId)) errors.push(`${contract.id}: unknown target species ${contract.objective.targetId}`);
   if (contract.objective.event === "complete-expedition" && contract.objective.targetId && !zoneIds.has(contract.objective.targetId)) errors.push(`${contract.id}: unknown target zone ${contract.objective.targetId}`);
+}
+for (const recipe of content.recipes) {
+  if (!buildingIds.has(recipe.requiredBuildingId)) errors.push(`${recipe.id}: unknown required building ${recipe.requiredBuildingId}`);
+  if (recipe.requiredBuildingLevel < 1 || !Object.keys(recipe.inputs).length || !Object.keys(recipe.outputs).length) errors.push(`${recipe.id}: invalid recipe requirements`);
+  for (const amount of [...Object.values(recipe.inputs), ...Object.values(recipe.outputs)]) if (!Number.isInteger(amount) || amount < 1) errors.push(`${recipe.id}: recipe amounts must be positive whole numbers`);
 }
 
 if (errors.length) {

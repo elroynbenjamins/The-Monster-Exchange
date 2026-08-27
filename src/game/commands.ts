@@ -18,6 +18,45 @@ export function setReducedMotion(state: GameState, reducedMotion: boolean): Game
   return { ...state, uiPreferences: { ...state.uiPreferences, reducedMotion } };
 }
 
+export function renameOwnedMonster(state: GameState, monsterId: string, nickname?: string): GameState {
+  const monster = state.monsters[monsterId];
+  if (!monster || monster.ownerId !== state.player.id) throw new Error("You do not own this monster.");
+  const trimmed = nickname?.trim();
+  if (trimmed && trimmed.length > 24) throw new Error("Nicknames can contain at most 24 characters.");
+  return { ...state, monsters: { ...state.monsters, [monsterId]: { ...monster, nickname: trimmed || undefined } } };
+}
+
+export function provideFieldCare(state: GameState, monsterId: string, herbCount: number): GameState {
+  if (state.activeExpedition) throw new Error("Field care is only available at homebase.");
+  const monster = state.monsters[monsterId];
+  if (!monster || monster.ownerId !== state.player.id) throw new Error("You do not own this monster.");
+  if (!Number.isInteger(herbCount) || herbCount < 1) throw new Error("Use at least one whole herb.");
+  if ((state.player.inventory.herbs ?? 0) < herbCount) throw new Error("Not enough herbs.");
+  const current = state.conditions[monsterId] ?? { hpRatio: 1, stamina: 100 };
+  if (current.hpRatio >= 1 && current.stamina >= 100) throw new Error("This monster does not need field care.");
+  const clinicLevel = state.homebase.buildings.find(({ buildingId, status }) => buildingId === "field-clinic" && status === "active")?.level ?? 0;
+  const healingPerHerb = 0.2 + clinicLevel * 0.05;
+  return {
+    ...state,
+    player: { ...state.player, inventory: { ...state.player.inventory, herbs: state.player.inventory.herbs! - herbCount } },
+    conditions: { ...state.conditions, [monsterId]: { hpRatio: Math.min(1, current.hpRatio + healingPerHerb * herbCount), stamina: Math.min(100, current.stamina + (10 + clinicLevel * 2) * herbCount) } },
+  };
+}
+
+export function craftRecipe(state: GameState, recipeId: string, quantity: number, content: GameContent): GameState {
+  if (state.activeExpedition) throw new Error("Crafting is only available at homebase.");
+  if (!Number.isInteger(quantity) || quantity < 1) throw new Error("Craft a positive whole quantity.");
+  const recipe = content.recipes.find(({ id }) => id === recipeId);
+  if (!recipe) throw new Error("Unknown recipe.");
+  const workshop = state.homebase.buildings.find(({ buildingId, status }) => buildingId === recipe.requiredBuildingId && status === "active");
+  if (!workshop || workshop.level < recipe.requiredBuildingLevel) throw new Error(`${recipe.name} requires ${recipe.requiredBuildingId} level ${recipe.requiredBuildingLevel}.`);
+  for (const [id, amount] of Object.entries(recipe.inputs)) if ((state.player.inventory[id] ?? 0) < amount * quantity) throw new Error(`Not enough ${id}.`);
+  const inventory = { ...state.player.inventory };
+  for (const [id, amount] of Object.entries(recipe.inputs)) inventory[id] = (inventory[id] ?? 0) - amount * quantity;
+  for (const [id, amount] of Object.entries(recipe.outputs)) inventory[id] = (inventory[id] ?? 0) + amount * quantity;
+  return { ...state, player: { ...state.player, inventory } };
+}
+
 export function setActiveTeam(state: GameState, monsterIds: readonly string[]): GameState {
   if (monsterIds.length < 1 || monsterIds.length > 5) throw new Error("A team requires 1–5 monsters.");
   if (new Set(monsterIds).size !== monsterIds.length) throw new Error("A monster cannot occupy two team slots.");

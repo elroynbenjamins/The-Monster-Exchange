@@ -23,6 +23,8 @@ Appearance settings persist a Light, Dark, or Follow Device preference plus redu
 
 The Contract Board offers authored, time-limited objectives for captures, expedition completions, alpha victories, and completed marketplace sales. Up to three may be active at once; matching play advances them and completed work pays explicit Crown, item, and reputation rewards.
 
+The terminal client now exposes the core management tools needed for regular play: detailed individual records, nicknames, active-team and skill editing, evolution, marketplace browsing and purchasing, inventory review, herb-based field care, and data-driven Workshop crafting.
+
 ## Architecture
 
 ```text
@@ -53,7 +55,7 @@ Systems accept state and return new state or explicit events. They do not know a
 ## Roadmap
 
 1. **Foundation (complete)** — definitions, deterministic generation, lineage-aware breeding, evolution eligibility, market ticks, buildings, expeditions, and timeline combat primitives.
-2. **Playable loop (in progress)** — versioned/migrated autosaves, inventory/currency, selectable and unlockable expedition zones, health/stamina, retreat/defeat, capture, marketplace purchases/player selling, NPC listings, time-limited contracts, roster commands, equipment loadouts, species research and focused Lab studies, timed breeding, evolution, functional homebase facilities, risk/reward expedition approaches, team-based hazard protection, and authored route bosses are connected. Next: repeatable contract generation, more regional content, and a visual client.
+2. **Playable loop (in progress)** — versioned/migrated autosaves, inventory/currency, selectable and unlockable expedition zones, health/stamina and field care, retreat/defeat, capture, full marketplace browsing/purchasing/player selling, NPC listings, time-limited contracts, detailed roster/team/skill/evolution commands, equipment loadouts, species research and focused Lab studies, timed breeding, data-driven Workshop crafting, functional homebase facilities, risk/reward expedition approaches, team-based hazard protection, and authored route bosses are connected. Next: repeatable contract generation, more regional content, and a visual client.
 3. **Combat depth (in progress)** — deterministic speed-timeline battles now support the complete centralized 18-type chart, three active/two reserve teams, action-cost switching, Energy, cooldowns, data-defined stackable statuses, damage-over-time, control, healing, cleansing, shields, fixed equipment, species passives, capped team synergies, Wet/Electric and other status combinations, weighted AI, XP, reputation, fame, and persistent battle records. Next: manual reserve replacement, boss triggers, and battle rewards beyond XP.
 4. **Living world (foundation in progress)** — one coordinated day tick now advances recovery, construction, breeding, listing expiry/sales, NPC listings, regional weather, seasons, and species populations. Next: persistent NPC portfolios, rival/friend progression, tournaments, contracts, and market news.
 5. **Content pipeline** — JSON import/export, schema versioning/migrations, editor tooling, localization, balance simulations, and pixel-art integration.
