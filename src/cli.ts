@@ -3,8 +3,9 @@ import { createInterface } from "node:readline/promises";
 import { stdin as input, stdout as output } from "node:process";
 import { join } from "node:path";
 import {
-  SeededRandom, addMonsterToPlayer, attemptCapture, byId, changeInventory, content, createMonster,
-  createNewGame, generateWildEncounter, loadGame, saveGame, type GameState,
+  SeededRandom, addMonsterToPlayer, appraiseMonster, attemptCapture, byId, changeInventory, content, createMonster,
+  createNewGame, finishExpedition, generateWildEncounter, listPlayerMonster, loadGame, resolveExpeditionNode,
+  resolvePlayerListingSales, restTeam, returnExpiredPlayerListings, saveGame, startExpeditionRun, tickMarket, type GameState,
 } from "./index.ts";
 
 const savePath = join(process.cwd(), ".local", "save.json");
@@ -27,7 +28,8 @@ function roster(state: GameState): void {
   for (const id of state.player.monsterIds) {
     const monster = state.monsters[id]!;
     const species = byId(content.species, monster.speciesId);
-    console.log(`- ${monster.nickname ?? species.name} · Lv.${monster.level} · Potential ${monster.potential} · ${monster.traitIds.join(", ") || "no trait"}`);
+    const condition = state.conditions[id] ?? { hpRatio: 1, stamina: 100 };
+    console.log(`- ${monster.nickname ?? species.name} · Lv.${monster.level} · Potential ${monster.potential} · HP ${Math.round(condition.hpRatio * 100)}% · Stamina ${condition.stamina}`);
   }
 }
 
@@ -45,22 +47,15 @@ async function newGame(): Promise<GameState> {
   return state;
 }
 
-async function explore(state: GameState): Promise<GameState> {
-  const zone = byId(content.zones, state.world.unlockedZoneIds[0]!);
-  const rng = new SeededRandom(state.world.seed + state.world.nextRandomOffset + 1);
+async function captureAfterEncounter(state: GameState, rng: SeededRandom): Promise<GameState> {
+  const zone = byId(content.zones, state.activeExpedition!.route.zoneId);
   const encounter = generateWildEncounter(zone, content.species, rng, state.world.day);
-  console.log(`\nIn ${zone.id}, a Lv.${encounter.monster.level} ${encounter.species.name} appears.`);
-  console.log(`Estimated Potential: ${encounter.estimatedPotential[0]}–${encounter.estimatedPotential[1]}`);
-  console.log("1. Battle and weaken it  2. Leave");
-  const action = await askNumber("> ", 1, 2);
-  let next = { ...state, world: { ...state.world, nextRandomOffset: state.world.nextRandomOffset + 1 } };
-  if (action === 2) return next;
   const remainingHp = rng.int(18, 48) / 100;
-  const crownsFound = rng.int(18, 45);
-  next = { ...next, player: { ...next.player, crowns: next.player.crowns + crownsFound } };
-  console.log(`Your team weakens it to ${Math.round(remainingHp * 100)}% HP. You recover ${crownsFound} Crowns from the field contract.`);
+  console.log(`\nThe encounter included a Lv.${encounter.monster.level} ${encounter.species.name}, now at ${Math.round(remainingHp * 100)}% HP.`);
+  console.log(`Estimated Potential: ${encounter.estimatedPotential[0]}–${encounter.estimatedPotential[1]}`);
+  let next = { ...state, world: { ...state.world, nextRandomOffset: state.world.nextRandomOffset + 1 } };
   if ((next.player.inventory["field-capsule"] ?? 0) < 1) { console.log("You have no Field Capsules."); return next; }
-  console.log("1. Use a Field Capsule  2. Let it go");
+  console.log("1. Use a Field Capsule  2. Leave it behind");
   if (await askNumber("> ", 1, 2) === 1) {
     next = changeInventory(next, "field-capsule", -1);
     const result = attemptCapture(encounter, remainingHp, rng);
@@ -72,21 +67,79 @@ async function explore(state: GameState): Promise<GameState> {
   return next;
 }
 
+async function expedition(state: GameState): Promise<GameState> {
+  const rng = new SeededRandom(state.world.seed + state.world.nextRandomOffset + 101);
+  let next = state.activeExpedition ? state : startExpeditionRun(state, byId(content.zones, state.world.unlockedZoneIds[0]!), rng);
+  console.log(next.activeExpedition === state.activeExpedition ? "\nResuming expedition." : "\nThe team enters Greenreach Meadow.");
+  while (next.activeExpedition) {
+    const route = next.activeExpedition.route;
+    if (route.status === "completed") {
+      next = finishExpedition(next);
+      console.log("Expedition complete. All secured rewards were added to your inventory.");
+      break;
+    }
+    if (route.status === "abandoned") {
+      next = finishExpedition(next, true);
+      console.log("The team was defeated and evacuated with 60% of its secured rewards.");
+      break;
+    }
+    const node = route.nodes[route.currentNode]!;
+    console.log(`\nRoute ${route.currentNode + 1}/${route.nodes.length}: ${node.type}`);
+    console.log("1. Resolve node  2. Retreat with 60% rewards  3. Save and return to office");
+    const choice = await askNumber("> ", 1, 3);
+    if (choice === 2) { next = finishExpedition(next, true); console.log("The team retreats safely."); break; }
+    if (choice === 3) break;
+    const outcome = resolveExpeditionNode(next, rng);
+    next = outcome.state;
+    console.log(outcome.event.payload.message);
+    if (node.type === "encounter" && !outcome.defeated) next = await captureAfterEncounter(next, rng);
+    await saveGame(savePath, next);
+  }
+  return next;
+}
+
+async function sellMonster(state: GameState): Promise<GameState> {
+  if (state.player.monsterIds.length <= 1) { console.log("You need at least two monsters before listing one."); return state; }
+  roster(state);
+  console.log("\nChoose a monster to list:");
+  state.player.monsterIds.forEach((id, index) => console.log(`${index + 1}. ${byId(content.species, state.monsters[id]!.speciesId).name}`));
+  const selectedId = state.player.monsterIds[(await askNumber("> ", 1, state.player.monsterIds.length)) - 1]!;
+  const monster = state.monsters[selectedId]!;
+  const species = byId(content.species, monster.speciesId);
+  const suggested = appraiseMonster(monster, species, content.traits, state.market.indices[species.id]);
+  console.log(`Suggested appraisal: ${suggested} Crowns.`);
+  const price = await askNumber("Asking price: ", 1, 1000000);
+  try {
+    return listPlayerMonster(state, selectedId, price, 3, new SeededRandom(state.world.seed + state.world.nextRandomOffset + 500));
+  } catch (error) { console.log(error instanceof Error ? error.message : error); return state; }
+}
+
+function advanceDay(state: GameState): GameState {
+  let next = restTeam(state);
+  const expiring = next.market.listings.filter((listing) => listing.expiresOnDay <= state.market.day + 1);
+  next = { ...next, market: tickMarket({ ...next.market, day: state.market.day }) };
+  next = returnExpiredPlayerListings(next, expiring);
+  const sales = resolvePlayerListingSales(next, new SeededRandom(next.world.seed + next.world.day * 97));
+  if (sales.soldListingIds.length) console.log(`${sales.soldListingIds.length} marketplace listing sold.`);
+  return sales.state;
+}
+
 async function run(): Promise<void> {
   let state = await exists(savePath) ? await loadGame(savePath, content.contentVersion) : await newGame();
   console.log(`\nWelcome, ${state.player.name}.`);
   while (true) {
     console.log(`\nDay ${state.world.day} · ${state.player.crowns} Crowns · ${state.player.inventory["field-capsule"] ?? 0} Capsules`);
-    console.log("1. Explore Greenreach  2. View roster  3. Rest until tomorrow  4. Save and quit");
-    const action = await askNumber("> ", 1, 4);
-    if (action === 1) state = await explore(state);
+    console.log("1. Expedition  2. View roster  3. Rest until tomorrow  4. Sell a monster  5. Save and quit");
+    const action = await askNumber("> ", 1, 5);
+    if (action === 1) state = await expedition(state);
     if (action === 2) roster(state);
     if (action === 3) {
-      state = { ...state, world: { ...state.world, day: state.world.day + 1 }, market: { ...state.market, day: state.market.day + 1 } };
-      console.log("A new market day begins.");
+      try { state = advanceDay(state); console.log("The team recovers and a new market day begins."); }
+      catch (error) { console.log(error instanceof Error ? error.message : error); }
     }
+    if (action === 4) state = await sellMonster(state);
     await saveGame(savePath, state);
-    if (action === 4) break;
+    if (action === 5) break;
   }
 }
 

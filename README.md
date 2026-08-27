@@ -15,7 +15,7 @@ npm run play
 
 `npm start` runs a small reproducible world tick: it creates monsters, breeds an offspring, advances the market, starts an expedition, and resolves a combat action.
 
-`npm run play` starts the first terminal-based playable loop. It creates an autosave under `.local/`, lets you choose a partner, explore Greenreach, weaken and capture wild individuals, inspect their true potential, and advance the world day. The terminal is a temporary development client, not the intended final interface.
+`npm run play` starts the terminal-based development client. It creates an autosave under `.local/`, lets you choose a partner, run or resume multi-node Greenreach expeditions, manage health and stamina, capture wild individuals, secure or risk route rewards, list monsters for sale, and advance the living market by resting. The terminal is a temporary development client, not the intended final interface.
 
 ## Architecture
 
@@ -46,7 +46,7 @@ Systems accept state and return new state or explicit events. They do not know a
 ## Roadmap
 
 1. **Foundation (complete)** — definitions, deterministic generation, lineage-aware breeding, evolution eligibility, market ticks, buildings, expeditions, and timeline combat primitives.
-2. **Playable loop (in progress)** — versioned autosaves, inventory/currency, wild encounters, capture, marketplace purchases, and a terminal development UI are connected. Next: full expedition node resolution, healing/stamina, selling, and defeat states.
+2. **Playable loop (in progress)** — versioned/migrated autosaves, inventory/currency, resumable expedition nodes, health/stamina, retreat/defeat, capture, marketplace purchases and player selling are connected. Next: tactical battle turns, clinic/homebase interaction, NPC listings, and richer node choices.
 3. **Combat depth** — status manager, skill resolver, switching, 3-active/2-reserve teams, weighted AI profiles, rewards, and battle records.
 4. **Living world** — NPC portfolios, rival/friend progression, regional populations, seasons/weather, tournaments, contracts, and market news.
 5. **Content pipeline** — JSON import/export, schema versioning/migrations, editor tooling, localization, balance simulations, and pixel-art integration.

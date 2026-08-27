@@ -3,6 +3,14 @@ import { dirname } from "node:path";
 import type { GameState } from "./state.ts";
 import { SAVE_VERSION } from "./state.ts";
 
+function migrateSave(raw: GameState & { saveVersion: number }): GameState {
+  if (raw.saveVersion === 1) {
+    const conditions = Object.fromEntries(Object.keys(raw.monsters).map((id) => [id, { hpRatio: 1, stamina: 100 }]));
+    return { ...raw, saveVersion: 2, conditions };
+  }
+  return raw;
+}
+
 export async function saveGame(path: string, state: GameState): Promise<void> {
   await mkdir(dirname(path), { recursive: true });
   const temporaryPath = `${path}.tmp`;
@@ -11,7 +19,7 @@ export async function saveGame(path: string, state: GameState): Promise<void> {
 }
 
 export async function loadGame(path: string, expectedContentVersion: number): Promise<GameState> {
-  const parsed = JSON.parse(await readFile(path, "utf8")) as GameState;
+  const parsed = migrateSave(JSON.parse(await readFile(path, "utf8")) as GameState);
   if (parsed.saveVersion !== SAVE_VERSION) throw new Error(`Unsupported save version ${parsed.saveVersion}.`);
   if (parsed.contentVersion > expectedContentVersion) throw new Error("This save uses newer game content.");
   return parsed;

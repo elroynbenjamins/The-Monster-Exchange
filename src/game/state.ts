@@ -1,8 +1,20 @@
 import type { HomebaseState } from "../systems/homebase.ts";
 import type { MarketState } from "../systems/market.ts";
 import type { MonsterIndividual } from "../core/types.ts";
+import type { ExpeditionState } from "../systems/exploration.ts";
 
-export const SAVE_VERSION = 1;
+export const SAVE_VERSION = 2;
+
+export interface MonsterCondition {
+  hpRatio: number;
+  stamina: number;
+}
+
+export interface ActiveExpedition {
+  route: ExpeditionState;
+  startedOnDay: number;
+  rewards: Readonly<Record<string, number>>;
+}
 
 export interface PlayerState {
   id: string;
@@ -27,6 +39,8 @@ export interface GameState {
   player: PlayerState;
   world: WorldState;
   monsters: Readonly<Record<string, MonsterIndividual>>;
+  conditions: Readonly<Record<string, MonsterCondition>>;
+  activeExpedition?: ActiveExpedition;
   market: MarketState;
   homebase: HomebaseState;
 }
@@ -44,6 +58,7 @@ export function createNewGame(playerName: string, seed: number, contentVersion: 
     },
     world: { day: 1, seed, nextRandomOffset: 0, unlockedZoneIds: ["greenreach-meadow"] },
     monsters: {},
+    conditions: {},
     market: { day: 1, indices: {}, listings: [], events: [] },
     homebase: { slotCount: 3, buildings: [], resources: { timber: 50, stone: 25, herbs: 5 } },
   };
@@ -54,6 +69,7 @@ export function addMonsterToPlayer(state: GameState, monster: MonsterIndividual,
   return {
     ...state,
     monsters: { ...state.monsters, [owned.id]: owned },
+    conditions: { ...state.conditions, [owned.id]: { hpRatio: 1, stamina: 100 } },
     player: {
       ...state.player,
       monsterIds: [...state.player.monsterIds, owned.id],
