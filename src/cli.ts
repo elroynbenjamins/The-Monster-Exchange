@@ -199,7 +199,8 @@ async function expedition(state: GameState): Promise<GameState> {
   const rng = new SeededRandom(state.world.seed + state.world.nextRandomOffset + 101);
   let zone = state.activeExpedition ? byId(content.zones, state.activeExpedition.route.zoneId) : undefined;
   if (!zone) {
-    const available = state.world.unlockedZoneIds.map((id) => byId(content.zones, id));
+    const available = state.world.unlockedZoneIds.map((id) => byId(content.zones, id)).filter(({ regionId }) => regionId === state.player.location.regionId);
+    if (!available.length) { console.log("No expedition zone is currently unlocked in this region."); return state; }
     console.log("\nChoose an expedition zone:");
     available.forEach((candidate, index) => {
       const boss = candidate.boss ? ` · Alpha Lv.${candidate.boss.level}` : "";

@@ -58,3 +58,11 @@ test("every monster is connected to reusable gameplay content", () => {
     assert.ok(species.habitats.every((habitat) => content.zones.some(({ id }) => id === habitat)));
   }
 });
+
+test("every regional expedition has a populated and type-relevant ecology", () => {
+  for (const zone of content.zones) {
+    assert.ok(zone.speciesPool.length >= 5, `${zone.name} needs at least five encounter species`);
+    const region = content.regions.find(({ id }) => id === zone.regionId)!;
+    assert.ok(zone.speciesPool.some(({ speciesId }) => content.species.find(({ id }) => id === speciesId)!.types.some((type) => type && region.types.includes(type))), `${zone.name} needs a regionally relevant species`);
+  }
+});

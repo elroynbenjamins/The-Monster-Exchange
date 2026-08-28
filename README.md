@@ -43,6 +43,8 @@ Regional travel now uses authored bidirectional road, rail, ferry, and airship r
 
 Player location now persists in save version 8. The terminal client's World Map lets keepers leave or enter a region's major city, use its market, arena, storage, clinic, workshop, expedition, and transport services, and travel along authored routes. Journey time executes the complete living-world tick, so weather, markets, recovery, construction, breeding, contracts, and trainer progression continue while travelling. Version 7 saves migrate safely to Hearthbrook.
 
+All twelve mapped regions now have playable expedition ecology. Thirteen zones span Greenreach's two-step opening route through Frostmarch, Stonehollow, Aurelia, Iron Dominion, Mistwater Coast, Mirefen, and the four late-game Frontier regions. Each has an authored level band, encounter distribution, environmental hazard, preparation counters, alpha boss, and rewards. Reaching a region unlocks its entry zone; expedition selection remains local to the player's current region. Content validation rejects empty encounter pools.
+
 Recent usability rules are centralized rather than embedded in menus: nicknames normalize safely and stay unique, field care avoids wasting herbs, crafting reports exact available quantities, market searches support quality thresholds and value labels, contracts expose percentage progress, and trainer profiles show relationship tiers plus estimated challenge difficulty.
 
 ## Architecture

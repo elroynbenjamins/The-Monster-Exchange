@@ -49,5 +49,7 @@ export function travelPlayer(state: GameState, routeId: string, content: GameCon
   }
   let next: GameState = { ...state, player: { ...state.player, crowns: result.state.crowns, location: { regionId: routeDestination(result.route, state.player.location.regionId)! } } };
   for (let day = 0; day < result.route.durationDays; day++) next = advanceWorldDay(next, content).state;
+  const entryZoneId = content.regions.find(({ id }) => id === next.player.location.regionId)?.zoneIds[0];
+  if (entryZoneId && !next.world.unlockedZoneIds.includes(entryZoneId)) next = { ...next, world: { ...next.world, unlockedZoneIds: [...next.world.unlockedZoneIds, entryZoneId] } };
   return next;
 }

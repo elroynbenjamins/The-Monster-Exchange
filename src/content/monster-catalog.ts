@@ -216,9 +216,19 @@ function habitatFor(types: readonly GameType[]): readonly string[] {
     if (["grass", "bug", "fairy", "normal", "fighting"].includes(type)) habitats.add("greenreach-meadow");
     if (["poison", "dark", "ghost", "psychic"].includes(type)) habitats.add("greenreach-deepwood");
     if (["electric", "flying", "rock", "ground", "steel", "ice", "dragon", "fire"].includes(type)) habitats.add("stormpeak-foothills");
+    if (type === "ice") habitats.add("frostmarch-glacial-shelf");
+    if (["rock", "ground"].includes(type)) habitats.add("stonehollow-quarries");
+    if (["normal", "fairy", "psychic"].includes(type)) habitats.add("aurelia-riverbank");
+    if (["steel", "fighting"].includes(type)) habitats.add("iron-dominion-slagfields");
+    if (["water", "flying", "ice"].includes(type)) habitats.add("mistwater-reefs");
+    if (["poison", "ghost", "dark", "bug"].includes(type)) habitats.add("mirefen-rotten-basin");
+    if (["fire", "dragon"].includes(type)) habitats.add("dragonspine-molten-fangs");
+    if (["rock", "fairy", "psychic"].includes(type)) habitats.add("crystal-depths-prism-chasm");
+    if (["water", "ghost", "dark"].includes(type)) habitats.add("the-deep-drowned-bastion");
+    if (["ghost", "psychic", "dragon"].includes(type)) habitats.add("rift-anomaly-nests");
     if (type === "water") habitats.add("greenreach-meadow");
   }
-  return [...habitats].slice(0, 2);
+  return [...habitats];
 }
 
 function statBudget(concept: MonsterConcept): number {

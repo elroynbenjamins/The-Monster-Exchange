@@ -21,6 +21,7 @@ test("regional travel charges Crowns, advances the living world, and clears city
   assert.equal(travelled.world.day, 2);
   assert.ok(travelled.market.listings.length > 0, "travel days should run the full world tick");
   assert.ok(availablePlayerRoutes(travelled).some(({ id }) => id === "greenreach-frostmarch-road"));
+  assert.ok(travelled.world.unlockedZoneIds.includes("frostmarch-glacial-shelf"));
 });
 
 test("late-game travel remains locked in persistent play", () => {
