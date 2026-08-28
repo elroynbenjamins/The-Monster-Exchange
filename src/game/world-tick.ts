@@ -30,7 +30,7 @@ function generateNpcListings(state: GameState, content: GameContent, rng: Seeded
   const needed = Math.max(0, 4 - npcListings.length);
   let listings = [...state.market.listings];
   for (let index = 0; index < needed; index++) {
-    const species = rng.pick(content.species.filter(({ rarity }) => rarity !== "legendary"));
+    const species = rng.pick(content.species.filter(({ rarity, obtainability }) => rarity !== "legendary" && obtainability?.tradeable !== false && !obtainability?.evolutionOnly));
     const monster = createMonster(species, rng, { day: state.world.day, level: rng.int(2, 16), ownerId: `npc-${rng.int(1, 12)}`, qualityBias: rng.float() * 0.12 });
     const appraisal = appraiseMonster(monster, species, content.traits, state.market.indices[species.id]);
     const price = Math.max(1, Math.round(appraisal * (0.85 + rng.float() * 0.35)));

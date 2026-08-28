@@ -284,7 +284,7 @@ async function sellMonster(state: GameState): Promise<GameState> {
   console.log(`Suggested appraisal: ${suggested} Crowns.`);
   const price = await askNumber("Asking price: ", 1, 1000000);
   try {
-    return listPlayerMonster(state, selectedId, price, 3, new SeededRandom(state.world.seed + state.world.nextRandomOffset + 500));
+    return listPlayerMonster(state, selectedId, price, 3, new SeededRandom(state.world.seed + state.world.nextRandomOffset + 500), content.species);
   } catch (error) { console.log(error instanceof Error ? error.message : error); return state; }
 }
 

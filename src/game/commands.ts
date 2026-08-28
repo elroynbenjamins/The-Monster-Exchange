@@ -202,15 +202,27 @@ export function claimBreedingJob(state: GameState, jobId: string, content: GameC
   return addMonsterToPlayer(withoutJob, result.offspring);
 }
 
-export function evolveOwnedMonster(state: GameState, monsterId: string, evolution: EvolutionDefinition, content: GameContent, context: { itemId?: string; regionId?: string } = {}): GameState {
+export function evolveOwnedMonster(state: GameState, monsterId: string, evolution: EvolutionDefinition, content: GameContent, context: { regionId?: string; environmentTags?: readonly string[]; licenceIds?: readonly string[]; storyMilestoneIds?: readonly string[] } = {}): GameState {
   const monster = state.monsters[monsterId];
   if (!monster || monster.ownerId !== state.player.id) throw new Error("You do not own this monster.");
-  const inventoryItemIds = Object.entries(state.player.inventory).filter(([, amount]) => amount > 0).map(([id]) => id);
-  const eligibility = evaluateEvolution(monster, evolution, { inventoryItemIds, regionId: context.regionId });
+  const regionId = context.regionId ?? state.player.location.regionId;
+  const evolutionContext = {
+    inventory: state.player.inventory,
+    regionId,
+    weather: state.world.weatherByRegion[regionId],
+    environmentTags: context.environmentTags,
+    researchLevel: state.player.researchBySpecies[monster.speciesId]?.level ?? 0,
+    licenceIds: context.licenceIds,
+    storyMilestoneIds: context.storyMilestoneIds ?? state.world.unlockedMapIds,
+  };
+  const eligibility = evaluateEvolution(monster, evolution, evolutionContext);
   if (!eligibility.eligible) throw new Error(`Evolution requirements unmet: ${eligibility.unmet.join(", ")}`);
   let inventory = state.player.inventory;
-  if (evolution.requirements.itemId) inventory = { ...inventory, [evolution.requirements.itemId]: (inventory[evolution.requirements.itemId] ?? 0) - 1 };
-  const evolved = evolve(monster, evolution, { inventoryItemIds, regionId: context.regionId });
+  if (evolution.requirements.itemId) {
+    const quantity = evolution.requirements.itemQuantity ?? 1;
+    inventory = { ...inventory, [evolution.requirements.itemId]: (inventory[evolution.requirements.itemId] ?? 0) - quantity };
+  }
+  const evolved = evolve(monster, evolution, evolutionContext);
   const nextSpecies = content.species.find(({ id }) => id === evolution.toSpeciesId)!;
   const unlockedCount = Math.min(nextSpecies.skillPool.length, 2 + Math.floor(monster.level / 10));
   const knownSkillIds = [...new Set([...evolved.knownSkillIds, ...nextSpecies.skillPool.slice(0, unlockedCount)])];

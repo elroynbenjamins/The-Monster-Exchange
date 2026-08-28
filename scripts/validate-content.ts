@@ -40,6 +40,9 @@ for (const species of content.species) {
   for (const id of species.evolutionIds) if (!evolutionIds.has(id)) errors.push(`${species.id}: unknown evolution ${id}`);
   for (const id of species.habitats) if (!zoneIds.has(id)) errors.push(`${species.id}: unknown habitat ${id}`);
   if (!species.artId.startsWith(`monsters/${species.id}/${species.id}--`)) errors.push(`${species.id}: artId violates asset convention`);
+  const obtainability = species.obtainability;
+  if (obtainability?.wildEncounterWeight !== undefined && obtainability.wildEncounterWeight < 0) errors.push(`${species.id}: wild encounter weight cannot be negative`);
+  if (obtainability?.evolutionOnly && (obtainability.wildCatchable !== false || obtainability.directHatch !== false)) errors.push(`${species.id}: evolution-only species must disable wild capture and direct hatching`);
 }
 for (const evolution of content.evolutions) {
   if (!speciesIds.has(evolution.fromSpeciesId) || !speciesIds.has(evolution.toSpeciesId)) errors.push(`${evolution.id}: unknown species reference`);
@@ -50,6 +53,9 @@ for (const evolution of content.evolutions) {
     const toBudget = to.baseStats.hp + to.baseStats.attack + to.baseStats.defense + to.baseStats.speed;
     if (to.evolutionStage !== from.evolutionStage + 1 || to.evolutionLineLength !== from.evolutionLineLength) errors.push(`${evolution.id}: stages are not sequential`);
     if (toBudget <= fromBudget) errors.push(`${evolution.id}: evolved form must have a larger core stat budget`);
+  }
+  for (const [name, value] of Object.entries(evolution.requirements)) {
+    if (["minLevel", "minPotential", "minWins", "itemQuantity", "minResearchLevel"].includes(name) && (typeof value !== "number" || !Number.isFinite(value) || value < 1)) errors.push(`${evolution.id}: ${name} must be a positive number`);
   }
 }
 for (const skill of content.skills) if (skill.statusId && !statusIds.has(skill.statusId)) errors.push(`${skill.id}: unknown status ${skill.statusId}`);

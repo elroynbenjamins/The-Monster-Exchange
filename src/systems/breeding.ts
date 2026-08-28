@@ -7,7 +7,8 @@ export interface BreedResult { offspring: MonsterIndividual; inheritedFrom: Read
 
 export function canBreed(a: MonsterIndividual, b: MonsterIndividual, speciesA: SpeciesDefinition, speciesB: SpeciesDefinition): { ok: boolean; reason?: string } {
   if (a.id === b.id) return { ok: false, reason: "A monster cannot breed with itself." };
-  if (speciesA.tags.includes("crest-guardian") || speciesB.tags.includes("crest-guardian")) return { ok: false, reason: "Crest Guardians form bonds but cannot be bred." };
+  if (speciesA.obtainability?.breedable === false || speciesB.obtainability?.breedable === false) return { ok: false, reason: "One of these species cannot be bred." };
+  if (speciesA.obtainability?.directHatch === false && speciesB.obtainability?.directHatch === false) return { ok: false, reason: "Neither species can hatch directly; use an earlier evolution stage." };
   if (a.sex !== "neutral" && b.sex !== "neutral" && a.sex === b.sex) return { ok: false, reason: "This pair is not compatible." };
   if (!speciesA.breedingGroups.some((group) => speciesB.breedingGroups.includes(group))) return { ok: false, reason: "No shared breeding group." };
   if (a.lineage.parentIds.includes(b.id) || b.lineage.parentIds.includes(a.id)) return { ok: false, reason: "Parent/offspring breeding is blocked." };
@@ -18,7 +19,8 @@ export function canBreed(a: MonsterIndividual, b: MonsterIndividual, speciesA: S
 export function breed(a: MonsterIndividual, b: MonsterIndividual, speciesA: SpeciesDefinition, speciesB: SpeciesDefinition, rng: RandomSource, day: number, ownerId?: string): BreedResult {
   const compatibility = canBreed(a, b, speciesA, speciesB);
   if (!compatibility.ok) throw new Error(compatibility.reason);
-  const childSpecies = rng.float() < 0.5 ? speciesA : speciesB;
+  const hatchableSpecies = [speciesA, speciesB].filter((species) => species.obtainability?.directHatch !== false);
+  const childSpecies = rng.pick(hatchableSpecies);
   const genes = inheritGenes(a.genes, b.genes, childSpecies.geneCaps, rng);
   const inheritableTraits = [...new Set([...a.traitIds, ...b.traitIds])];
   const traitIds = inheritableTraits.length && rng.float() < 0.6 ? [rng.pick(inheritableTraits)] : [];

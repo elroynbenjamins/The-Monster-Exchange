@@ -34,7 +34,8 @@ function weightedSpecies(zone: ZoneDefinition, species: readonly SpeciesDefiniti
     const definition = species.find(({ id }) => id === entry.speciesId);
     if (!definition) throw new Error(`Zone ${zone.id} references unknown species ${entry.speciesId}.`);
     return { definition, weight: encounterSpeciesWeight(entry.weight, definition, environment) };
-  });
+  }).filter(({ definition, weight }) => definition.obtainability?.wildCatchable !== false && weight > 0);
+  if (!entries.length) throw new Error(`Zone ${zone.id} has no catchable encounter species.`);
   const total = entries.reduce((sum, entry) => sum + entry.weight, 0);
   let roll = rng.float() * total;
   for (const entry of entries) {
@@ -82,7 +83,7 @@ export function generateBossEncounter(zone: ZoneDefinition, species: readonly Sp
 }
 
 export function captureChance(encounter: WildEncounter, remainingHpRatio: number, capsuleBonus = 0): number {
-  if (encounter.isBoss) return 0;
+  if (encounter.isBoss || encounter.species.obtainability?.wildCatchable === false) return 0;
   const weakenedBonus = (1 - Math.max(0, Math.min(1, remainingHpRatio))) * 0.58;
   return Math.max(0.05, Math.min(0.95, 0.42 + weakenedBonus + capsuleBonus - encounter.captureDifficulty));
 }

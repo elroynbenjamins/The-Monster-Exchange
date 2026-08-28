@@ -21,7 +21,7 @@ test("Aurevine requires reputation and broad research, then bonds only once", ()
   assert.equal(guardian.sex, "neutral");
   assert.equal(guardian.variantId, "crest");
   assert.equal(crestGuardianBondEligibility(state, "aurevine").eligible, false);
-  assert.throws(() => listPlayerMonster(state, guardian.id, 99999, 3, new SeededRandom(8)), /cannot be sold/i);
+  assert.throws(() => listPlayerMonster(state, guardian.id, 99999, 3, new SeededRandom(8), content.species), /cannot be sold/i);
 });
 
 test("crest guardians cannot be bred", () => {

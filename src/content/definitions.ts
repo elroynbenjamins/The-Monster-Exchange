@@ -67,7 +67,19 @@ export interface EvolutionDefinition {
   id: string;
   fromSpeciesId: string;
   toSpeciesId: string;
-  requirements: { minLevel?: number; minPotential?: number; itemId?: string; regionId?: string };
+  requirements: {
+    minLevel?: number;
+    minPotential?: number;
+    minWins?: number;
+    itemId?: string;
+    itemQuantity?: number;
+    regionId?: string;
+    weather?: string;
+    environmentTag?: string;
+    minResearchLevel?: number;
+    licenceId?: string;
+    storyMilestoneId?: string;
+  };
 }
 
 export interface RegionDefinition {

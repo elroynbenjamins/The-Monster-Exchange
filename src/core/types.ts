@@ -11,6 +11,16 @@ export type Genes = Record<GeneId, number>;
 export type Sex = "female" | "male" | "neutral";
 export type Rarity = "common" | "uncommon" | "rare" | "epic" | "legendary";
 
+export interface SpeciesObtainability {
+  wildCatchable?: boolean;
+  wildEncounterWeight?: number;
+  breedable?: boolean;
+  directHatch?: boolean;
+  tradeable?: boolean;
+  auctionEligible?: boolean;
+  evolutionOnly?: boolean;
+}
+
 export interface SpeciesDefinition {
   id: string;
   catalogNumber: number;
@@ -31,6 +41,7 @@ export interface SpeciesDefinition {
   habitats: readonly string[];
   baseMarketValue: number;
   artId: string;
+  obtainability?: SpeciesObtainability;
 }
 
 export interface Lineage {

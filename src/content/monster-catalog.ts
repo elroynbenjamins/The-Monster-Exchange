@@ -198,12 +198,17 @@ const SPECIES_OVERRIDES: Readonly<Record<string, Partial<SpeciesDefinition>>> = 
     tags: ["crest-guardian", "plantlike", "fey", "serpentine"],
     skillPool: ["type-grass-basic", "type-fairy-basic", "type-grass-advanced", "crest-renewal"],
     passiveId: "keeper-of-balance", habitats: ["greenreach-deepwood"], baseMarketValue: 8800,
+    obtainability: { wildCatchable: false, wildEncounterWeight: 0, breedable: false, directHatch: false, tradeable: false, auctionEligible: false },
   },
   tempestyr: {
     tags: ["crest-guardian", "charged", "draconic", "serpentine"],
     skillPool: ["type-electric-basic", "type-dragon-basic", "type-dragon-advanced", "crest-thunderbolt"],
     passiveId: "keeper-of-momentum", habitats: ["stormpeak-foothills"], baseMarketValue: 8800,
+    obtainability: { wildCatchable: false, wildEncounterWeight: 0, breedable: false, directHatch: false, tradeable: false, auctionEligible: false },
   },
+  rimehorn: { obtainability: { wildCatchable: false, wildEncounterWeight: 0, directHatch: false, tradeable: true, auctionEligible: true, evolutionOnly: true } },
+  mournglade: { obtainability: { wildCatchable: false, wildEncounterWeight: 0, directHatch: false, tradeable: true, auctionEligible: true, evolutionOnly: true } },
+  solvulture: { obtainability: { wildCatchable: false, wildEncounterWeight: 0, directHatch: false, tradeable: true, auctionEligible: true, evolutionOnly: true } },
 };
 
 function slug(value: string): string {
@@ -326,7 +331,7 @@ export const CATALOG_SPECIES: readonly SpeciesDefinition[] = MONSTER_CONCEPTS.ma
 });
 
 export function speciesPoolForZone(zoneId: string): readonly { speciesId: string; weight: number }[] {
-  return CATALOG_SPECIES.filter((species) => species.habitats.includes(zoneId) && !species.tags.includes("crest-guardian")).map((species) => ({
-    speciesId: species.id, weight: Math.max(1, Math.round(RARITY_WEIGHT[species.rarity] / species.evolutionStage)),
+  return CATALOG_SPECIES.filter((species) => species.habitats.includes(zoneId) && species.obtainability?.wildCatchable !== false).map((species) => ({
+    speciesId: species.id, weight: species.obtainability?.wildEncounterWeight ?? Math.max(1, Math.round(RARITY_WEIGHT[species.rarity] / species.evolutionStage)),
   }));
 }
