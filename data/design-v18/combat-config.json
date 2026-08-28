@@ -1,0 +1,202 @@
+[
+  {
+    "Config ID": "CMB_001",
+    "System": "Battle Structure",
+    "Parameter": "Active Monsters",
+    "Default": 3,
+    "Min": 3,
+    "Max": 3,
+    "Unit": "monsters",
+    "Implementation Notes": "Three monsters occupy left/center/right active positions."
+  },
+  {
+    "Config ID": "CMB_002",
+    "System": "Battle Structure",
+    "Parameter": "Reserve Monsters",
+    "Default": 2,
+    "Min": 2,
+    "Max": 2,
+    "Unit": "monsters",
+    "Implementation Notes": "Two reserves can switch into active positions."
+  },
+  {
+    "Config ID": "CMB_003",
+    "System": "Timeline",
+    "Parameter": "Base Action Gauge",
+    "Default": 100,
+    "Min": 100,
+    "Max": 100,
+    "Unit": "points",
+    "Implementation Notes": "Speed modifies gauge fill; no grid movement system."
+  },
+  {
+    "Config ID": "CMB_004",
+    "System": "Switching",
+    "Parameter": "Switch Action Cost",
+    "Default": 100,
+    "Min": 75,
+    "Max": 125,
+    "Unit": "% action",
+    "Implementation Notes": "Switching consumes an action rather than being free."
+  },
+  {
+    "Config ID": "CMB_005",
+    "System": "Energy",
+    "Parameter": "Base Energy Cap",
+    "Default": 100,
+    "Min": 60,
+    "Max": 160,
+    "Unit": "energy",
+    "Implementation Notes": "Species/skills may modify cap within bounded ranges."
+  },
+  {
+    "Config ID": "CMB_006",
+    "System": "Energy",
+    "Parameter": "Basic Attack Energy Gain",
+    "Default": 14,
+    "Min": 8,
+    "Max": 22,
+    "Unit": "energy",
+    "Implementation Notes": "Keeps skills cycling without manual resource farming."
+  },
+  {
+    "Config ID": "CMB_007",
+    "System": "Skills",
+    "Parameter": "Equipped Active Skills",
+    "Default": 3,
+    "Min": 3,
+    "Max": 3,
+    "Unit": "skills",
+    "Implementation Notes": "Player queues three active skills for each monster."
+  },
+  {
+    "Config ID": "CMB_008",
+    "System": "Skills",
+    "Parameter": "Species Passive Slots",
+    "Default": 1,
+    "Min": 1,
+    "Max": 1,
+    "Unit": "passive",
+    "Implementation Notes": "Species identity remains distinct from traits."
+  },
+  {
+    "Config ID": "CMB_009",
+    "System": "AI",
+    "Parameter": "Decision Re-evaluation Interval",
+    "Default": 1,
+    "Min": 1,
+    "Max": 1,
+    "Unit": "action",
+    "Implementation Notes": "AI scores legal actions each action opportunity."
+  },
+  {
+    "Config ID": "CMB_010",
+    "System": "Modes",
+    "Parameter": "Battle Speed Options",
+    "Default": "1x / 2x / 3x",
+    "Min": null,
+    "Max": null,
+    "Unit": "speed",
+    "Implementation Notes": "Same outcome for same RNG state regardless of animation speed."
+  },
+  {
+    "Config ID": "CMB_011",
+    "System": "Modes",
+    "Parameter": "Control Modes",
+    "Default": "Manual / Assisted / Full Auto",
+    "Min": null,
+    "Max": null,
+    "Unit": "mode",
+    "Implementation Notes": "Assisted suggests/queues; Full Auto uses AI profiles."
+  },
+  {
+    "Config ID": "CMB_012",
+    "System": "Damage",
+    "Parameter": "Same-Type Skill Bonus",
+    "Default": 1.15,
+    "Min": 1.05,
+    "Max": 1.25,
+    "Unit": "multiplier",
+    "Implementation Notes": "Optional modest identity bonus."
+  },
+  {
+    "Config ID": "CMB_013",
+    "System": "Damage",
+    "Parameter": "Critical Base Chance",
+    "Default": 0.05,
+    "Min": 0,
+    "Max": 0.15,
+    "Unit": "probability",
+    "Implementation Notes": "Crit builds require traits/skills rather than a high universal base."
+  },
+  {
+    "Config ID": "CMB_014",
+    "System": "Damage",
+    "Parameter": "Critical Damage",
+    "Default": 1.5,
+    "Min": 1.25,
+    "Max": 1.8,
+    "Unit": "multiplier",
+    "Implementation Notes": "Tune after battle simulation."
+  },
+  {
+    "Config ID": "CMB_015",
+    "System": "Status",
+    "Parameter": "Default Major Status Limit",
+    "Default": 1,
+    "Min": 1,
+    "Max": 2,
+    "Unit": "major status",
+    "Implementation Notes": "Prevents excessive stacked hard control."
+  },
+  {
+    "Config ID": "CMB_016",
+    "System": "Status",
+    "Parameter": "Minor Debuff Stack Limit",
+    "Default": 3,
+    "Min": 1,
+    "Max": 5,
+    "Unit": "stacks",
+    "Implementation Notes": "Species-specific exceptions may override."
+  },
+  {
+    "Config ID": "CMB_017",
+    "System": "Boss",
+    "Parameter": "Boss Phases Typical",
+    "Default": 3,
+    "Min": 2,
+    "Max": 3,
+    "Unit": "phases",
+    "Implementation Notes": "Regional bosses use two to three telegraphed phases."
+  },
+  {
+    "Config ID": "CMB_018",
+    "System": "Boss",
+    "Parameter": "Boss Telegraph Lead",
+    "Default": 1,
+    "Min": 1,
+    "Max": 2,
+    "Unit": "actions",
+    "Implementation Notes": "Players should be able to respond rather than guess."
+  },
+  {
+    "Config ID": "CMB_019",
+    "System": "Recovery",
+    "Parameter": "Permanent Death",
+    "Default": 0,
+    "Min": 0,
+    "Max": 0,
+    "Unit": "boolean",
+    "Implementation Notes": "No permanent death; recovery creates cost/time pressure."
+  },
+  {
+    "Config ID": "CMB_020",
+    "System": "Progression",
+    "Parameter": "Max Monster Level",
+    "Default": 50,
+    "Min": 50,
+    "Max": 50,
+    "Unit": "level",
+    "Implementation Notes": "Boss-gated level cap ends around 50."
+  }
+]

@@ -1,0 +1,146 @@
+[
+  {
+    "Config ID": "BRD_001",
+    "Parameter": "Eligible Sex System",
+    "Default": "Male/Female species data",
+    "Min": null,
+    "Max": null,
+    "Unit": "category",
+    "Rule": "Species sex distributions and exceptions are data-driven."
+  },
+  {
+    "Config ID": "BRD_002",
+    "Parameter": "Base Breeding Duration",
+    "Default": 4,
+    "Min": 2,
+    "Max": 8,
+    "Unit": "days",
+    "Rule": "in-game days; Varies by species rarity/size and facilities."
+  },
+  {
+    "Config ID": "BRD_003",
+    "Parameter": "Post-Breeding Recovery",
+    "Default": 3,
+    "Min": 1,
+    "Max": 7,
+    "Unit": "days",
+    "Rule": "in-game days; Traits/facilities can reduce."
+  },
+  {
+    "Config ID": "BRD_004",
+    "Parameter": "Base Egg Incubation",
+    "Default": 5,
+    "Min": 2,
+    "Max": 10,
+    "Unit": "days",
+    "Rule": "in-game days; Heat/cold species may require specialist habitats."
+  },
+  {
+    "Config ID": "BRD_005",
+    "Parameter": "Gene Range",
+    "Default": 20,
+    "Min": 20,
+    "Max": 20,
+    "Unit": "points/gene",
+    "Rule": "integer; Five immutable genes: HP, Attack, Defense, Speed, Energy."
+  },
+  {
+    "Config ID": "BRD_006",
+    "Parameter": "Potential Maximum",
+    "Default": 100,
+    "Min": 100,
+    "Max": 100,
+    "Unit": "points",
+    "Rule": "integer; Potential equals sum of five genes."
+  },
+  {
+    "Config ID": "BRD_007",
+    "Parameter": "Base Parent Gene Pick Chance",
+    "Default": 0.75,
+    "Min": 0.6,
+    "Max": 0.9,
+    "Unit": "probability",
+    "Rule": "probability; Each offspring gene usually derives from one parent before variance."
+  },
+  {
+    "Config ID": "BRD_008",
+    "Parameter": "Base New-Gene Variance Chance",
+    "Default": 0.25,
+    "Min": 0.1,
+    "Max": 0.4,
+    "Unit": "probability",
+    "Rule": "probability; Allows offspring to deviate rather than clone."
+  },
+  {
+    "Config ID": "BRD_009",
+    "Parameter": "Gene Variance Range",
+    "Default": 2,
+    "Min": 1,
+    "Max": 4,
+    "Unit": "points",
+    "Rule": "integer; Variance from selected parent gene, clamped 0-20."
+  },
+  {
+    "Config ID": "BRD_010",
+    "Parameter": "Natural Trait Inheritance",
+    "Default": 0.35,
+    "Min": 0.2,
+    "Max": 0.55,
+    "Unit": "probability",
+    "Rule": "probability; Per eligible parental trait before modifiers."
+  },
+  {
+    "Config ID": "BRD_011",
+    "Parameter": "New Trait Roll",
+    "Default": 0.12,
+    "Min": 0.05,
+    "Max": 0.2,
+    "Unit": "probability",
+    "Rule": "probability; New traits from species/region trait pools."
+  },
+  {
+    "Config ID": "BRD_012",
+    "Parameter": "Mutation Base Chance",
+    "Default": 0.005,
+    "Min": 0.001,
+    "Max": 0.02,
+    "Unit": "probability",
+    "Rule": "probability; Research/events can alter within cap."
+  },
+  {
+    "Config ID": "BRD_013",
+    "Parameter": "Special Color Base Chance",
+    "Default": 0.0025,
+    "Min": 0.0005,
+    "Max": 0.01,
+    "Unit": "probability",
+    "Rule": "probability; Collector feature only unless variant data says otherwise."
+  },
+  {
+    "Config ID": "BRD_014",
+    "Parameter": "Pedigree Depth Stored",
+    "Default": 4,
+    "Min": 3,
+    "Max": 6,
+    "Unit": "generations",
+    "Rule": "integer; Meaningful ancestry without unbounded save growth."
+  },
+  {
+    "Config ID": "BRD_015",
+    "Parameter": "Inbreeding Penalty Start",
+    "Default": 2,
+    "Min": 1,
+    "Max": 3,
+    "Unit": "shared close ancestors",
+    "Rule": "threshold; Close-line breeding increases negative-trait/new-gene risk."
+  },
+  {
+    "Config ID": "BRD_016",
+    "Parameter": "Breeding Listing Rights",
+    "Default": "Allowed",
+    "Min": null,
+    "Max": null,
+    "Unit": "boolean",
+    "Rule": "flag; Future async breeding-rights market can reuse parent IDs and fees."
+  }
+]

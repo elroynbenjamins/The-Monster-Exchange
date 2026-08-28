@@ -1,0 +1,1466 @@
+[
+  {
+    "Path ID": "EVO_001_002",
+    "Requirement Type": "Battle Wins",
+    "Operator": "At least",
+    "Value": 8,
+    "Optional?": "No",
+    "Notes": "Counts completed official/wild battles with this individual."
+  },
+  {
+    "Path ID": "EVO_001_002",
+    "Requirement Type": "Environment",
+    "Operator": "Equals",
+    "Value": "Bloom / protected grove",
+    "Optional?": "No",
+    "Notes": "Zone tag requirement."
+  },
+  {
+    "Path ID": "EVO_001_002",
+    "Requirement Type": "Level",
+    "Operator": "At least",
+    "Value": 18,
+    "Optional?": "No",
+    "Notes": "Boss-gated level cap must already permit this level."
+  },
+  {
+    "Path ID": "EVO_003_004",
+    "Requirement Type": "Battle Wins",
+    "Operator": "At least",
+    "Value": 8,
+    "Optional?": "No",
+    "Notes": "Counts completed official/wild battles with this individual."
+  },
+  {
+    "Path ID": "EVO_003_004",
+    "Requirement Type": "Level",
+    "Operator": "At least",
+    "Value": 20,
+    "Optional?": "No",
+    "Notes": "Boss-gated level cap must already permit this level."
+  },
+  {
+    "Path ID": "EVO_003_004",
+    "Requirement Type": "Weather / World State",
+    "Operator": "Equals",
+    "Value": "Storm",
+    "Optional?": "No",
+    "Notes": "Checked at evolution attempt."
+  },
+  {
+    "Path ID": "EVO_005_006",
+    "Requirement Type": "Battle Wins",
+    "Operator": "At least",
+    "Value": 9,
+    "Optional?": "No",
+    "Notes": "Counts completed official/wild battles with this individual."
+  },
+  {
+    "Path ID": "EVO_005_006",
+    "Requirement Type": "Environment",
+    "Operator": "Equals",
+    "Value": "Volcanic zone exposure",
+    "Optional?": "No",
+    "Notes": "Zone tag requirement."
+  },
+  {
+    "Path ID": "EVO_005_006",
+    "Requirement Type": "Level",
+    "Operator": "At least",
+    "Value": 17,
+    "Optional?": "No",
+    "Notes": "Boss-gated level cap must already permit this level."
+  },
+  {
+    "Path ID": "EVO_005_006",
+    "Requirement Type": "Material",
+    "Operator": "At least",
+    "Value": "MAT_FAULTSTONE x1",
+    "Optional?": "No",
+    "Notes": "Consumed on evolution."
+  },
+  {
+    "Path ID": "EVO_006_007",
+    "Requirement Type": "Battle Wins",
+    "Operator": "At least",
+    "Value": 19,
+    "Optional?": "No",
+    "Notes": "Counts completed official/wild battles with this individual."
+  },
+  {
+    "Path ID": "EVO_006_007",
+    "Requirement Type": "Environment",
+    "Operator": "Equals",
+    "Value": "Volcanic zone exposure",
+    "Optional?": "No",
+    "Notes": "Zone tag requirement."
+  },
+  {
+    "Path ID": "EVO_006_007",
+    "Requirement Type": "Level",
+    "Operator": "At least",
+    "Value": 35,
+    "Optional?": "No",
+    "Notes": "Boss-gated level cap must already permit this level."
+  },
+  {
+    "Path ID": "EVO_006_007",
+    "Requirement Type": "Story Flag",
+    "Operator": "Equals",
+    "Value": "Relevant regional story milestone",
+    "Optional?": "No",
+    "Notes": "Player-wide milestone."
+  },
+  {
+    "Path ID": "EVO_008_009",
+    "Requirement Type": "Battle Wins",
+    "Operator": "At least",
+    "Value": 12,
+    "Optional?": "No",
+    "Notes": "Counts completed official/wild battles with this individual."
+  },
+  {
+    "Path ID": "EVO_008_009",
+    "Requirement Type": "Environment",
+    "Operator": "Equals",
+    "Value": "Night or spectral zone",
+    "Optional?": "No",
+    "Notes": "Zone tag requirement."
+  },
+  {
+    "Path ID": "EVO_008_009",
+    "Requirement Type": "Level",
+    "Operator": "At least",
+    "Value": 25,
+    "Optional?": "No",
+    "Notes": "Boss-gated level cap must already permit this level."
+  },
+  {
+    "Path ID": "EVO_010_011",
+    "Requirement Type": "Battle Wins",
+    "Operator": "At least",
+    "Value": 8,
+    "Optional?": "No",
+    "Notes": "Counts completed official/wild battles with this individual."
+  },
+  {
+    "Path ID": "EVO_010_011",
+    "Requirement Type": "Environment",
+    "Operator": "Equals",
+    "Value": "Bloom / protected grove",
+    "Optional?": "No",
+    "Notes": "Zone tag requirement."
+  },
+  {
+    "Path ID": "EVO_010_011",
+    "Requirement Type": "Level",
+    "Operator": "At least",
+    "Value": 20,
+    "Optional?": "No",
+    "Notes": "Boss-gated level cap must already permit this level."
+  },
+  {
+    "Path ID": "EVO_010_011",
+    "Requirement Type": "Material",
+    "Operator": "At least",
+    "Value": "MAT_HEARTGLASS x2",
+    "Optional?": "No",
+    "Notes": "Consumed on evolution."
+  },
+  {
+    "Path ID": "EVO_012_013",
+    "Requirement Type": "Battle Wins",
+    "Operator": "At least",
+    "Value": 8,
+    "Optional?": "No",
+    "Notes": "Counts completed official/wild battles with this individual."
+  },
+  {
+    "Path ID": "EVO_012_013",
+    "Requirement Type": "Level",
+    "Operator": "At least",
+    "Value": 18,
+    "Optional?": "No",
+    "Notes": "Boss-gated level cap must already permit this level."
+  },
+  {
+    "Path ID": "EVO_012_013",
+    "Requirement Type": "Material",
+    "Operator": "At least",
+    "Value": "MAT_RESONANT_KNUCKLE x1",
+    "Optional?": "No",
+    "Notes": "Consumed on evolution."
+  },
+  {
+    "Path ID": "EVO_014_015",
+    "Requirement Type": "Battle Wins",
+    "Operator": "At least",
+    "Value": 12,
+    "Optional?": "No",
+    "Notes": "Counts completed official/wild battles with this individual."
+  },
+  {
+    "Path ID": "EVO_014_015",
+    "Requirement Type": "Level",
+    "Operator": "At least",
+    "Value": 25,
+    "Optional?": "No",
+    "Notes": "Boss-gated level cap must already permit this level."
+  },
+  {
+    "Path ID": "EVO_014_015",
+    "Requirement Type": "Licence",
+    "Operator": "Equals",
+    "Value": "LIC_RFT_01",
+    "Optional?": "No",
+    "Notes": "Player-wide legal/progression gate."
+  },
+  {
+    "Path ID": "EVO_014_015",
+    "Requirement Type": "Research",
+    "Operator": "At least",
+    "Value": "Rift Signature Mapping",
+    "Optional?": "No",
+    "Notes": "Player-wide requirement."
+  },
+  {
+    "Path ID": "EVO_016_017",
+    "Requirement Type": "Battle Wins",
+    "Operator": "At least",
+    "Value": 8,
+    "Optional?": "No",
+    "Notes": "Counts completed official/wild battles with this individual."
+  },
+  {
+    "Path ID": "EVO_016_017",
+    "Requirement Type": "Level",
+    "Operator": "At least",
+    "Value": 18,
+    "Optional?": "No",
+    "Notes": "Boss-gated level cap must already permit this level."
+  },
+  {
+    "Path ID": "EVO_016_017",
+    "Requirement Type": "Weather / World State",
+    "Operator": "Equals",
+    "Value": "Storm",
+    "Optional?": "No",
+    "Notes": "Checked at evolution attempt."
+  },
+  {
+    "Path ID": "EVO_018_019",
+    "Requirement Type": "Battle Wins",
+    "Operator": "At least",
+    "Value": 8,
+    "Optional?": "No",
+    "Notes": "Counts completed official/wild battles with this individual."
+  },
+  {
+    "Path ID": "EVO_018_019",
+    "Requirement Type": "Level",
+    "Operator": "At least",
+    "Value": 18,
+    "Optional?": "No",
+    "Notes": "Boss-gated level cap must already permit this level."
+  },
+  {
+    "Path ID": "EVO_021_143",
+    "Requirement Type": "Battle Wins",
+    "Operator": "At least",
+    "Value": 8,
+    "Optional?": "No",
+    "Notes": "Counts completed battles with this individual."
+  },
+  {
+    "Path ID": "EVO_021_143",
+    "Requirement Type": "Environment",
+    "Operator": "Equals",
+    "Value": "Volcanic zone exposure",
+    "Optional?": "No",
+    "Notes": "Zone/environment tag requirement."
+  },
+  {
+    "Path ID": "EVO_021_143",
+    "Requirement Type": "Level",
+    "Operator": "At least",
+    "Value": 18,
+    "Optional?": "No",
+    "Notes": "Boss-gated level cap must permit this level."
+  },
+  {
+    "Path ID": "EVO_021_143",
+    "Requirement Type": "Region Exposure",
+    "Operator": "Equals",
+    "Value": "Dragonspine",
+    "Optional?": "No",
+    "Notes": "Evolution attempt must occur after exposure to region."
+  },
+  {
+    "Path ID": "EVO_023_141",
+    "Requirement Type": "Battle Wins",
+    "Operator": "At least",
+    "Value": 7,
+    "Optional?": "No",
+    "Notes": "Counts completed battles with this individual."
+  },
+  {
+    "Path ID": "EVO_023_141",
+    "Requirement Type": "Level",
+    "Operator": "At least",
+    "Value": 16,
+    "Optional?": "No",
+    "Notes": "Boss-gated level cap must permit this level."
+  },
+  {
+    "Path ID": "EVO_023_141",
+    "Requirement Type": "Region Exposure",
+    "Operator": "Equals",
+    "Value": "Frostmarch",
+    "Optional?": "No",
+    "Notes": "Evolution attempt must occur after exposure to region."
+  },
+  {
+    "Path ID": "EVO_023_141",
+    "Requirement Type": "Weather / World State",
+    "Operator": "Equals",
+    "Value": "Snow / Aurora",
+    "Optional?": "No",
+    "Notes": "Checked at evolution attempt."
+  },
+  {
+    "Path ID": "EVO_026_027",
+    "Requirement Type": "Battle Wins",
+    "Operator": "At least",
+    "Value": 8,
+    "Optional?": "No",
+    "Notes": "Counts completed official/wild battles with this individual."
+  },
+  {
+    "Path ID": "EVO_026_027",
+    "Requirement Type": "Level",
+    "Operator": "At least",
+    "Value": 20,
+    "Optional?": "No",
+    "Notes": "Boss-gated level cap must already permit this level."
+  },
+  {
+    "Path ID": "EVO_028_142",
+    "Requirement Type": "Battle Wins",
+    "Operator": "At least",
+    "Value": 7,
+    "Optional?": "No",
+    "Notes": "Counts completed battles with this individual."
+  },
+  {
+    "Path ID": "EVO_028_142",
+    "Requirement Type": "Environment",
+    "Operator": "Equals",
+    "Value": "Night or spectral zone",
+    "Optional?": "No",
+    "Notes": "Zone/environment tag requirement."
+  },
+  {
+    "Path ID": "EVO_028_142",
+    "Requirement Type": "Level",
+    "Operator": "At least",
+    "Value": 16,
+    "Optional?": "No",
+    "Notes": "Boss-gated level cap must permit this level."
+  },
+  {
+    "Path ID": "EVO_028_142",
+    "Requirement Type": "Region Exposure",
+    "Operator": "Equals",
+    "Value": "Mirefen",
+    "Optional?": "No",
+    "Notes": "Evolution attempt must occur after exposure to region."
+  },
+  {
+    "Path ID": "EVO_030_031",
+    "Requirement Type": "Battle Wins",
+    "Operator": "At least",
+    "Value": 8,
+    "Optional?": "No",
+    "Notes": "Counts completed official/wild battles with this individual."
+  },
+  {
+    "Path ID": "EVO_030_031",
+    "Requirement Type": "Level",
+    "Operator": "At least",
+    "Value": 20,
+    "Optional?": "No",
+    "Notes": "Boss-gated level cap must already permit this level."
+  },
+  {
+    "Path ID": "EVO_030_031",
+    "Requirement Type": "Material",
+    "Operator": "At least",
+    "Value": "MAT_DRAGON_SCALE x2",
+    "Optional?": "No",
+    "Notes": "Consumed on evolution."
+  },
+  {
+    "Path ID": "EVO_032_033",
+    "Requirement Type": "Battle Wins",
+    "Operator": "At least",
+    "Value": 8,
+    "Optional?": "No",
+    "Notes": "Counts completed official/wild battles with this individual."
+  },
+  {
+    "Path ID": "EVO_032_033",
+    "Requirement Type": "Environment",
+    "Operator": "Equals",
+    "Value": "Deep quarry / canyon exposure",
+    "Optional?": "No",
+    "Notes": "Zone tag requirement."
+  },
+  {
+    "Path ID": "EVO_032_033",
+    "Requirement Type": "Level",
+    "Operator": "At least",
+    "Value": 20,
+    "Optional?": "No",
+    "Notes": "Boss-gated level cap must already permit this level."
+  },
+  {
+    "Path ID": "EVO_032_033",
+    "Requirement Type": "Material",
+    "Operator": "At least",
+    "Value": "MAT_MEMORY_FILM x2",
+    "Optional?": "No",
+    "Notes": "Consumed on evolution."
+  },
+  {
+    "Path ID": "EVO_041_042",
+    "Requirement Type": "Battle Wins",
+    "Operator": "At least",
+    "Value": 12,
+    "Optional?": "No",
+    "Notes": "Counts completed official/wild battles with this individual."
+  },
+  {
+    "Path ID": "EVO_041_042",
+    "Requirement Type": "Environment",
+    "Operator": "Equals",
+    "Value": "Resonant crystal zone",
+    "Optional?": "No",
+    "Notes": "Zone tag requirement."
+  },
+  {
+    "Path ID": "EVO_041_042",
+    "Requirement Type": "Level",
+    "Operator": "At least",
+    "Value": 23,
+    "Optional?": "No",
+    "Notes": "Boss-gated level cap must already permit this level."
+  },
+  {
+    "Path ID": "EVO_043_044",
+    "Requirement Type": "Battle Wins",
+    "Operator": "At least",
+    "Value": 12,
+    "Optional?": "No",
+    "Notes": "Counts completed official/wild battles with this individual."
+  },
+  {
+    "Path ID": "EVO_043_044",
+    "Requirement Type": "Environment",
+    "Operator": "Equals",
+    "Value": "Volcanic zone exposure",
+    "Optional?": "No",
+    "Notes": "Zone tag requirement."
+  },
+  {
+    "Path ID": "EVO_043_044",
+    "Requirement Type": "Level",
+    "Operator": "At least",
+    "Value": 23,
+    "Optional?": "No",
+    "Notes": "Boss-gated level cap must already permit this level."
+  },
+  {
+    "Path ID": "EVO_045_046",
+    "Requirement Type": "Battle Wins",
+    "Operator": "At least",
+    "Value": 8,
+    "Optional?": "No",
+    "Notes": "Counts completed official/wild battles with this individual."
+  },
+  {
+    "Path ID": "EVO_045_046",
+    "Requirement Type": "Environment",
+    "Operator": "Equals",
+    "Value": "High tide / coastal zone",
+    "Optional?": "No",
+    "Notes": "Zone tag requirement."
+  },
+  {
+    "Path ID": "EVO_045_046",
+    "Requirement Type": "Level",
+    "Operator": "At least",
+    "Value": 18,
+    "Optional?": "No",
+    "Notes": "Boss-gated level cap must already permit this level."
+  },
+  {
+    "Path ID": "EVO_045_046",
+    "Requirement Type": "Material",
+    "Operator": "At least",
+    "Value": "MAT_FAULTSTONE x1",
+    "Optional?": "No",
+    "Notes": "Consumed on evolution."
+  },
+  {
+    "Path ID": "EVO_047_048",
+    "Requirement Type": "Battle Wins",
+    "Operator": "At least",
+    "Value": 8,
+    "Optional?": "No",
+    "Notes": "Counts completed official/wild battles with this individual."
+  },
+  {
+    "Path ID": "EVO_047_048",
+    "Requirement Type": "Level",
+    "Operator": "At least",
+    "Value": 20,
+    "Optional?": "No",
+    "Notes": "Boss-gated level cap must already permit this level."
+  },
+  {
+    "Path ID": "EVO_047_048",
+    "Requirement Type": "Material",
+    "Operator": "At least",
+    "Value": "MAT_VOID_THREAD x2",
+    "Optional?": "No",
+    "Notes": "Consumed on evolution."
+  },
+  {
+    "Path ID": "EVO_049_050",
+    "Requirement Type": "Battle Wins",
+    "Operator": "At least",
+    "Value": 8,
+    "Optional?": "No",
+    "Notes": "Counts completed official/wild battles with this individual."
+  },
+  {
+    "Path ID": "EVO_049_050",
+    "Requirement Type": "Level",
+    "Operator": "At least",
+    "Value": 20,
+    "Optional?": "No",
+    "Notes": "Boss-gated level cap must already permit this level."
+  },
+  {
+    "Path ID": "EVO_049_050",
+    "Requirement Type": "Weather / World State",
+    "Operator": "Equals",
+    "Value": "Storm",
+    "Optional?": "No",
+    "Notes": "Checked at evolution attempt."
+  },
+  {
+    "Path ID": "EVO_051_052",
+    "Requirement Type": "Battle Wins",
+    "Operator": "At least",
+    "Value": 8,
+    "Optional?": "No",
+    "Notes": "Counts completed official/wild battles with this individual."
+  },
+  {
+    "Path ID": "EVO_051_052",
+    "Requirement Type": "Environment",
+    "Operator": "Equals",
+    "Value": "Bloom / protected grove",
+    "Optional?": "No",
+    "Notes": "Zone tag requirement."
+  },
+  {
+    "Path ID": "EVO_051_052",
+    "Requirement Type": "Level",
+    "Operator": "At least",
+    "Value": 18,
+    "Optional?": "No",
+    "Notes": "Boss-gated level cap must already permit this level."
+  },
+  {
+    "Path ID": "EVO_053_054",
+    "Requirement Type": "Battle Wins",
+    "Operator": "At least",
+    "Value": 8,
+    "Optional?": "No",
+    "Notes": "Counts completed official/wild battles with this individual."
+  },
+  {
+    "Path ID": "EVO_053_054",
+    "Requirement Type": "Level",
+    "Operator": "At least",
+    "Value": 20,
+    "Optional?": "No",
+    "Notes": "Boss-gated level cap must already permit this level."
+  },
+  {
+    "Path ID": "EVO_053_054",
+    "Requirement Type": "Weather / World State",
+    "Operator": "Equals",
+    "Value": "Storm",
+    "Optional?": "No",
+    "Notes": "Checked at evolution attempt."
+  },
+  {
+    "Path ID": "EVO_055_056",
+    "Requirement Type": "Battle Wins",
+    "Operator": "At least",
+    "Value": 8,
+    "Optional?": "No",
+    "Notes": "Counts completed official/wild battles with this individual."
+  },
+  {
+    "Path ID": "EVO_055_056",
+    "Requirement Type": "Environment",
+    "Operator": "Equals",
+    "Value": "Deep quarry / canyon exposure",
+    "Optional?": "No",
+    "Notes": "Zone tag requirement."
+  },
+  {
+    "Path ID": "EVO_055_056",
+    "Requirement Type": "Level",
+    "Operator": "At least",
+    "Value": 18,
+    "Optional?": "No",
+    "Notes": "Boss-gated level cap must already permit this level."
+  },
+  {
+    "Path ID": "EVO_055_056",
+    "Requirement Type": "Material",
+    "Operator": "At least",
+    "Value": "MAT_SKY_SILK x1",
+    "Optional?": "No",
+    "Notes": "Consumed on evolution."
+  },
+  {
+    "Path ID": "EVO_057_058",
+    "Requirement Type": "Battle Wins",
+    "Operator": "At least",
+    "Value": 5,
+    "Optional?": "No",
+    "Notes": "Counts completed official/wild battles with this individual."
+  },
+  {
+    "Path ID": "EVO_057_058",
+    "Requirement Type": "Level",
+    "Operator": "At least",
+    "Value": 12,
+    "Optional?": "No",
+    "Notes": "Boss-gated level cap must already permit this level."
+  },
+  {
+    "Path ID": "EVO_057_058",
+    "Requirement Type": "Material",
+    "Operator": "At least",
+    "Value": "MAT_ROYAL_CHITIN x1",
+    "Optional?": "No",
+    "Notes": "Consumed on evolution."
+  },
+  {
+    "Path ID": "EVO_057_058",
+    "Requirement Type": "Weather / World State",
+    "Operator": "Equals",
+    "Value": "Snow / Aurora",
+    "Optional?": "No",
+    "Notes": "Checked at evolution attempt."
+  },
+  {
+    "Path ID": "EVO_058_059",
+    "Requirement Type": "Battle Wins",
+    "Operator": "At least",
+    "Value": 15,
+    "Optional?": "No",
+    "Notes": "Counts completed official/wild battles with this individual."
+  },
+  {
+    "Path ID": "EVO_058_059",
+    "Requirement Type": "Level",
+    "Operator": "At least",
+    "Value": 30,
+    "Optional?": "No",
+    "Notes": "Boss-gated level cap must already permit this level."
+  },
+  {
+    "Path ID": "EVO_058_059",
+    "Requirement Type": "Story Flag",
+    "Operator": "Equals",
+    "Value": "Relevant regional story milestone",
+    "Optional?": "No",
+    "Notes": "Player-wide milestone."
+  },
+  {
+    "Path ID": "EVO_058_059",
+    "Requirement Type": "Weather / World State",
+    "Operator": "Equals",
+    "Value": "Snow / Aurora",
+    "Optional?": "No",
+    "Notes": "Checked at evolution attempt."
+  },
+  {
+    "Path ID": "EVO_060_061",
+    "Requirement Type": "Battle Wins",
+    "Operator": "At least",
+    "Value": 8,
+    "Optional?": "No",
+    "Notes": "Counts completed official/wild battles with this individual."
+  },
+  {
+    "Path ID": "EVO_060_061",
+    "Requirement Type": "Level",
+    "Operator": "At least",
+    "Value": 18,
+    "Optional?": "No",
+    "Notes": "Boss-gated level cap must already permit this level."
+  },
+  {
+    "Path ID": "EVO_060_061",
+    "Requirement Type": "Material",
+    "Operator": "At least",
+    "Value": "MAT_ROOT_RESIN x1",
+    "Optional?": "No",
+    "Notes": "Consumed on evolution."
+  },
+  {
+    "Path ID": "EVO_062_063",
+    "Requirement Type": "Battle Wins",
+    "Operator": "At least",
+    "Value": 8,
+    "Optional?": "No",
+    "Notes": "Counts completed official/wild battles with this individual."
+  },
+  {
+    "Path ID": "EVO_062_063",
+    "Requirement Type": "Level",
+    "Operator": "At least",
+    "Value": 20,
+    "Optional?": "No",
+    "Notes": "Boss-gated level cap must already permit this level."
+  },
+  {
+    "Path ID": "EVO_062_063",
+    "Requirement Type": "Material",
+    "Operator": "At least",
+    "Value": "MAT_DRAGON_SCALE x2",
+    "Optional?": "No",
+    "Notes": "Consumed on evolution."
+  },
+  {
+    "Path ID": "EVO_064_065",
+    "Requirement Type": "Battle Wins",
+    "Operator": "At least",
+    "Value": 8,
+    "Optional?": "No",
+    "Notes": "Counts completed official/wild battles with this individual."
+  },
+  {
+    "Path ID": "EVO_064_065",
+    "Requirement Type": "Level",
+    "Operator": "At least",
+    "Value": 18,
+    "Optional?": "No",
+    "Notes": "Boss-gated level cap must already permit this level."
+  },
+  {
+    "Path ID": "EVO_070_071",
+    "Requirement Type": "Battle Wins",
+    "Operator": "At least",
+    "Value": 8,
+    "Optional?": "No",
+    "Notes": "Counts completed official/wild battles with this individual."
+  },
+  {
+    "Path ID": "EVO_070_071",
+    "Requirement Type": "Level",
+    "Operator": "At least",
+    "Value": 18,
+    "Optional?": "No",
+    "Notes": "Boss-gated level cap must already permit this level."
+  },
+  {
+    "Path ID": "EVO_070_071",
+    "Requirement Type": "Material",
+    "Operator": "At least",
+    "Value": "MAT_RESONANT_KNUCKLE x1",
+    "Optional?": "No",
+    "Notes": "Consumed on evolution."
+  },
+  {
+    "Path ID": "EVO_072_073",
+    "Requirement Type": "Battle Wins",
+    "Operator": "At least",
+    "Value": 8,
+    "Optional?": "No",
+    "Notes": "Counts completed official/wild battles with this individual."
+  },
+  {
+    "Path ID": "EVO_072_073",
+    "Requirement Type": "Level",
+    "Operator": "At least",
+    "Value": 18,
+    "Optional?": "No",
+    "Notes": "Boss-gated level cap must already permit this level."
+  },
+  {
+    "Path ID": "EVO_072_073",
+    "Requirement Type": "Material",
+    "Operator": "At least",
+    "Value": "MAT_MIASMA_CRYSTAL x1",
+    "Optional?": "No",
+    "Notes": "Consumed on evolution."
+  },
+  {
+    "Path ID": "EVO_081_082",
+    "Requirement Type": "Battle Wins",
+    "Operator": "At least",
+    "Value": 8,
+    "Optional?": "No",
+    "Notes": "Counts completed official/wild battles with this individual."
+  },
+  {
+    "Path ID": "EVO_081_082",
+    "Requirement Type": "Level",
+    "Operator": "At least",
+    "Value": 18,
+    "Optional?": "No",
+    "Notes": "Boss-gated level cap must already permit this level."
+  },
+  {
+    "Path ID": "EVO_083_084",
+    "Requirement Type": "Battle Wins",
+    "Operator": "At least",
+    "Value": 8,
+    "Optional?": "No",
+    "Notes": "Counts completed official/wild battles with this individual."
+  },
+  {
+    "Path ID": "EVO_083_084",
+    "Requirement Type": "Environment",
+    "Operator": "Equals",
+    "Value": "High tide / coastal zone",
+    "Optional?": "No",
+    "Notes": "Zone tag requirement."
+  },
+  {
+    "Path ID": "EVO_083_084",
+    "Requirement Type": "Level",
+    "Operator": "At least",
+    "Value": 18,
+    "Optional?": "No",
+    "Notes": "Boss-gated level cap must already permit this level."
+  },
+  {
+    "Path ID": "EVO_085_086",
+    "Requirement Type": "Battle Wins",
+    "Operator": "At least",
+    "Value": 8,
+    "Optional?": "No",
+    "Notes": "Counts completed official/wild battles with this individual."
+  },
+  {
+    "Path ID": "EVO_085_086",
+    "Requirement Type": "Level",
+    "Operator": "At least",
+    "Value": 18,
+    "Optional?": "No",
+    "Notes": "Boss-gated level cap must already permit this level."
+  },
+  {
+    "Path ID": "EVO_085_086",
+    "Requirement Type": "Material",
+    "Operator": "At least",
+    "Value": "MAT_ROYAL_CHITIN x1",
+    "Optional?": "No",
+    "Notes": "Consumed on evolution."
+  },
+  {
+    "Path ID": "EVO_087_088",
+    "Requirement Type": "Battle Wins",
+    "Operator": "At least",
+    "Value": 8,
+    "Optional?": "No",
+    "Notes": "Counts completed official/wild battles with this individual."
+  },
+  {
+    "Path ID": "EVO_087_088",
+    "Requirement Type": "Environment",
+    "Operator": "Equals",
+    "Value": "Deep quarry / canyon exposure",
+    "Optional?": "No",
+    "Notes": "Zone tag requirement."
+  },
+  {
+    "Path ID": "EVO_087_088",
+    "Requirement Type": "Level",
+    "Operator": "At least",
+    "Value": 20,
+    "Optional?": "No",
+    "Notes": "Boss-gated level cap must already permit this level."
+  },
+  {
+    "Path ID": "EVO_087_088",
+    "Requirement Type": "Material",
+    "Operator": "At least",
+    "Value": "MAT_FAULTSTONE x2",
+    "Optional?": "No",
+    "Notes": "Consumed on evolution."
+  },
+  {
+    "Path ID": "EVO_089_090",
+    "Requirement Type": "Battle Wins",
+    "Operator": "At least",
+    "Value": 8,
+    "Optional?": "No",
+    "Notes": "Counts completed official/wild battles with this individual."
+  },
+  {
+    "Path ID": "EVO_089_090",
+    "Requirement Type": "Level",
+    "Operator": "At least",
+    "Value": 18,
+    "Optional?": "No",
+    "Notes": "Boss-gated level cap must already permit this level."
+  },
+  {
+    "Path ID": "EVO_089_090",
+    "Requirement Type": "Weather / World State",
+    "Operator": "Equals",
+    "Value": "Storm",
+    "Optional?": "No",
+    "Notes": "Checked at evolution attempt."
+  },
+  {
+    "Path ID": "EVO_091_092",
+    "Requirement Type": "Battle Wins",
+    "Operator": "At least",
+    "Value": 12,
+    "Optional?": "No",
+    "Notes": "Counts completed official/wild battles with this individual."
+  },
+  {
+    "Path ID": "EVO_091_092",
+    "Requirement Type": "Environment",
+    "Operator": "Equals",
+    "Value": "Night or spectral zone",
+    "Optional?": "No",
+    "Notes": "Zone tag requirement."
+  },
+  {
+    "Path ID": "EVO_091_092",
+    "Requirement Type": "Level",
+    "Operator": "At least",
+    "Value": 25,
+    "Optional?": "No",
+    "Notes": "Boss-gated level cap must already permit this level."
+  },
+  {
+    "Path ID": "EVO_091_092",
+    "Requirement Type": "Licence",
+    "Operator": "Equals",
+    "Value": "LIC_RFT_01",
+    "Optional?": "No",
+    "Notes": "Player-wide legal/progression gate."
+  },
+  {
+    "Path ID": "EVO_091_092",
+    "Requirement Type": "Research",
+    "Operator": "At least",
+    "Value": "Rift Signature Mapping",
+    "Optional?": "No",
+    "Notes": "Player-wide requirement."
+  },
+  {
+    "Path ID": "EVO_093_094",
+    "Requirement Type": "Battle Wins",
+    "Operator": "At least",
+    "Value": 8,
+    "Optional?": "No",
+    "Notes": "Counts completed official/wild battles with this individual."
+  },
+  {
+    "Path ID": "EVO_093_094",
+    "Requirement Type": "Level",
+    "Operator": "At least",
+    "Value": 18,
+    "Optional?": "No",
+    "Notes": "Boss-gated level cap must already permit this level."
+  },
+  {
+    "Path ID": "EVO_093_094",
+    "Requirement Type": "Weather / World State",
+    "Operator": "Equals",
+    "Value": "Snow / Aurora",
+    "Optional?": "No",
+    "Notes": "Checked at evolution attempt."
+  },
+  {
+    "Path ID": "EVO_101_102",
+    "Requirement Type": "Battle Wins",
+    "Operator": "At least",
+    "Value": 8,
+    "Optional?": "No",
+    "Notes": "Counts completed official/wild battles with this individual."
+  },
+  {
+    "Path ID": "EVO_101_102",
+    "Requirement Type": "Level",
+    "Operator": "At least",
+    "Value": 18,
+    "Optional?": "No",
+    "Notes": "Boss-gated level cap must already permit this level."
+  },
+  {
+    "Path ID": "EVO_103_104",
+    "Requirement Type": "Battle Wins",
+    "Operator": "At least",
+    "Value": 8,
+    "Optional?": "No",
+    "Notes": "Counts completed official/wild battles with this individual."
+  },
+  {
+    "Path ID": "EVO_103_104",
+    "Requirement Type": "Environment",
+    "Operator": "Equals",
+    "Value": "Bloom / protected grove",
+    "Optional?": "No",
+    "Notes": "Zone tag requirement."
+  },
+  {
+    "Path ID": "EVO_103_104",
+    "Requirement Type": "Level",
+    "Operator": "At least",
+    "Value": 20,
+    "Optional?": "No",
+    "Notes": "Boss-gated level cap must already permit this level."
+  },
+  {
+    "Path ID": "EVO_105_106",
+    "Requirement Type": "Battle Wins",
+    "Operator": "At least",
+    "Value": 8,
+    "Optional?": "No",
+    "Notes": "Counts completed official/wild battles with this individual."
+  },
+  {
+    "Path ID": "EVO_105_106",
+    "Requirement Type": "Level",
+    "Operator": "At least",
+    "Value": 18,
+    "Optional?": "No",
+    "Notes": "Boss-gated level cap must already permit this level."
+  },
+  {
+    "Path ID": "EVO_105_106",
+    "Requirement Type": "Material",
+    "Operator": "At least",
+    "Value": "MAT_ALLOY_NODE x1",
+    "Optional?": "No",
+    "Notes": "Consumed on evolution."
+  },
+  {
+    "Path ID": "EVO_109_110",
+    "Requirement Type": "Battle Wins",
+    "Operator": "At least",
+    "Value": 8,
+    "Optional?": "No",
+    "Notes": "Counts completed official/wild battles with this individual."
+  },
+  {
+    "Path ID": "EVO_109_110",
+    "Requirement Type": "Environment",
+    "Operator": "Equals",
+    "Value": "High tide / coastal zone",
+    "Optional?": "No",
+    "Notes": "Zone tag requirement."
+  },
+  {
+    "Path ID": "EVO_109_110",
+    "Requirement Type": "Level",
+    "Operator": "At least",
+    "Value": 18,
+    "Optional?": "No",
+    "Notes": "Boss-gated level cap must already permit this level."
+  },
+  {
+    "Path ID": "EVO_111_112",
+    "Requirement Type": "Battle Wins",
+    "Operator": "At least",
+    "Value": 8,
+    "Optional?": "No",
+    "Notes": "Counts completed official/wild battles with this individual."
+  },
+  {
+    "Path ID": "EVO_111_112",
+    "Requirement Type": "Environment",
+    "Operator": "Equals",
+    "Value": "High tide / coastal zone",
+    "Optional?": "No",
+    "Notes": "Zone tag requirement."
+  },
+  {
+    "Path ID": "EVO_111_112",
+    "Requirement Type": "Level",
+    "Operator": "At least",
+    "Value": 20,
+    "Optional?": "No",
+    "Notes": "Boss-gated level cap must already permit this level."
+  },
+  {
+    "Path ID": "EVO_113_114",
+    "Requirement Type": "Battle Wins",
+    "Operator": "At least",
+    "Value": 8,
+    "Optional?": "No",
+    "Notes": "Counts completed official/wild battles with this individual."
+  },
+  {
+    "Path ID": "EVO_113_114",
+    "Requirement Type": "Level",
+    "Operator": "At least",
+    "Value": 20,
+    "Optional?": "No",
+    "Notes": "Boss-gated level cap must already permit this level."
+  },
+  {
+    "Path ID": "EVO_115_116",
+    "Requirement Type": "Battle Wins",
+    "Operator": "At least",
+    "Value": 8,
+    "Optional?": "No",
+    "Notes": "Counts completed official/wild battles with this individual."
+  },
+  {
+    "Path ID": "EVO_115_116",
+    "Requirement Type": "Environment",
+    "Operator": "Equals",
+    "Value": "Night or spectral zone",
+    "Optional?": "No",
+    "Notes": "Zone tag requirement."
+  },
+  {
+    "Path ID": "EVO_115_116",
+    "Requirement Type": "Level",
+    "Operator": "At least",
+    "Value": 18,
+    "Optional?": "No",
+    "Notes": "Boss-gated level cap must already permit this level."
+  },
+  {
+    "Path ID": "EVO_115_116",
+    "Requirement Type": "Material",
+    "Operator": "At least",
+    "Value": "MAT_ROYAL_CHITIN x1",
+    "Optional?": "No",
+    "Notes": "Consumed on evolution."
+  },
+  {
+    "Path ID": "EVO_117_118",
+    "Requirement Type": "Battle Wins",
+    "Operator": "At least",
+    "Value": 12,
+    "Optional?": "No",
+    "Notes": "Counts completed official/wild battles with this individual."
+  },
+  {
+    "Path ID": "EVO_117_118",
+    "Requirement Type": "Environment",
+    "Operator": "Equals",
+    "Value": "Volcanic zone exposure",
+    "Optional?": "No",
+    "Notes": "Zone tag requirement."
+  },
+  {
+    "Path ID": "EVO_117_118",
+    "Requirement Type": "Level",
+    "Operator": "At least",
+    "Value": 25,
+    "Optional?": "No",
+    "Notes": "Boss-gated level cap must already permit this level."
+  },
+  {
+    "Path ID": "EVO_117_118",
+    "Requirement Type": "Material",
+    "Operator": "At least",
+    "Value": "MAT_FAULTSTONE x2",
+    "Optional?": "No",
+    "Notes": "Consumed on evolution."
+  },
+  {
+    "Path ID": "EVO_121_122",
+    "Requirement Type": "Battle Wins",
+    "Operator": "At least",
+    "Value": 8,
+    "Optional?": "No",
+    "Notes": "Counts completed official/wild battles with this individual."
+  },
+  {
+    "Path ID": "EVO_121_122",
+    "Requirement Type": "Level",
+    "Operator": "At least",
+    "Value": 18,
+    "Optional?": "No",
+    "Notes": "Boss-gated level cap must already permit this level."
+  },
+  {
+    "Path ID": "EVO_121_122",
+    "Requirement Type": "Weather / World State",
+    "Operator": "Equals",
+    "Value": "Snow / Aurora",
+    "Optional?": "No",
+    "Notes": "Checked at evolution attempt."
+  },
+  {
+    "Path ID": "EVO_125_126",
+    "Requirement Type": "Battle Wins",
+    "Operator": "At least",
+    "Value": 8,
+    "Optional?": "No",
+    "Notes": "Counts completed official/wild battles with this individual."
+  },
+  {
+    "Path ID": "EVO_125_126",
+    "Requirement Type": "Environment",
+    "Operator": "Equals",
+    "Value": "Deep quarry / canyon exposure",
+    "Optional?": "No",
+    "Notes": "Zone tag requirement."
+  },
+  {
+    "Path ID": "EVO_125_126",
+    "Requirement Type": "Level",
+    "Operator": "At least",
+    "Value": 18,
+    "Optional?": "No",
+    "Notes": "Boss-gated level cap must already permit this level."
+  },
+  {
+    "Path ID": "EVO_125_126",
+    "Requirement Type": "Material",
+    "Operator": "At least",
+    "Value": "MAT_HEARTGLASS x1",
+    "Optional?": "No",
+    "Notes": "Consumed on evolution."
+  },
+  {
+    "Path ID": "EVO_129_130",
+    "Requirement Type": "Battle Wins",
+    "Operator": "At least",
+    "Value": 8,
+    "Optional?": "No",
+    "Notes": "Counts completed official/wild battles with this individual."
+  },
+  {
+    "Path ID": "EVO_129_130",
+    "Requirement Type": "Level",
+    "Operator": "At least",
+    "Value": 18,
+    "Optional?": "No",
+    "Notes": "Boss-gated level cap must already permit this level."
+  },
+  {
+    "Path ID": "EVO_129_130",
+    "Requirement Type": "Weather / World State",
+    "Operator": "Equals",
+    "Value": "Storm",
+    "Optional?": "No",
+    "Notes": "Checked at evolution attempt."
+  },
+  {
+    "Path ID": "EVO_133_134",
+    "Requirement Type": "Battle Wins",
+    "Operator": "At least",
+    "Value": 8,
+    "Optional?": "No",
+    "Notes": "Counts completed official/wild battles with this individual."
+  },
+  {
+    "Path ID": "EVO_133_134",
+    "Requirement Type": "Level",
+    "Operator": "At least",
+    "Value": 18,
+    "Optional?": "No",
+    "Notes": "Boss-gated level cap must already permit this level."
+  },
+  {
+    "Path ID": "EVO_136_137",
+    "Requirement Type": "Battle Wins",
+    "Operator": "At least",
+    "Value": 8,
+    "Optional?": "No",
+    "Notes": "Counts completed official/wild battles with this individual."
+  },
+  {
+    "Path ID": "EVO_136_137",
+    "Requirement Type": "Level",
+    "Operator": "At least",
+    "Value": 20,
+    "Optional?": "No",
+    "Notes": "Boss-gated level cap must already permit this level."
+  },
+  {
+    "Path ID": "EVO_136_137",
+    "Requirement Type": "Weather / World State",
+    "Operator": "Equals",
+    "Value": "Storm",
+    "Optional?": "No",
+    "Notes": "Checked at evolution attempt."
+  },
+  {
+    "Path ID": "EVO_141_024",
+    "Requirement Type": "Battle Wins",
+    "Operator": "At least",
+    "Value": 16,
+    "Optional?": "No",
+    "Notes": "Must be earned with this individual before final evolution."
+  },
+  {
+    "Path ID": "EVO_141_024",
+    "Requirement Type": "Environment",
+    "Operator": "Equals",
+    "Value": "Frozen challenge ground",
+    "Optional?": "No",
+    "Notes": "Zone/environment tag requirement."
+  },
+  {
+    "Path ID": "EVO_141_024",
+    "Requirement Type": "Level",
+    "Operator": "At least",
+    "Value": 34,
+    "Optional?": "No",
+    "Notes": "Late final evolution level; intentionally near late-game progression."
+  },
+  {
+    "Path ID": "EVO_141_024",
+    "Requirement Type": "Material",
+    "Operator": "At least",
+    "Value": "MAT_RIMECORE x1",
+    "Optional?": "No",
+    "Notes": "Consumed on final evolution."
+  },
+  {
+    "Path ID": "EVO_141_024",
+    "Requirement Type": "Region Exposure",
+    "Operator": "Equals",
+    "Value": "Frostmarch",
+    "Optional?": "No",
+    "Notes": "Final evolution must be completed in its thematic region."
+  },
+  {
+    "Path ID": "EVO_141_024",
+    "Requirement Type": "Weather / World State",
+    "Operator": "Equals",
+    "Value": "Snow / Aurora",
+    "Optional?": "No",
+    "Notes": "Checked when the player attempts evolution."
+  },
+  {
+    "Path ID": "EVO_142_029",
+    "Requirement Type": "Battle Wins",
+    "Operator": "At least",
+    "Value": 16,
+    "Optional?": "No",
+    "Notes": "Must be earned with this individual before final evolution."
+  },
+  {
+    "Path ID": "EVO_142_029",
+    "Requirement Type": "Environment",
+    "Operator": "Equals",
+    "Value": "Memorial grove / spectral woodland",
+    "Optional?": "No",
+    "Notes": "Zone/environment tag requirement."
+  },
+  {
+    "Path ID": "EVO_142_029",
+    "Requirement Type": "Level",
+    "Operator": "At least",
+    "Value": 34,
+    "Optional?": "No",
+    "Notes": "Late final evolution level; intentionally near late-game progression."
+  },
+  {
+    "Path ID": "EVO_142_029",
+    "Requirement Type": "Material",
+    "Operator": "At least",
+    "Value": "MAT_MEMORY_FILM x1",
+    "Optional?": "No",
+    "Notes": "Consumed on final evolution."
+  },
+  {
+    "Path ID": "EVO_142_029",
+    "Requirement Type": "Region Exposure",
+    "Operator": "Equals",
+    "Value": "Mirefen",
+    "Optional?": "No",
+    "Notes": "Final evolution must be completed in its thematic region."
+  },
+  {
+    "Path ID": "EVO_142_029",
+    "Requirement Type": "Research",
+    "Operator": "At least",
+    "Value": "Heredity Mapping",
+    "Optional?": "No",
+    "Notes": "Player-wide requirement."
+  },
+  {
+    "Path ID": "EVO_142_029",
+    "Requirement Type": "Weather / World State",
+    "Operator": "Equals",
+    "Value": "Night",
+    "Optional?": "No",
+    "Notes": "Checked when the player attempts evolution."
+  },
+  {
+    "Path ID": "EVO_143_022",
+    "Requirement Type": "Battle Wins",
+    "Operator": "At least",
+    "Value": 18,
+    "Optional?": "No",
+    "Notes": "Must be earned with this individual before final evolution."
+  },
+  {
+    "Path ID": "EVO_143_022",
+    "Requirement Type": "Environment",
+    "Operator": "Equals",
+    "Value": "High thermal / volcanic summit",
+    "Optional?": "No",
+    "Notes": "Zone/environment tag requirement."
+  },
+  {
+    "Path ID": "EVO_143_022",
+    "Requirement Type": "Level",
+    "Operator": "At least",
+    "Value": 36,
+    "Optional?": "No",
+    "Notes": "Late final evolution level; intentionally near late-game progression."
+  },
+  {
+    "Path ID": "EVO_143_022",
+    "Requirement Type": "Material",
+    "Operator": "At least",
+    "Value": "MAT_SKY_SILK x2",
+    "Optional?": "No",
+    "Notes": "Consumed on final evolution."
+  },
+  {
+    "Path ID": "EVO_143_022",
+    "Requirement Type": "Region Exposure",
+    "Operator": "Equals",
+    "Value": "Dragonspine",
+    "Optional?": "No",
+    "Notes": "Final evolution must be completed in its thematic region."
+  },
+  {
+    "Path ID": "EVO_143_022",
+    "Requirement Type": "Weather / World State",
+    "Operator": "Equals",
+    "Value": "Ashfall / High Thermal",
+    "Optional?": "No",
+    "Notes": "Checked when the player attempts evolution."
+  }
+]

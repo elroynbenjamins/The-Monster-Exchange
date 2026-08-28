@@ -1,0 +1,258 @@
+[
+  {
+    "Component": "Potential",
+    "Band / Condition": "0-39",
+    "Multiplier": 0.7,
+    "Applies To": "All individuals",
+    "Rule": "Weak genetics discount; still potentially useful as producer/collector.",
+    "Anti-Exploit / Clamp": "Combined individual multiplier clamp applies."
+  },
+  {
+    "Component": "Potential",
+    "Band / Condition": "40-49",
+    "Multiplier": 0.8,
+    "Applies To": "All individuals",
+    "Rule": "Below-average genetic ceiling.",
+    "Anti-Exploit / Clamp": null
+  },
+  {
+    "Component": "Potential",
+    "Band / Condition": "50-59",
+    "Multiplier": 0.9,
+    "Applies To": "All individuals",
+    "Rule": "Ordinary lower-mid quality.",
+    "Anti-Exploit / Clamp": null
+  },
+  {
+    "Component": "Potential",
+    "Band / Condition": "60-69",
+    "Multiplier": 1,
+    "Applies To": "All individuals",
+    "Rule": "Market baseline quality.",
+    "Anti-Exploit / Clamp": null
+  },
+  {
+    "Component": "Potential",
+    "Band / Condition": "70-79",
+    "Multiplier": 1.15,
+    "Applies To": "All individuals",
+    "Rule": "Good genetics premium.",
+    "Anti-Exploit / Clamp": null
+  },
+  {
+    "Component": "Potential",
+    "Band / Condition": "80-89",
+    "Multiplier": 1.35,
+    "Applies To": "All individuals",
+    "Rule": "Excellent breeding/battle demand.",
+    "Anti-Exploit / Clamp": null
+  },
+  {
+    "Component": "Potential",
+    "Band / Condition": "90-94",
+    "Multiplier": 1.6,
+    "Applies To": "All individuals",
+    "Rule": "Elite quality; materially rarer.",
+    "Anti-Exploit / Clamp": null
+  },
+  {
+    "Component": "Potential",
+    "Band / Condition": "95-99",
+    "Multiplier": 2,
+    "Applies To": "All individuals",
+    "Rule": "Exceptional market premium.",
+    "Anti-Exploit / Clamp": null
+  },
+  {
+    "Component": "Potential",
+    "Band / Condition": "100",
+    "Multiplier": 3,
+    "Applies To": "All individuals",
+    "Rule": "Perfect genetics; ultra-rare trophy/breeding asset.",
+    "Anti-Exploit / Clamp": "Do not increase spawn chance through premium currency."
+  },
+  {
+    "Component": "Traits",
+    "Band / Condition": "Negative combination",
+    "Multiplier": 0.85,
+    "Applies To": "Individual",
+    "Rule": "Meaningful bad traits reduce value.",
+    "Anti-Exploit / Clamp": "Trait effects use stable IDs and bounded multipliers."
+  },
+  {
+    "Component": "Traits",
+    "Band / Condition": "Neutral / ordinary",
+    "Multiplier": 1,
+    "Applies To": "Individual",
+    "Rule": "No premium.",
+    "Anti-Exploit / Clamp": null
+  },
+  {
+    "Component": "Traits",
+    "Band / Condition": "Strong economic/combat/breeding synergy",
+    "Multiplier": 1.1,
+    "Applies To": "Individual",
+    "Rule": "Useful trait package.",
+    "Anti-Exploit / Clamp": null
+  },
+  {
+    "Component": "Traits",
+    "Band / Condition": "Exceptional synergy",
+    "Multiplier": 1.25,
+    "Applies To": "Individual",
+    "Rule": "Rare multi-trait synergy.",
+    "Anti-Exploit / Clamp": "Trait multiplier capped around 1.35."
+  },
+  {
+    "Component": "Variant",
+    "Band / Condition": "Normal",
+    "Multiplier": 1,
+    "Applies To": "Individual",
+    "Rule": "No cosmetic premium.",
+    "Anti-Exploit / Clamp": null
+  },
+  {
+    "Component": "Variant",
+    "Band / Condition": "Regional / uncommon cosmetic",
+    "Multiplier": 1.2,
+    "Applies To": "Individual",
+    "Rule": "Collector premium varies by region.",
+    "Anti-Exploit / Clamp": "No combat advantage required."
+  },
+  {
+    "Component": "Variant",
+    "Band / Condition": "Rare coloration / albino",
+    "Multiplier": 1.6,
+    "Applies To": "Individual",
+    "Rule": "Strong collector demand.",
+    "Anti-Exploit / Clamp": null
+  },
+  {
+    "Component": "Mutation",
+    "Band / Condition": "Minor mutation",
+    "Multiplier": 1.2,
+    "Applies To": "Individual",
+    "Rule": "Mutation can add collector/research demand.",
+    "Anti-Exploit / Clamp": "Negative mutations can be below 1.0."
+  },
+  {
+    "Component": "Mutation",
+    "Band / Condition": "Highly desirable mutation",
+    "Multiplier": 2,
+    "Applies To": "Individual",
+    "Rule": "Very rare market premium.",
+    "Anti-Exploit / Clamp": "Do not let mutations guarantee battle dominance."
+  },
+  {
+    "Component": "Pedigree",
+    "Band / Condition": "No notable pedigree",
+    "Multiplier": 1,
+    "Applies To": "Bred monsters",
+    "Rule": "Baseline.",
+    "Anti-Exploit / Clamp": null
+  },
+  {
+    "Component": "Pedigree",
+    "Band / Condition": "Documented strong lineage",
+    "Multiplier": 1.15,
+    "Applies To": "Bred monsters",
+    "Rule": "Breeder premium.",
+    "Anti-Exploit / Clamp": null
+  },
+  {
+    "Component": "Pedigree",
+    "Band / Condition": "Champion parent / elite line",
+    "Multiplier": 1.35,
+    "Applies To": "Bred monsters",
+    "Rule": "High breeding demand.",
+    "Anti-Exploit / Clamp": null
+  },
+  {
+    "Component": "Pedigree",
+    "Band / Condition": "Historic champion bloodline",
+    "Multiplier": 1.65,
+    "Applies To": "Bred monsters",
+    "Rule": "Prestige premium.",
+    "Anti-Exploit / Clamp": "Pedigree premium diminishes across distant generations."
+  },
+  {
+    "Component": "Battle Reputation",
+    "Band / Condition": "Unproven",
+    "Multiplier": 1,
+    "Applies To": "Individual",
+    "Rule": "No fame premium.",
+    "Anti-Exploit / Clamp": null
+  },
+  {
+    "Component": "Battle Reputation",
+    "Band / Condition": "Regional success",
+    "Multiplier": 1.1,
+    "Applies To": "Individual",
+    "Rule": "Arena/bounty recognition.",
+    "Anti-Exploit / Clamp": null
+  },
+  {
+    "Component": "Battle Reputation",
+    "Band / Condition": "Major tournament champion",
+    "Multiplier": 1.35,
+    "Applies To": "Individual",
+    "Rule": "Persistent battle history adds value.",
+    "Anti-Exploit / Clamp": null
+  },
+  {
+    "Component": "Battle Reputation",
+    "Band / Condition": "World-class / historic",
+    "Multiplier": 1.75,
+    "Applies To": "Individual",
+    "Rule": "Very high prestige.",
+    "Anti-Exploit / Clamp": "Current hype and career fame tracked separately."
+  },
+  {
+    "Component": "Level",
+    "Band / Condition": "Far below current player cap",
+    "Multiplier": 0.88,
+    "Applies To": "Individual",
+    "Rule": "Catch-up/training cost discount.",
+    "Anti-Exploit / Clamp": "Fast training prevents extreme devaluation."
+  },
+  {
+    "Component": "Level",
+    "Band / Condition": "Near expected market level",
+    "Multiplier": 1,
+    "Applies To": "Individual",
+    "Rule": "Baseline.",
+    "Anti-Exploit / Clamp": null
+  },
+  {
+    "Component": "Level",
+    "Band / Condition": "At current progression cap",
+    "Multiplier": 1.1,
+    "Applies To": "Individual",
+    "Rule": "Convenience premium only.",
+    "Anti-Exploit / Clamp": "Level factor intentionally small."
+  },
+  {
+    "Component": "Health / Condition",
+    "Band / Condition": "Healthy",
+    "Multiplier": 1,
+    "Applies To": "Individual",
+    "Rule": "Baseline.",
+    "Anti-Exploit / Clamp": null
+  },
+  {
+    "Component": "Health / Condition",
+    "Band / Condition": "Injured / depleted",
+    "Multiplier": 0.92,
+    "Applies To": "Individual",
+    "Rule": "Temporary sale discount.",
+    "Anti-Exploit / Clamp": "No permanent injury value destruction unless explicit trait/system."
+  },
+  {
+    "Component": "Combined Individual Factor",
+    "Band / Condition": "Final clamp",
+    "Multiplier": 8,
+    "Applies To": "All individuals",
+    "Rule": "Product of quality multipliers is capped at 8× regional species fair value.",
+    "Anti-Exploit / Clamp": "Floor 0.50× except distressed/special scripted sale."
+  }
+]

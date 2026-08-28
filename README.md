@@ -13,6 +13,7 @@ Requirements: Node.js 22.6 or newer. No package download is required for the cur
 ```bash
 npm test
 npm run check
+npm run audit:design
 npm start
 npm run play
 ```
@@ -33,7 +34,7 @@ Marketplace discovery supports species, affordability, and maximum-price filters
 
 The Trainer Network introduces persistent named characters. Rival Rowan Vale and research friend Tessa Reed own actual monster rosters, train them on world ticks, remember challenge records, build relationships through repeat battles, and award authored victory purses.
 
-The complete initial Word catalog is now playable: 100 original species, 38 evolution transitions, all 18 types, and the approved 40/30/24/4/2 Common-to-Legendary rarity curve. Each concept carries its catalog description into data and receives type-shaped stats, genetics, traits, breeding compatibility, reusable skills and passives, habitat access, encounter scarcity, market value, and a placeholder-safe pixel-art ID. The authored Mossveil, Canopyre, and Voltgrazer identities remain intact.
+The current playable runtime contains the initial 100-species Word catalog plus the two Exchange Crest guardians. The newer master design database v18 is now the authoritative migration source: its repository snapshot contains 146 workbook species, exact combat data, 54 evolution paths, 48 zones, 288 encounter rows, and detailed skill, passive, trait, breeding, progression, and market systems. The migration is intentionally staged so working saves and mechanics remain valid; see [the migration plan](docs/DESIGN_DATABASE_MIGRATION.md).
 
 The Exchange Crest is the selected application icon. Its paired guardians are also game species beyond the initial catalog: Legendary Grass/Fairy Aurevine protects balance and recovery, while Legendary Electric/Dragon Tempestyr represents momentum and decisive change. Both have signature crest skills and passives. They never appear in ordinary wild or NPC-market rolls, cannot breed or be sold, and may bond only once per save: Aurevine rewards broad research at 20 reputation; Tempestyr rewards an accomplished battle roster at 30 reputation.
 

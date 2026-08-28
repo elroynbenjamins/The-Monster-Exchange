@@ -1,0 +1,92 @@
+[
+  {
+    "Rule ID": "INH_001",
+    "Component": "Individual Gene",
+    "Method": "Weighted parent pick",
+    "Base Chance / Weight": "75%",
+    "Modifier Sources": "Research, breeding items, lineage traits",
+    "Hard Limits": "Final gene 0-20",
+    "Implementation Notes": "Select parent gene then apply bounded variance."
+  },
+  {
+    "Rule ID": "INH_002",
+    "Component": "Potential",
+    "Method": "Derived",
+    "Base Chance / Weight": "N/A",
+    "Modifier Sources": "None directly",
+    "Hard Limits": "0-100",
+    "Implementation Notes": "Never roll Potential separately; sum offspring genes."
+  },
+  {
+    "Rule ID": "INH_003",
+    "Component": "Species",
+    "Method": "Parent/evolution compatibility",
+    "Base Chance / Weight": "Data-driven",
+    "Modifier Sources": "Species breeding group/rule",
+    "Hard Limits": "Explicit species rules",
+    "Implementation Notes": "Do not infer purely from type."
+  },
+  {
+    "Rule ID": "INH_004",
+    "Component": "Trait",
+    "Method": "Independent inherited roll",
+    "Base Chance / Weight": "35% per eligible trait",
+    "Modifier Sources": "Dominant Gene, charms, research",
+    "Hard Limits": "Per-trait cap 65%",
+    "Implementation Notes": "New traits roll separately."
+  },
+  {
+    "Rule ID": "INH_005",
+    "Component": "New Trait",
+    "Method": "Species/region pool",
+    "Base Chance / Weight": "12%",
+    "Modifier Sources": "Mutation events, research",
+    "Hard Limits": "Max trait slots by species",
+    "Implementation Notes": "Weighted away from rare traits."
+  },
+  {
+    "Rule ID": "INH_006",
+    "Component": "Mutation",
+    "Method": "Independent rare roll",
+    "Base Chance / Weight": "0.5%",
+    "Modifier Sources": "Research, Rift events",
+    "Hard Limits": "Ordinary cap 2%",
+    "Implementation Notes": "Can be positive, neutral or negative."
+  },
+  {
+    "Rule ID": "INH_007",
+    "Component": "Special Color",
+    "Method": "Independent cosmetic roll",
+    "Base Chance / Weight": "0.25%",
+    "Modifier Sources": "Collector research/events",
+    "Hard Limits": "Ordinary cap 1%",
+    "Implementation Notes": "No direct combat advantage."
+  },
+  {
+    "Rule ID": "INH_008",
+    "Component": "Pedigree",
+    "Method": "Persistent ancestry",
+    "Base Chance / Weight": "100%",
+    "Modifier Sources": "Parent records",
+    "Hard Limits": "4 generations default",
+    "Implementation Notes": "Use IDs, not copied full objects."
+  },
+  {
+    "Rule ID": "INH_009",
+    "Component": "Champion Ancestry",
+    "Method": "Tag propagation",
+    "Base Chance / Weight": "100% lineage record",
+    "Modifier Sources": "Distance reduces market premium",
+    "Hard Limits": "Diminishes by generation",
+    "Implementation Notes": "History remains factual even when premium fades."
+  },
+  {
+    "Rule ID": "INH_010",
+    "Component": "Negative Inbreeding Effect",
+    "Method": "Conditional roll",
+    "Base Chance / Weight": "After threshold",
+    "Modifier Sources": "Facility/research may mitigate",
+    "Hard Limits": "Never guaranteed permanent defect",
+    "Implementation Notes": "Adds risk rather than blocking breeding."
+  }
+]

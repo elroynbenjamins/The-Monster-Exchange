@@ -1,0 +1,79 @@
+{
+  "source": "Monster_Exchange_Master_Design_Database_v18.xlsx",
+  "version": 18,
+  "extractedAt": "2026-08-28",
+  "sheets": {
+    "Species Catalog": {
+      "file": "species-catalog.json",
+      "rows": 146
+    },
+    "Species Combat Stats": {
+      "file": "species-combat-stats.json",
+      "rows": 146
+    },
+    "Species Passives": {
+      "file": "species-passives.json",
+      "rows": 146
+    },
+    "Skill Catalog": {
+      "file": "skill-catalog.json",
+      "rows": 38
+    },
+    "Trait Catalog": {
+      "file": "trait-catalog.json",
+      "rows": 24
+    },
+    "Species Skill Learnsets": {
+      "file": "species-skill-learnsets.json",
+      "rows": 541
+    },
+    "Species Trait Pools": {
+      "file": "species-trait-pools.json",
+      "rows": 876
+    },
+    "Evolution Paths": {
+      "file": "evolution-paths.json",
+      "rows": 54
+    },
+    "Evolution Requirements": {
+      "file": "evolution-requirements.json",
+      "rows": 183
+    },
+    "Special Obtainability Rules": {
+      "file": "special-obtainability-rules.json",
+      "rows": 3
+    },
+    "Region Habitats": {
+      "file": "region-habitats.json",
+      "rows": 12
+    },
+    "Zone Design": {
+      "file": "zone-design.json",
+      "rows": 48
+    },
+    "Zone Encounters": {
+      "file": "zone-encounters.json",
+      "rows": 288
+    },
+    "Species Market Baselines": {
+      "file": "species-market-baselines.json",
+      "rows": 146
+    },
+    "Individual Valuation Rules": {
+      "file": "individual-valuation-rules.json",
+      "rows": 32
+    },
+    "Combat Config": {
+      "file": "combat-config.json",
+      "rows": 20
+    },
+    "Breeding Config": {
+      "file": "breeding-config.json",
+      "rows": 16
+    },
+    "Inheritance Rules": {
+      "file": "inheritance-rules.json",
+      "rows": 10
+    }
+  }
+}

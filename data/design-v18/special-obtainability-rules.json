@@ -1,0 +1,47 @@
+[
+  {
+    "Monster ID": 24,
+    "Species": "Rimehorn",
+    "Wild Catchable": "No",
+    "Wild Encounter Weight": 0,
+    "Direct Egg/Hatch Final Form": "No",
+    "Evolution Required": "Yes",
+    "Tradeable": "Yes",
+    "Auction Eligible": "Yes",
+    "Primary Obtain Method": "Evolve its middle form",
+    "Allowed Secondary Sources": "Player resale; NPC evolved-monster listing; rare prestige auction",
+    "Supply Origin Rule": "Every legal market copy must trace back to an evolved individual; never generate the final form as wild catch or direct hatch.",
+    "Implementation Flags": "isCatchable=false; wildEncounterWeight=0; evolutionOnly=true; directHatch=false",
+    "Design Reason": "Late, visually prestigious final evolution with deliberately constrained supply and higher collector value."
+  },
+  {
+    "Monster ID": 29,
+    "Species": "Mournglade",
+    "Wild Catchable": "No",
+    "Wild Encounter Weight": 0,
+    "Direct Egg/Hatch Final Form": "No",
+    "Evolution Required": "Yes",
+    "Tradeable": "Yes",
+    "Auction Eligible": "Yes",
+    "Primary Obtain Method": "Evolve its middle form",
+    "Allowed Secondary Sources": "Player resale; NPC evolved-monster listing; rare prestige auction",
+    "Supply Origin Rule": "Every legal market copy must trace back to an evolved individual; never generate the final form as wild catch or direct hatch.",
+    "Implementation Flags": "isCatchable=false; wildEncounterWeight=0; evolutionOnly=true; directHatch=false",
+    "Design Reason": "Late, visually prestigious final evolution with deliberately constrained supply and higher collector value."
+  },
+  {
+    "Monster ID": 22,
+    "Species": "Solvulture",
+    "Wild Catchable": "No",
+    "Wild Encounter Weight": 0,
+    "Direct Egg/Hatch Final Form": "No",
+    "Evolution Required": "Yes",
+    "Tradeable": "Yes",
+    "Auction Eligible": "Yes",
+    "Primary Obtain Method": "Evolve its middle form",
+    "Allowed Secondary Sources": "Player resale; NPC evolved-monster listing; rare prestige auction",
+    "Supply Origin Rule": "Every legal market copy must trace back to an evolved individual; never generate the final form as wild catch or direct hatch.",
+    "Implementation Flags": "isCatchable=false; wildEncounterWeight=0; evolutionOnly=true; directHatch=false",
+    "Design Reason": "Late, visually prestigious final evolution with deliberately constrained supply and higher collector value."
+  }
+]
