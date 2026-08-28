@@ -3,12 +3,13 @@ import type { MarketState } from "../systems/market.ts";
 import type { MonsterIndividual } from "../core/types.ts";
 import type { ExpeditionState } from "../systems/exploration.ts";
 
-export const SAVE_VERSION = 7;
+export const SAVE_VERSION = 8;
 
 export type ThemePreference = "system" | "light" | "dark";
 export interface UiPreferences { theme: ThemePreference; reducedMotion: boolean }
 
 export interface SpeciesResearch { level: number; points: number }
+export interface PlayerLocation { regionId: string; cityId?: string }
 
 export interface MonsterCondition {
   hpRatio: number;
@@ -30,6 +31,7 @@ export interface PlayerState {
   activeTeamIds: readonly string[];
   reputation: number;
   researchBySpecies: Readonly<Record<string, SpeciesResearch>>;
+  location: PlayerLocation;
 }
 
 export interface WorldState {
@@ -40,6 +42,7 @@ export interface WorldState {
   season: "spring" | "summer" | "autumn" | "winter";
   weatherByRegion: Readonly<Record<string, string>>;
   populations: Readonly<Record<string, number>>;
+  unlockedMapIds: readonly string[];
 }
 
 export interface BreedingJob {
@@ -92,9 +95,9 @@ export function createNewGame(playerName: string, seed: number, contentVersion: 
     player: {
       id: "player", name: trimmedName, crowns: 750,
       inventory: { "field-capsule": 5, "training-band": 1, "trail-harness": 1, herbs: 5, timber: 50, stone: 25 },
-      monsterIds: [], activeTeamIds: [], reputation: 0, researchBySpecies: {},
+      monsterIds: [], activeTeamIds: [], reputation: 0, researchBySpecies: {}, location: { regionId: "greenreach", cityId: "hearthbrook" },
     },
-    world: { day: 1, seed, nextRandomOffset: 0, unlockedZoneIds: ["greenreach-meadow"], season: "spring", weatherByRegion: { greenreach: "clear", stormpeak: "windy" }, populations: {} },
+    world: { day: 1, seed, nextRandomOffset: 0, unlockedZoneIds: ["greenreach-meadow"], unlockedMapIds: [], season: "spring", weatherByRegion: { greenreach: "clear", stormpeak: "windy" }, populations: {} },
     monsters: {},
     conditions: {},
     market: { day: 1, indices: {}, listings: [], events: [] },

@@ -5,7 +5,7 @@ import { join } from "node:path";
 import {
   EXPEDITION_APPROACHES, SeededRandom, activeTeamCaptureBonus, addMonsterToPlayer, appraiseMonster, attemptCapture, byId, changeInventory, content, createMonster,
   abandonContract, acceptContract, advanceWorldDay, applyBattleAction, availableRecipes, browseMarketListings, buyListing, calculateExpeditionPreparation, challengeTrainer, chooseAiAction, claimBreedingJob, claimContract, completedContractNames, conductSpeciesStudy, constructBuilding, contractProgressPercent, craftRecipe, createBattle, createNewGame, depositHomebaseResource, estimateTrainerDifficulty, evolveOwnedMonster, finishExpedition, gainSpeciesResearch, generateBossEncounter, generateWildEncounter, initializeTrainers, listPlayerMonster, listingValueLabel, loadGame, maximumCraftableQuantity, nextActor, provideFieldCare, recordContractProgress, renameOwnedMonster, resolveExpeditionNode, trainerRelationshipTier,
-  equipMonsterItems, equipMonsterSkills, researchLabLevel, saveGame, setActiveTeam, setReducedMotion, setThemePreference, settleBattleProgression, startBreeding, startExpeditionRun, upgradeBuilding, type GameState,
+  availablePlayerRoutes, cityServices, enterMajorCity, equipMonsterItems, equipMonsterSkills, leaveCity, majorCityForRegion, researchLabLevel, routeDestination, saveGame, setActiveTeam, setReducedMotion, setThemePreference, settleBattleProgression, startBreeding, startExpeditionRun, travelPlayer, upgradeBuilding, type GameState,
   validActions, type BattleAction, type ExpeditionApproach, type WildEncounter,
 } from "./index.ts";
 
@@ -519,15 +519,49 @@ async function manageTrainers(state: GameState): Promise<GameState> {
   } catch (error) { console.log(error instanceof Error ? error.message : error); return state; }
 }
 
+async function manageWorld(state: GameState): Promise<GameState> {
+  const { regionId, cityId } = state.player.location;
+  console.log(`\nWorld travel · ${regionId}${cityId ? ` · ${cityId}` : " · regional map"}`);
+  if (cityId) {
+    const services = cityServices(cityId);
+    console.log(`City services: ${services.join(", ")}.`);
+    console.log("1. Marketplace  2. Arena/Trainers  3. Monster Storage/Roster  4. Clinic  5. Workshop/Homebase  6. Expedition Guild  7. Transport  8. Leave city  9. Back");
+    const action = await askNumber("> ", 1, 9);
+    if (action === 1) return manageMarketplace(state);
+    if (action === 2) return manageTrainers(state);
+    if (action === 3) return manageRoster(state);
+    if (action === 4) return manageRoster(state);
+    if (action === 5) return manageHomebase(state);
+    if (action === 6) return expedition(state);
+    if (action === 8) return leaveCity(state);
+    if (action === 9) return state;
+  } else {
+    const city = majorCityForRegion(regionId);
+    console.log(`1. Enter ${city ?? "major city"}  2. Transport  3. Back`);
+    const action = await askNumber("> ", 1, 3);
+    if (action === 1) return enterMajorCity(state);
+    if (action === 3) return state;
+  }
+  const routes = availablePlayerRoutes(state);
+  if (!routes.length) { console.log("No transport routes depart from this region."); return state; }
+  console.log("\nAvailable routes");
+  routes.forEach((route, index) => console.log(`${index + 1}. ${route.mode} to ${routeDestination(route, regionId)} · ${route.costCrowns} Crowns · ${route.durationDays} day${route.durationDays === 1 ? "" : "s"}${route.requiredUnlockId && !state.world.unlockedMapIds.includes(route.requiredUnlockId) ? " · LOCKED" : ""}`));
+  console.log(`${routes.length + 1}. Back`);
+  const selection = await askNumber("> ", 1, routes.length + 1);
+  if (selection > routes.length) return state;
+  try { return travelPlayer(state, routes[selection - 1]!.id, content); }
+  catch (error) { console.log(error instanceof Error ? error.message : error); return state; }
+}
+
 async function run(): Promise<void> {
   let state = await exists(savePath) ? await loadGame(savePath, content.contentVersion) : await newGame();
   state = initializeTrainers(state, content, new SeededRandom(state.world.seed + 9000));
   console.log(`\nWelcome, ${state.player.name}.`);
   while (true) {
     console.log(`\nDay ${state.world.day} · ${state.player.crowns} Crowns · ${state.player.inventory["field-capsule"] ?? 0} Capsules`);
-    console.log(`Season: ${state.world.season} · Greenreach weather: ${state.world.weatherByRegion.greenreach ?? "unknown"}`);
-    console.log("1. Expedition  2. Roster  3. Marketplace  4. Inventory  5. End day  6. Homebase  7. Equipment  8. Appearance  9. Contracts  10. Trainers  11. Save and quit");
-    const action = await askNumber("> ", 1, 11);
+    console.log(`Season: ${state.world.season} · Location: ${state.player.location.cityId ?? state.player.location.regionId} · Local weather: ${state.world.weatherByRegion[state.player.location.regionId] ?? "unknown"}`);
+    console.log("1. Expedition  2. Roster  3. Marketplace  4. Inventory  5. End day  6. Homebase  7. Equipment  8. Appearance  9. Contracts  10. Trainers  11. World map  12. Save and quit");
+    const action = await askNumber("> ", 1, 12);
     if (action === 1) state = await expedition(state);
     if (action === 2) state = await manageRoster(state);
     if (action === 3) state = await manageMarketplace(state);
@@ -548,8 +582,9 @@ async function run(): Promise<void> {
     if (action === 8) state = await manageAppearance(state);
     if (action === 9) state = await manageContracts(state);
     if (action === 10) state = await manageTrainers(state);
+    if (action === 11) state = await manageWorld(state);
     await saveGame(savePath, state);
-    if (action === 11) break;
+    if (action === 12) break;
   }
 }
 

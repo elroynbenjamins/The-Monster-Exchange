@@ -41,6 +41,8 @@ World-map navigation is data-driven through normalized clickable areas. The Hear
 
 Regional travel now uses authored bidirectional road, rail, ferry, and airship routes that consume Crowns and world days. City maps expose normalized hotspots for markets, arenas, monster storage, clinics, workshops, breeding, expedition guilds, government landmarks, and transport hubs. Six city maps and eleven regional maps are currently ready; missing art remains an explicit awaiting-upload destination.
 
+Player location now persists in save version 8. The terminal client's World Map lets keepers leave or enter a region's major city, use its market, arena, storage, clinic, workshop, expedition, and transport services, and travel along authored routes. Journey time executes the complete living-world tick, so weather, markets, recovery, construction, breeding, contracts, and trainer progression continue while travelling. Version 7 saves migrate safely to Hearthbrook.
+
 Recent usability rules are centralized rather than embedded in menus: nicknames normalize safely and stay unique, field care avoids wasting herbs, crafting reports exact available quantities, market searches support quality thresholds and value labels, contracts expose percentage progress, and trainer profiles show relationship tiers plus estimated challenge difficulty.
 
 ## Architecture

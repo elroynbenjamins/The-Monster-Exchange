@@ -25,6 +25,12 @@ function migrateSave(raw: GameState & { saveVersion: number }): GameState {
   }
   if (migrated.saveVersion === 5) migrated = { ...migrated, saveVersion: 6, contracts: [] };
   if (migrated.saveVersion === 6) migrated = { ...migrated, saveVersion: 7, trainers: {} };
+  if (migrated.saveVersion === 7) migrated = {
+    ...migrated,
+    saveVersion: 8,
+    player: { ...migrated.player, location: { regionId: "greenreach", cityId: "hearthbrook" } },
+    world: { ...migrated.world, unlockedMapIds: [] },
+  };
   return migrated;
 }
 
