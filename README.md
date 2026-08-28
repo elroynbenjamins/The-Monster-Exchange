@@ -2,6 +2,8 @@
 
 Canonical application/package identifier: `com.elroybenjamins.themonsterexchange`. Android, iOS, and future distribution builds must keep this identifier unchanged; shared metadata lives in `app.config.json` and `src/config/app.ts`.
 
+Google Play release documentation: [Privacy Policy](PRIVACY.md) · [Data safety and release checklist](docs/GOOGLE_PLAY_DATA_SAFETY.md). The current declaration assumes the shipped build remains offline and contains no analytics, ads, accounts, cloud services, payments, or third-party data-collection SDKs.
+
 The Monster Exchange is a pixel-art monster management game where collecting, breeding, exploration, combat, and a living marketplace feed one another. This repository is the simulation-first starter: the rules are usable without a UI, deterministic under a seed, and driven by content definitions rather than species-specific code.
 
 ## Start here

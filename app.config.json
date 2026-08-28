@@ -3,6 +3,7 @@
   "slug": "the-monster-exchange",
   "packageId": "com.elroybenjamins.themonsterexchange",
   "icon": "assets/pixel/ui/ui--app-icon--exchange-crest.png",
+  "privacyPolicy": "PRIVACY.md",
   "android": {
     "applicationId": "com.elroybenjamins.themonsterexchange"
   },
