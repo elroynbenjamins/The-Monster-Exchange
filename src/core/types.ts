@@ -13,7 +13,11 @@ export type Rarity = "common" | "uncommon" | "rare" | "epic" | "legendary";
 
 export interface SpeciesDefinition {
   id: string;
+  catalogNumber: number;
   name: string;
+  description: string;
+  evolutionStage: number;
+  evolutionLineLength: number;
   types: readonly [GameType, GameType?];
   tags: readonly string[];
   rarity: Rarity;

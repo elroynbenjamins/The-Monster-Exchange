@@ -7,6 +7,7 @@ export interface BreedResult { offspring: MonsterIndividual; inheritedFrom: Read
 
 export function canBreed(a: MonsterIndividual, b: MonsterIndividual, speciesA: SpeciesDefinition, speciesB: SpeciesDefinition): { ok: boolean; reason?: string } {
   if (a.id === b.id) return { ok: false, reason: "A monster cannot breed with itself." };
+  if (speciesA.tags.includes("crest-guardian") || speciesB.tags.includes("crest-guardian")) return { ok: false, reason: "Crest Guardians form bonds but cannot be bred." };
   if (a.sex !== "neutral" && b.sex !== "neutral" && a.sex === b.sex) return { ok: false, reason: "This pair is not compatible." };
   if (!speciesA.breedingGroups.some((group) => speciesB.breedingGroups.includes(group))) return { ok: false, reason: "No shared breeding group." };
   if (a.lineage.parentIds.includes(b.id) || b.lineage.parentIds.includes(a.id)) return { ok: false, reason: "Parent/offspring breeding is blocked." };

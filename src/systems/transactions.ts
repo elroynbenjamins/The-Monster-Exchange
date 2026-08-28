@@ -2,6 +2,7 @@ import type { GameState } from "../game/state.ts";
 import type { MarketplaceListing } from "./market.ts";
 import type { RandomSource } from "../core/random.ts";
 import { createListing } from "./market.ts";
+import { isCrestGuardianSpeciesId } from "../content/crest-guardians.ts";
 
 export interface MarketBrowseOptions {
   speciesId?: string;
@@ -51,9 +52,10 @@ export function purchasePrice(listing: MarketplaceListing): number { return list
 export function listPlayerMonster(state: GameState, monsterId: string, askingPrice: number, durationDays: number, rng: RandomSource): GameState {
   if (!state.player.monsterIds.includes(monsterId)) throw new Error("You do not own this monster.");
   if (state.activeExpedition?.route.teamIds.includes(monsterId)) throw new Error("A monster on expedition cannot be listed.");
-  if (state.player.monsterIds.length <= 1) throw new Error("You cannot list your final monster.");
   const monster = state.monsters[monsterId];
   if (!monster) throw new Error("Monster record is missing.");
+  if (isCrestGuardianSpeciesId(monster.speciesId)) throw new Error("Crest Guardians cannot be sold on the Exchange.");
+  if (state.player.monsterIds.length <= 1) throw new Error("You cannot list your final monster.");
   const listing = createListing(monster, state.player.id, askingPrice, state.world.day, durationDays, rng);
   return {
     ...state,

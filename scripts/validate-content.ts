@@ -23,8 +23,16 @@ const evolutionIds = new Set(content.evolutions.map(({ id }) => id));
 const zoneIds = new Set(content.zones.map(({ id }) => id));
 const hazardIds = new Set(content.hazards.map(({ id }) => id));
 const buildingIds = new Set(content.buildings.map(({ id }) => id));
+const catalogNumbers = new Set<number>();
+
+if (content.species.length < 100) errors.push(`Expected at least the approved 100-species catalog, found ${content.species.length}`);
 
 for (const species of content.species) {
+  if (!Number.isInteger(species.catalogNumber) || species.catalogNumber < 1) errors.push(`${species.id}: invalid catalog number`);
+  if (catalogNumbers.has(species.catalogNumber)) errors.push(`${species.id}: duplicate catalog number ${species.catalogNumber}`);
+  catalogNumbers.add(species.catalogNumber);
+  if (!species.description.trim()) errors.push(`${species.id}: description is required`);
+  if (species.evolutionStage < 1 || species.evolutionStage > species.evolutionLineLength) errors.push(`${species.id}: invalid evolution stage`);
   for (const type of species.types) if (type && !GAME_TYPES.includes(type)) errors.push(`${species.id}: unknown type ${type}`);
   for (const id of species.traitPool) if (!traitIds.has(id)) errors.push(`${species.id}: unknown trait ${id}`);
   for (const id of species.skillPool) if (!skillIds.has(id)) errors.push(`${species.id}: unknown skill ${id}`);
@@ -35,6 +43,14 @@ for (const species of content.species) {
 }
 for (const evolution of content.evolutions) {
   if (!speciesIds.has(evolution.fromSpeciesId) || !speciesIds.has(evolution.toSpeciesId)) errors.push(`${evolution.id}: unknown species reference`);
+  const from = content.species.find(({ id }) => id === evolution.fromSpeciesId);
+  const to = content.species.find(({ id }) => id === evolution.toSpeciesId);
+  if (from && to) {
+    const fromBudget = from.baseStats.hp + from.baseStats.attack + from.baseStats.defense + from.baseStats.speed;
+    const toBudget = to.baseStats.hp + to.baseStats.attack + to.baseStats.defense + to.baseStats.speed;
+    if (to.evolutionStage !== from.evolutionStage + 1 || to.evolutionLineLength !== from.evolutionLineLength) errors.push(`${evolution.id}: stages are not sequential`);
+    if (toBudget <= fromBudget) errors.push(`${evolution.id}: evolved form must have a larger core stat budget`);
+  }
 }
 for (const skill of content.skills) if (skill.statusId && !statusIds.has(skill.statusId)) errors.push(`${skill.id}: unknown status ${skill.statusId}`);
 for (const synergy of content.synergies) {

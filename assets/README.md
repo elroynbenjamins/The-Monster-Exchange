@@ -9,6 +9,10 @@ assets/pixel/monsters/<species-id>/<species-id>--<variant>--<pose>--<direction>.
 assets/pixel/icons/types/type--<type-id>--16.png
 assets/pixel/icons/traits/trait--<trait-id>--16.png
 assets/pixel/regions/<region-id>/<region-id>--<scene>--<size>.png
+assets/pixel/maps/continents/continent--<continent-id>--world-map.png
+assets/pixel/maps/regions/region--<region-id>--map.png
+assets/pixel/maps/cities/city--<city-id>--map.png
+assets/pixel/monsters/concept-portraits/<species-id>--concept-portrait.png
 assets/pixel/ui/ui--<component>--<state>.png
 ```
 
@@ -18,6 +22,9 @@ Examples:
 - `voltgrazer--albino--attack--left.png`
 - `type--electric--16.png`
 - `greenreach--meadow--320x180.png`
+- `ui--app-icon--exchange-crest.png` (current primary application icon)
+- `continent--heartland--world-map.png`
+- `region--stormpeak--map.png`
 
 Rules: integer canvas sizes, nearest-neighbor scaling, transparent PNG for sprites/icons, no spaces, no version numbers in filenames, and no copyrighted lookalikes. Palette/source files may sit beside exports but runtime code references only final asset IDs.
 

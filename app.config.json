@@ -2,6 +2,7 @@
   "name": "The Monster Exchange",
   "slug": "the-monster-exchange",
   "packageId": "com.elroybenjamins.themonsterexchange",
+  "icon": "assets/pixel/ui/ui--app-icon--exchange-crest.png",
   "android": {
     "applicationId": "com.elroybenjamins.themonsterexchange"
   },
