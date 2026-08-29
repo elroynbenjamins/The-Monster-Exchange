@@ -16,9 +16,12 @@ npm run check
 npm run audit:design
 npm start
 npm run play
+npm run monsterdex
 ```
 
 `npm start` runs a small reproducible world tick: it creates monsters, breeds an offspring, advances the market, starts an expedition, and resolves a combat action.
+
+`npm run monsterdex` opens the local visual-client prototype at `http://127.0.0.1:4173`. It uses the supplied card atlases for catalog monsters #1–90 and supports responsive scrolling, search, type/rarity/record filters, light and dark themes, clickable details, previous/next navigation, persistent demo discovery states, and a compact combat-card preview. The shared `src/systems/monsterdex.ts` module derives real unknown/seen/caught records from save ownership and species research.
 
 `npm run play` starts the terminal-based development client. It creates an autosave under `.local/`, lets you choose a partner, run or resume multi-node Greenreach expeditions, choose cautious, balanced, or bold field approaches, manage health and stamina, capture wild individuals, defeat protected alpha bosses for authored bounties, secure or risk route rewards, list monsters for sale, and advance the living market by resting. The terminal is a temporary development client, not the intended final interface.
 
@@ -61,6 +64,7 @@ tests/           behavior tests across system boundaries
 scripts/         content validation
 docs/            design bible and contributor conventions
 assets/          placeholder pixel-art tree and naming guide
+prototype/       interactive visual-client experiments
 ```
 
 Systems accept state and return new state or explicit events. They do not know about a rendering framework, persistence layer, or network transport. A future client can therefore use the same simulation in a desktop, web, or mobile shell. Save data should store content IDs and a `contentVersion`, never embedded copies of definitions.

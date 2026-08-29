@@ -10,7 +10,8 @@
     "start": "node --experimental-strip-types src/demo.ts",
     "test": "node --test --experimental-strip-types tests/*.test.ts",
     "check": "node --experimental-strip-types scripts/validate-content.ts",
-    "audit:design": "node --experimental-strip-types scripts/audit-design-v18.ts"
+    "audit:design": "node --experimental-strip-types scripts/audit-design-v18.ts",
+    "monsterdex": "node --experimental-strip-types scripts/serve-monsterdex.ts"
   },
   "engines": {
     "node": ">=22.6"

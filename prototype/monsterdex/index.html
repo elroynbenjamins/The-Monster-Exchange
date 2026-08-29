@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>The Monster Exchange — Monsterdex</title>
+  <link rel="stylesheet" href="monsterdex.css" />
+</head>
+<body>
+  <main class="app-shell">
+    <header class="topbar">
+      <div>
+        <p class="eyebrow">THE MONSTER EXCHANGE</p>
+        <h1>Monsterdex</h1>
+      </div>
+      <div class="progress" aria-live="polite">
+        <span id="progress-text">0 / 90 collected</span>
+        <div class="progress-track"><span id="progress-bar"></span></div>
+      </div>
+    </header>
+
+    <section class="controls" aria-label="Monsterdex filters">
+      <label class="search"><span>Search</span><input id="search" type="search" placeholder="Name or number" /></label>
+      <label><span>Type</span><select id="type-filter"><option value="">All types</option></select></label>
+      <label><span>Rarity</span><select id="rarity-filter"><option value="">All rarities</option><option>common</option><option>uncommon</option><option>rare</option><option>epic</option><option>legendary</option></select></label>
+      <label><span>Record</span><select id="status-filter"><option value="">All records</option><option value="caught">Caught</option><option value="seen">Seen</option><option value="unknown">Unknown</option></select></label>
+      <button id="theme-toggle" class="icon-button" aria-label="Toggle theme">☼</button>
+    </section>
+
+    <section class="content">
+      <div class="results-heading"><strong id="result-count">90 entries</strong><span>Tap a card to inspect it</span></div>
+      <div id="card-grid" class="card-grid" aria-live="polite"></div>
+    </section>
+  </main>
+
+  <dialog id="detail-dialog">
+    <button id="close-detail" class="close-button" aria-label="Close">×</button>
+    <button id="previous-entry" class="step-button previous" aria-label="Previous monster">‹</button>
+    <article class="detail-layout">
+      <div id="detail-card" class="atlas-card detail-card"></div>
+      <div class="detail-copy">
+        <p id="detail-number" class="eyebrow"></p>
+        <h2 id="detail-name"></h2>
+        <div id="detail-types" class="type-row"></div>
+        <p id="detail-description"></p>
+        <dl>
+          <div><dt>Rarity</dt><dd id="detail-rarity"></dd></div>
+          <div><dt>Region</dt><dd id="detail-region"></dd></div>
+          <div><dt>Evolution</dt><dd id="detail-stage"></dd></div>
+          <div><dt>Record</dt><dd id="detail-status"></dd></div>
+        </dl>
+        <div class="detail-actions">
+          <button id="status-action" class="primary-button">Mark as seen</button>
+          <button id="combat-preview">Combat card preview</button>
+        </div>
+        <section id="combat-panel" class="combat-panel" hidden>
+          <span>Combat presentation</span>
+          <div class="combat-row"><div id="combat-card" class="atlas-card combat-card"></div><div><strong id="combat-name"></strong><small>Full art can appear for introductions, switching, victory, and inspection. The active battle HUD should use a cropped portrait for performance.</small></div></div>
+        </section>
+      </div>
+    </article>
+    <button id="next-entry" class="step-button next" aria-label="Next monster">›</button>
+  </dialog>
+
+  <script src="catalog-data.js"></script>
+  <script src="monsterdex.js"></script>
+</body>
+</html>
