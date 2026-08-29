@@ -3,11 +3,14 @@ import { stat } from "node:fs/promises";
 import { createServer } from "node:http";
 import { extname, join, normalize } from "node:path";
 
-const root = new URL("../prototype/monsterdex/", import.meta.url).pathname.replace(/^\/(?:[A-Za-z]:)/, (match) => match.slice(1));
+const root = new URL("../", import.meta.url).pathname.replace(/^\/(?:[A-Za-z]:)/, (match) => match.slice(1));
 const mimeTypes: Readonly<Record<string, string>> = { ".html": "text/html; charset=utf-8", ".css": "text/css; charset=utf-8", ".js": "text/javascript; charset=utf-8", ".png": "image/png" };
 const server = createServer(async (request, response) => {
-  const relative = decodeURIComponent(new URL(request.url ?? "/", "http://localhost").pathname).replace(/^\/+/, "") || "index.html";
-  const path = normalize(join(root, relative));
+  const pathname = decodeURIComponent(new URL(request.url ?? "/", "http://localhost").pathname);
+  if (pathname === "/") { response.writeHead(302, { Location: "/prototype/monsterdex/" }).end(); return; }
+  const relative = pathname.replace(/^\/+/, "") || "prototype/monsterdex/index.html";
+  const requestedPath = relative.endsWith("/") ? `${relative}index.html` : relative;
+  const path = normalize(join(root, requestedPath));
   if (!path.startsWith(normalize(root))) { response.writeHead(403).end("Forbidden"); return; }
   try {
     const info = await stat(path);

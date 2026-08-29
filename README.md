@@ -21,7 +21,9 @@ npm run monsterdex
 
 `npm start` runs a small reproducible world tick: it creates monsters, breeds an offspring, advances the market, starts an expedition, and resolves a combat action.
 
-`npm run monsterdex` opens the local visual-client prototype at `http://127.0.0.1:4173`. It uses the supplied card atlases for catalog monsters #1–90 and supports responsive scrolling, search, type/rarity/record filters, light and dark themes, clickable details, previous/next navigation, persistent demo discovery states, and a compact combat-card preview. The shared `src/systems/monsterdex.ts` module derives real unknown/seen/caught records from save ownership and species research.
+`npm run monsterdex` opens the local visual-client prototype at `http://127.0.0.1:4173`. It uses clean individual cards and 256×192 combat portraits generated losslessly from the supplied #1–90 card atlases. It supports responsive scrolling, search, type/rarity/record filters, light and dark themes, clickable details, previous/next navigation, persistent demo discovery states, and a compact combat preview. The shared `src/systems/monsterdex.ts` module derives real unknown/seen/caught records from save ownership and species research.
+
+The reusable `scripts/build-monster-card-assets.py` pipeline rebuilds the individual cards, combat portraits, and manifest from the six source sheets. It detects the real card borders independently for each differently sized sheet, uses nearest-neighbor portrait scaling, and never repaints the supplied artwork.
 
 `npm run play` starts the terminal-based development client. It creates an autosave under `.local/`, lets you choose a partner, run or resume multi-node Greenreach expeditions, choose cautious, balanced, or bold field approaches, manage health and stamina, capture wild individuals, defeat protected alpha bosses for authored bounties, secure or risk route rewards, list monsters for sale, and advance the living market by resting. The terminal is a temporary development client, not the intended final interface.
 

@@ -1,0 +1,2256 @@
+{
+  "version": 1,
+  "artworkModified": false,
+  "entries": [
+    {
+      "catalogNumber": 1,
+      "speciesId": "mossveil",
+      "card": "monsterdex/cards/001--mossveil--card.png",
+      "portrait": "monsterdex/portraits/001--mossveil--portrait.png",
+      "sourceSheet": "Monsters_Card_1-15_final.png",
+      "sourceCell": {
+        "column": 0,
+        "row": 0
+      },
+      "sourceBounds": [
+        8,
+        8,
+        298,
+        341
+      ],
+      "cardSize": [
+        290,
+        333
+      ],
+      "portraitSize": [
+        256,
+        192
+      ]
+    },
+    {
+      "catalogNumber": 2,
+      "speciesId": "canopyre",
+      "card": "monsterdex/cards/002--canopyre--card.png",
+      "portrait": "monsterdex/portraits/002--canopyre--portrait.png",
+      "sourceSheet": "Monsters_Card_1-15_final.png",
+      "sourceCell": {
+        "column": 1,
+        "row": 0
+      },
+      "sourceBounds": [
+        305,
+        8,
+        590,
+        341
+      ],
+      "cardSize": [
+        285,
+        333
+      ],
+      "portraitSize": [
+        256,
+        192
+      ]
+    },
+    {
+      "catalogNumber": 3,
+      "speciesId": "voltgrazer",
+      "card": "monsterdex/cards/003--voltgrazer--card.png",
+      "portrait": "monsterdex/portraits/003--voltgrazer--portrait.png",
+      "sourceSheet": "Monsters_Card_1-15_final.png",
+      "sourceCell": {
+        "column": 2,
+        "row": 0
+      },
+      "sourceBounds": [
+        598,
+        8,
+        880,
+        341
+      ],
+      "cardSize": [
+        282,
+        333
+      ],
+      "portraitSize": [
+        256,
+        192
+      ]
+    },
+    {
+      "catalogNumber": 4,
+      "speciesId": "tempestride",
+      "card": "monsterdex/cards/004--tempestride--card.png",
+      "portrait": "monsterdex/portraits/004--tempestride--portrait.png",
+      "sourceSheet": "Monsters_Card_1-15_final.png",
+      "sourceCell": {
+        "column": 3,
+        "row": 0
+      },
+      "sourceBounds": [
+        887,
+        8,
+        1198,
+        341
+      ],
+      "cardSize": [
+        311,
+        333
+      ],
+      "portraitSize": [
+        256,
+        192
+      ]
+    },
+    {
+      "catalogNumber": 5,
+      "speciesId": "cindlet",
+      "card": "monsterdex/cards/005--cindlet--card.png",
+      "portrait": "monsterdex/portraits/005--cindlet--portrait.png",
+      "sourceSheet": "Monsters_Card_1-15_final.png",
+      "sourceCell": {
+        "column": 4,
+        "row": 0
+      },
+      "sourceBounds": [
+        1206,
+        8,
+        1528,
+        341
+      ],
+      "cardSize": [
+        322,
+        333
+      ],
+      "portraitSize": [
+        256,
+        192
+      ]
+    },
+    {
+      "catalogNumber": 6,
+      "speciesId": "kilnback",
+      "card": "monsterdex/cards/006--kilnback--card.png",
+      "portrait": "monsterdex/portraits/006--kilnback--portrait.png",
+      "sourceSheet": "Monsters_Card_1-15_final.png",
+      "sourceCell": {
+        "column": 0,
+        "row": 1
+      },
+      "sourceBounds": [
+        8,
+        341,
+        298,
+        683
+      ],
+      "cardSize": [
+        290,
+        342
+      ],
+      "portraitSize": [
+        256,
+        192
+      ]
+    },
+    {
+      "catalogNumber": 7,
+      "speciesId": "pyroclastor",
+      "card": "monsterdex/cards/007--pyroclastor--card.png",
+      "portrait": "monsterdex/portraits/007--pyroclastor--portrait.png",
+      "sourceSheet": "Monsters_Card_1-15_final.png",
+      "sourceCell": {
+        "column": 1,
+        "row": 1
+      },
+      "sourceBounds": [
+        305,
+        341,
+        590,
+        683
+      ],
+      "cardSize": [
+        285,
+        342
+      ],
+      "portraitSize": [
+        256,
+        192
+      ]
+    },
+    {
+      "catalogNumber": 8,
+      "speciesId": "rillfin",
+      "card": "monsterdex/cards/008--rillfin--card.png",
+      "portrait": "monsterdex/portraits/008--rillfin--portrait.png",
+      "sourceSheet": "Monsters_Card_1-15_final.png",
+      "sourceCell": {
+        "column": 2,
+        "row": 1
+      },
+      "sourceBounds": [
+        598,
+        341,
+        879,
+        683
+      ],
+      "cardSize": [
+        281,
+        342
+      ],
+      "portraitSize": [
+        256,
+        192
+      ]
+    },
+    {
+      "catalogNumber": 9,
+      "speciesId": "brineveil",
+      "card": "monsterdex/cards/009--brineveil--card.png",
+      "portrait": "monsterdex/portraits/009--brineveil--portrait.png",
+      "sourceSheet": "Monsters_Card_1-15_final.png",
+      "sourceCell": {
+        "column": 3,
+        "row": 1
+      },
+      "sourceBounds": [
+        887,
+        341,
+        1198,
+        683
+      ],
+      "cardSize": [
+        311,
+        342
+      ],
+      "portraitSize": [
+        256,
+        192
+      ]
+    },
+    {
+      "catalogNumber": 10,
+      "speciesId": "budmote",
+      "card": "monsterdex/cards/010--budmote--card.png",
+      "portrait": "monsterdex/portraits/010--budmote--portrait.png",
+      "sourceSheet": "Monsters_Card_1-15_final.png",
+      "sourceCell": {
+        "column": 4,
+        "row": 1
+      },
+      "sourceBounds": [
+        1206,
+        341,
+        1528,
+        683
+      ],
+      "cardSize": [
+        322,
+        342
+      ],
+      "portraitSize": [
+        256,
+        192
+      ]
+    },
+    {
+      "catalogNumber": 11,
+      "speciesId": "crownbloom",
+      "card": "monsterdex/cards/011--crownbloom--card.png",
+      "portrait": "monsterdex/portraits/011--crownbloom--portrait.png",
+      "sourceSheet": "Monsters_Card_1-15_final.png",
+      "sourceCell": {
+        "column": 0,
+        "row": 2
+      },
+      "sourceBounds": [
+        8,
+        683,
+        298,
+        1010
+      ],
+      "cardSize": [
+        290,
+        327
+      ],
+      "portraitSize": [
+        256,
+        192
+      ]
+    },
+    {
+      "catalogNumber": 12,
+      "speciesId": "pebblit",
+      "card": "monsterdex/cards/012--pebblit--card.png",
+      "portrait": "monsterdex/portraits/012--pebblit--portrait.png",
+      "sourceSheet": "Monsters_Card_1-15_final.png",
+      "sourceCell": {
+        "column": 1,
+        "row": 2
+      },
+      "sourceBounds": [
+        305,
+        683,
+        590,
+        1010
+      ],
+      "cardSize": [
+        285,
+        327
+      ],
+      "portraitSize": [
+        256,
+        192
+      ]
+    },
+    {
+      "catalogNumber": 13,
+      "speciesId": "cairnox",
+      "card": "monsterdex/cards/013--cairnox--card.png",
+      "portrait": "monsterdex/portraits/013--cairnox--portrait.png",
+      "sourceSheet": "Monsters_Card_1-15_final.png",
+      "sourceCell": {
+        "column": 2,
+        "row": 2
+      },
+      "sourceBounds": [
+        598,
+        683,
+        879,
+        1010
+      ],
+      "cardSize": [
+        281,
+        327
+      ],
+      "portraitSize": [
+        256,
+        192
+      ]
+    },
+    {
+      "catalogNumber": 14,
+      "speciesId": "gloamkit",
+      "card": "monsterdex/cards/014--gloamkit--card.png",
+      "portrait": "monsterdex/portraits/014--gloamkit--portrait.png",
+      "sourceSheet": "Monsters_Card_1-15_final.png",
+      "sourceCell": {
+        "column": 3,
+        "row": 2
+      },
+      "sourceBounds": [
+        887,
+        683,
+        1198,
+        1010
+      ],
+      "cardSize": [
+        311,
+        327
+      ],
+      "portraitSize": [
+        256,
+        192
+      ]
+    },
+    {
+      "catalogNumber": 15,
+      "speciesId": "nocturnyx",
+      "card": "monsterdex/cards/015--nocturnyx--card.png",
+      "portrait": "monsterdex/portraits/015--nocturnyx--portrait.png",
+      "sourceSheet": "Monsters_Card_1-15_final.png",
+      "sourceCell": {
+        "column": 4,
+        "row": 2
+      },
+      "sourceBounds": [
+        1206,
+        683,
+        1528,
+        1010
+      ],
+      "cardSize": [
+        322,
+        327
+      ],
+      "portraitSize": [
+        256,
+        192
+      ]
+    },
+    {
+      "catalogNumber": 16,
+      "speciesId": "fuzzvolt",
+      "card": "monsterdex/cards/016--fuzzvolt--card.png",
+      "portrait": "monsterdex/portraits/016--fuzzvolt--portrait.png",
+      "sourceSheet": "Monsters_Card_16-30_final.png",
+      "sourceCell": {
+        "column": 0,
+        "row": 0
+      },
+      "sourceBounds": [
+        7,
+        8,
+        294,
+        341
+      ],
+      "cardSize": [
+        287,
+        333
+      ],
+      "portraitSize": [
+        256,
+        192
+      ]
+    },
+    {
+      "catalogNumber": 17,
+      "speciesId": "loomspark",
+      "card": "monsterdex/cards/017--loomspark--card.png",
+      "portrait": "monsterdex/portraits/017--loomspark--portrait.png",
+      "sourceSheet": "Monsters_Card_16-30_final.png",
+      "sourceCell": {
+        "column": 1,
+        "row": 0
+      },
+      "sourceBounds": [
+        304,
+        8,
+        583,
+        341
+      ],
+      "cardSize": [
+        279,
+        333
+      ],
+      "portraitSize": [
+        256,
+        192
+      ]
+    },
+    {
+      "catalogNumber": 18,
+      "speciesId": "mucklet",
+      "card": "monsterdex/cards/018--mucklet--card.png",
+      "portrait": "monsterdex/portraits/018--mucklet--portrait.png",
+      "sourceSheet": "Monsters_Card_16-30_final.png",
+      "sourceCell": {
+        "column": 2,
+        "row": 0
+      },
+      "sourceBounds": [
+        592,
+        8,
+        878,
+        341
+      ],
+      "cardSize": [
+        286,
+        333
+      ],
+      "portraitSize": [
+        256,
+        192
+      ]
+    },
+    {
+      "catalogNumber": 19,
+      "speciesId": "bogrumbler",
+      "card": "monsterdex/cards/019--bogrumbler--card.png",
+      "portrait": "monsterdex/portraits/019--bogrumbler--portrait.png",
+      "sourceSheet": "Monsters_Card_16-30_final.png",
+      "sourceCell": {
+        "column": 3,
+        "row": 0
+      },
+      "sourceBounds": [
+        887,
+        8,
+        1195,
+        341
+      ],
+      "cardSize": [
+        308,
+        333
+      ],
+      "portraitSize": [
+        256,
+        192
+      ]
+    },
+    {
+      "catalogNumber": 20,
+      "speciesId": "chimeshell",
+      "card": "monsterdex/cards/020--chimeshell--card.png",
+      "portrait": "monsterdex/portraits/020--chimeshell--portrait.png",
+      "sourceSheet": "Monsters_Card_16-30_final.png",
+      "sourceCell": {
+        "column": 4,
+        "row": 0
+      },
+      "sourceBounds": [
+        1205,
+        8,
+        1528,
+        341
+      ],
+      "cardSize": [
+        323,
+        333
+      ],
+      "portraitSize": [
+        256,
+        192
+      ]
+    },
+    {
+      "catalogNumber": 21,
+      "speciesId": "ashwing",
+      "card": "monsterdex/cards/021--ashwing--card.png",
+      "portrait": "monsterdex/portraits/021--ashwing--portrait.png",
+      "sourceSheet": "Monsters_Card_16-30_final.png",
+      "sourceCell": {
+        "column": 0,
+        "row": 1
+      },
+      "sourceBounds": [
+        7,
+        341,
+        294,
+        683
+      ],
+      "cardSize": [
+        287,
+        342
+      ],
+      "portraitSize": [
+        256,
+        192
+      ]
+    },
+    {
+      "catalogNumber": 22,
+      "speciesId": "solvulture",
+      "card": "monsterdex/cards/022--solvulture--card.png",
+      "portrait": "monsterdex/portraits/022--solvulture--portrait.png",
+      "sourceSheet": "Monsters_Card_16-30_final.png",
+      "sourceCell": {
+        "column": 1,
+        "row": 1
+      },
+      "sourceBounds": [
+        303,
+        341,
+        582,
+        683
+      ],
+      "cardSize": [
+        279,
+        342
+      ],
+      "portraitSize": [
+        256,
+        192
+      ]
+    },
+    {
+      "catalogNumber": 23,
+      "speciesId": "frostuft",
+      "card": "monsterdex/cards/023--frostuft--card.png",
+      "portrait": "monsterdex/portraits/023--frostuft--portrait.png",
+      "sourceSheet": "Monsters_Card_16-30_final.png",
+      "sourceCell": {
+        "column": 2,
+        "row": 1
+      },
+      "sourceBounds": [
+        592,
+        341,
+        880,
+        683
+      ],
+      "cardSize": [
+        288,
+        342
+      ],
+      "portraitSize": [
+        256,
+        192
+      ]
+    },
+    {
+      "catalogNumber": 24,
+      "speciesId": "rimehorn",
+      "card": "monsterdex/cards/024--rimehorn--card.png",
+      "portrait": "monsterdex/portraits/024--rimehorn--portrait.png",
+      "sourceSheet": "Monsters_Card_16-30_final.png",
+      "sourceCell": {
+        "column": 3,
+        "row": 1
+      },
+      "sourceBounds": [
+        891,
+        341,
+        1195,
+        683
+      ],
+      "cardSize": [
+        304,
+        342
+      ],
+      "portraitSize": [
+        256,
+        192
+      ]
+    },
+    {
+      "catalogNumber": 25,
+      "speciesId": "gleamgulper",
+      "card": "monsterdex/cards/025--gleamgulper--card.png",
+      "portrait": "monsterdex/portraits/025--gleamgulper--portrait.png",
+      "sourceSheet": "Monsters_Card_16-30_final.png",
+      "sourceCell": {
+        "column": 4,
+        "row": 1
+      },
+      "sourceBounds": [
+        1205,
+        341,
+        1528,
+        683
+      ],
+      "cardSize": [
+        323,
+        342
+      ],
+      "portraitSize": [
+        256,
+        192
+      ]
+    },
+    {
+      "catalogNumber": 26,
+      "speciesId": "ferricrawl",
+      "card": "monsterdex/cards/026--ferricrawl--card.png",
+      "portrait": "monsterdex/portraits/026--ferricrawl--portrait.png",
+      "sourceSheet": "Monsters_Card_16-30_final.png",
+      "sourceCell": {
+        "column": 0,
+        "row": 2
+      },
+      "sourceBounds": [
+        7,
+        683,
+        293,
+        1012
+      ],
+      "cardSize": [
+        286,
+        329
+      ],
+      "portraitSize": [
+        256,
+        192
+      ]
+    },
+    {
+      "catalogNumber": 27,
+      "speciesId": "bastionsect",
+      "card": "monsterdex/cards/027--bastionsect--card.png",
+      "portrait": "monsterdex/portraits/027--bastionsect--portrait.png",
+      "sourceSheet": "Monsters_Card_16-30_final.png",
+      "sourceCell": {
+        "column": 1,
+        "row": 2
+      },
+      "sourceBounds": [
+        309,
+        683,
+        582,
+        1012
+      ],
+      "cardSize": [
+        273,
+        329
+      ],
+      "portraitSize": [
+        256,
+        192
+      ]
+    },
+    {
+      "catalogNumber": 28,
+      "speciesId": "wispling",
+      "card": "monsterdex/cards/028--wispling--card.png",
+      "portrait": "monsterdex/portraits/028--wispling--portrait.png",
+      "sourceSheet": "Monsters_Card_16-30_final.png",
+      "sourceCell": {
+        "column": 2,
+        "row": 2
+      },
+      "sourceBounds": [
+        599,
+        683,
+        873,
+        1012
+      ],
+      "cardSize": [
+        274,
+        329
+      ],
+      "portraitSize": [
+        256,
+        192
+      ]
+    },
+    {
+      "catalogNumber": 29,
+      "speciesId": "mournglade",
+      "card": "monsterdex/cards/029--mournglade--card.png",
+      "portrait": "monsterdex/portraits/029--mournglade--portrait.png",
+      "sourceSheet": "Monsters_Card_16-30_final.png",
+      "sourceCell": {
+        "column": 3,
+        "row": 2
+      },
+      "sourceBounds": [
+        889,
+        683,
+        1188,
+        1012
+      ],
+      "cardSize": [
+        299,
+        329
+      ],
+      "portraitSize": [
+        256,
+        192
+      ]
+    },
+    {
+      "catalogNumber": 30,
+      "speciesId": "skyrill",
+      "card": "monsterdex/cards/030--skyrill--card.png",
+      "portrait": "monsterdex/portraits/030--skyrill--portrait.png",
+      "sourceSheet": "Monsters_Card_16-30_final.png",
+      "sourceCell": {
+        "column": 4,
+        "row": 2
+      },
+      "sourceBounds": [
+        1211,
+        683,
+        1528,
+        1012
+      ],
+      "cardSize": [
+        317,
+        329
+      ],
+      "portraitSize": [
+        256,
+        192
+      ]
+    },
+    {
+      "catalogNumber": 31,
+      "speciesId": "galecrest",
+      "card": "monsterdex/cards/031--galecrest--card.png",
+      "portrait": "monsterdex/portraits/031--galecrest--portrait.png",
+      "sourceSheet": "Monsters_Card_31-45_final.png",
+      "sourceCell": {
+        "column": 0,
+        "row": 0
+      },
+      "sourceBounds": [
+        9,
+        10,
+        304,
+        353
+      ],
+      "cardSize": [
+        295,
+        343
+      ],
+      "portraitSize": [
+        256,
+        192
+      ]
+    },
+    {
+      "catalogNumber": 32,
+      "speciesId": "dunelet",
+      "card": "monsterdex/cards/032--dunelet--card.png",
+      "portrait": "monsterdex/portraits/032--dunelet--portrait.png",
+      "sourceSheet": "Monsters_Card_31-45_final.png",
+      "sourceCell": {
+        "column": 1,
+        "row": 0
+      },
+      "sourceBounds": [
+        313,
+        10,
+        588,
+        353
+      ],
+      "cardSize": [
+        275,
+        343
+      ],
+      "portraitSize": [
+        256,
+        192
+      ]
+    },
+    {
+      "catalogNumber": 33,
+      "speciesId": "mirrormaw",
+      "card": "monsterdex/cards/033--mirrormaw--card.png",
+      "portrait": "monsterdex/portraits/033--mirrormaw--portrait.png",
+      "sourceSheet": "Monsters_Card_31-45_final.png",
+      "sourceCell": {
+        "column": 2,
+        "row": 0
+      },
+      "sourceBounds": [
+        597,
+        10,
+        859,
+        353
+      ],
+      "cardSize": [
+        262,
+        343
+      ],
+      "portraitSize": [
+        256,
+        192
+      ]
+    },
+    {
+      "catalogNumber": 34,
+      "speciesId": "vialtail",
+      "card": "monsterdex/cards/034--vialtail--card.png",
+      "portrait": "monsterdex/portraits/034--vialtail--portrait.png",
+      "sourceSheet": "Monsters_Card_31-45_final.png",
+      "sourceCell": {
+        "column": 3,
+        "row": 0
+      },
+      "sourceBounds": [
+        868,
+        10,
+        1137,
+        353
+      ],
+      "cardSize": [
+        269,
+        343
+      ],
+      "portraitSize": [
+        256,
+        192
+      ]
+    },
+    {
+      "catalogNumber": 35,
+      "speciesId": "runebuck",
+      "card": "monsterdex/cards/035--runebuck--card.png",
+      "portrait": "monsterdex/portraits/035--runebuck--portrait.png",
+      "sourceSheet": "Monsters_Card_31-45_final.png",
+      "sourceCell": {
+        "column": 4,
+        "row": 0
+      },
+      "sourceBounds": [
+        1146,
+        10,
+        1439,
+        353
+      ],
+      "cardSize": [
+        293,
+        343
+      ],
+      "portraitSize": [
+        256,
+        192
+      ]
+    },
+    {
+      "catalogNumber": 36,
+      "speciesId": "deepmaw",
+      "card": "monsterdex/cards/036--deepmaw--card.png",
+      "portrait": "monsterdex/portraits/036--deepmaw--portrait.png",
+      "sourceSheet": "Monsters_Card_31-45_final.png",
+      "sourceCell": {
+        "column": 0,
+        "row": 1
+      },
+      "sourceBounds": [
+        9,
+        368,
+        303,
+        710
+      ],
+      "cardSize": [
+        294,
+        342
+      ],
+      "portraitSize": [
+        256,
+        192
+      ]
+    },
+    {
+      "catalogNumber": 37,
+      "speciesId": "prismite",
+      "card": "monsterdex/cards/037--prismite--card.png",
+      "portrait": "monsterdex/portraits/037--prismite--portrait.png",
+      "sourceSheet": "Monsters_Card_31-45_final.png",
+      "sourceCell": {
+        "column": 1,
+        "row": 1
+      },
+      "sourceBounds": [
+        312,
+        368,
+        588,
+        710
+      ],
+      "cardSize": [
+        276,
+        342
+      ],
+      "portraitSize": [
+        256,
+        192
+      ]
+    },
+    {
+      "catalogNumber": 38,
+      "speciesId": "cloudrum",
+      "card": "monsterdex/cards/038--cloudrum--card.png",
+      "portrait": "monsterdex/portraits/038--cloudrum--portrait.png",
+      "sourceSheet": "Monsters_Card_31-45_final.png",
+      "sourceCell": {
+        "column": 2,
+        "row": 1
+      },
+      "sourceBounds": [
+        597,
+        368,
+        859,
+        710
+      ],
+      "cardSize": [
+        262,
+        342
+      ],
+      "portraitSize": [
+        256,
+        192
+      ]
+    },
+    {
+      "catalogNumber": 39,
+      "speciesId": "oathcoil",
+      "card": "monsterdex/cards/039--oathcoil--card.png",
+      "portrait": "monsterdex/portraits/039--oathcoil--portrait.png",
+      "sourceSheet": "Monsters_Card_31-45_final.png",
+      "sourceCell": {
+        "column": 3,
+        "row": 1
+      },
+      "sourceBounds": [
+        868,
+        368,
+        1135,
+        710
+      ],
+      "cardSize": [
+        267,
+        342
+      ],
+      "portraitSize": [
+        256,
+        192
+      ]
+    },
+    {
+      "catalogNumber": 40,
+      "speciesId": "riftwarden",
+      "card": "monsterdex/cards/040--riftwarden--card.png",
+      "portrait": "monsterdex/portraits/040--riftwarden--portrait.png",
+      "sourceSheet": "Monsters_Card_31-45_final.png",
+      "sourceCell": {
+        "column": 4,
+        "row": 1
+      },
+      "sourceBounds": [
+        1143,
+        368,
+        1439,
+        710
+      ],
+      "cardSize": [
+        296,
+        342
+      ],
+      "portraitSize": [
+        256,
+        192
+      ]
+    },
+    {
+      "catalogNumber": 41,
+      "speciesId": "glintad",
+      "card": "monsterdex/cards/041--glintad--card.png",
+      "portrait": "monsterdex/portraits/041--glintad--portrait.png",
+      "sourceSheet": "Monsters_Card_31-45_final.png",
+      "sourceCell": {
+        "column": 0,
+        "row": 2
+      },
+      "sourceBounds": [
+        9,
+        725,
+        303,
+        1054
+      ],
+      "cardSize": [
+        294,
+        329
+      ],
+      "portraitSize": [
+        256,
+        192
+      ]
+    },
+    {
+      "catalogNumber": 42,
+      "speciesId": "facetoad",
+      "card": "monsterdex/cards/042--facetoad--card.png",
+      "portrait": "monsterdex/portraits/042--facetoad--portrait.png",
+      "sourceSheet": "Monsters_Card_31-45_final.png",
+      "sourceCell": {
+        "column": 1,
+        "row": 2
+      },
+      "sourceBounds": [
+        312,
+        725,
+        588,
+        1054
+      ],
+      "cardSize": [
+        276,
+        329
+      ],
+      "portraitSize": [
+        256,
+        192
+      ]
+    },
+    {
+      "catalogNumber": 43,
+      "speciesId": "sootsnip",
+      "card": "monsterdex/cards/043--sootsnip--card.png",
+      "portrait": "monsterdex/portraits/043--sootsnip--portrait.png",
+      "sourceSheet": "Monsters_Card_31-45_final.png",
+      "sourceCell": {
+        "column": 2,
+        "row": 2
+      },
+      "sourceBounds": [
+        597,
+        725,
+        859,
+        1054
+      ],
+      "cardSize": [
+        262,
+        329
+      ],
+      "portraitSize": [
+        256,
+        192
+      ]
+    },
+    {
+      "catalogNumber": 44,
+      "speciesId": "cauterwing",
+      "card": "monsterdex/cards/044--cauterwing--card.png",
+      "portrait": "monsterdex/portraits/044--cauterwing--portrait.png",
+      "sourceSheet": "Monsters_Card_31-45_final.png",
+      "sourceCell": {
+        "column": 3,
+        "row": 2
+      },
+      "sourceBounds": [
+        868,
+        725,
+        1136,
+        1054
+      ],
+      "cardSize": [
+        268,
+        329
+      ],
+      "portraitSize": [
+        256,
+        192
+      ]
+    },
+    {
+      "catalogNumber": 45,
+      "speciesId": "tidepup",
+      "card": "monsterdex/cards/045--tidepup--card.png",
+      "portrait": "monsterdex/portraits/045--tidepup--portrait.png",
+      "sourceSheet": "Monsters_Card_31-45_final.png",
+      "sourceCell": {
+        "column": 4,
+        "row": 2
+      },
+      "sourceBounds": [
+        1145,
+        725,
+        1439,
+        1054
+      ],
+      "cardSize": [
+        294,
+        329
+      ],
+      "portraitSize": [
+        256,
+        192
+      ]
+    },
+    {
+      "catalogNumber": 46,
+      "speciesId": "reefhowl",
+      "card": "monsterdex/cards/046--reefhowl--card.png",
+      "portrait": "monsterdex/portraits/046--reefhowl--portrait.png",
+      "sourceSheet": "Monsters_Card_46-60_final.png",
+      "sourceCell": {
+        "column": 0,
+        "row": 0
+      },
+      "sourceBounds": [
+        9,
+        7,
+        297,
+        341
+      ],
+      "cardSize": [
+        288,
+        334
+      ],
+      "portraitSize": [
+        256,
+        192
+      ]
+    },
+    {
+      "catalogNumber": 47,
+      "speciesId": "bramblejaw",
+      "card": "monsterdex/cards/047--bramblejaw--card.png",
+      "portrait": "monsterdex/portraits/047--bramblejaw--portrait.png",
+      "sourceSheet": "Monsters_Card_46-60_final.png",
+      "sourceCell": {
+        "column": 1,
+        "row": 0
+      },
+      "sourceBounds": [
+        307,
+        7,
+        596,
+        341
+      ],
+      "cardSize": [
+        289,
+        334
+      ],
+      "portraitSize": [
+        256,
+        192
+      ]
+    },
+    {
+      "catalogNumber": 48,
+      "speciesId": "thicketyr",
+      "card": "monsterdex/cards/048--thicketyr--card.png",
+      "portrait": "monsterdex/portraits/048--thicketyr--portrait.png",
+      "sourceSheet": "Monsters_Card_46-60_final.png",
+      "sourceCell": {
+        "column": 2,
+        "row": 0
+      },
+      "sourceBounds": [
+        603,
+        7,
+        891,
+        341
+      ],
+      "cardSize": [
+        288,
+        334
+      ],
+      "portraitSize": [
+        256,
+        192
+      ]
+    },
+    {
+      "catalogNumber": 49,
+      "speciesId": "coilbud",
+      "card": "monsterdex/cards/049--coilbud--card.png",
+      "portrait": "monsterdex/portraits/049--coilbud--portrait.png",
+      "sourceSheet": "Monsters_Card_46-60_final.png",
+      "sourceCell": {
+        "column": 3,
+        "row": 0
+      },
+      "sourceBounds": [
+        900,
+        7,
+        1192,
+        341
+      ],
+      "cardSize": [
+        292,
+        334
+      ],
+      "portraitSize": [
+        256,
+        192
+      ]
+    },
+    {
+      "catalogNumber": 50,
+      "speciesId": "dynamoira",
+      "card": "monsterdex/cards/050--dynamoira--card.png",
+      "portrait": "monsterdex/portraits/050--dynamoira--portrait.png",
+      "sourceSheet": "Monsters_Card_46-60_final.png",
+      "sourceCell": {
+        "column": 4,
+        "row": 0
+      },
+      "sourceBounds": [
+        1201,
+        7,
+        1527,
+        341
+      ],
+      "cardSize": [
+        326,
+        334
+      ],
+      "portraitSize": [
+        256,
+        192
+      ]
+    },
+    {
+      "catalogNumber": 51,
+      "speciesId": "hushhare",
+      "card": "monsterdex/cards/051--hushhare--card.png",
+      "portrait": "monsterdex/portraits/051--hushhare--portrait.png",
+      "sourceSheet": "Monsters_Card_46-60_final.png",
+      "sourceCell": {
+        "column": 0,
+        "row": 1
+      },
+      "sourceBounds": [
+        9,
+        341,
+        296,
+        683
+      ],
+      "cardSize": [
+        287,
+        342
+      ],
+      "portraitSize": [
+        256,
+        192
+      ]
+    },
+    {
+      "catalogNumber": 52,
+      "speciesId": "pallop",
+      "card": "monsterdex/cards/052--pallop--card.png",
+      "portrait": "monsterdex/portraits/052--pallop--portrait.png",
+      "sourceSheet": "Monsters_Card_46-60_final.png",
+      "sourceCell": {
+        "column": 1,
+        "row": 1
+      },
+      "sourceBounds": [
+        306,
+        341,
+        596,
+        683
+      ],
+      "cardSize": [
+        290,
+        342
+      ],
+      "portraitSize": [
+        256,
+        192
+      ]
+    },
+    {
+      "catalogNumber": 53,
+      "speciesId": "oreling",
+      "card": "monsterdex/cards/053--oreling--card.png",
+      "portrait": "monsterdex/portraits/053--oreling--portrait.png",
+      "sourceSheet": "Monsters_Card_46-60_final.png",
+      "sourceCell": {
+        "column": 2,
+        "row": 1
+      },
+      "sourceBounds": [
+        605,
+        341,
+        891,
+        683
+      ],
+      "cardSize": [
+        286,
+        342
+      ],
+      "portraitSize": [
+        256,
+        192
+      ]
+    },
+    {
+      "catalogNumber": 54,
+      "speciesId": "magnox",
+      "card": "monsterdex/cards/054--magnox--card.png",
+      "portrait": "monsterdex/portraits/054--magnox--portrait.png",
+      "sourceSheet": "Monsters_Card_46-60_final.png",
+      "sourceCell": {
+        "column": 3,
+        "row": 1
+      },
+      "sourceBounds": [
+        900,
+        341,
+        1192,
+        683
+      ],
+      "cardSize": [
+        292,
+        342
+      ],
+      "portraitSize": [
+        256,
+        192
+      ]
+    },
+    {
+      "catalogNumber": 55,
+      "speciesId": "dustlet",
+      "card": "monsterdex/cards/055--dustlet--card.png",
+      "portrait": "monsterdex/portraits/055--dustlet--portrait.png",
+      "sourceSheet": "Monsters_Card_46-60_final.png",
+      "sourceCell": {
+        "column": 4,
+        "row": 1
+      },
+      "sourceBounds": [
+        1201,
+        341,
+        1527,
+        683
+      ],
+      "cardSize": [
+        326,
+        342
+      ],
+      "portraitSize": [
+        256,
+        192
+      ]
+    },
+    {
+      "catalogNumber": 56,
+      "speciesId": "siroccoil",
+      "card": "monsterdex/cards/056--siroccoil--card.png",
+      "portrait": "monsterdex/portraits/056--siroccoil--portrait.png",
+      "sourceSheet": "Monsters_Card_46-60_final.png",
+      "sourceCell": {
+        "column": 0,
+        "row": 2
+      },
+      "sourceBounds": [
+        15,
+        683,
+        296,
+        991
+      ],
+      "cardSize": [
+        281,
+        308
+      ],
+      "portraitSize": [
+        256,
+        192
+      ]
+    },
+    {
+      "catalogNumber": 57,
+      "speciesId": "chillip",
+      "card": "monsterdex/cards/057--chillip--card.png",
+      "portrait": "monsterdex/portraits/057--chillip--portrait.png",
+      "sourceSheet": "Monsters_Card_46-60_final.png",
+      "sourceCell": {
+        "column": 1,
+        "row": 2
+      },
+      "sourceBounds": [
+        305,
+        683,
+        596,
+        991
+      ],
+      "cardSize": [
+        291,
+        308
+      ],
+      "portraitSize": [
+        256,
+        192
+      ]
+    },
+    {
+      "catalogNumber": 58,
+      "speciesId": "crysalid",
+      "card": "monsterdex/cards/058--crysalid--card.png",
+      "portrait": "monsterdex/portraits/058--crysalid--portrait.png",
+      "sourceSheet": "Monsters_Card_46-60_final.png",
+      "sourceCell": {
+        "column": 2,
+        "row": 2
+      },
+      "sourceBounds": [
+        611,
+        683,
+        891,
+        991
+      ],
+      "cardSize": [
+        280,
+        308
+      ],
+      "portraitSize": [
+        256,
+        192
+      ]
+    },
+    {
+      "catalogNumber": 59,
+      "speciesId": "borealume",
+      "card": "monsterdex/cards/059--borealume--card.png",
+      "portrait": "monsterdex/portraits/059--borealume--portrait.png",
+      "sourceSheet": "Monsters_Card_46-60_final.png",
+      "sourceCell": {
+        "column": 3,
+        "row": 2
+      },
+      "sourceBounds": [
+        900,
+        683,
+        1185,
+        991
+      ],
+      "cardSize": [
+        285,
+        308
+      ],
+      "portraitSize": [
+        256,
+        192
+      ]
+    },
+    {
+      "catalogNumber": 60,
+      "speciesId": "knucklebud",
+      "card": "monsterdex/cards/060--knucklebud--card.png",
+      "portrait": "monsterdex/portraits/060--knucklebud--portrait.png",
+      "sourceSheet": "Monsters_Card_46-60_final.png",
+      "sourceCell": {
+        "column": 4,
+        "row": 2
+      },
+      "sourceBounds": [
+        1201,
+        683,
+        1527,
+        991
+      ],
+      "cardSize": [
+        326,
+        308
+      ],
+      "portraitSize": [
+        256,
+        192
+      ]
+    },
+    {
+      "catalogNumber": 61,
+      "speciesId": "burlbrute",
+      "card": "monsterdex/cards/061--burlbrute--card.png",
+      "portrait": "monsterdex/portraits/061--burlbrute--portrait.png",
+      "sourceSheet": "Monsters_Card_61-75_final.png",
+      "sourceCell": {
+        "column": 0,
+        "row": 0
+      },
+      "sourceBounds": [
+        5,
+        6,
+        302,
+        335
+      ],
+      "cardSize": [
+        297,
+        329
+      ],
+      "portraitSize": [
+        256,
+        192
+      ]
+    },
+    {
+      "catalogNumber": 62,
+      "speciesId": "pipscale",
+      "card": "monsterdex/cards/062--pipscale--card.png",
+      "portrait": "monsterdex/portraits/062--pipscale--portrait.png",
+      "sourceSheet": "Monsters_Card_61-75_final.png",
+      "sourceCell": {
+        "column": 1,
+        "row": 0
+      },
+      "sourceBounds": [
+        312,
+        6,
+        608,
+        335
+      ],
+      "cardSize": [
+        296,
+        329
+      ],
+      "portraitSize": [
+        256,
+        192
+      ]
+    },
+    {
+      "catalogNumber": 63,
+      "speciesId": "venodrake",
+      "card": "monsterdex/cards/063--venodrake--card.png",
+      "portrait": "monsterdex/portraits/063--venodrake--portrait.png",
+      "sourceSheet": "Monsters_Card_61-75_final.png",
+      "sourceCell": {
+        "column": 2,
+        "row": 0
+      },
+      "sourceBounds": [
+        619,
+        6,
+        915,
+        335
+      ],
+      "cardSize": [
+        296,
+        329
+      ],
+      "portraitSize": [
+        256,
+        192
+      ]
+    },
+    {
+      "catalogNumber": 64,
+      "speciesId": "whirloo",
+      "card": "monsterdex/cards/064--whirloo--card.png",
+      "portrait": "monsterdex/portraits/064--whirloo--portrait.png",
+      "sourceSheet": "Monsters_Card_61-75_final.png",
+      "sourceCell": {
+        "column": 3,
+        "row": 0
+      },
+      "sourceBounds": [
+        926,
+        6,
+        1221,
+        335
+      ],
+      "cardSize": [
+        295,
+        329
+      ],
+      "portraitSize": [
+        256,
+        192
+      ]
+    },
+    {
+      "catalogNumber": 65,
+      "speciesId": "oracline",
+      "card": "monsterdex/cards/065--oracline--card.png",
+      "portrait": "monsterdex/portraits/065--oracline--portrait.png",
+      "sourceSheet": "Monsters_Card_61-75_final.png",
+      "sourceCell": {
+        "column": 4,
+        "row": 0
+      },
+      "sourceBounds": [
+        1232,
+        6,
+        1528,
+        335
+      ],
+      "cardSize": [
+        296,
+        329
+      ],
+      "portraitSize": [
+        256,
+        192
+      ]
+    },
+    {
+      "catalogNumber": 66,
+      "speciesId": "clinkshade",
+      "card": "monsterdex/cards/066--clinkshade--card.png",
+      "portrait": "monsterdex/portraits/066--clinkshade--portrait.png",
+      "sourceSheet": "Monsters_Card_61-75_final.png",
+      "sourceCell": {
+        "column": 0,
+        "row": 1
+      },
+      "sourceBounds": [
+        5,
+        346,
+        302,
+        675
+      ],
+      "cardSize": [
+        297,
+        329
+      ],
+      "portraitSize": [
+        256,
+        192
+      ]
+    },
+    {
+      "catalogNumber": 67,
+      "speciesId": "mirthmew",
+      "card": "monsterdex/cards/067--mirthmew--card.png",
+      "portrait": "monsterdex/portraits/067--mirthmew--portrait.png",
+      "sourceSheet": "Monsters_Card_61-75_final.png",
+      "sourceCell": {
+        "column": 1,
+        "row": 1
+      },
+      "sourceBounds": [
+        312,
+        346,
+        609,
+        675
+      ],
+      "cardSize": [
+        297,
+        329
+      ],
+      "portraitSize": [
+        256,
+        192
+      ]
+    },
+    {
+      "catalogNumber": 68,
+      "speciesId": "siltwraith",
+      "card": "monsterdex/cards/068--siltwraith--card.png",
+      "portrait": "monsterdex/portraits/068--siltwraith--portrait.png",
+      "sourceSheet": "Monsters_Card_61-75_final.png",
+      "sourceCell": {
+        "column": 2,
+        "row": 1
+      },
+      "sourceBounds": [
+        619,
+        346,
+        915,
+        675
+      ],
+      "cardSize": [
+        296,
+        329
+      ],
+      "portraitSize": [
+        256,
+        192
+      ]
+    },
+    {
+      "catalogNumber": 69,
+      "speciesId": "kitespine",
+      "card": "monsterdex/cards/069--kitespine--card.png",
+      "portrait": "monsterdex/portraits/069--kitespine--portrait.png",
+      "sourceSheet": "Monsters_Card_61-75_final.png",
+      "sourceCell": {
+        "column": 3,
+        "row": 1
+      },
+      "sourceBounds": [
+        926,
+        346,
+        1221,
+        675
+      ],
+      "cardSize": [
+        295,
+        329
+      ],
+      "portraitSize": [
+        256,
+        192
+      ]
+    },
+    {
+      "catalogNumber": 70,
+      "speciesId": "tusslegrub",
+      "card": "monsterdex/cards/070--tusslegrub--card.png",
+      "portrait": "monsterdex/portraits/070--tusslegrub--portrait.png",
+      "sourceSheet": "Monsters_Card_61-75_final.png",
+      "sourceCell": {
+        "column": 4,
+        "row": 1
+      },
+      "sourceBounds": [
+        1232,
+        346,
+        1528,
+        675
+      ],
+      "cardSize": [
+        296,
+        329
+      ],
+      "portraitSize": [
+        256,
+        192
+      ]
+    },
+    {
+      "catalogNumber": 71,
+      "speciesId": "rooklimb",
+      "card": "monsterdex/cards/071--rooklimb--card.png",
+      "portrait": "monsterdex/portraits/071--rooklimb--portrait.png",
+      "sourceSheet": "Monsters_Card_61-75_final.png",
+      "sourceCell": {
+        "column": 0,
+        "row": 2
+      },
+      "sourceBounds": [
+        6,
+        687,
+        302,
+        1015
+      ],
+      "cardSize": [
+        296,
+        328
+      ],
+      "portraitSize": [
+        256,
+        192
+      ]
+    },
+    {
+      "catalogNumber": 72,
+      "speciesId": "drizzlepod",
+      "card": "monsterdex/cards/072--drizzlepod--card.png",
+      "portrait": "monsterdex/portraits/072--drizzlepod--portrait.png",
+      "sourceSheet": "Monsters_Card_61-75_final.png",
+      "sourceCell": {
+        "column": 1,
+        "row": 2
+      },
+      "sourceBounds": [
+        313,
+        687,
+        608,
+        1015
+      ],
+      "cardSize": [
+        295,
+        328
+      ],
+      "portraitSize": [
+        256,
+        192
+      ]
+    },
+    {
+      "catalogNumber": 73,
+      "speciesId": "noxitide",
+      "card": "monsterdex/cards/073--noxitide--card.png",
+      "portrait": "monsterdex/portraits/073--noxitide--portrait.png",
+      "sourceSheet": "Monsters_Card_61-75_final.png",
+      "sourceCell": {
+        "column": 2,
+        "row": 2
+      },
+      "sourceBounds": [
+        619,
+        687,
+        915,
+        1015
+      ],
+      "cardSize": [
+        296,
+        328
+      ],
+      "portraitSize": [
+        256,
+        192
+      ]
+    },
+    {
+      "catalogNumber": 74,
+      "speciesId": "hearthwish",
+      "card": "monsterdex/cards/074--hearthwish--card.png",
+      "portrait": "monsterdex/portraits/074--hearthwish--portrait.png",
+      "sourceSheet": "Monsters_Card_61-75_final.png",
+      "sourceCell": {
+        "column": 3,
+        "row": 2
+      },
+      "sourceBounds": [
+        926,
+        687,
+        1221,
+        1015
+      ],
+      "cardSize": [
+        295,
+        328
+      ],
+      "portraitSize": [
+        256,
+        192
+      ]
+    },
+    {
+      "catalogNumber": 75,
+      "speciesId": "asterolith",
+      "card": "monsterdex/cards/075--asterolith--card.png",
+      "portrait": "monsterdex/portraits/075--asterolith--portrait.png",
+      "sourceSheet": "Monsters_Card_61-75_final.png",
+      "sourceCell": {
+        "column": 4,
+        "row": 2
+      },
+      "sourceBounds": [
+        1232,
+        687,
+        1528,
+        1015
+      ],
+      "cardSize": [
+        296,
+        328
+      ],
+      "portraitSize": [
+        256,
+        192
+      ]
+    },
+    {
+      "catalogNumber": 76,
+      "speciesId": "coldforge",
+      "card": "monsterdex/cards/076--coldforge--card.png",
+      "portrait": "monsterdex/portraits/076--coldforge--portrait.png",
+      "sourceSheet": "Monsters_Card_76-90_final.png",
+      "sourceCell": {
+        "column": 0,
+        "row": 0
+      },
+      "sourceBounds": [
+        6,
+        6,
+        302,
+        334
+      ],
+      "cardSize": [
+        296,
+        328
+      ],
+      "portraitSize": [
+        256,
+        192
+      ]
+    },
+    {
+      "catalogNumber": 77,
+      "speciesId": "tumblet",
+      "card": "monsterdex/cards/077--tumblet--card.png",
+      "portrait": "monsterdex/portraits/077--tumblet--portrait.png",
+      "sourceSheet": "Monsters_Card_76-90_final.png",
+      "sourceCell": {
+        "column": 1,
+        "row": 0
+      },
+      "sourceBounds": [
+        313,
+        6,
+        609,
+        334
+      ],
+      "cardSize": [
+        296,
+        328
+      ],
+      "portraitSize": [
+        256,
+        192
+      ]
+    },
+    {
+      "catalogNumber": 78,
+      "speciesId": "glimmerguilt",
+      "card": "monsterdex/cards/078--glimmerguilt--card.png",
+      "portrait": "monsterdex/portraits/078--glimmerguilt--portrait.png",
+      "sourceSheet": "Monsters_Card_76-90_final.png",
+      "sourceCell": {
+        "column": 2,
+        "row": 0
+      },
+      "sourceBounds": [
+        620,
+        6,
+        915,
+        334
+      ],
+      "cardSize": [
+        295,
+        328
+      ],
+      "portraitSize": [
+        256,
+        192
+      ]
+    },
+    {
+      "catalogNumber": 79,
+      "speciesId": "eonbriar",
+      "card": "monsterdex/cards/079--eonbriar--card.png",
+      "portrait": "monsterdex/portraits/079--eonbriar--portrait.png",
+      "sourceSheet": "Monsters_Card_76-90_final.png",
+      "sourceCell": {
+        "column": 3,
+        "row": 0
+      },
+      "sourceBounds": [
+        926,
+        6,
+        1221,
+        334
+      ],
+      "cardSize": [
+        295,
+        328
+      ],
+      "portraitSize": [
+        256,
+        192
+      ]
+    },
+    {
+      "catalogNumber": 80,
+      "speciesId": "resonuckle",
+      "card": "monsterdex/cards/080--resonuckle--card.png",
+      "portrait": "monsterdex/portraits/080--resonuckle--portrait.png",
+      "sourceSheet": "Monsters_Card_76-90_final.png",
+      "sourceCell": {
+        "column": 4,
+        "row": 0
+      },
+      "sourceBounds": [
+        1232,
+        6,
+        1528,
+        334
+      ],
+      "cardSize": [
+        296,
+        328
+      ],
+      "portraitSize": [
+        256,
+        192
+      ]
+    },
+    {
+      "catalogNumber": 81,
+      "speciesId": "quillop",
+      "card": "monsterdex/cards/081--quillop--card.png",
+      "portrait": "monsterdex/portraits/081--quillop--portrait.png",
+      "sourceSheet": "Monsters_Card_76-90_final.png",
+      "sourceCell": {
+        "column": 0,
+        "row": 1
+      },
+      "sourceBounds": [
+        6,
+        346,
+        302,
+        674
+      ],
+      "cardSize": [
+        296,
+        328
+      ],
+      "portraitSize": [
+        256,
+        192
+      ]
+    },
+    {
+      "catalogNumber": 82,
+      "speciesId": "scribetail",
+      "card": "monsterdex/cards/082--scribetail--card.png",
+      "portrait": "monsterdex/portraits/082--scribetail--portrait.png",
+      "sourceSheet": "Monsters_Card_76-90_final.png",
+      "sourceCell": {
+        "column": 1,
+        "row": 1
+      },
+      "sourceBounds": [
+        313,
+        346,
+        609,
+        674
+      ],
+      "cardSize": [
+        296,
+        328
+      ],
+      "portraitSize": [
+        256,
+        192
+      ]
+    },
+    {
+      "catalogNumber": 83,
+      "speciesId": "brinibble",
+      "card": "monsterdex/cards/083--brinibble--card.png",
+      "portrait": "monsterdex/portraits/083--brinibble--portrait.png",
+      "sourceSheet": "Monsters_Card_76-90_final.png",
+      "sourceCell": {
+        "column": 2,
+        "row": 1
+      },
+      "sourceBounds": [
+        620,
+        346,
+        915,
+        674
+      ],
+      "cardSize": [
+        295,
+        328
+      ],
+      "portraitSize": [
+        256,
+        192
+      ]
+    },
+    {
+      "catalogNumber": 84,
+      "speciesId": "steamvat",
+      "card": "monsterdex/cards/084--steamvat--card.png",
+      "portrait": "monsterdex/portraits/084--steamvat--portrait.png",
+      "sourceSheet": "Monsters_Card_76-90_final.png",
+      "sourceCell": {
+        "column": 3,
+        "row": 1
+      },
+      "sourceBounds": [
+        926,
+        346,
+        1221,
+        674
+      ],
+      "cardSize": [
+        295,
+        328
+      ],
+      "portraitSize": [
+        256,
+        192
+      ]
+    },
+    {
+      "catalogNumber": 85,
+      "speciesId": "frondle",
+      "card": "monsterdex/cards/085--frondle--card.png",
+      "portrait": "monsterdex/portraits/085--frondle--portrait.png",
+      "sourceSheet": "Monsters_Card_76-90_final.png",
+      "sourceCell": {
+        "column": 4,
+        "row": 1
+      },
+      "sourceBounds": [
+        1232,
+        346,
+        1528,
+        674
+      ],
+      "cardSize": [
+        296,
+        328
+      ],
+      "portraitSize": [
+        256,
+        192
+      ]
+    },
+    {
+      "catalogNumber": 86,
+      "speciesId": "thornloom",
+      "card": "monsterdex/cards/086--thornloom--card.png",
+      "portrait": "monsterdex/portraits/086--thornloom--portrait.png",
+      "sourceSheet": "Monsters_Card_76-90_final.png",
+      "sourceCell": {
+        "column": 0,
+        "row": 2
+      },
+      "sourceBounds": [
+        6,
+        686,
+        302,
+        1015
+      ],
+      "cardSize": [
+        296,
+        329
+      ],
+      "portraitSize": [
+        256,
+        192
+      ]
+    },
+    {
+      "catalogNumber": 87,
+      "speciesId": "gravvel",
+      "card": "monsterdex/cards/087--gravvel--card.png",
+      "portrait": "monsterdex/portraits/087--gravvel--portrait.png",
+      "sourceSheet": "Monsters_Card_76-90_final.png",
+      "sourceCell": {
+        "column": 1,
+        "row": 2
+      },
+      "sourceBounds": [
+        313,
+        686,
+        609,
+        1015
+      ],
+      "cardSize": [
+        296,
+        329
+      ],
+      "portraitSize": [
+        256,
+        192
+      ]
+    },
+    {
+      "catalogNumber": 88,
+      "speciesId": "faultusk",
+      "card": "monsterdex/cards/088--faultusk--card.png",
+      "portrait": "monsterdex/portraits/088--faultusk--portrait.png",
+      "sourceSheet": "Monsters_Card_76-90_final.png",
+      "sourceCell": {
+        "column": 2,
+        "row": 2
+      },
+      "sourceBounds": [
+        620,
+        686,
+        915,
+        1015
+      ],
+      "cardSize": [
+        295,
+        329
+      ],
+      "portraitSize": [
+        256,
+        192
+      ]
+    },
+    {
+      "catalogNumber": 89,
+      "speciesId": "arcwren",
+      "card": "monsterdex/cards/089--arcwren--card.png",
+      "portrait": "monsterdex/portraits/089--arcwren--portrait.png",
+      "sourceSheet": "Monsters_Card_76-90_final.png",
+      "sourceCell": {
+        "column": 3,
+        "row": 2
+      },
+      "sourceBounds": [
+        926,
+        686,
+        1221,
+        1015
+      ],
+      "cardSize": [
+        295,
+        329
+      ],
+      "portraitSize": [
+        256,
+        192
+      ]
+    },
+    {
+      "catalogNumber": 90,
+      "speciesId": "stormscribe",
+      "card": "monsterdex/cards/090--stormscribe--card.png",
+      "portrait": "monsterdex/portraits/090--stormscribe--portrait.png",
+      "sourceSheet": "Monsters_Card_76-90_final.png",
+      "sourceCell": {
+        "column": 4,
+        "row": 2
+      },
+      "sourceBounds": [
+        1232,
+        686,
+        1528,
+        1015
+      ],
+      "cardSize": [
+        296,
+        329
+      ],
+      "portraitSize": [
+        256,
+        192
+      ]
+    }
+  ]
+}

@@ -1,12 +1,5 @@
 const species = window.MONSTERDEX_SPECIES ?? [];
-const atlasPath = (number) => {
-  const first = Math.floor((number - 1) / 15) * 15 + 1;
-  return `assets/monster-cards--${String(first).padStart(3,"0")}-${String(first + 14).padStart(3,"0")}.png`;
-};
-const atlasPosition = (number) => {
-  const offset = (number - 1) % 15;
-  return { x: [".64%","24.54%","48.44%","72.33%","96.23%"][offset % 5], y: ["1.01%","50.29%","99.13%"][Math.floor(offset / 5)] };
-};
+const artPath = (entry, kind) => `../../assets/pixel/monsterdex/${kind === "portrait" ? "portraits" : "cards"}/${String(entry.catalogNumber).padStart(3,"0")}--${entry.id}--${kind}.png`;
 const stored = JSON.parse(localStorage.getItem("monsterdex-demo-records") ?? "{}");
 const records = new Map(Object.entries(stored));
 for (let number = 1; number <= 15; number++) if (!records.has(String(number))) records.set(String(number), number <= 3 ? "caught" : "seen");
@@ -16,11 +9,8 @@ let selectedNumber = 1;
 
 function status(number) { return records.get(String(number)) ?? "unknown"; }
 function saveRecords() { localStorage.setItem("monsterdex-demo-records", JSON.stringify(Object.fromEntries(records))); }
-function setCardArt(node, number) {
-  const position = atlasPosition(number);
-  node.style.setProperty("--sheet", `url('${atlasPath(number)}')`);
-  node.style.setProperty("--x", position.x);
-  node.style.setProperty("--y", position.y);
+function setCardArt(node, entry, kind = "card") {
+  node.style.setProperty("--art", `url('${artPath(entry, kind)}')`);
 }
 function updateProgress() {
   const caught = species.filter(({ catalogNumber }) => status(catalogNumber) === "caught").length;
@@ -42,7 +32,7 @@ function renderGrid() {
     button.className = "entry";
     button.dataset.status = status(entry.catalogNumber);
     button.setAttribute("aria-label", `#${entry.catalogNumber} ${entry.name}`);
-    const art = document.createElement("div"); art.className = "atlas-card"; setCardArt(art, entry.catalogNumber);
+    const art = document.createElement("div"); art.className = "card-art"; setCardArt(art, entry);
     const ribbon = document.createElement("span"); ribbon.className = "status-ribbon"; ribbon.textContent = status(entry.catalogNumber);
     button.append(art, ribbon);
     button.addEventListener("click", () => openDetail(entry.catalogNumber));
@@ -53,7 +43,7 @@ function renderGrid() {
 function openDetail(number) {
   const entry = species.find((item) => item.catalogNumber === number); if (!entry) return;
   selectedNumber = number;
-  setCardArt(elements["detail-card"], number); setCardArt(elements["combat-card"], number);
+  setCardArt(elements["detail-card"], entry); setCardArt(elements["combat-card"], entry, "portrait");
   elements["detail-number"].textContent = `Catalog #${String(number).padStart(3,"0")}`;
   elements["detail-name"].textContent = entry.name;
   elements["detail-description"].textContent = entry.description;

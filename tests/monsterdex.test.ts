@@ -1,17 +1,28 @@
 import assert from "node:assert/strict";
 import test from "node:test";
+import { existsSync } from "node:fs";
+import { resolve } from "node:path";
 import { content } from "../src/content/index.ts";
 import { SeededRandom } from "../src/core/random.ts";
 import { createNewGame } from "../src/game/state.ts";
 import { addMonsterToPlayer } from "../src/game/state.ts";
-import { adjacentMonsterdexEntry, buildMonsterdexEntries, cardAssetId, filterMonsterdex, monsterdexProgress } from "../src/systems/monsterdex.ts";
+import { adjacentMonsterdexEntry, buildMonsterdexEntries, cardAssetId, filterMonsterdex, monsterdexProgress, portraitAssetId } from "../src/systems/monsterdex.ts";
 import { createMonster } from "../src/systems/monsters.ts";
 
-test("the first ninety catalog monsters map to six card atlases", () => {
-  assert.equal(cardAssetId(1), "monsterdex/cards/monster-cards--001-015.png");
-  assert.equal(cardAssetId(16), "monsterdex/cards/monster-cards--016-030.png");
-  assert.equal(cardAssetId(90), "monsterdex/cards/monster-cards--076-090.png");
-  assert.equal(cardAssetId(91), undefined);
+test("the first ninety catalog monsters map to refined cards and combat portraits", () => {
+  assert.equal(cardAssetId(1, "mossveil"), "monsterdex/cards/001--mossveil--card.png");
+  assert.equal(cardAssetId(90, "stormscribe"), "monsterdex/cards/090--stormscribe--card.png");
+  assert.equal(portraitAssetId(1, "mossveil"), "monsterdex/portraits/001--mossveil--portrait.png");
+  assert.equal(cardAssetId(91, "later-species"), undefined);
+});
+
+test("every initial Monsterdex entry has a card and portrait asset", () => {
+  const state = createNewGame("Art Keeper", 6, content.contentVersion);
+  const entries = buildMonsterdexEntries(content.species.filter(({ catalogNumber }) => catalogNumber <= 90), state);
+  for (const entry of entries) {
+    assert.ok(entry.cardAssetId && existsSync(resolve("assets/pixel", entry.cardAssetId)), `Missing card for ${entry.species.id}`);
+    assert.ok(entry.portraitAssetId && existsSync(resolve("assets/pixel", entry.portraitAssetId)), `Missing portrait for ${entry.species.id}`);
+  }
 });
 
 test("Monsterdex tracks unknown, seen, and caught species from persistent state", () => {

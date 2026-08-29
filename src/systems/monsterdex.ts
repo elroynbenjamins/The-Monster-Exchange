@@ -10,6 +10,7 @@ export interface MonsterdexEntry {
   researchLevel: number;
   ownedCount: number;
   cardAssetId?: string;
+  portraitAssetId?: string;
 }
 
 export interface MonsterdexFilter {
@@ -26,10 +27,14 @@ export interface MonsterdexProgress {
   completionPercent: number;
 }
 
-export function cardAssetId(catalogNumber: number): string | undefined {
+export function cardAssetId(catalogNumber: number, speciesId: string): string | undefined {
   if (!Number.isInteger(catalogNumber) || catalogNumber < 1 || catalogNumber > 90) return undefined;
-  const first = Math.floor((catalogNumber - 1) / 15) * 15 + 1;
-  return `monsterdex/cards/monster-cards--${String(first).padStart(3, "0")}-${String(first + 14).padStart(3, "0")}.png`;
+  return `monsterdex/cards/${String(catalogNumber).padStart(3, "0")}--${speciesId}--card.png`;
+}
+
+export function portraitAssetId(catalogNumber: number, speciesId: string): string | undefined {
+  if (!Number.isInteger(catalogNumber) || catalogNumber < 1 || catalogNumber > 90) return undefined;
+  return `monsterdex/portraits/${String(catalogNumber).padStart(3, "0")}--${speciesId}--portrait.png`;
 }
 
 export function buildMonsterdexEntries(species: readonly SpeciesDefinition[], state: GameState): readonly MonsterdexEntry[] {
@@ -47,7 +52,8 @@ export function buildMonsterdexEntries(species: readonly SpeciesDefinition[], st
       status: ownedCount > 0 ? "caught" : researchLevel > 0 ? "seen" : "unknown",
       researchLevel,
       ownedCount,
-      cardAssetId: cardAssetId(definition.catalogNumber),
+      cardAssetId: cardAssetId(definition.catalogNumber, definition.id),
+      portraitAssetId: portraitAssetId(definition.catalogNumber, definition.id),
     };
   });
 }

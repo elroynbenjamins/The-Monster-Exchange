@@ -14,7 +14,9 @@ assets/pixel/maps/regions/region--<region-id>--map.png
 assets/pixel/maps/cities/city--<city-id>--map.png
 assets/pixel/monsters/concept-portraits/<species-id>--concept-portrait.png
 assets/pixel/ui/ui--<component>--<state>.png
-prototype/monsterdex/assets/monster-cards--<first-number>-<last-number>.png
+assets/pixel/monsterdex/atlases/monster-cards--<first-number>-<last-number>.png
+assets/pixel/monsterdex/cards/<catalog-number>--<species-id>--card.png
+assets/pixel/monsterdex/portraits/<catalog-number>--<species-id>--portrait.png
 ```
 
 Examples:
@@ -25,6 +27,8 @@ Examples:
 - `greenreach--meadow--320x180.png`
 - `ui--app-icon--exchange-crest.png` (current primary application icon)
 - `monster-cards--001-015.png` (Monsterdex card atlas; five columns by three rows)
+- `001--mossveil--card.png` (clean catalog card cropped from its source atlas)
+- `001--mossveil--portrait.png` (256×192 combat portrait crop; nearest-neighbor scaling)
 - `continent--heartland--world-map.png`
 - `region--stormpeak--map.png`
 

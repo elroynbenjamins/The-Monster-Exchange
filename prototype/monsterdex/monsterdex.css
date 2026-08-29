@@ -22,12 +22,13 @@ h1 { font-size:clamp(2rem,5vw,4.5rem); }
 .card-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(174px,1fr)); gap:clamp(10px,1.4vw,20px); }
 .entry { position:relative; padding:0; overflow:hidden; border:1px solid var(--line); border-radius:10px; background:#050908; box-shadow:0 8px 22px var(--shadow); transition:transform .16s ease,border-color .16s ease; }
 .entry:hover,.entry:focus-visible { transform:translateY(-4px); border-color:var(--gold); outline:none; }
-.atlas-card { --sheet:url('assets/monster-cards--001-015.png'); --x:.64%; --y:1.01%; aspect-ratio:289/334; background-image:var(--sheet); background-repeat:no-repeat; background-size:531.49% 306.59%; background-position:var(--x) var(--y); }
-.entry .atlas-card { width:100%; }
+.card-art,.portrait-art { --art:none; background-image:var(--art); background-position:center; background-repeat:no-repeat; background-size:contain; }
+.card-art { aspect-ratio:289/334; }
+.entry .card-art { width:100%; }
 .status-ribbon { position:absolute; top:7px; right:7px; padding:5px 7px; border-radius:5px; background:#07100edb; color:#d6e7df; font-size:.6rem; font-weight:800; letter-spacing:.08em; text-transform:uppercase; }
 .entry[data-status="caught"] { border-color:#78ad5f; }
 .entry[data-status="caught"] .status-ribbon { background:#456e31e8; }
-.entry[data-status="unknown"] .atlas-card { filter:saturate(.2) brightness(.42); }
+.entry[data-status="unknown"] .card-art { filter:saturate(.2) brightness(.42); }
 .entry[data-status="unknown"]::after { content:"?"; position:absolute; inset:0; display:grid; place-items:center; color:#fff9; font:700 4rem Georgia,serif; pointer-events:none; }
 dialog { width:min(1040px,calc(100% - 20px)); max-height:calc(100vh - 20px); padding:0; overflow:auto; color:var(--ink); background:var(--panel); border:1px solid var(--gold); border-radius:14px; box-shadow:0 30px 100px #000b; }
 dialog::backdrop { background:#010604db; backdrop-filter:blur(7px); }
@@ -53,6 +54,6 @@ dd { margin:4px 0 0; text-transform:capitalize; }
 .combat-panel>span { color:var(--gold); font-size:.65rem; font-weight:800; text-transform:uppercase; }
 .combat-row { display:flex; align-items:center; gap:14px; margin-top:9px; }
 .combat-row small { display:block; margin-top:6px; color:var(--muted); line-height:1.4; }
-.combat-card { flex:0 0 86px; border-radius:5px; }
+.combat-card { flex:0 0 128px; aspect-ratio:4/3; border:1px solid var(--line); border-radius:6px; background-size:cover; }
 @media(max-width:760px) { .controls { grid-template-columns:1fr 1fr; }.search { grid-column:1/-1; }.icon-button { position:absolute; right:0; bottom:14px; }.detail-layout { grid-template-columns:1fr; }.detail-card { width:min(330px,100%); margin:auto; }.step-button { top:32%; }.card-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }.results-heading span { display:none; } }
 @media(prefers-reduced-motion:reduce) { * { scroll-behavior:auto!important; transition:none!important; } }
