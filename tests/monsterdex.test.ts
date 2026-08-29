@@ -6,7 +6,7 @@ import { content } from "../src/content/index.ts";
 import { SeededRandom } from "../src/core/random.ts";
 import { createNewGame } from "../src/game/state.ts";
 import { addMonsterToPlayer } from "../src/game/state.ts";
-import { adjacentMonsterdexEntry, buildMonsterdexEntries, cardAssetId, filterMonsterdex, monsterdexProgress, portraitAssetId } from "../src/systems/monsterdex.ts";
+import { adjacentMonsterdexEntry, buildMonsterdexEntries, cardAssetId, filterMonsterdex, monsterdexEvolutionFamily, monsterdexProgress, nextMonsterdexMilestone, portraitAssetId, sortMonsterdex } from "../src/systems/monsterdex.ts";
 import { createMonster } from "../src/systems/monsters.ts";
 
 test("the first ninety catalog monsters map to refined cards and combat portraits", () => {
@@ -43,4 +43,18 @@ test("Monsterdex filters and wraps previous/next navigation", () => {
   assert.equal(filterMonsterdex(entries, { query: "Moss", type: "grass" })[0]?.species.id, "mossveil");
   assert.equal(adjacentMonsterdexEntry(entries, 1, -1)?.catalogNumber, 90);
   assert.equal(adjacentMonsterdexEntry(entries, 90, 1)?.catalogNumber, 1);
+});
+
+test("Monsterdex sorts entries and resolves complete evolution families", () => {
+  const state = createNewGame("Curator", 8, content.contentVersion);
+  const entries = buildMonsterdexEntries(content.species.slice(0, 90), state);
+  assert.equal(sortMonsterdex(entries, "name")[0]?.species.name, [...entries].sort((a, b) => a.species.name.localeCompare(b.species.name))[0]?.species.name);
+  assert.deepEqual(monsterdexEvolutionFamily(entries, 2).map(({ catalogNumber }) => catalogNumber), [1, 2]);
+  assert.deepEqual(monsterdexEvolutionFamily(entries, 4).map(({ catalogNumber }) => catalogNumber), [3, 4]);
+});
+
+test("Monsterdex milestones advance in ten-monster steps and cap at collection size", () => {
+  assert.deepEqual(nextMonsterdexMilestone({ total: 90, seen: 15, caught: 3, completionPercent: 3 }), { target: 10, remaining: 7 });
+  assert.deepEqual(nextMonsterdexMilestone({ total: 90, seen: 90, caught: 90, completionPercent: 100 }), { target: 90, remaining: 0 });
+  assert.deepEqual(nextMonsterdexMilestone({ total: 7, seen: 0, caught: 0, completionPercent: 0 }), { target: 7, remaining: 7 });
 });

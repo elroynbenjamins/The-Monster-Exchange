@@ -16,6 +16,7 @@
       <div class="progress" aria-live="polite">
         <span id="progress-text">0 / 90 collected</span>
         <div class="progress-track"><span id="progress-bar"></span></div>
+        <small id="milestone-text">10 until the first milestone</small>
       </div>
     </header>
 
@@ -24,11 +25,20 @@
       <label><span>Type</span><select id="type-filter"><option value="">All types</option></select></label>
       <label><span>Rarity</span><select id="rarity-filter"><option value="">All rarities</option><option>common</option><option>uncommon</option><option>rare</option><option>epic</option><option>legendary</option></select></label>
       <label><span>Record</span><select id="status-filter"><option value="">All records</option><option value="caught">Caught</option><option value="seen">Seen</option><option value="unknown">Unknown</option></select></label>
+      <label><span>Region</span><select id="region-filter"><option value="">All regions</option></select></label>
+      <label><span>Sort</span><select id="sort-order"><option value="number">Catalog number</option><option value="name">Name</option><option value="rarity">Rarity</option><option value="record">Record status</option></select></label>
       <button id="theme-toggle" class="icon-button" aria-label="Toggle theme">☼</button>
     </section>
 
+    <section class="quick-actions" aria-label="Monsterdex display options">
+      <button id="favorites-filter" aria-pressed="false">★ Favorites only</button>
+      <button id="random-entry">↝ Random discovery</button>
+      <button id="spoiler-toggle" aria-pressed="false">◉ Reveal unknown art</button>
+      <button id="density-toggle" aria-pressed="false">▦ Compact cards</button>
+    </section>
+
     <section class="content">
-      <div class="results-heading"><strong id="result-count">90 entries</strong><span>Tap a card to inspect it</span></div>
+      <div class="results-heading"><strong id="result-count">90 entries</strong><span id="collection-summary">15 seen · 3 caught · 0 favorites</span></div>
       <div id="card-grid" class="card-grid" aria-live="polite"></div>
     </section>
   </main>
@@ -51,8 +61,13 @@
         </dl>
         <div class="detail-actions">
           <button id="status-action" class="primary-button">Mark as seen</button>
+          <button id="favorite-action" aria-pressed="false">☆ Add favorite</button>
           <button id="combat-preview">Combat card preview</button>
         </div>
+        <section class="evolution-section" aria-labelledby="evolution-heading">
+          <h3 id="evolution-heading">Evolution family</h3>
+          <div id="evolution-family" class="evolution-family"></div>
+        </section>
         <section id="combat-panel" class="combat-panel" hidden>
           <span>Combat presentation</span>
           <div class="combat-row"><div id="combat-card" class="portrait-art combat-card"></div><div><strong id="combat-name"></strong><small>Full cards appear for introductions, switching, victory, and inspection. The battle HUD uses a lightweight portrait crop from the same unaltered artwork.</small></div></div>

@@ -27,6 +27,10 @@ export interface MonsterdexProgress {
   completionPercent: number;
 }
 
+export type MonsterdexSort = "number" | "name" | "rarity" | "research";
+
+const RARITY_ORDER: Readonly<Record<SpeciesDefinition["rarity"], number>> = { common: 0, uncommon: 1, rare: 2, epic: 3, legendary: 4 };
+
 export function cardAssetId(catalogNumber: number, speciesId: string): string | undefined {
   if (!Number.isInteger(catalogNumber) || catalogNumber < 1 || catalogNumber > 90) return undefined;
   return `monsterdex/cards/${String(catalogNumber).padStart(3, "0")}--${speciesId}--card.png`;
@@ -70,6 +74,31 @@ export function monsterdexProgress(entries: readonly MonsterdexEntry[]): Monster
   const seen = entries.filter(({ status }) => status !== "unknown").length;
   const caught = entries.filter(({ status }) => status === "caught").length;
   return { total: entries.length, seen, caught, completionPercent: entries.length ? Math.round((caught / entries.length) * 100) : 0 };
+}
+
+export function sortMonsterdex(entries: readonly MonsterdexEntry[], sort: MonsterdexSort = "number"): readonly MonsterdexEntry[] {
+  return [...entries].sort((a, b) => {
+    if (sort === "name") return a.species.name.localeCompare(b.species.name) || a.catalogNumber - b.catalogNumber;
+    if (sort === "rarity") return RARITY_ORDER[b.species.rarity] - RARITY_ORDER[a.species.rarity] || a.catalogNumber - b.catalogNumber;
+    if (sort === "research") return b.researchLevel - a.researchLevel || b.ownedCount - a.ownedCount || a.catalogNumber - b.catalogNumber;
+    return a.catalogNumber - b.catalogNumber;
+  });
+}
+
+export function monsterdexEvolutionFamily(entries: readonly MonsterdexEntry[], catalogNumber: number): readonly MonsterdexEntry[] {
+  const selected = entries.find((entry) => entry.catalogNumber === catalogNumber);
+  if (!selected) return [];
+  const firstCatalogNumber = selected.catalogNumber - selected.species.evolutionStage + 1;
+  const lastCatalogNumber = firstCatalogNumber + selected.species.evolutionLineLength - 1;
+  return entries.filter((entry) => entry.catalogNumber >= firstCatalogNumber && entry.catalogNumber <= lastCatalogNumber)
+    .sort((a, b) => a.species.evolutionStage - b.species.evolutionStage || a.catalogNumber - b.catalogNumber);
+}
+
+export function nextMonsterdexMilestone(progress: MonsterdexProgress, interval = 10): { target: number; remaining: number } {
+  if (progress.total <= 0) return { target: 0, remaining: 0 };
+  const safeInterval = Math.max(1, Math.floor(interval));
+  const target = Math.min(progress.total, Math.max(safeInterval, Math.ceil((progress.caught + 1) / safeInterval) * safeInterval));
+  return { target, remaining: Math.max(0, target - progress.caught) };
 }
 
 export function adjacentMonsterdexEntry(entries: readonly MonsterdexEntry[], catalogNumber: number, direction: -1 | 1): MonsterdexEntry | undefined {
