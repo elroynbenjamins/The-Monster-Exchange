@@ -39,8 +39,15 @@ export interface StatusDefinition {
 export interface PassiveDefinition {
   id: string;
   name: string;
+  sourceId?: string;
+  effectText?: string;
   statModifiers?: Partial<Record<StatId, number>>;
   teamShieldPercent?: number;
+  battleStartEnergy?: number;
+  switchInEnergy?: number;
+  switchInShieldPercent?: number;
+  damageTakenTimelinePercent?: number;
+  switchMode?: "control-discount" | "dark-damage" | "forecast";
 }
 
 export interface SynergyDefinition {

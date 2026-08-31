@@ -8,6 +8,21 @@ import { evaluateEvolution, evolve } from "../systems/evolution.ts";
 import type { BuildingDefinition } from "../content/definitions.ts";
 import { startBuildingUpgrade, startConstruction } from "../systems/homebase.ts";
 import type { BattleState } from "../systems/battle-engine.ts";
+import { createMonster } from "../systems/monsters.ts";
+
+export const STARTER_SPECIES_IDS = ["sprigbara", "cindlet", "rifflin", "joltmeer", "rimeket"] as const;
+
+export function selectStarter(state: GameState, speciesId: string, content: GameContent, rng: RandomSource): GameState {
+  if (state.player.selectedStarterSpeciesId !== null || state.player.monsterIds.length > 0) throw new Error("A starter has already been selected for this profile.");
+  if (!STARTER_SPECIES_IDS.includes(speciesId as (typeof STARTER_SPECIES_IDS)[number])) throw new Error("That species is not a starter choice.");
+  const species = content.species.find(({ id }) => id === speciesId);
+  if (!species) throw new Error(`Missing starter species: ${speciesId}.`);
+  const discoveryBySpecies = { ...state.player.discoveryBySpecies };
+  for (const starterId of STARTER_SPECIES_IDS) discoveryBySpecies[starterId] = starterId === speciesId ? "CAUGHT" : "SEEN";
+  const prepared = { ...state, player: { ...state.player, discoveryBySpecies, selectedStarterSpeciesId: speciesId } };
+  const starter = createMonster(species, rng, { day: state.world.day, level: 5, ownerId: state.player.id, qualityBias: 0.12 });
+  return addMonsterToPlayer(prepared, starter, true);
+}
 
 export function setThemePreference(state: GameState, theme: ThemePreference): GameState {
   if (!["system", "light", "dark"].includes(theme)) throw new Error("Unknown theme preference.");
@@ -226,7 +241,11 @@ export function evolveOwnedMonster(state: GameState, monsterId: string, evolutio
   const nextSpecies = content.species.find(({ id }) => id === evolution.toSpeciesId)!;
   const unlockedCount = Math.min(nextSpecies.skillPool.length, 2 + Math.floor(monster.level / 10));
   const knownSkillIds = [...new Set([...evolved.knownSkillIds, ...nextSpecies.skillPool.slice(0, unlockedCount)])];
-  return { ...state, player: { ...state.player, inventory }, monsters: { ...state.monsters, [monsterId]: { ...evolved, knownSkillIds } } };
+  return {
+    ...state,
+    player: { ...state.player, inventory, discoveryBySpecies: { ...state.player.discoveryBySpecies, [nextSpecies.id]: "CAUGHT" } },
+    monsters: { ...state.monsters, [monsterId]: { ...evolved, knownSkillIds } },
+  };
 }
 
 export function depositHomebaseResource(state: GameState, resourceId: string, amount: number): GameState {

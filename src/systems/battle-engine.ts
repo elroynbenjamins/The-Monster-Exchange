@@ -29,6 +29,9 @@ export interface BattleUnit {
   active: boolean;
   shield: number;
   statuses: readonly ActiveStatus[];
+  passiveTriggerCounts: Readonly<Record<string, number>>;
+  switchEffectArmed?: boolean;
+  nextDamageDealtMultiplier?: number;
 }
 
 export interface ActiveStatus { id: string; remainingActions: number; stacks: number }
@@ -56,6 +59,21 @@ export interface BattleContent {
   passives: readonly PassiveDefinition[];
   synergies: readonly SynergyDefinition[];
   equipment: readonly EquipmentDefinition[];
+}
+
+function passiveForUnit(unit: Pick<BattleUnit, "species">, content: Pick<BattleContent, "passives">): PassiveDefinition {
+  const passive = content.passives.find(({ id }) => id === unit.species.passiveId);
+  if (!passive) throw new Error(`Missing passive ${unit.species.passiveId}.`);
+  return passive;
+}
+
+function isControlSkill(skill: SkillDefinition): boolean {
+  return Boolean(skill.statusId) || skill.power === 0;
+}
+
+function actionEnergyCost(unit: BattleUnit, skill: SkillDefinition, content: Pick<BattleContent, "passives">): number {
+  const passive = passiveForUnit(unit, content);
+  return Math.max(0, skill.energyCost - (unit.switchEffectArmed && passive.switchMode === "control-discount" && isControlSkill(skill) ? 6 : 0));
 }
 
 function refreshTeamStats(units: BattleUnit[], content: BattleContent): Readonly<Record<BattleSide, readonly string[]>> {
@@ -99,11 +117,18 @@ export function createBattle(
       energy: combatant.stats.energy, maxEnergy: combatant.stats.energy, baseMaxHp: combatant.stats.hp, baseMaxEnergy: combatant.stats.energy,
       baseAttack: combatant.stats.attack, baseDefense: combatant.stats.defense, baseSpeed: combatant.stats.speed, speed: combatant.stats.speed,
       attack: combatant.stats.attack, defense: combatant.stats.defense, readyAt: combatant.nextActionAt,
-      cooldowns: {}, active: index < 3, shield: 0, statuses: [],
+      cooldowns: {}, active: index < 3, shield: 0, statuses: [], passiveTriggerCounts: {},
     };
   });
   const units = [...makeUnits(playerMonsters, "player"), ...makeUnits(enemyMonsters, "enemy")];
   const activeSynergies = refreshTeamStats(units, content);
+  for (const unit of units.filter(({ active }) => active)) {
+    const passive = passiveForUnit(unit, content);
+    if (passive.battleStartEnergy) {
+      unit.energy = Math.min(unit.maxEnergy, unit.energy + passive.battleStartEnergy);
+      unit.passiveTriggerCounts = { ...unit.passiveTriggerCounts, "battle-start-energy": 1 };
+    }
+  }
   for (const side of ["player", "enemy"] as const) {
     const active = units.filter((unit) => unit.side === side && unit.active);
     const teamEffects = evaluateTeamSynergies(active.map(({ monster }) => monster), content.species, content.synergies);
@@ -121,7 +146,7 @@ export function nextActor(state: BattleState): BattleUnit | undefined {
   return state.units.filter(({ hp, active }) => hp > 0 && active).sort((a, b) => a.readyAt - b.readyAt || b.speed - a.speed)[0];
 }
 
-export function validActions(state: BattleState, actorId: string, content: Pick<BattleContent, "skills" | "statuses">): readonly BattleAction[] {
+export function validActions(state: BattleState, actorId: string, content: Pick<BattleContent, "skills" | "statuses" | "passives">): readonly BattleAction[] {
   const actor = state.units.find(({ id }) => id === actorId);
   if (!actor || actor.hp <= 0 || state.result !== "ongoing") return [];
   if (actor.statuses.some((status) => content.statuses.find(({ id }) => id === status.id)?.preventsAction)) return [{ kind: "wait", actorId }];
@@ -132,7 +157,7 @@ export function validActions(state: BattleState, actorId: string, content: Pick<
   for (const reserve of reserves) actions.push({ kind: "switch", actorId, targetId: reserve.id });
   for (const skillId of actor.monster.equippedSkillIds) {
     const skill = content.skills.find(({ id }) => id === skillId);
-    if (!skill || actor.energy < skill.energyCost || (actor.cooldowns[skill.id] ?? 0) > 0) continue;
+    if (!skill || actor.energy < actionEnergyCost(actor, skill, content as BattleContent) || (actor.cooldowns[skill.id] ?? 0) > 0) continue;
     if (skill.target === "enemy") for (const target of enemies) actions.push({ kind: "skill", actorId, skillId, targetId: target.id });
     else if (skill.target === "ally") for (const target of allies) actions.push({ kind: "skill", actorId, skillId, targetId: target.id });
     else actions.push({ kind: "skill", actorId, skillId });
@@ -167,7 +192,7 @@ export function applyBattleAction(state: BattleState, action: BattleAction, cont
   });
   if (!isValid) throw new Error("Action is not currently usable.");
   const targets = targetsFor(state, actor, action, skill);
-  const units = state.units.map((unit) => ({ ...unit, cooldowns: { ...unit.cooldowns }, statuses: unit.statuses.map((status) => ({ ...status })) }));
+  const units = state.units.map((unit) => ({ ...unit, cooldowns: { ...unit.cooldowns }, statuses: unit.statuses.map((status) => ({ ...status })), passiveTriggerCounts: { ...unit.passiveTriggerCounts } }));
   const acting = units.find(({ id }) => id === actor.id)!;
   const events: DomainEvent[] = [];
   if (action.kind === "switch") {
@@ -176,8 +201,21 @@ export function applyBattleAction(state: BattleState, action: BattleAction, cont
     reserve.active = true;
     reserve.readyAt = acting.readyAt;
     events.push({ type: "battle.switched", day, payload: { outId: acting.id, inId: reserve.id } });
+    const passive = passiveForUnit(reserve, content);
+    if ((reserve.passiveTriggerCounts["switch-in"] ?? 0) === 0 && (passive.switchInEnergy || passive.switchInShieldPercent || passive.switchMode)) {
+      const energy = Math.min(passive.switchInEnergy ?? 0, reserve.maxEnergy - reserve.energy);
+      const shield = Math.round(reserve.maxHp * (passive.switchInShieldPercent ?? 0));
+      reserve.energy += energy;
+      reserve.shield = Math.min(Math.round(reserve.maxHp * 0.5), reserve.shield + shield);
+      reserve.switchEffectArmed = Boolean(passive.switchMode);
+      reserve.passiveTriggerCounts = { ...reserve.passiveTriggerCounts, "switch-in": 1 };
+      events.push({ type: "battle.passive-triggered", day, payload: { monsterId: reserve.id, passiveId: passive.id, trigger: "switch-in", energy, shield } });
+    }
   }
-  const power = skill?.power ?? 28;
+  const actingPassive = passiveForUnit(acting, content);
+  const spentEnergy = skill ? actionEnergyCost(acting, skill, content) : 0;
+  const darkSwitchBonus = Boolean(skill && acting.switchEffectArmed && actingPassive.switchMode === "dark-damage" && skill.type === "dark" && targets.some((target) => acting.readyAt <= target.readyAt));
+  const power = (skill?.power ?? 28) * (darkSwitchBonus ? 1.1 : 1) * (acting.nextDamageDealtMultiplier ?? 1);
   for (const targetSnapshot of targets) {
     const target = units.find(({ id }) => id === targetSnapshot.id)!;
     if (power > 0 && target.side !== acting.side) {
@@ -201,6 +239,14 @@ export function applyBattleAction(state: BattleState, action: BattleAction, cont
       target.hp = Math.max(0, target.hp - hpDamage);
       if (hpDamage > 0) target.statuses = target.statuses.filter((active) => !content.statuses.find(({ id }) => id === active.id)?.breaksOnDamage);
       events.push({ type: "battle.damage", day, payload: { actorId: acting.id, targetId: target.id, skillId: skill?.id, damage: hpDamage, absorbed, multiplier, remainingHp: target.hp } });
+      const targetPassive = passiveForUnit(target, content);
+      const triggerKey = `damage-timeline-${state.round}`;
+      if (targetPassive.damageTakenTimelinePercent && (target.passiveTriggerCounts[triggerKey] ?? 0) === 0) {
+        const timelineGain = 1000 / Math.max(1, target.speed) * targetPassive.damageTakenTimelinePercent;
+        target.readyAt = Math.max(state.tick, target.readyAt - timelineGain);
+        target.passiveTriggerCounts = { ...target.passiveTriggerCounts, [triggerKey]: 1 };
+        events.push({ type: "battle.passive-triggered", day, payload: { monsterId: target.id, passiveId: targetPassive.id, trigger: "damage-timeline", timelineGain } });
+      }
     }
     if (skill?.healingPower && target.side === acting.side) {
       const healed = Math.min(target.maxHp - target.hp, Math.round(skill.healingPower * acting.attack / 50));
@@ -224,7 +270,13 @@ export function applyBattleAction(state: BattleState, action: BattleAction, cont
       events.push({ type: "battle.status-applied", day, payload: { targetId: target.id, statusId: skill.statusId } });
     }
   }
-  acting.energy = Math.min(acting.maxEnergy, acting.energy - (skill?.energyCost ?? 0) + (skill ? 5 : 14));
+  if (skill && acting.switchEffectArmed && actingPassive.switchMode === "forecast" && (skill.type === "psychic" || isControlSkill(skill))) {
+    for (const target of targets.filter(({ side }) => side !== acting.side)) units.find(({ id }) => id === target.id)!.nextDamageDealtMultiplier = 0.92;
+    acting.switchEffectArmed = false;
+  }
+  if (skill && acting.switchEffectArmed && (actingPassive.switchMode === "control-discount" && isControlSkill(skill) || darkSwitchBonus)) acting.switchEffectArmed = false;
+  acting.energy = Math.min(acting.maxEnergy, acting.energy - spentEnergy + (skill ? 5 : 14));
+  if (power > 0) acting.nextDamageDealtMultiplier = undefined;
   const reduced = Object.fromEntries(Object.entries(acting.cooldowns).map(([id, value]) => [id, Math.max(0, value - 1)]));
   acting.cooldowns = skill?.cooldown ? { ...reduced, [skill.id]: skill.cooldown } : reduced;
   const speedModifier = acting.statuses.reduce((value, status) => value + (content.statuses.find(({ id }) => id === status.id)?.speedModifier ?? 0) * status.stacks, 1);

@@ -1,7 +1,7 @@
 import type { SpeciesDefinition } from "../core/types.ts";
-import type { GameState } from "../game/state.ts";
+import type { GameState, SpeciesDiscoveryStatus } from "../game/state.ts";
 
-export type MonsterdexStatus = "unknown" | "seen" | "caught";
+export type MonsterdexStatus = SpeciesDiscoveryStatus;
 
 export interface MonsterdexEntry {
   catalogNumber: number;
@@ -11,6 +11,13 @@ export interface MonsterdexEntry {
   ownedCount: number;
   cardAssetId?: string;
   portraitAssetId?: string;
+  display: {
+    name: string;
+    types?: SpeciesDefinition["types"];
+    description?: string;
+    habitatIds?: readonly string[];
+    fullEntry?: SpeciesDefinition;
+  };
 }
 
 export interface MonsterdexFilter {
@@ -32,13 +39,15 @@ export type MonsterdexSort = "number" | "name" | "rarity" | "research";
 const RARITY_ORDER: Readonly<Record<SpeciesDefinition["rarity"], number>> = { common: 0, uncommon: 1, rare: 2, epic: 3, legendary: 4 };
 
 export function cardAssetId(catalogNumber: number, speciesId: string): string | undefined {
-  if (!Number.isInteger(catalogNumber) || catalogNumber < 1 || catalogNumber > 90) return undefined;
-  return `monsterdex/cards/${String(catalogNumber).padStart(3, "0")}--${speciesId}--card.png`;
+  void catalogNumber;
+  void speciesId;
+  return undefined;
 }
 
 export function portraitAssetId(catalogNumber: number, speciesId: string): string | undefined {
-  if (!Number.isInteger(catalogNumber) || catalogNumber < 1 || catalogNumber > 90) return undefined;
-  return `monsterdex/portraits/${String(catalogNumber).padStart(3, "0")}--${speciesId}--portrait.png`;
+  void catalogNumber;
+  void speciesId;
+  return undefined;
 }
 
 export function buildMonsterdexEntries(species: readonly SpeciesDefinition[], state: GameState): readonly MonsterdexEntry[] {
@@ -47,19 +56,26 @@ export function buildMonsterdexEntries(species: readonly SpeciesDefinition[], st
     const speciesId = state.monsters[monsterId]?.speciesId;
     if (speciesId) ownedCounts.set(speciesId, (ownedCounts.get(speciesId) ?? 0) + 1);
   }
-  return [...species].sort((a, b) => a.catalogNumber - b.catalogNumber).map((definition) => {
+  return [...species].sort((a, b) => a.dexNumber - b.dexNumber).map((definition) => {
     const ownedCount = ownedCounts.get(definition.id) ?? 0;
     const researchLevel = state.player.researchBySpecies[definition.id]?.level ?? 0;
     return {
-      catalogNumber: definition.catalogNumber,
+      catalogNumber: definition.dexNumber,
       species: definition,
-      status: ownedCount > 0 ? "caught" : researchLevel > 0 ? "seen" : "unknown",
+      status: state.player.discoveryBySpecies[definition.id] ?? "UNKNOWN",
       researchLevel,
       ownedCount,
-      cardAssetId: cardAssetId(definition.catalogNumber, definition.id),
-      portraitAssetId: portraitAssetId(definition.catalogNumber, definition.id),
+      cardAssetId: cardAssetId(definition.internalId, definition.id),
+      portraitAssetId: portraitAssetId(definition.internalId, definition.id),
+      display: statusDisplay(definition, state.player.discoveryBySpecies[definition.id] ?? "UNKNOWN"),
     };
   });
+}
+
+function statusDisplay(definition: SpeciesDefinition, status: MonsterdexStatus): MonsterdexEntry["display"] {
+  if (status === "UNKNOWN") return { name: "???" };
+  const basic = { name: definition.name, types: definition.types, habitatIds: definition.habitats };
+  return status === "CAUGHT" ? { ...basic, description: definition.description, fullEntry: definition } : basic;
 }
 
 export function filterMonsterdex(entries: readonly MonsterdexEntry[], filter: MonsterdexFilter = {}): readonly MonsterdexEntry[] {
@@ -71,8 +87,8 @@ export function filterMonsterdex(entries: readonly MonsterdexEntry[], filter: Mo
 }
 
 export function monsterdexProgress(entries: readonly MonsterdexEntry[]): MonsterdexProgress {
-  const seen = entries.filter(({ status }) => status !== "unknown").length;
-  const caught = entries.filter(({ status }) => status === "caught").length;
+  const seen = entries.filter(({ status }) => status !== "UNKNOWN").length;
+  const caught = entries.filter(({ status }) => status === "CAUGHT").length;
   return { total: entries.length, seen, caught, completionPercent: entries.length ? Math.round((caught / entries.length) * 100) : 0 };
 }
 
@@ -88,9 +104,7 @@ export function sortMonsterdex(entries: readonly MonsterdexEntry[], sort: Monste
 export function monsterdexEvolutionFamily(entries: readonly MonsterdexEntry[], catalogNumber: number): readonly MonsterdexEntry[] {
   const selected = entries.find((entry) => entry.catalogNumber === catalogNumber);
   if (!selected) return [];
-  const firstCatalogNumber = selected.catalogNumber - selected.species.evolutionStage + 1;
-  const lastCatalogNumber = firstCatalogNumber + selected.species.evolutionLineLength - 1;
-  return entries.filter((entry) => entry.catalogNumber >= firstCatalogNumber && entry.catalogNumber <= lastCatalogNumber)
+  return entries.filter((entry) => entry.species.evolutionLineId === selected.species.evolutionLineId)
     .sort((a, b) => a.species.evolutionStage - b.species.evolutionStage || a.catalogNumber - b.catalogNumber);
 }
 

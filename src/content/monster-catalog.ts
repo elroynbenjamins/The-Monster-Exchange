@@ -1,7 +1,10 @@
 import type { EvolutionDefinition, PassiveDefinition, SkillDefinition } from "./definitions.ts";
 import { GAME_TYPES, type GameType, type Rarity, type SpeciesDefinition, type Stats } from "../core/types.ts";
+import { GENERATED_V45_CONCEPTS, GENERATED_V45_EVOLUTIONS, GENERATED_V45_INTEGRATIONS, GENERATED_V45_MARKET_VALUES, GENERATED_V45_PASSIVES, GENERATED_V45_STATS } from "./generated-v45.ts";
 
 export interface MonsterConcept {
+  internalId: number;
+  dexNumber: number;
   catalogNumber: number;
   name: string;
   types: readonly [GameType, GameType?];
@@ -12,7 +15,7 @@ export interface MonsterConcept {
   lineId: string;
 }
 
-export const MONSTER_CONCEPTS: readonly MonsterConcept[] = [
+const LEGACY_MONSTER_CONCEPTS = [
   {"catalogNumber":1,"name":"Mossveil","types":["grass","poison"],"rarity":"common","description":"A velvet-backed marsh mollusk carrying a tiny living thicket. It filters toxins from wet soil and stores them in glowing dew sacs.","stage":1,"totalStages":2,"lineId":"mossveil"},
   {"catalogNumber":2,"name":"Canopyre","types":["grass","fairy"],"rarity":"uncommon","description":"A broad-shelled forest grazer crowned by a miniature canopy. Its drifting pollen calms nearby creatures and helps damaged woodland recover.","stage":2,"totalStages":2,"lineId":"mossveil"},
   {"catalogNumber":3,"name":"Voltgrazer","types":["electric","ground"],"rarity":"uncommon","description":"A lean herd beast with copper hooves and storm-sensitive whiskers. It stamps rhythmic charges into the earth to warn its herd.","stage":1,"totalStages":2,"lineId":"voltgrazer"},
@@ -115,7 +118,12 @@ export const MONSTER_CONCEPTS: readonly MonsterConcept[] = [
   {"catalogNumber":100,"name":"Hollowmorrow","types":["ghost","normal"],"rarity":"epic","description":"A pale featureless creature followed by echoes of movements it has not made yet. It appears shortly before major turning points.","stage":1,"totalStages":1,"lineId":"hollowmorrow"},
   {"catalogNumber":101,"name":"Aurevine","types":["grass","fairy"],"rarity":"legendary","description":"The leaf-antlered guardian of fair exchange. Its ivory crest unfurls living fronds that reveal imbalance, restore exhausted habitats, and curl protectively around honest traders.","stage":1,"totalStages":1,"lineId":"aurevine"},
   {"catalogNumber":102,"name":"Tempestyr","types":["electric","dragon"],"rarity":"legendary","description":"The lightning-antlered guardian of decisive exchange. Its teal body stores storm current while its golden crest flashes whenever a bargain will reshape the lives on both sides.","stage":1,"totalStages":1,"lineId":"tempestyr"},
-] as MonsterConcept[];
+] as const;
+
+export const MONSTER_CONCEPTS: readonly MonsterConcept[] = GENERATED_V45_CONCEPTS.map((concept) => ({
+  ...concept,
+  catalogNumber: concept.dexNumber,
+})) as readonly MonsterConcept[];
 
 const TYPE_PROFILE: Record<GameType, readonly [number, number, number, number]> = {
   normal: [2, 0, 0, 3], fire: [-2, 7, -3, 4], water: [4, 0, 4, -1],
@@ -181,29 +189,29 @@ const RARITY_WEIGHT: Record<Rarity, number> = {
 const SPECIES_OVERRIDES: Readonly<Record<string, Partial<SpeciesDefinition>>> = {
   mossveil: {
     tags: ["plantlike", "mollusk"], baseStats: { hp: 54, attack: 38, defense: 52, speed: 31, energy: 100 },
-    traitPool: ["hardy", "patient"], breedingGroups: ["verdant"], skillPool: ["root-lash", "spore-veil"],
-    passiveId: "dew-fed", habitats: ["greenreach-meadow"], baseMarketValue: 220,
+    breedingGroups: ["verdant"], skillPool: ["root-lash", "spore-veil"],
+    habitats: ["greenreach-meadow"], baseMarketValue: 220,
   },
   canopyre: {
     tags: ["plantlike", "mollusk"], baseStats: { hp: 76, attack: 58, defense: 71, speed: 46, energy: 100 },
-    traitPool: ["hardy", "patient"], breedingGroups: ["verdant"], skillPool: ["root-lash", "spore-veil", "canopy-surge"],
-    passiveId: "living-canopy", habitats: ["greenreach-deepwood"], baseMarketValue: 610,
+    breedingGroups: ["verdant"], skillPool: ["root-lash", "spore-veil", "canopy-surge"],
+    habitats: ["greenreach-deepwood"], baseMarketValue: 610,
   },
   voltgrazer: {
     tags: ["beast", "herd"], baseStats: { hp: 62, attack: 55, defense: 45, speed: 68, energy: 100 },
-    traitPool: ["keen-senses", "patient"], breedingGroups: ["field"], skillPool: ["static-prance", "grounding-hum"],
-    passiveId: "storm-fed", habitats: ["stormpeak-foothills"], baseMarketValue: 430,
+    breedingGroups: ["field"], skillPool: ["static-prance", "grounding-hum"],
+    habitats: ["stormpeak-foothills"], baseMarketValue: 430,
   },
   aurevine: {
     tags: ["crest-guardian", "plantlike", "fey", "serpentine"],
     skillPool: ["type-grass-basic", "type-fairy-basic", "type-grass-advanced", "crest-renewal"],
-    passiveId: "keeper-of-balance", habitats: ["greenreach-deepwood"], baseMarketValue: 8800,
+    habitats: ["greenreach-deepwood"], baseMarketValue: 8800,
     obtainability: { wildCatchable: false, wildEncounterWeight: 0, breedable: false, directHatch: false, tradeable: false, auctionEligible: false },
   },
   tempestyr: {
     tags: ["crest-guardian", "charged", "draconic", "serpentine"],
     skillPool: ["type-electric-basic", "type-dragon-basic", "type-dragon-advanced", "crest-thunderbolt"],
-    passiveId: "keeper-of-momentum", habitats: ["stormpeak-foothills"], baseMarketValue: 8800,
+    habitats: ["stormpeak-foothills"], baseMarketValue: 8800,
     obtainability: { wildCatchable: false, wildEncounterWeight: 0, breedable: false, directHatch: false, tradeable: false, auctionEligible: false },
   },
   rimehorn: { obtainability: { wildCatchable: false, wildEncounterWeight: 0, directHatch: false, tradeable: true, auctionEligible: true, evolutionOnly: true } },
@@ -245,6 +253,8 @@ function statBudget(concept: MonsterConcept): number {
 }
 
 function buildStats(concept: MonsterConcept): Stats {
+  const canonical = GENERATED_V45_STATS[slug(concept.name) as keyof typeof GENERATED_V45_STATS];
+  if (canonical) return canonical;
   const profiles = concept.types.map((type) => TYPE_PROFILE[type]);
   const profile = [0, 1, 2, 3].map((index) => profiles.reduce((sum, values) => sum + values[index], 0) / profiles.length);
   const wobble = [
@@ -274,7 +284,7 @@ for (const concept of MONSTER_CONCEPTS) {
   conceptsByLine.set(concept.lineId, line);
 }
 
-export const CATALOG_EVOLUTIONS: readonly EvolutionDefinition[] = [...conceptsByLine.values()].flatMap((line) =>
+const LEGACY_CATALOG_EVOLUTIONS: readonly EvolutionDefinition[] = [...conceptsByLine.values()].flatMap((line) =>
   line.slice(0, -1).map((from, index) => {
     const to = line[index + 1];
     return {
@@ -288,6 +298,8 @@ export const CATALOG_EVOLUTIONS: readonly EvolutionDefinition[] = [...conceptsBy
   }),
 );
 
+export const CATALOG_EVOLUTIONS: readonly EvolutionDefinition[] = GENERATED_V45_EVOLUTIONS;
+
 export const CATALOG_SKILLS: readonly SkillDefinition[] = [...GAME_TYPES.flatMap((type) => {
   const [basicName, advancedName] = TYPE_SKILL_NAMES[type];
   const statusId = TYPE_STATUS[type];
@@ -300,34 +312,35 @@ export const CATALOG_SKILLS: readonly SkillDefinition[] = [...GAME_TYPES.flatMap
   { id: "crest-thunderbolt", name: "Crest Thunderbolt", type: "electric", power: 82, energyCost: 55, cooldown: 3, target: "enemy", statusId: "shock", statusChance: 0.4 },
 ];
 
-export const CATALOG_PASSIVES: readonly PassiveDefinition[] = [...GAME_TYPES.map((type) => ({
-  id: `affinity-${type}`, name: `${type[0].toUpperCase() + type.slice(1)} Affinity`,
-  statModifiers: { [TYPE_PASSIVE_STAT[type]]: 0.07 },
-})),
-  { id: "keeper-of-balance", name: "Keeper of Balance", statModifiers: { defense: 0.1 }, teamShieldPercent: 0.08 },
-  { id: "keeper-of-momentum", name: "Keeper of Momentum", statModifiers: { attack: 0.08, speed: 0.08 } },
-];
+export const CATALOG_PASSIVES: readonly PassiveDefinition[] = GENERATED_V45_PASSIVES;
 
 export const CATALOG_SPECIES: readonly SpeciesDefinition[] = MONSTER_CONCEPTS.map((concept) => {
   const id = slug(concept.name);
   const line = conceptsByLine.get(concept.lineId) ?? [];
   const next = line.find((candidate) => candidate.stage === concept.stage + 1);
   const generated: SpeciesDefinition = {
-    id, catalogNumber: concept.catalogNumber, name: concept.name, description: concept.description,
-    evolutionStage: concept.stage, evolutionLineLength: concept.totalStages, types: concept.types,
-    tags: [...new Set(concept.types.map((type) => TYPE_TAG[type]))], rarity: concept.rarity,
+    id, internalId: concept.internalId, dexNumber: concept.dexNumber, catalogNumber: concept.dexNumber,
+    name: concept.name, description: concept.description,
+    evolutionStage: concept.stage, evolutionLineLength: concept.totalStages, evolutionLineId: concept.lineId, types: concept.types,
+    tags: [...new Set(concept.types.map((type) => TYPE_TAG[type]))], rarity: concept.rarity, battleRole: concept.battleRole,
     baseStats: buildStats(concept), geneCaps: { hp: 31, attack: 31, defense: 31, speed: 31 },
     traitPool: concept.types.includes("electric") || concept.types.includes("flying")
       ? ["keen-senses", "hardy"]
       : concept.types.includes("rock") || concept.types.includes("steel") || concept.types.includes("ground")
         ? ["patient", "hardy"] : ["hardy", "patient", "keen-senses"],
+    sourceTraitIds: [],
     breedingGroups: [...new Set(concept.types.map((type) => BREEDING_GROUP[type]))],
-    skillPool: skillIds(concept), passiveId: `affinity-${concept.types[0]}`,
-    evolutionIds: next ? [evolutionId(id, slug(next.name))] : [], habitats: habitatFor(concept.types),
-    baseMarketValue: Math.round(RARITY_VALUE[concept.rarity] * (1 + (concept.stage - 1) * 0.28)),
+    skillPool: skillIds(concept), passiveId: "",
+    sourceSkillIds: [], sourcePassiveId: "",
+    evolutionIds: CATALOG_EVOLUTIONS.filter((evolution) => evolution.fromSpeciesId === id).map(({ id: evolutionId }) => evolutionId),
+    habitats: habitatFor(concept.types),
+    baseMarketValue: GENERATED_V45_MARKET_VALUES[id as keyof typeof GENERATED_V45_MARKET_VALUES]
+      ?? Math.round(RARITY_VALUE[concept.rarity] * (1 + (concept.stage - 1) * 0.28)),
+    weeklyMaterialValue: 0,
     artId: `monsters/${id}/${id}--base--idle--right`,
   };
-  return { ...generated, ...SPECIES_OVERRIDES[id] };
+  const integration = GENERATED_V45_INTEGRATIONS[id as keyof typeof GENERATED_V45_INTEGRATIONS];
+  return { ...generated, ...integration, passiveId: integration.sourcePassiveId.toLowerCase().replace(/_/g, "-"), ...SPECIES_OVERRIDES[id] };
 });
 
 export function speciesPoolForZone(zoneId: string): readonly { speciesId: string; weight: number }[] {

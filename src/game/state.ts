@@ -3,12 +3,14 @@ import type { MarketState } from "../systems/market.ts";
 import type { MonsterIndividual } from "../core/types.ts";
 import type { ExpeditionState } from "../systems/exploration.ts";
 
-export const SAVE_VERSION = 8;
+export const SAVE_VERSION = 9;
+export const VEYDRIS_ACCESS_FLAG = "STORY_VEYDRIS_ACCESS";
 
 export type ThemePreference = "system" | "light" | "dark";
 export interface UiPreferences { theme: ThemePreference; reducedMotion: boolean }
 
 export interface SpeciesResearch { level: number; points: number }
+export type SpeciesDiscoveryStatus = "UNKNOWN" | "SEEN" | "CAUGHT";
 export interface PlayerLocation { regionId: string; cityId?: string }
 
 export interface MonsterCondition {
@@ -31,6 +33,9 @@ export interface PlayerState {
   activeTeamIds: readonly string[];
   reputation: number;
   researchBySpecies: Readonly<Record<string, SpeciesResearch>>;
+  discoveryBySpecies: Readonly<Record<string, SpeciesDiscoveryStatus>>;
+  selectedStarterSpeciesId: string | null;
+  specialEvolutionProgress: Readonly<Record<string, number>>;
   location: PlayerLocation;
 }
 
@@ -43,6 +48,9 @@ export interface WorldState {
   weatherByRegion: Readonly<Record<string, string>>;
   populations: Readonly<Record<string, number>>;
   unlockedMapIds: readonly string[];
+  storyFlags: readonly string[];
+  travelEventState: { pendingEventId?: string; resolvedEventIds: readonly string[] };
+  dynamicState: Readonly<Record<string, string | number | boolean>>;
 }
 
 export interface BreedingJob {
@@ -84,6 +92,9 @@ export interface GameState {
   uiPreferences: UiPreferences;
   contracts: readonly ContractState[];
   trainers: Readonly<Record<string, TrainerState>>;
+  rivalStateExtensions: Readonly<Record<string, Readonly<Record<string, string | number | boolean>>>>;
+  homebaseQueues: { constructionIds: readonly string[]; breedingJobIds: readonly string[] };
+  monetizationEntitlements: readonly string[];
 }
 
 export function createNewGame(playerName: string, seed: number, contentVersion: number): GameState {
@@ -95,9 +106,11 @@ export function createNewGame(playerName: string, seed: number, contentVersion: 
     player: {
       id: "player", name: trimmedName, crowns: 750,
       inventory: { "field-capsule": 5, "training-band": 1, "trail-harness": 1, herbs: 5, timber: 50, stone: 25 },
-      monsterIds: [], activeTeamIds: [], reputation: 0, researchBySpecies: {}, location: { regionId: "greenreach", cityId: "hearthbrook" },
+      monsterIds: [], activeTeamIds: [], reputation: 0, researchBySpecies: {}, discoveryBySpecies: {},
+      selectedStarterSpeciesId: null, specialEvolutionProgress: {},
+      location: { regionId: "greenreach", cityId: "willowmere" },
     },
-    world: { day: 1, seed, nextRandomOffset: 0, unlockedZoneIds: ["greenreach-meadow"], unlockedMapIds: [], season: "spring", weatherByRegion: { greenreach: "clear", stormpeak: "windy" }, populations: {} },
+    world: { day: 1, seed, nextRandomOffset: 0, unlockedZoneIds: ["greenreach-meadow"], unlockedMapIds: [], storyFlags: [], travelEventState: { resolvedEventIds: [] }, dynamicState: {}, season: "spring", weatherByRegion: { greenreach: "clear", stormpeak: "windy" }, populations: {} },
     monsters: {},
     conditions: {},
     market: { day: 1, indices: {}, listings: [], events: [] },
@@ -106,6 +119,9 @@ export function createNewGame(playerName: string, seed: number, contentVersion: 
     uiPreferences: { theme: "system", reducedMotion: false },
     contracts: [],
     trainers: {},
+    rivalStateExtensions: {},
+    homebaseQueues: { constructionIds: [], breedingJobIds: [] },
+    monetizationEntitlements: [],
   };
 }
 
@@ -119,8 +135,25 @@ export function addMonsterToPlayer(state: GameState, monster: MonsterIndividual,
       ...state.player,
       monsterIds: [...state.player.monsterIds, owned.id],
       activeTeamIds: addToTeam && state.player.activeTeamIds.length < 5 ? [...state.player.activeTeamIds, owned.id] : state.player.activeTeamIds,
+      discoveryBySpecies: { ...state.player.discoveryBySpecies, [owned.speciesId]: "CAUGHT" },
     },
   };
+}
+
+const DISCOVERY_RANK: Readonly<Record<SpeciesDiscoveryStatus, number>> = { UNKNOWN: 0, SEEN: 1, CAUGHT: 2 };
+
+export function recordSpeciesDiscovery(state: GameState, speciesId: string, status: SpeciesDiscoveryStatus): GameState {
+  const current = state.player.discoveryBySpecies[speciesId] ?? "UNKNOWN";
+  if (DISCOVERY_RANK[current] >= DISCOVERY_RANK[status]) return state;
+  return { ...state, player: { ...state.player, discoveryBySpecies: { ...state.player.discoveryBySpecies, [speciesId]: status } } };
+}
+
+export function recordSpeciesSeen(state: GameState, speciesId: string): GameState {
+  return recordSpeciesDiscovery(state, speciesId, "SEEN");
+}
+
+export function recordSpeciesCaught(state: GameState, speciesId: string): GameState {
+  return recordSpeciesDiscovery(state, speciesId, "CAUGHT");
 }
 
 export function changeInventory(state: GameState, itemId: string, delta: number): GameState {

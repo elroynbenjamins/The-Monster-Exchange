@@ -1,0 +1,2193 @@
+[
+  {
+    "Monster ID": 1,
+    "Species": "Mossveil",
+    "Passive ID": "PAS_001",
+    "Passive Name": "Rooted Recovery: Poison Affinity",
+    "Effect": "Recover 3% max HP after using a support skill. Secondary Poison identity can be referenced by species-specific skill AI.",
+    "AI Tags": "heal;sustain",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 2,
+    "Species": "Canopyre",
+    "Passive ID": "PAS_002",
+    "Passive Name": "Rooted Recovery: Fairy Affinity",
+    "Effect": "Recover 3% max HP after using a support skill. Secondary Fairy identity can be referenced by species-specific skill AI.",
+    "AI Tags": "heal;sustain",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 3,
+    "Species": "Voltgrazer",
+    "Passive ID": "PAS_003",
+    "Passive Name": "Live Current: Ground Affinity",
+    "Effect": "First action each battle starts with +12 Energy. Secondary Ground identity can be referenced by species-specific skill AI.",
+    "AI Tags": "speed;energy",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 4,
+    "Species": "Tempestride",
+    "Passive ID": "PAS_004",
+    "Passive Name": "Stormstride",
+    "Effect": "The first time each battle Tempestride uses an Electric skill immediately after a Ground skill, or Ground after Electric, gain +8% timeline progress.",
+    "AI Tags": "electric;ground;tempo;alternate",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 5,
+    "Species": "Cindlet",
+    "Passive ID": "PAS_005",
+    "Passive Name": "Heatbuild",
+    "Effect": "After using two skills, next Fire skill gains +12% power.",
+    "AI Tags": "damage;combo",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 6,
+    "Species": "Kilnback",
+    "Passive ID": "PAS_006",
+    "Passive Name": "Heatbuild: Rock Affinity",
+    "Effect": "After using two skills, next Fire skill gains +12% power. Secondary Rock identity can be referenced by species-specific skill AI.",
+    "AI Tags": "damage;combo",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 7,
+    "Species": "Pyroclastor",
+    "Passive ID": "PAS_007",
+    "Passive Name": "Furnace Bastion",
+    "Effect": "After Pyroclastor gains a shield or Defense buff, its next Fire damaging skill within 2 actions gains +10% power.",
+    "AI Tags": "fire;steel;tank;setup",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 8,
+    "Species": "Rifflin",
+    "Passive ID": "PAS_008",
+    "Passive Name": "Flowstate",
+    "Effect": "After taking damage, gain +5% timeline progress.",
+    "AI Tags": "tempo;sustain",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 9,
+    "Species": "Brineveil",
+    "Passive ID": "PAS_009",
+    "Passive Name": "Undertide Veil",
+    "Effect": "The first time Brineveil is directly targeted each battle, gain +6% timeline progress and 6 Energy.",
+    "AI Tags": "water;ghost;tempo;energy",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 10,
+    "Species": "Budmote",
+    "Passive ID": "PAS_010",
+    "Passive Name": "Rooted Recovery: Fairy Affinity",
+    "Effect": "Recover 3% max HP after using a support skill. Secondary Fairy identity can be referenced by species-specific skill AI.",
+    "AI Tags": "heal;sustain",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 11,
+    "Species": "Crownbloom",
+    "Passive ID": "PAS_011",
+    "Passive Name": "Royal Nectar",
+    "Effect": "The first time each ally is healed by Crownbloom in a battle, that ally also gains 4 Energy.",
+    "AI Tags": "grass;fairy;heal;energy",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 12,
+    "Species": "Pebblit",
+    "Passive ID": "PAS_012",
+    "Passive Name": "Stone Memory",
+    "Effect": "First shield received is 20% stronger.",
+    "AI Tags": "shield;defense",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 13,
+    "Species": "Cairnox",
+    "Passive ID": "PAS_013",
+    "Passive Name": "Stone Memory: Fighting Affinity",
+    "Effect": "First shield received is 20% stronger. Secondary Fighting identity can be referenced by species-specific skill AI.",
+    "AI Tags": "shield;defense",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 14,
+    "Species": "Gloamkit",
+    "Passive ID": "PAS_014",
+    "Passive Name": "Opportunist",
+    "Effect": "Deal +8% damage to targets below 35% HP.",
+    "AI Tags": "execute;damage",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 15,
+    "Species": "Nocturnyx",
+    "Passive ID": "PAS_015",
+    "Passive Name": "Thought Stalker",
+    "Effect": "The first time Nocturnyx successfully applies a control effect to a target, its next Dark or Psychic damaging skill against that target gains +10% power.",
+    "AI Tags": "dark;psychic;control;mark",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 16,
+    "Species": "Fuzzvolt",
+    "Passive ID": "PAS_016",
+    "Passive Name": "Live Current: Bug Affinity",
+    "Effect": "First action each battle starts with +12 Energy. Secondary Bug identity can be referenced by species-specific skill AI.",
+    "AI Tags": "speed;energy",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 17,
+    "Species": "Loomspark",
+    "Passive ID": "PAS_017",
+    "Passive Name": "Live Current: Bug Affinity",
+    "Effect": "First action each battle starts with +12 Energy. Secondary Bug identity can be referenced by species-specific skill AI.",
+    "AI Tags": "speed;energy",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 18,
+    "Species": "Mucklet",
+    "Passive ID": "PAS_018",
+    "Passive Name": "Toxic Ecology: Water Affinity",
+    "Effect": "Damage-over-time effects from this monster last +1 action, max normal duration cap. Secondary Water identity can be referenced by species-specific skill AI.",
+    "AI Tags": "dot;control",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 19,
+    "Species": "Bogrumbler",
+    "Passive ID": "PAS_019",
+    "Passive Name": "Toxic Ecology: Ground Affinity",
+    "Effect": "Damage-over-time effects from this monster last +1 action, max normal duration cap. Secondary Ground identity can be referenced by species-specific skill AI.",
+    "AI Tags": "dot;control",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 20,
+    "Species": "Chimeshell",
+    "Passive ID": "PAS_020",
+    "Passive Name": "Tidal Premonition",
+    "Effect": "The first time each enemy spends 30 or more Energy on a skill, Chimeshell gains 6 Energy.",
+    "AI Tags": "water;psychic;prediction;energy",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 21,
+    "Species": "Ashwing",
+    "Passive ID": "PAS_021",
+    "Passive Name": "Heatbuild: Flying Affinity",
+    "Effect": "After using two skills, next Fire skill gains +12% power. Secondary Flying identity can be referenced by species-specific skill AI.",
+    "AI Tags": "damage;combo",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 22,
+    "Species": "Solvulture",
+    "Passive ID": "PAS_022",
+    "Passive Name": "Carrion Thermals",
+    "Effect": "When an enemy first falls below 40% HP, Solvulture gains +8% Speed until its next action.",
+    "AI Tags": "fire;flying;execute;speed",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 23,
+    "Species": "Frostuft",
+    "Passive ID": "PAS_023",
+    "Passive Name": "Cold Focus",
+    "Effect": "Chilled or slowed enemies deal 6% less damage to this monster.",
+    "AI Tags": "defense;control",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 24,
+    "Species": "Rimehorn",
+    "Passive ID": "PAS_024",
+    "Passive Name": "Avalanche Mass",
+    "Effect": "The first direct hit Rimehorn takes from a slowed or chilled enemy each battle deals 18% less damage.",
+    "AI Tags": "ice;fighting;bruiser;mitigation",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 25,
+    "Species": "Gleamgulper",
+    "Passive ID": "PAS_025",
+    "Passive Name": "Bright Spirit: Water Affinity",
+    "Effect": "First minor debuff applied is automatically cleared. Secondary Water identity can be referenced by species-specific skill AI.",
+    "AI Tags": "cleanse;support",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 26,
+    "Species": "Ferricrawl",
+    "Passive ID": "PAS_026",
+    "Passive Name": "Reinforced Frame: Bug Affinity",
+    "Effect": "Reduce shield-breaking damage taken by 15%. Secondary Bug identity can be referenced by species-specific skill AI.",
+    "AI Tags": "defense;shield",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 27,
+    "Species": "Bastionsect",
+    "Passive ID": "PAS_027",
+    "Passive Name": "Locking Carapace",
+    "Effect": "The first shield Bastionsect receives each battle also grants +15% status resistance until that shield breaks.",
+    "AI Tags": "steel;bug;shield;resist",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 28,
+    "Species": "Wispling",
+    "Passive ID": "PAS_028",
+    "Passive Name": "Fading Presence",
+    "Effect": "First direct hit taken in battle deals 12% less damage.",
+    "AI Tags": "defense;ghost",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 29,
+    "Species": "Mournglade",
+    "Passive ID": "PAS_029",
+    "Passive Name": "Memorial Bloom",
+    "Effect": "The first ally to fall below 40% HP each battle is healed for 8% max HP by Mournglade.",
+    "AI Tags": "ghost;grass;protect;heal",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 30,
+    "Species": "Skyrill",
+    "Passive ID": "PAS_030",
+    "Passive Name": "Slipstream: Normal Affinity",
+    "Effect": "After acting before the target, gain +5% Speed until next action. Secondary Normal identity can be referenced by species-specific skill AI.",
+    "AI Tags": "speed;tempo",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 31,
+    "Species": "Galecrest",
+    "Passive ID": "PAS_031",
+    "Passive Name": "Jetstream Instinct",
+    "Effect": "After Galecrest acts before its target, its next Dragon or Flying skill costs 4 less Energy.",
+    "AI Tags": "flying;dragon;speed;energy",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 32,
+    "Species": "Dunelet",
+    "Passive ID": "PAS_032",
+    "Passive Name": "Steady Footing",
+    "Effect": "Timeline delay effects against this monster are 20% weaker.",
+    "AI Tags": "resist;timeline",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 33,
+    "Species": "Mirrormaw",
+    "Passive ID": "PAS_033",
+    "Passive Name": "Echoed Footing",
+    "Effect": "The first time Mirrormaw reduces or resists timeline delay each battle, gain 8 Energy.",
+    "AI Tags": "ground;psychic;resist;energy",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 34,
+    "Species": "Vialtail",
+    "Passive ID": "PAS_034",
+    "Passive Name": "Toxic Ecology",
+    "Effect": "Damage-over-time effects from this monster last +1 action, max normal duration cap.",
+    "AI Tags": "dot;control",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 35,
+    "Species": "Runebuck",
+    "Passive ID": "PAS_035",
+    "Passive Name": "Rune Graze",
+    "Effect": "After Runebuck uses a non-damaging skill, gain +4% timeline progress.",
+    "AI Tags": "psychic;grass;control;tempo",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 36,
+    "Species": "Deepmaw",
+    "Passive ID": "PAS_036",
+    "Passive Name": "Abyssal Patience",
+    "Effect": "The first time Deepmaw falls below 50% HP each battle, heal 6% max HP and gain 10 Energy.",
+    "AI Tags": "water;dark;sustain;comeback",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 37,
+    "Species": "Prismite",
+    "Passive ID": "PAS_037",
+    "Passive Name": "Prismatic Shelter",
+    "Effect": "The first shield Prismite receives each battle is 20% stronger; when that shield breaks, Prismite gains 5 Energy.",
+    "AI Tags": "rock;fairy;shield;energy;epic",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 38,
+    "Species": "Cloudrum",
+    "Passive ID": "PAS_038",
+    "Passive Name": "Slipstream: Electric Affinity",
+    "Effect": "After acting before the target, gain +5% Speed until next action. Secondary Electric identity can be referenced by species-specific skill AI.",
+    "AI Tags": "speed;tempo",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 39,
+    "Species": "Oathcoil",
+    "Passive ID": "PAS_039",
+    "Passive Name": "Oathbound Frame",
+    "Effect": "The first time Oathcoil falls below 35% HP each battle, clear one minor debuff and gain a shield equal to 10% max HP.",
+    "AI Tags": "steel;ghost;comeback;shield;epic",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 40,
+    "Species": "Riftwarden",
+    "Passive ID": "PAS_040",
+    "Passive Name": "Rift Memory",
+    "Effect": "After Riftwarden takes damage from a skill type, the next hit of that same type before Riftwarden's next action deals 10% less damage.",
+    "AI Tags": "ghost;dragon;adaptive;legendary",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 41,
+    "Species": "Glintad",
+    "Passive ID": "PAS_041",
+    "Passive Name": "Pattern Read",
+    "Effect": "First enemy control skill targeting this monster has -15% success chance.",
+    "AI Tags": "control;resist",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 42,
+    "Species": "Facetoad",
+    "Passive ID": "PAS_042",
+    "Passive Name": "Pattern Read: Rock Affinity",
+    "Effect": "First enemy control skill targeting this monster has -15% success chance. Secondary Rock identity can be referenced by species-specific skill AI.",
+    "AI Tags": "control;resist",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 43,
+    "Species": "Sootsnip",
+    "Passive ID": "PAS_043",
+    "Passive Name": "Heatbuild: Bug Affinity",
+    "Effect": "After using two skills, next Fire skill gains +12% power. Secondary Bug identity can be referenced by species-specific skill AI.",
+    "AI Tags": "damage;combo",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 44,
+    "Species": "Cauterwing",
+    "Passive ID": "PAS_044",
+    "Passive Name": "Heatbuild: Bug Affinity",
+    "Effect": "After using two skills, next Fire skill gains +12% power. Secondary Bug identity can be referenced by species-specific skill AI.",
+    "AI Tags": "damage;combo",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 45,
+    "Species": "Tidepup",
+    "Passive ID": "PAS_045",
+    "Passive Name": "Flowstate",
+    "Effect": "After taking damage, gain +5% timeline progress.",
+    "AI Tags": "tempo;sustain",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 46,
+    "Species": "Reefhowl",
+    "Passive ID": "PAS_046",
+    "Passive Name": "Flowstate: Rock Affinity",
+    "Effect": "After taking damage, gain +5% timeline progress. Secondary Rock identity can be referenced by species-specific skill AI.",
+    "AI Tags": "tempo;sustain",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 47,
+    "Species": "Bramblejaw",
+    "Passive ID": "PAS_047",
+    "Passive Name": "Rooted Recovery: Dark Affinity",
+    "Effect": "Recover 3% max HP after using a support skill. Secondary Dark identity can be referenced by species-specific skill AI.",
+    "AI Tags": "heal;sustain",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 48,
+    "Species": "Thicketyr",
+    "Passive ID": "PAS_048",
+    "Passive Name": "Briar Guard",
+    "Effect": "After Thicketyr uses a Support or Control skill, the next direct hit it takes before its next action deals 10% less damage.",
+    "AI Tags": "grass;dark;support;guard",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 49,
+    "Species": "Coilbud",
+    "Passive ID": "PAS_049",
+    "Passive Name": "Live Current: Grass Affinity",
+    "Effect": "First action each battle starts with +12 Energy. Secondary Grass identity can be referenced by species-specific skill AI.",
+    "AI Tags": "speed;energy",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 50,
+    "Species": "Dynamoira",
+    "Passive ID": "PAS_050",
+    "Passive Name": "Circuit Bloom",
+    "Effect": "Whenever Dynamoira grants Energy or regeneration to an ally, Dynamoira gains 3 Energy, up to 6 Energy per action. Energy gained from this passive cannot trigger another passive Energy effect.",
+    "AI Tags": "electric;grass;support;energy",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 51,
+    "Species": "Hushhare",
+    "Passive ID": "PAS_051",
+    "Passive Name": "Adaptable Rhythm: Ghost Affinity",
+    "Effect": "After switching in, gain +8 Energy once per battle. Secondary Ghost identity can be referenced by species-specific skill AI.",
+    "AI Tags": "tempo;energy",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 52,
+    "Species": "Pallop",
+    "Passive ID": "PAS_052",
+    "Passive Name": "Fading Presence: Fairy Affinity",
+    "Effect": "First direct hit taken in battle deals 12% less damage. Secondary Fairy identity can be referenced by species-specific skill AI.",
+    "AI Tags": "defense;ghost",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 53,
+    "Species": "Oreling",
+    "Passive ID": "PAS_053",
+    "Passive Name": "Reinforced Frame",
+    "Effect": "Reduce shield-breaking damage taken by 15%.",
+    "AI Tags": "defense;shield",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 54,
+    "Species": "Magnox",
+    "Passive ID": "PAS_054",
+    "Passive Name": "Magnetic Plating",
+    "Effect": "When a shield on Magnox breaks, advance its timeline by 6%.",
+    "AI Tags": "steel;electric;tank;tempo",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 55,
+    "Species": "Dustlet",
+    "Passive ID": "PAS_055",
+    "Passive Name": "Steady Footing: Flying Affinity",
+    "Effect": "Timeline delay effects against this monster are 20% weaker. Secondary Flying identity can be referenced by species-specific skill AI.",
+    "AI Tags": "resist;timeline",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 56,
+    "Species": "Siroccoil",
+    "Passive ID": "PAS_056",
+    "Passive Name": "Steady Footing: Flying Affinity",
+    "Effect": "Timeline delay effects against this monster are 20% weaker. Secondary Flying identity can be referenced by species-specific skill AI.",
+    "AI Tags": "resist;timeline",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 57,
+    "Species": "Chillip",
+    "Passive ID": "PAS_057",
+    "Passive Name": "Cold Focus: Bug Affinity",
+    "Effect": "Chilled or slowed enemies deal 6% less damage to this monster. Secondary Bug identity can be referenced by species-specific skill AI.",
+    "AI Tags": "defense;control",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 58,
+    "Species": "Crysalid",
+    "Passive ID": "PAS_058",
+    "Passive Name": "Cold Focus: Bug Affinity",
+    "Effect": "Chilled or slowed enemies deal 6% less damage to this monster. Secondary Bug identity can be referenced by species-specific skill AI.",
+    "AI Tags": "defense;control",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 59,
+    "Species": "Borealume",
+    "Passive ID": "PAS_059",
+    "Passive Name": "Aurora Shelter",
+    "Effect": "The first time Borealume heals or shields an ally suffering Chill or Slow, clear that effect and restore 4 Energy to the ally.",
+    "AI Tags": "ice;fairy;cleanse;support",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 60,
+    "Species": "Knucklebud",
+    "Passive ID": "PAS_060",
+    "Passive Name": "Momentum",
+    "Effect": "Gain +4% Attack after landing a damaging skill, max 3 stacks.",
+    "AI Tags": "damage;stack",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 61,
+    "Species": "Burlbrute",
+    "Passive ID": "PAS_061",
+    "Passive Name": "Momentum: Grass Affinity",
+    "Effect": "Gain +4% Attack after landing a damaging skill, max 3 stacks. Secondary Grass identity can be referenced by species-specific skill AI.",
+    "AI Tags": "damage;stack",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 62,
+    "Species": "Pipscale",
+    "Passive ID": "PAS_062",
+    "Passive Name": "Toxic Ecology",
+    "Effect": "Damage-over-time effects from this monster last +1 action, max normal duration cap.",
+    "AI Tags": "dot;control",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 63,
+    "Species": "Venodrake",
+    "Passive ID": "PAS_063",
+    "Passive Name": "Venom Pulse",
+    "Effect": "The first time each enemy becomes Poisoned or Toxic from Venodrake, Venodrake gains 4 Energy.",
+    "AI Tags": "poison;dragon;dot;energy",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 64,
+    "Species": "Whirloo",
+    "Passive ID": "PAS_064",
+    "Passive Name": "Slipstream",
+    "Effect": "After acting before the target, gain +5% Speed until next action.",
+    "AI Tags": "speed;tempo",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 65,
+    "Species": "Oracline",
+    "Passive ID": "PAS_065",
+    "Passive Name": "Slipstream: Psychic Affinity",
+    "Effect": "After acting before the target, gain +5% Speed until next action. Secondary Psychic identity can be referenced by species-specific skill AI.",
+    "AI Tags": "speed;tempo",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 66,
+    "Species": "Clinkshade",
+    "Passive ID": "PAS_066",
+    "Passive Name": "Opportunist: Steel Affinity",
+    "Effect": "Deal +8% damage to targets below 35% HP. Secondary Steel identity can be referenced by species-specific skill AI.",
+    "AI Tags": "execute;damage",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 67,
+    "Species": "Mirthmew",
+    "Passive ID": "PAS_067",
+    "Passive Name": "Bright Spirit: Normal Affinity",
+    "Effect": "First minor debuff applied is automatically cleared. Secondary Normal identity can be referenced by species-specific skill AI.",
+    "AI Tags": "cleanse;support",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 68,
+    "Species": "Siltwraith",
+    "Passive ID": "PAS_068",
+    "Passive Name": "Mudfade",
+    "Effect": "The first direct hit Siltwraith takes each battle deals 15% less damage.",
+    "AI Tags": "ghost;ground;defense;fade",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 69,
+    "Species": "Kitespine",
+    "Passive ID": "PAS_069",
+    "Passive Name": "Ancient Blood: Flying Affinity",
+    "Effect": "At 50% HP or lower, Energy gain +10%. Secondary Flying identity can be referenced by species-specific skill AI.",
+    "AI Tags": "comeback;energy",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 70,
+    "Species": "Tusslegrub",
+    "Passive ID": "PAS_070",
+    "Passive Name": "Swarm Instinct",
+    "Effect": "If an ally falls below 40% HP, gain +10 Energy once per battle.",
+    "AI Tags": "support;energy",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 71,
+    "Species": "Rooklimb",
+    "Passive ID": "PAS_071",
+    "Passive Name": "Swarm Instinct: Fighting Affinity",
+    "Effect": "If an ally falls below 40% HP, gain +10 Energy once per battle. Secondary Fighting identity can be referenced by species-specific skill AI.",
+    "AI Tags": "support;energy",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 72,
+    "Species": "Drizzlepod",
+    "Passive ID": "PAS_072",
+    "Passive Name": "Flowstate: Poison Affinity",
+    "Effect": "After taking damage, gain +5% timeline progress. Secondary Poison identity can be referenced by species-specific skill AI.",
+    "AI Tags": "tempo;sustain",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 73,
+    "Species": "Noxitide",
+    "Passive ID": "PAS_073",
+    "Passive Name": "Flowstate: Poison Affinity",
+    "Effect": "After taking damage, gain +5% timeline progress. Secondary Poison identity can be referenced by species-specific skill AI.",
+    "AI Tags": "tempo;sustain",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 74,
+    "Species": "Hearthwish",
+    "Passive ID": "PAS_074",
+    "Passive Name": "Heatbuild: Fairy Affinity",
+    "Effect": "After using two skills, next Fire skill gains +12% power. Secondary Fairy identity can be referenced by species-specific skill AI.",
+    "AI Tags": "damage;combo",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 75,
+    "Species": "Asterolith",
+    "Passive ID": "PAS_075",
+    "Passive Name": "Gravity Facet",
+    "Effect": "The first time each enemy gains bonus timeline progress, Asterolith gains 4 Energy.",
+    "AI Tags": "rock;psychic;gravity;energy;epic",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 76,
+    "Species": "Coldforge",
+    "Passive ID": "PAS_076",
+    "Passive Name": "Reinforced Frame: Ice Affinity",
+    "Effect": "Reduce shield-breaking damage taken by 15%. Secondary Ice identity can be referenced by species-specific skill AI.",
+    "AI Tags": "defense;shield",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 77,
+    "Species": "Tumblet",
+    "Passive ID": "PAS_077",
+    "Passive Name": "Adaptable Rhythm: Ground Affinity",
+    "Effect": "After switching in, gain +8 Energy once per battle. Secondary Ground identity can be referenced by species-specific skill AI.",
+    "AI Tags": "tempo;energy",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 78,
+    "Species": "Glimmerguilt",
+    "Passive ID": "PAS_078",
+    "Passive Name": "Bright Spirit: Dark Affinity",
+    "Effect": "First minor debuff applied is automatically cleared. Secondary Dark identity can be referenced by species-specific skill AI.",
+    "AI Tags": "cleanse;support",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 79,
+    "Species": "Eonbriar",
+    "Passive ID": "PAS_079",
+    "Passive Name": "Ancient Canopy",
+    "Effect": "At battle start, all active allies gain a shield equal to 5% of their max HP.",
+    "AI Tags": "grass;dragon;team;shield;legendary",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 80,
+    "Species": "Resonuckle",
+    "Passive ID": "PAS_080",
+    "Passive Name": "Resonant Guard",
+    "Effect": "After Resonuckle uses a Defense or Control skill, its next Fighting damaging skill within 2 actions gains +8% power.",
+    "AI Tags": "fighting;psychic;counter;setup",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 81,
+    "Species": "Quillop",
+    "Passive ID": "PAS_081",
+    "Passive Name": "Adaptable Rhythm",
+    "Effect": "After switching in, gain +8 Energy once per battle.",
+    "AI Tags": "tempo;energy",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 82,
+    "Species": "Scribetail",
+    "Passive ID": "PAS_082",
+    "Passive Name": "Adaptable Rhythm: Psychic Affinity",
+    "Effect": "After switching in, gain +8 Energy once per battle. Secondary Psychic identity can be referenced by species-specific skill AI.",
+    "AI Tags": "tempo;energy",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 83,
+    "Species": "Brinibble",
+    "Passive ID": "PAS_083",
+    "Passive Name": "Flowstate",
+    "Effect": "After taking damage, gain +5% timeline progress.",
+    "AI Tags": "tempo;sustain",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 84,
+    "Species": "Steamvat",
+    "Passive ID": "PAS_084",
+    "Passive Name": "Flowstate: Fire Affinity",
+    "Effect": "After taking damage, gain +5% timeline progress. Secondary Fire identity can be referenced by species-specific skill AI.",
+    "AI Tags": "tempo;sustain",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 85,
+    "Species": "Frondle",
+    "Passive ID": "PAS_085",
+    "Passive Name": "Rooted Recovery: Bug Affinity",
+    "Effect": "Recover 3% max HP after using a support skill. Secondary Bug identity can be referenced by species-specific skill AI.",
+    "AI Tags": "heal;sustain",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 86,
+    "Species": "Thornloom",
+    "Passive ID": "PAS_086",
+    "Passive Name": "Rooted Recovery: Bug Affinity",
+    "Effect": "Recover 3% max HP after using a support skill. Secondary Bug identity can be referenced by species-specific skill AI.",
+    "AI Tags": "heal;sustain",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 87,
+    "Species": "Gravvel",
+    "Passive ID": "PAS_087",
+    "Passive Name": "Stone Memory: Ground Affinity",
+    "Effect": "First shield received is 20% stronger. Secondary Ground identity can be referenced by species-specific skill AI.",
+    "AI Tags": "shield;defense",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 88,
+    "Species": "Faultusk",
+    "Passive ID": "PAS_088",
+    "Passive Name": "Fault Armor",
+    "Effect": "The first time Faultusk falls below 50% HP, gain +15% Defense until its next action and 5 Energy.",
+    "AI Tags": "rock;ground;tank;comeback",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 89,
+    "Species": "Arcwren",
+    "Passive ID": "PAS_089",
+    "Passive Name": "Live Current: Flying Affinity",
+    "Effect": "First action each battle starts with +12 Energy. Secondary Flying identity can be referenced by species-specific skill AI.",
+    "AI Tags": "speed;energy",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 90,
+    "Species": "Stormscribe",
+    "Passive ID": "PAS_090",
+    "Passive Name": "Live Current: Flying Affinity",
+    "Effect": "First action each battle starts with +12 Energy. Secondary Flying identity can be referenced by species-specific skill AI.",
+    "AI Tags": "speed;energy",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 91,
+    "Species": "Sprigbara",
+    "Passive ID": "PAS_091",
+    "Passive Name": "Rooted Recovery",
+    "Effect": "Recover 3% max HP after using a support skill.",
+    "AI Tags": "heal;sustain",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 92,
+    "Species": "Fenbara",
+    "Passive ID": "PAS_092",
+    "Passive Name": "Rooted Recovery",
+    "Effect": "Recover 3% max HP after using a support skill.",
+    "AI Tags": "heal;sustain",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 93,
+    "Species": "Crownbara",
+    "Passive ID": "PAS_093",
+    "Passive Name": "Stillwater Grace",
+    "Effect": "The first Support skill Crownbara uses each battle also restores 5 Energy to the lowest-HP ally.",
+    "AI Tags": "grass;fairy;support;energy",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 94,
+    "Species": "Prismink",
+    "Passive ID": "PAS_094",
+    "Passive Name": "Pattern Read",
+    "Effect": "First enemy control skill targeting this monster has -15% success chance.",
+    "AI Tags": "anti-control;utility",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 95,
+    "Species": "Veilscale",
+    "Passive ID": "PAS_095",
+    "Passive Name": "Pattern Read",
+    "Effect": "First enemy control skill targeting this monster has -15% success chance.",
+    "AI Tags": "anti-control;utility",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 96,
+    "Species": "Chromavex",
+    "Passive ID": "PAS_096",
+    "Passive Name": "Chromatic Venom",
+    "Effect": "The first time Chromavex applies each different debuff category to an enemy, gain 3 Energy, up to 9 Energy per enemy per battle.",
+    "AI Tags": "psychic;poison;control;energy",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 97,
+    "Species": "Emberfin",
+    "Passive ID": "PAS_097",
+    "Passive Name": "Flowstate",
+    "Effect": "After taking damage, gain +5% timeline progress.",
+    "AI Tags": "tempo;survival",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 98,
+    "Species": "Anemflare",
+    "Passive ID": "PAS_098",
+    "Passive Name": "Flowstate: Fire Affinity",
+    "Effect": "After taking damage, gain +5% timeline progress. Secondary Fire identity can be referenced by species-specific skill AI.",
+    "AI Tags": "tempo;survival",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 99,
+    "Species": "Floelet",
+    "Passive ID": "PAS_099",
+    "Passive Name": "Cold Focus",
+    "Effect": "Chilled or slowed enemies deal 6% less damage to this monster.",
+    "AI Tags": "anti-speed;defense",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 100,
+    "Species": "Regaldrift",
+    "Passive ID": "PAS_100",
+    "Passive Name": "Cold Focus: Water Affinity",
+    "Effect": "Chilled or slowed enemies deal 6% less damage to this monster. Secondary Water identity can be referenced by species-specific skill AI.",
+    "AI Tags": "anti-speed;defense",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 101,
+    "Species": "Imperglace",
+    "Passive ID": "PAS_101",
+    "Passive Name": "Imperial Frostplate",
+    "Effect": "The first shield Imperglace receives each battle is 20% stronger and grants 20% timeline-delay resistance while active.",
+    "AI Tags": "ice;steel;tank;shield;resist",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 102,
+    "Species": "Drowseed",
+    "Passive ID": "PAS_102",
+    "Passive Name": "Rooted Recovery",
+    "Effect": "Recover 3% max HP after using a support skill.",
+    "AI Tags": "heal;sustain",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 103,
+    "Species": "Somnaloak",
+    "Passive ID": "PAS_103",
+    "Passive Name": "Rooted Recovery: Psychic Affinity",
+    "Effect": "Recover 3% max HP after using a support skill. Secondary Psychic identity can be referenced by species-specific skill AI.",
+    "AI Tags": "heal;sustain",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 104,
+    "Species": "Cinderskink",
+    "Passive ID": "PAS_104",
+    "Passive Name": "Toxic Ecology",
+    "Effect": "Damage-over-time effects from this monster last +1 action, max normal duration cap.",
+    "AI Tags": "poison;attrition",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 105,
+    "Species": "Ashmaul",
+    "Passive ID": "PAS_105",
+    "Passive Name": "Toxic Ecology: Fire Affinity",
+    "Effect": "Damage-over-time effects from this monster last +1 action, max normal duration cap. Secondary Fire identity can be referenced by species-specific skill AI.",
+    "AI Tags": "poison;attrition",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 106,
+    "Species": "Vulcarodo",
+    "Passive ID": "PAS_106",
+    "Passive Name": "Toxic Furnace",
+    "Effect": "After Vulcarodo deals Poison or Toxic damage twice, its next Dragon damaging skill gains +10% power; then the counter resets.",
+    "AI Tags": "poison;dragon;combo;damage",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 107,
+    "Species": "Burrowseer",
+    "Passive ID": "PAS_107",
+    "Passive Name": "Steady Footing",
+    "Effect": "Timeline delay effects against this monster are 20% weaker.",
+    "AI Tags": "anti-control;speed",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 108,
+    "Species": "Sunoracle",
+    "Passive ID": "PAS_108",
+    "Passive Name": "Steady Footing: Psychic Affinity",
+    "Effect": "Timeline delay effects against this monster are 20% weaker. Secondary Psychic identity can be referenced by species-specific skill AI.",
+    "AI Tags": "anti-control;speed",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 109,
+    "Species": "Mossfist",
+    "Passive ID": "PAS_109",
+    "Passive Name": "Momentum",
+    "Effect": "Gain +4% Attack after landing a damaging skill, max 3 stacks.",
+    "AI Tags": "damage;combo",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 110,
+    "Species": "Grovegrip",
+    "Passive ID": "PAS_110",
+    "Passive Name": "Momentum: Grass Affinity",
+    "Effect": "Gain +4% Attack after landing a damaging skill, max 3 stacks. Secondary Grass identity can be referenced by species-specific skill AI.",
+    "AI Tags": "damage;combo",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 111,
+    "Species": "Duskfang",
+    "Passive ID": "PAS_111",
+    "Passive Name": "Toxic Ecology",
+    "Effect": "Damage-over-time effects from this monster last +1 action, max normal duration cap.",
+    "AI Tags": "poison;attrition",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 112,
+    "Species": "Umbraasp",
+    "Passive ID": "PAS_112",
+    "Passive Name": "Toxic Ecology: Dark Affinity",
+    "Effect": "Damage-over-time effects from this monster last +1 action, max normal duration cap. Secondary Dark identity can be referenced by species-specific skill AI.",
+    "AI Tags": "poison;attrition",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 113,
+    "Species": "Burrowarden",
+    "Passive ID": "PAS_113",
+    "Passive Name": "Stone Memory: Rock Affinity",
+    "Effect": "First shield received is 20% stronger. Secondary Rock identity can be referenced by species-specific skill AI.",
+    "AI Tags": "shield;defense",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 114,
+    "Species": "Aetherbale",
+    "Passive ID": "PAS_114",
+    "Passive Name": "Starcurrent",
+    "Effect": "The first Support skill Aetherbale uses each battle advances all active allies' timelines by 3%.",
+    "AI Tags": "water;psychic;support;tempo;epic",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 115,
+    "Species": "Nightwake",
+    "Passive ID": "PAS_115",
+    "Passive Name": "Moonwake Pursuit",
+    "Effect": "After Nightwake damages a target below 50% HP, gain +6% timeline progress.",
+    "AI Tags": "water;dark;striker;execute;tempo",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 116,
+    "Species": "Stridepelt",
+    "Passive ID": "PAS_116",
+    "Passive Name": "Adaptable Rhythm",
+    "Effect": "After switching in, gain +8 Energy once per battle.",
+    "AI Tags": "switch;energy",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 117,
+    "Species": "Velocrest",
+    "Passive ID": "PAS_117",
+    "Passive Name": "Adaptable Rhythm",
+    "Effect": "After switching in, gain +8 Energy once per battle.",
+    "AI Tags": "switch;energy",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 118,
+    "Species": "Stormpard",
+    "Passive ID": "PAS_118",
+    "Passive Name": "Conductive Sprint",
+    "Effect": "When Stormpard alternates between Normal and Electric skills on consecutive actions, gain +5% timeline progress.",
+    "AI Tags": "normal;electric;speed;alternate",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 119,
+    "Species": "Tundrusk",
+    "Passive ID": "PAS_119",
+    "Passive Name": "Cold Focus",
+    "Effect": "Chilled or slowed enemies deal 6% less damage to this monster.",
+    "AI Tags": "anti-speed;defense",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 120,
+    "Species": "Paleolith",
+    "Passive ID": "PAS_120",
+    "Passive Name": "Cold Focus",
+    "Effect": "Chilled or slowed enemies deal 6% less damage to this monster.",
+    "AI Tags": "anti-speed;defense",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 121,
+    "Species": "Glacimast",
+    "Passive ID": "PAS_121",
+    "Passive Name": "Permafrost Mass",
+    "Effect": "Timeline-delay effects against Glacimast are 25% weaker, and the first Chill or Slow applied to it each battle is ignored.",
+    "AI Tags": "ice;ground;tank;resist",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 122,
+    "Species": "Reedblade",
+    "Passive ID": "PAS_122",
+    "Passive Name": "Swarm Instinct",
+    "Effect": "If an ally falls below 40% HP, gain +10 Energy once per battle.",
+    "AI Tags": "team;energy",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 123,
+    "Species": "Thornscythe",
+    "Passive ID": "PAS_123",
+    "Passive Name": "Swarm Instinct",
+    "Effect": "If an ally falls below 40% HP, gain +10 Energy once per battle.",
+    "AI Tags": "team;energy",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 124,
+    "Species": "Ferramantis",
+    "Passive ID": "PAS_124",
+    "Passive Name": "Forged Executioner",
+    "Effect": "The first time Ferramantis breaks an enemy shield each battle, gain +8% Attack until its next action.",
+    "AI Tags": "bug;steel;striker;anti-shield",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 125,
+    "Species": "Skydisc",
+    "Passive ID": "PAS_125",
+    "Passive Name": "Slipstream",
+    "Effect": "After acting before the target, gain +5% Speed until next action.",
+    "AI Tags": "speed;tempo",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 126,
+    "Species": "Aetheray",
+    "Passive ID": "PAS_126",
+    "Passive Name": "Slipstream: Psychic Affinity",
+    "Effect": "After acting before the target, gain +5% Speed until next action. Secondary Psychic identity can be referenced by species-specific skill AI.",
+    "AI Tags": "speed;tempo",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 127,
+    "Species": "Murmurwing",
+    "Passive ID": "PAS_127",
+    "Passive Name": "Fading Presence",
+    "Effect": "First direct hit taken in battle deals 12% less damage.",
+    "AI Tags": "evasion;defense",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 128,
+    "Species": "Echonoct",
+    "Passive ID": "PAS_128",
+    "Passive Name": "Fading Presence: Flying Affinity",
+    "Effect": "First direct hit taken in battle deals 12% less damage. Secondary Flying identity can be referenced by species-specific skill AI.",
+    "AI Tags": "evasion;defense",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 129,
+    "Species": "Duneclasp",
+    "Passive ID": "PAS_129",
+    "Passive Name": "Toxic Ecology",
+    "Effect": "Damage-over-time effects from this monster last +1 action, max normal duration cap.",
+    "AI Tags": "poison;attrition",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 130,
+    "Species": "Cragsting",
+    "Passive ID": "PAS_130",
+    "Passive Name": "Toxic Ecology: Rock Affinity",
+    "Effect": "Damage-over-time effects from this monster last +1 action, max normal duration cap. Secondary Rock identity can be referenced by species-specific skill AI.",
+    "AI Tags": "poison;attrition",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 131,
+    "Species": "Clawtide",
+    "Passive ID": "PAS_131",
+    "Passive Name": "Flowstate",
+    "Effect": "After taking damage, gain +5% timeline progress.",
+    "AI Tags": "tempo;survival",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 132,
+    "Species": "Pugilcrab",
+    "Passive ID": "PAS_132",
+    "Passive Name": "Flowstate: Fighting Affinity",
+    "Effect": "After taking damage, gain +5% timeline progress. Secondary Fighting identity can be referenced by species-specific skill AI.",
+    "AI Tags": "tempo;survival",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 133,
+    "Species": "Lumigill",
+    "Passive ID": "PAS_133",
+    "Passive Name": "Bright Spirit",
+    "Effect": "First minor debuff applied is automatically cleared.",
+    "AI Tags": "cleanse;support",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 134,
+    "Species": "Faelotl",
+    "Passive ID": "PAS_134",
+    "Passive Name": "Bright Spirit: Water Affinity",
+    "Effect": "First minor debuff applied is automatically cleared. Secondary Water identity can be referenced by species-specific skill AI.",
+    "AI Tags": "cleanse;support",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 135,
+    "Species": "Shardpang",
+    "Passive ID": "PAS_135",
+    "Passive Name": "Steady Footing",
+    "Effect": "Timeline delay effects against this monster are 20% weaker.",
+    "AI Tags": "anti-control;speed",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 136,
+    "Species": "Ferrapine",
+    "Passive ID": "PAS_136",
+    "Passive Name": "Steady Footing: Steel Affinity",
+    "Effect": "Timeline delay effects against this monster are 20% weaker. Secondary Steel identity can be referenced by species-specific skill AI.",
+    "AI Tags": "anti-control;speed",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 137,
+    "Species": "Marshgrim",
+    "Passive ID": "PAS_137",
+    "Passive Name": "Slipstream: Ground Affinity",
+    "Effect": "After acting before the target, gain +5% Speed until next action. Secondary Ground identity can be referenced by species-specific skill AI.",
+    "AI Tags": "speed;tempo",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 138,
+    "Species": "Riftjaw",
+    "Passive ID": "PAS_138",
+    "Passive Name": "Opportunist: Steel Affinity",
+    "Effect": "Deal +8% damage to targets below 35% HP. Secondary Steel identity can be referenced by species-specific skill AI.",
+    "AI Tags": "damage;execute",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 139,
+    "Species": "Voltspur",
+    "Passive ID": "PAS_139",
+    "Passive Name": "Flowstate: Electric Affinity",
+    "Effect": "After taking damage, gain +5% timeline progress. Secondary Electric identity can be referenced by species-specific skill AI.",
+    "AI Tags": "tempo;survival",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 140,
+    "Species": "Razorcrest",
+    "Passive ID": "PAS_140",
+    "Passive Name": "Momentum: Flying Affinity",
+    "Effect": "Gain +4% Attack after landing a damaging skill, max 3 stacks. Secondary Flying identity can be referenced by species-specific skill AI.",
+    "AI Tags": "damage;combo",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 141,
+    "Species": "Prismtail",
+    "Passive ID": "PAS_141",
+    "Passive Name": "Bright Spirit: Flying Affinity",
+    "Effect": "First minor debuff applied is automatically cleared. Secondary Flying identity can be referenced by species-specific skill AI.",
+    "AI Tags": "cleanse;support",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 142,
+    "Species": "Mossdrowse",
+    "Passive ID": "PAS_142",
+    "Passive Name": "Rooted Recovery: Ghost Affinity",
+    "Effect": "Recover 3% max HP after using a support skill. Secondary Ghost identity can be referenced by species-specific skill AI.",
+    "AI Tags": "heal;sustain",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 143,
+    "Species": "Cacklemaw",
+    "Passive ID": "PAS_143",
+    "Passive Name": "Opportunist: Poison Affinity",
+    "Effect": "Deal +8% damage to targets below 35% HP. Secondary Poison identity can be referenced by species-specific skill AI.",
+    "AI Tags": "damage;execute",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 144,
+    "Species": "Sparkspine",
+    "Passive ID": "PAS_144",
+    "Passive Name": "Live Current: Normal Affinity",
+    "Effect": "First action each battle starts with +12 Energy. Secondary Normal identity can be referenced by species-specific skill AI.",
+    "AI Tags": "speed;energy",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 145,
+    "Species": "Burrowbeak",
+    "Passive ID": "PAS_145",
+    "Passive Name": "Adaptable Rhythm: Ground Affinity",
+    "Effect": "After switching in, gain +8 Energy once per battle. Secondary Ground identity can be referenced by species-specific skill AI.",
+    "AI Tags": "switch;energy",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 146,
+    "Species": "Wraithjelly",
+    "Passive ID": "PAS_146",
+    "Passive Name": "Static Afterimage",
+    "Effect": "The first enemy to directly damage Wraithjelly each battle becomes Shocked for 1 action.",
+    "AI Tags": "electric;ghost;control;epic",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 147,
+    "Species": "Brinehorn",
+    "Passive ID": "PAS_147",
+    "Passive Name": "Flowstate",
+    "Effect": "After taking damage, gain +5% timeline progress.",
+    "AI Tags": "tempo;survival",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 148,
+    "Species": "Aurorwhal",
+    "Passive ID": "PAS_148",
+    "Passive Name": "Flowstate: Ice Affinity",
+    "Effect": "After taking damage, gain +5% timeline progress. Secondary Ice identity can be referenced by species-specific skill AI.",
+    "AI Tags": "tempo;survival",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 149,
+    "Species": "Siltweb",
+    "Passive ID": "PAS_149",
+    "Passive Name": "Swarm Instinct: Ground Affinity",
+    "Effect": "If an ally falls below 40% HP, gain +10 Energy once per battle. Secondary Ground identity can be referenced by species-specific skill AI.",
+    "AI Tags": "team;energy",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 150,
+    "Species": "Cryptarach",
+    "Passive ID": "PAS_150",
+    "Passive Name": "Swarm Instinct: Dark Affinity",
+    "Effect": "If an ally falls below 40% HP, gain +10 Energy once per battle. Secondary Dark identity can be referenced by species-specific skill AI.",
+    "AI Tags": "team;energy",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 151,
+    "Species": "Puffleece",
+    "Passive ID": "PAS_151",
+    "Passive Name": "Adaptable Rhythm",
+    "Effect": "After switching in, gain +8 Energy once per battle.",
+    "AI Tags": "switch;energy",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 152,
+    "Species": "Loomstride",
+    "Passive ID": "PAS_152",
+    "Passive Name": "Adaptable Rhythm",
+    "Effect": "After switching in, gain +8 Energy once per battle.",
+    "AI Tags": "switch;energy",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 153,
+    "Species": "Aurawool",
+    "Passive ID": "PAS_153",
+    "Passive Name": "Aurora Fleece",
+    "Effect": "The first minor debuff applied to Aurawool each battle is cleared; when cleared this way, the lowest-HP ally gains 4 Energy.",
+    "AI Tags": "normal;ice;sustain;cleanse",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 154,
+    "Species": "Craghush",
+    "Passive ID": "PAS_154",
+    "Passive Name": "Cold Focus",
+    "Effect": "Chilled or slowed enemies deal 6% less damage to this monster.",
+    "AI Tags": "anti-speed;defense",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 155,
+    "Species": "Rimeclaw",
+    "Passive ID": "PAS_155",
+    "Passive Name": "Cold Focus: Fighting Affinity",
+    "Effect": "Chilled or slowed enemies deal 6% less damage to this monster. Secondary Fighting identity can be referenced by species-specific AI.",
+    "AI Tags": "anti-speed;defense",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 156,
+    "Species": "Whitewroth",
+    "Passive ID": "PAS_156",
+    "Passive Name": "Whiteout Fury",
+    "Effect": "While Whitewroth is below 50% HP, its Fighting damaging skills deal +8% damage.",
+    "AI Tags": "ice;fighting;bruiser;comeback",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 157,
+    "Species": "Sickletoe",
+    "Passive ID": "PAS_157",
+    "Passive Name": "Momentum",
+    "Effect": "Gain +4% Attack after landing a damaging skill, max 3 stacks.",
+    "AI Tags": "damage;combo",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 158,
+    "Species": "Quillrend",
+    "Passive ID": "PAS_158",
+    "Passive Name": "Momentum",
+    "Effect": "Gain +4% Attack after landing a damaging skill, max 3 stacks.",
+    "AI Tags": "damage;combo",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 159,
+    "Species": "Crescentyr",
+    "Passive ID": "PAS_159",
+    "Passive Name": "Fossil Momentum",
+    "Effect": "The first time Crescentyr breaks a shield or Guard each battle, gain +8% Attack until its next action.",
+    "AI Tags": "fighting;rock;striker;epic;breaker",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 160,
+    "Species": "Knobback",
+    "Passive ID": "PAS_160",
+    "Passive Name": "Stone Memory",
+    "Effect": "First shield received is 20% stronger.",
+    "AI Tags": "shield;defense",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 161,
+    "Species": "Rampartail",
+    "Passive ID": "PAS_161",
+    "Passive Name": "Stone Memory",
+    "Effect": "First shield received is 20% stronger.",
+    "AI Tags": "shield;defense",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 162,
+    "Species": "Forgeclub",
+    "Passive ID": "PAS_162",
+    "Passive Name": "Stone Memory: Steel Affinity",
+    "Effect": "First shield received is 20% stronger. Secondary Steel identity can be referenced by species-specific AI.",
+    "AI Tags": "shield;defense",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 163,
+    "Species": "Hummcrest",
+    "Passive ID": "PAS_163",
+    "Passive Name": "Pattern Read",
+    "Effect": "First enemy control skill targeting this monster has -15% success chance.",
+    "AI Tags": "anti-control;utility",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 164,
+    "Species": "Resonadon",
+    "Passive ID": "PAS_164",
+    "Passive Name": "Pattern Read",
+    "Effect": "First enemy control skill targeting this monster has -15% success chance.",
+    "AI Tags": "anti-control;utility",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 165,
+    "Species": "Voltchorus",
+    "Passive ID": "PAS_165",
+    "Passive Name": "Resonant Charge",
+    "Effect": "The first Control skill Voltchorus uses each battle also reduces the target's Energy gain by 10% for 1 action.",
+    "AI Tags": "psychic;electric;control;energy",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 166,
+    "Species": "Dustsnout",
+    "Passive ID": "PAS_166",
+    "Passive Name": "Adaptable Rhythm",
+    "Effect": "After switching in, gain +8 Energy once per battle.",
+    "AI Tags": "switch;energy",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 167,
+    "Species": "Bellroam",
+    "Passive ID": "PAS_167",
+    "Passive Name": "Adaptable Rhythm: Psychic Affinity",
+    "Effect": "After switching in, gain +8 Energy once per battle. Secondary Psychic identity can be referenced by species-specific AI.",
+    "AI Tags": "switch;energy",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 168,
+    "Species": "Echonaris",
+    "Passive ID": "PAS_168",
+    "Passive Name": "Echo Forecast",
+    "Effect": "The first time Echonaris successfully delays or controls the currently fastest enemy each battle, gain 8 Energy.",
+    "AI Tags": "psychic;control;prediction;energy",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 169,
+    "Species": "Tapshade",
+    "Passive ID": "PAS_169",
+    "Passive Name": "Opportunist",
+    "Effect": "Deal +8% damage to targets below 35% HP.",
+    "AI Tags": "damage;execute",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 170,
+    "Species": "Knucklemurmur",
+    "Passive ID": "PAS_170",
+    "Passive Name": "Opportunist",
+    "Effect": "Deal +8% damage to targets below 35% HP.",
+    "AI Tags": "damage;execute",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 171,
+    "Species": "Hexfinger",
+    "Passive ID": "PAS_171",
+    "Passive Name": "Hex Sequence",
+    "Effect": "After Hexfinger uses a Control skill, its next Dark damaging skill gains +10% power if it is a different skill.",
+    "AI Tags": "dark;psychic;control;combo",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 172,
+    "Species": "Stridestamp",
+    "Passive ID": "PAS_172",
+    "Passive Name": "Momentum",
+    "Effect": "Gain +4% Attack after landing a damaging skill, max 3 stacks.",
+    "AI Tags": "damage;combo",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 173,
+    "Species": "Quillmarshal",
+    "Passive ID": "PAS_173",
+    "Passive Name": "Momentum",
+    "Effect": "Gain +4% Attack after landing a damaging skill, max 3 stacks.",
+    "AI Tags": "damage;combo",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 174,
+    "Species": "Serpentjudge",
+    "Passive ID": "PAS_174",
+    "Passive Name": "Judicial Tempo",
+    "Effect": "When Serpentjudge damages an enemy that has acted since Serpentjudge's previous turn, advance its timeline by 5%.",
+    "AI Tags": "fighting;flying;striker;tempo",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 175,
+    "Species": "Spinewry",
+    "Passive ID": "PAS_175",
+    "Passive Name": "Stone Memory",
+    "Effect": "First shield received is 20% stronger.",
+    "AI Tags": "shield;defense",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 176,
+    "Species": "Thornmirage",
+    "Passive ID": "PAS_176",
+    "Passive Name": "Stone Memory: Poison Affinity",
+    "Effect": "First shield received is 20% stronger. Secondary Poison identity can be referenced by species-specific AI.",
+    "AI Tags": "shield;defense",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 177,
+    "Species": "Kelpskein",
+    "Passive ID": "PAS_177",
+    "Passive Name": "Fading Presence",
+    "Effect": "First direct hit taken in battle deals 12% less damage.",
+    "AI Tags": "evasion;defense",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 178,
+    "Species": "Wraithfrond",
+    "Passive ID": "PAS_178",
+    "Passive Name": "Fading Presence: Water Affinity",
+    "Effect": "First direct hit taken in battle deals 12% less damage. Secondary Water identity can be referenced by species-specific AI.",
+    "AI Tags": "evasion;defense",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 179,
+    "Species": "Prismjab",
+    "Passive ID": "PAS_179",
+    "Passive Name": "Momentum",
+    "Effect": "Gain +4% Attack after landing a damaging skill, max 3 stacks.",
+    "AI Tags": "damage;combo",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 180,
+    "Species": "Caviclub",
+    "Passive ID": "PAS_180",
+    "Passive Name": "Momentum: Electric Affinity",
+    "Effect": "Gain +4% Attack after landing a damaging skill, max 3 stacks. Secondary Electric identity can be referenced by species-specific AI.",
+    "AI Tags": "damage;combo",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 181,
+    "Species": "Spectrafist",
+    "Passive ID": "PAS_181",
+    "Passive Name": "Prism Pressure",
+    "Effect": "After Spectrafist deals Electric damage, its next Fighting skill ignores 10% Defense; after Fighting damage, its next Electric skill gains +8 power.",
+    "AI Tags": "fighting;electric;striker;alternate",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 182,
+    "Species": "Duneskip",
+    "Passive ID": "PAS_182",
+    "Passive Name": "Adaptable Rhythm",
+    "Effect": "After switching in, gain +8 Energy once per battle.",
+    "AI Tags": "switch;energy",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 183,
+    "Species": "Springarc",
+    "Passive ID": "PAS_183",
+    "Passive Name": "Live Current: Normal Affinity",
+    "Effect": "First action each battle starts with +12 Energy. Secondary Normal identity can be referenced by species-specific AI.",
+    "AI Tags": "speed;energy",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 184,
+    "Species": "Needlesnout",
+    "Passive ID": "PAS_184",
+    "Passive Name": "Opportunist",
+    "Effect": "Deal +8% damage to targets below 35% HP.",
+    "AI Tags": "damage;execute",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 185,
+    "Species": "Riftrostrum",
+    "Passive ID": "PAS_185",
+    "Passive Name": "Opportunist: Water Affinity",
+    "Effect": "Deal +8% damage to targets below 35% HP. Secondary Water identity can be referenced by species-specific AI.",
+    "AI Tags": "damage;execute",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 186,
+    "Species": "Starburrow",
+    "Passive ID": "PAS_186",
+    "Passive Name": "Pattern Read",
+    "Effect": "First enemy control skill targeting this monster has -15% success chance.",
+    "AI Tags": "anti-control;utility",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 187,
+    "Species": "Sensecrown",
+    "Passive ID": "PAS_187",
+    "Passive Name": "Pattern Read: Ground Affinity",
+    "Effect": "First enemy control skill targeting this monster has -15% success chance. Secondary Ground identity can be referenced by species-specific AI.",
+    "AI Tags": "anti-control;utility",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 188,
+    "Species": "Clearcroak",
+    "Passive ID": "PAS_188",
+    "Passive Name": "Fading Presence",
+    "Effect": "First direct hit taken in battle deals 12% less damage.",
+    "AI Tags": "evasion;defense",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 189,
+    "Species": "Vitrawisp",
+    "Passive ID": "PAS_189",
+    "Passive Name": "Fading Presence: Poison Affinity",
+    "Effect": "First direct hit taken in battle deals 12% less damage. Secondary Poison identity can be referenced by species-specific AI.",
+    "AI Tags": "evasion;defense",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 190,
+    "Species": "Rootsnuff",
+    "Passive ID": "PAS_190",
+    "Passive Name": "Momentum",
+    "Effect": "Gain +4% Attack after landing a damaging skill, max 3 stacks.",
+    "AI Tags": "damage;combo",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 191,
+    "Species": "Termibreak",
+    "Passive ID": "PAS_191",
+    "Passive Name": "Momentum: Rock Affinity",
+    "Effect": "Gain +4% Attack after landing a damaging skill, max 3 stacks. Secondary Rock identity can be referenced by species-specific AI.",
+    "AI Tags": "damage;combo",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 192,
+    "Species": "Scenttail",
+    "Passive ID": "PAS_192",
+    "Passive Name": "Opportunist",
+    "Effect": "Deal +8% damage to targets below 35% HP.",
+    "AI Tags": "damage;execute",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 193,
+    "Species": "Nightvine",
+    "Passive ID": "PAS_193",
+    "Passive Name": "Opportunist: Normal Affinity",
+    "Effect": "Deal +8% damage to targets below 35% HP. Secondary Normal identity can be referenced by species-specific AI.",
+    "AI Tags": "damage;execute",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 194,
+    "Species": "Velvetstripe",
+    "Passive ID": "PAS_194",
+    "Passive Name": "Adaptable Rhythm",
+    "Effect": "After switching in, gain +8 Energy once per battle.",
+    "AI Tags": "switch;energy",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 195,
+    "Species": "Glyphneck",
+    "Passive ID": "PAS_195",
+    "Passive Name": "Adaptable Rhythm: Psychic Affinity",
+    "Effect": "After switching in, gain +8 Energy once per battle. Secondary Psychic identity can be referenced by species-specific AI.",
+    "AI Tags": "switch;energy",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 196,
+    "Species": "Mangroknob",
+    "Passive ID": "PAS_196",
+    "Passive Name": "Adaptable Rhythm",
+    "Effect": "After switching in, gain +8 Energy once per battle.",
+    "AI Tags": "switch;energy",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 197,
+    "Species": "Baritonose",
+    "Passive ID": "PAS_197",
+    "Passive Name": "Adaptable Rhythm: Poison Affinity",
+    "Effect": "After switching in, gain +8 Energy once per battle. Secondary Poison identity can be referenced by species-specific AI.",
+    "AI Tags": "switch;energy",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 198,
+    "Species": "Umbrelloom",
+    "Passive ID": "PAS_198",
+    "Passive Name": "Fading Presence",
+    "Effect": "First direct hit taken in battle deals 12% less damage.",
+    "AI Tags": "evasion;defense",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 199,
+    "Species": "Abyssbell",
+    "Passive ID": "PAS_199",
+    "Passive Name": "Hadal Pressure",
+    "Effect": "The first enemy each battle to spend 40 or more Energy on a skill immediately loses 5 Energy and has Energy gain reduced by 10% for 1 action.",
+    "AI Tags": "ghost;water;control;energy;epic",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 200,
+    "Species": "Epochshield",
+    "Passive ID": "PAS_200",
+    "Passive Name": "Ancient Bulwark",
+    "Effect": "The first time any ally falls below 40% HP each battle, Epochshield gains 10 Energy and a shield equal to 8% max HP.",
+    "AI Tags": "bug;steel;tank;team;shield",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 201,
+    "Species": "Simiri",
+    "Passive ID": "PAS_201",
+    "Passive Name": "Adaptable Rhythm",
+    "Effect": "After switching in, gain +8 Energy once per battle.",
+    "AI Tags": "switch;energy",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 202,
+    "Species": "Cinderimi",
+    "Passive ID": "PAS_202",
+    "Passive Name": "Adaptable Rhythm: Fire Affinity",
+    "Effect": "After switching in, gain +8 Energy once per battle. Secondary Fire identity can be referenced by species-specific AI.",
+    "AI Tags": "switch;energy",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 203,
+    "Species": "Brookimi",
+    "Passive ID": "PAS_203",
+    "Passive Name": "Adaptable Rhythm: Water Affinity",
+    "Effect": "After switching in, gain +8 Energy once per battle. Secondary Water identity can be referenced by species-specific AI.",
+    "AI Tags": "switch;energy",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 204,
+    "Species": "Bramblemi",
+    "Passive ID": "PAS_204",
+    "Passive Name": "Adaptable Rhythm: Grass Affinity",
+    "Effect": "After switching in, gain +8 Energy once per battle. Secondary Grass identity can be referenced by species-specific AI.",
+    "AI Tags": "switch;energy",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 205,
+    "Species": "Voltimiri",
+    "Passive ID": "PAS_205",
+    "Passive Name": "Adaptable Rhythm: Electric Affinity",
+    "Effect": "After switching in, gain +8 Energy once per battle. Secondary Electric identity can be referenced by species-specific AI.",
+    "AI Tags": "switch;energy",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 206,
+    "Species": "Rimeiri",
+    "Passive ID": "PAS_206",
+    "Passive Name": "Adaptable Rhythm: Ice Affinity",
+    "Effect": "After switching in, gain +8 Energy once per battle. Secondary Ice identity can be referenced by species-specific AI.",
+    "AI Tags": "switch;energy",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 207,
+    "Species": "Omeniri",
+    "Passive ID": "PAS_207",
+    "Passive Name": "Omen Shift",
+    "Effect": "Once per battle after Omeniri switches in, its first Control skill costs 6 less Energy.",
+    "AI Tags": "simiri;ghost;switch;control",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 208,
+    "Species": "Noctimiri",
+    "Passive ID": "PAS_208",
+    "Passive Name": "Nightstep",
+    "Effect": "Once per battle after Noctimiri switches in, its first Dark damaging skill gains +10% power if it acts before the target.",
+    "AI Tags": "simiri;dark;switch;initiative",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 209,
+    "Species": "Alloymiri",
+    "Passive ID": "PAS_209",
+    "Passive Name": "Alloy Guard",
+    "Effect": "Once per battle after Alloymiri switches in, gain a shield equal to 8% max HP.",
+    "AI Tags": "simiri;steel;switch;shield",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 210,
+    "Species": "Oraciri",
+    "Passive ID": "PAS_210",
+    "Passive Name": "Forecast Palm",
+    "Effect": "Once per battle after Oraciri switches in, the first Psychic or Control skill it uses causes the target's next damaging skill to deal 8% less damage.",
+    "AI Tags": "simiri;psychic;switch;prediction",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 211,
+    "Species": "Aurevine",
+    "Passive ID": "PAS_211",
+    "Passive Name": "Verdant Equilibrium",
+    "Effect": "The first time an ally falls below 50% HP each battle, grant that ally a 10% max-HP shield and restore 6 Energy.",
+    "AI Tags": "guardian;support;shield;energy",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 212,
+    "Species": "Tempestyr",
+    "Passive ID": "PAS_212",
+    "Passive Name": "Stormbound Choice",
+    "Effect": "After Tempestyr targets a different enemy than on its previous action, gain +6% Speed and +6 Energy until its next action.",
+    "AI Tags": "guardian;speed;tempo;energy",
+    "Category": "Species Passive",
+    "Slots": 1
+  },
+  {
+    "Monster ID": 213,
+    "Species": "Brookotl",
+    "Passive ID": "PAS_213",
+    "Passive Name": "Current Sense",
+    "Effect": "The first time Brookotl delays an enemy each battle, gain 6 Energy.",
+    "AI Tags": "water;tempo;energy",
+    "Category": "Species Passive",
+    "Slots": null
+  },
+  {
+    "Monster ID": 214,
+    "Species": "Joltmeer",
+    "Passive ID": "PAS_214",
+    "Passive Name": "Static Sparring",
+    "Effect": "After acting before a target with a damaging skill, gain +4% Attack until the next action.",
+    "AI Tags": "electric;speed;damage",
+    "Category": "Species Passive",
+    "Slots": null
+  },
+  {
+    "Monster ID": 215,
+    "Species": "Voltbrace",
+    "Passive ID": "PAS_215",
+    "Passive Name": "Charged Form",
+    "Effect": "Using Electric then Fighting, or Fighting then Electric, grants 6 Energy once per two-skill sequence.",
+    "AI Tags": "electric;fighting;combo;energy",
+    "Category": "Species Passive",
+    "Slots": null
+  },
+  {
+    "Monster ID": 216,
+    "Species": "Tempestark",
+    "Passive ID": "PAS_216",
+    "Passive Name": "Storm Combination",
+    "Effect": "The first time each battle Tempestark hits with two different skill types on consecutive actions, gain 8% timeline progress and +6% Attack until next action.",
+    "AI Tags": "electric;fighting;combo;tempo",
+    "Category": "Species Passive",
+    "Slots": null
+  },
+  {
+    "Monster ID": 217,
+    "Species": "Rimeket",
+    "Passive ID": "PAS_217",
+    "Passive Name": "Snowstalk",
+    "Effect": "Deal +6% damage to chilled or slowed targets.",
+    "AI Tags": "ice;slow;damage",
+    "Category": "Species Passive",
+    "Slots": null
+  },
+  {
+    "Monster ID": 218,
+    "Species": "Duskrime",
+    "Passive ID": "PAS_218",
+    "Passive Name": "Dusk Prowl",
+    "Effect": "After acting before a slowed target, gain 5% timeline progress once before the next action.",
+    "AI Tags": "ice;dark;speed;tempo",
+    "Category": "Species Passive",
+    "Slots": null
+  },
+  {
+    "Monster ID": 219,
+    "Species": "Nocthyrme",
+    "Passive ID": "PAS_219",
+    "Passive Name": "Nightfrost Hunt",
+    "Effect": "Against chilled, slowed or debuffed targets, the first Dark attack each battle gains +12% power.",
+    "AI Tags": "ice;dark;ambush;damage",
+    "Category": "Species Passive",
+    "Slots": null
+  }
+]
+

@@ -3,7 +3,7 @@ import test from "node:test";
 import { isTransportPlace, routesFrom, travelRegion } from "../src/systems/travel.ts";
 
 const early = { unlockIds: new Set<string>() };
-const late = { unlockIds: new Set(["late-game-continent"]) };
+const late = { unlockIds: new Set(["STORY_VEYDRIS_ACCESS"]) };
 
 test("transport routes move between regions and charge time and Crowns", () => {
   const result = travelRegion({ regionId: "greenreach", day: 4, crowns: 100 }, "greenreach-frostmarch-road", early);

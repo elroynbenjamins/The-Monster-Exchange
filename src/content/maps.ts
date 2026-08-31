@@ -27,22 +27,29 @@ export interface InteractiveMapDefinition {
   hotspots: readonly MapHotspotDefinition[];
 }
 
+const CITY_ALIASES: Readonly<Record<string, readonly [string, string]>> = {
+  hearthbrook: ["willowmere", "Willowmere"], stonehollow: ["cairnstead", "Cairnstead"], saltwharf: ["tidemark", "Tidemark"], bogmoor: ["fenwatch", "Fenwatch"],
+  glacierhold: ["rimegate", "Rimegate"], thunderwatch: ["thunderrest", "Thunderrest"], aurelia: ["crownspire", "Crownspire"], steelgate: ["ferrum-gate", "Ferrum Gate"],
+  drakoria: ["ashenhold", "Ashenhold"], luminspire: ["lumenfall", "Lumenfall"], "abyssal-point": ["blacktide", "Blacktide"], nullspire: ["seamwatch", "Seamwatch"],
+};
+const canonicalMapId = (id: string) => id === "continent-heartland" ? "continent-ardenfall" : id === "continent-frontier" ? "continent-veydris" : id === "late-game-continent" ? "STORY_VEYDRIS_ACCESS" : id.startsWith("city-") ? `city-${CITY_ALIASES[id.slice(5)]?.[0] ?? id.slice(5)}` : id;
+
 const region = (id: string, label: string, bounds: NormalizedMapBounds): MapHotspotDefinition => ({
   id: `open-${id}`, label, kind: "region", bounds, destinationMapId: `region-${id}`,
 });
 const city = (id: string, label: string, bounds: NormalizedMapBounds): MapHotspotDefinition => ({
-  id: `open-${id}`, label, kind: "major-city", bounds, destinationMapId: `city-${id}`,
+  id: `open-${CITY_ALIASES[id]?.[0] ?? id}`, label: CITY_ALIASES[id]?.[1] ?? label, kind: "major-city", bounds, destinationMapId: canonicalMapId(`city-${id}`),
 });
 const place = (cityId: string, id: string, label: string, capability: CityPlaceCapability, bounds: NormalizedMapBounds): MapHotspotDefinition => ({
   id: `visit-${cityId}-${id}`, placeId: `${cityId}-${id}`, label, kind: "city-place", capability, bounds,
 });
 
 const readyRegion = (id: string, name: string, parentMapId: string, cityId: string, cityName: string, cityBounds: NormalizedMapBounds, unlockId?: string): InteractiveMapDefinition => ({
-  id: `region-${id}`, name, level: "region", parentMapId, assetId: `maps/regions/region--${id}--map`,
-  assetStatus: "ready", unlockId, hotspots: [city(cityId, cityName, cityBounds)],
+  id: `region-${id}`, name, level: "region", parentMapId: canonicalMapId(parentMapId), assetId: `maps/regions/region--${id}--map`,
+  assetStatus: "ready", unlockId: unlockId ? canonicalMapId(unlockId) : undefined, hotspots: [city(cityId, cityName, cityBounds)],
 });
 const pendingMap = (id: string, name: string, level: MapLevel, parentMapId: string, unlockId?: string): InteractiveMapDefinition => ({
-  id, name, level, parentMapId, assetStatus: "awaiting-upload", unlockId, hotspots: [],
+  id: canonicalMapId(id), name: id.startsWith("city-") ? (CITY_ALIASES[id.slice(5)]?.[1] ?? name) : name, level, parentMapId: canonicalMapId(parentMapId), assetStatus: "awaiting-upload", unlockId: unlockId ? canonicalMapId(unlockId) : undefined, hotspots: [],
 });
 
 const CITY_PLACES: Readonly<Record<string, readonly MapHotspotDefinition[]>> = {
@@ -109,13 +116,13 @@ const CITY_PLACES: Readonly<Record<string, readonly MapHotspotDefinition[]>> = {
 };
 
 const readyCity = (id: string, name: string, parentMapId: string, unlockId?: string): InteractiveMapDefinition => ({
-  id: `city-${id}`, name, level: "city", parentMapId, assetId: `maps/cities/city--${id}--map`,
-  assetStatus: "ready", unlockId, hotspots: CITY_PLACES[id] ?? [],
+  id: canonicalMapId(`city-${id}`), name: CITY_ALIASES[id]?.[1] ?? name, level: "city", parentMapId: canonicalMapId(parentMapId), assetId: `maps/cities/city--${id}--map`,
+  assetStatus: "ready", unlockId: unlockId ? canonicalMapId(unlockId) : undefined, hotspots: CITY_PLACES[id] ?? [],
 });
 
 export const interactiveMaps: readonly InteractiveMapDefinition[] = [
   {
-    id: "continent-heartland", name: "Heartland Continent", level: "continent", assetStatus: "ready",
+    id: "continent-ardenfall", name: "Ardenfall", level: "continent", assetStatus: "ready",
     assetId: "maps/continents/continent--heartland--world-map",
     hotspots: [
       region("frostmarch", "Frostmarch", { x: 0.27, y: 0.02, width: 0.34, height: 0.23 }),
@@ -129,8 +136,8 @@ export const interactiveMaps: readonly InteractiveMapDefinition[] = [
     ],
   },
   {
-    id: "continent-frontier", name: "Frontier Continent", level: "continent", assetStatus: "ready",
-    assetId: "maps/continents/continent--frontier--world-map", unlockId: "late-game-continent",
+    id: "continent-veydris", name: "Veydris", level: "continent", assetStatus: "ready",
+    assetId: "maps/continents/continent--frontier--world-map", unlockId: "STORY_VEYDRIS_ACCESS",
     hotspots: [
       region("dragonspine", "Dragonspine", { x: 0.04, y: 0.02, width: 0.92, height: 0.29 }),
       region("crystal-depths", "Crystal Depths", { x: 0.03, y: 0.29, width: 0.49, height: 0.36 }),

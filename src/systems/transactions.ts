@@ -30,10 +30,13 @@ export function listingValueLabel(askingPrice: number, appraisal: number): "barg
   return ratio <= 0.9 ? "bargain" : ratio <= 1.12 ? "fair" : "premium";
 }
 
-export function buyListing(state: GameState, listingId: string): GameState {
+export function buyListing(state: GameState, listingId: string, speciesDefinitions: readonly SpeciesDefinition[] = []): GameState {
   const listing = state.market.listings.find(({ id }) => id === listingId);
   if (!listing) throw new Error("Listing is no longer available.");
   if (listing.sellerId === state.player.id) throw new Error("You cannot buy your own listing.");
+  const species = speciesDefinitions.find(({ id }) => id === listing.monster.speciesId);
+  if (species?.obtainability?.tradeable === false || isCrestGuardianSpeciesId(listing.monster.speciesId)) throw new Error("This species cannot be bought on the Exchange.");
+  if ((state.player.discoveryBySpecies[listing.monster.speciesId] ?? "UNKNOWN") === "UNKNOWN") throw new Error("You must see this species before buying it on the public market.");
   if (state.player.crowns < listing.askingPrice) throw new Error("Not enough Crowns.");
   const monster = { ...listing.monster, ownerId: state.player.id };
   return {
@@ -43,6 +46,7 @@ export function buyListing(state: GameState, listingId: string): GameState {
     player: {
       ...state.player, crowns: state.player.crowns - listing.askingPrice,
       monsterIds: [...state.player.monsterIds, monster.id],
+      discoveryBySpecies: { ...state.player.discoveryBySpecies, [monster.speciesId]: "CAUGHT" },
     },
     market: { ...state.market, listings: state.market.listings.filter(({ id }) => id !== listingId) },
   };

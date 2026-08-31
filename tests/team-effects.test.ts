@@ -18,13 +18,13 @@ test("synergies use only active members and expose readable IDs", () => {
   assert.equal(reserveOnly.synergyIds.includes("toxic-canopy"), false);
 });
 
-test("stacked passive and synergy stat bonuses are reflected in battle units", () => {
+test("canonical passive activation and synergy shields are reflected in battle units", () => {
   const mossA = monster("mossveil", 3, "a");
   const mossB = monster("mossveil", 4, "b");
   const enemy = monster("voltgrazer", 5, "enemy");
   const battle = createBattle([mossA, mossB], [enemy], content);
   const unit = battle.units.find(({ id }) => id === mossA.id)!;
-  assert.ok(unit.defense > unit.baseDefense);
+  assert.equal(unit.defense, unit.baseDefense);
   assert.ok(battle.activeSynergies.player.includes("toxic-canopy"));
   assert.ok(unit.shield > 0);
   assert.ok(battle.events.some(({ type }) => type === "battle.passive-activated"));

@@ -1,6 +1,6 @@
 import type { DomainEvent } from "../core/types.ts";
 import type { RandomSource } from "../core/random.ts";
-import type { GameState } from "./state.ts";
+import { recordSpeciesSeen, type GameState } from "./state.ts";
 import type { ExpeditionNodeType } from "../systems/exploration.ts";
 import { createExpedition, resolveCurrentNode } from "../systems/exploration.ts";
 import type { EquipmentDefinition, HazardDefinition, ZoneDefinition } from "../content/definitions.ts";
@@ -91,6 +91,7 @@ export function resolveExpeditionNode(state: GameState, rng: RandomSource, equip
     }
     case "boss": {
       const boss = zone?.id === state.activeExpedition.route.zoneId ? zone.boss : undefined;
+      if (boss) next = recordSpeciesSeen(next, boss.speciesId);
       const rewardCrowns = boss?.rewardCrowns ?? 100;
       const researchNotes = boss?.researchNotes ?? 1;
       next = spendTeamCondition(next, 0, 15, equipment);

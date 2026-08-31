@@ -23,23 +23,36 @@ export interface SpeciesObtainability {
 
 export interface SpeciesDefinition {
   id: string;
+  /** Stable numeric identity from the design database. Save references continue to use `id`. */
+  internalId: number;
+  /** Display-only progression number. Never use this as a save identity. */
+  dexNumber: number;
+  /** @deprecated Compatibility alias for dexNumber. */
   catalogNumber: number;
   name: string;
   description: string;
   evolutionStage: number;
   evolutionLineLength: number;
+  evolutionLineId: string;
   types: readonly [GameType, GameType?];
   tags: readonly string[];
   rarity: Rarity;
+  battleRole: string;
   baseStats: Stats;
   geneCaps: Genes;
   traitPool: readonly string[];
+  /** Stable workbook trait references retained for validation and future trait-engine expansion. */
+  sourceTraitIds: readonly string[];
   breedingGroups: readonly string[];
   skillPool: readonly string[];
+  /** Canonical workbook learnset references; runtime skills remain phase-gated. */
+  sourceSkillIds: readonly string[];
   passiveId: string;
+  sourcePassiveId: string;
   evolutionIds: readonly string[];
   habitats: readonly string[];
   baseMarketValue: number;
+  weeklyMaterialValue: number;
   artId: string;
   obtainability?: SpeciesObtainability;
 }

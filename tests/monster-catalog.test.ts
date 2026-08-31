@@ -4,16 +4,17 @@ import { GAME_TYPES } from "../src/core/types.ts";
 import { content } from "../src/content/index.ts";
 import { CREST_GUARDIANS } from "../src/content/crest-guardians.ts";
 
-test("the approved Word catalog is implemented as 100 playable species", () => {
-  assert.ok(content.species.length >= 100);
-  assert.deepEqual(content.species.slice(0, 100).map(({ catalogNumber }) => catalogNumber), Array.from({ length: 100 }, (_, index) => index + 1));
+test("the v45 catalog is implemented as 221 playable species with stable identities", () => {
+  assert.equal(content.species.length, 221);
+  assert.deepEqual([...content.species].sort((a, b) => a.dexNumber - b.dexNumber).map(({ dexNumber }) => dexNumber), Array.from({ length: 221 }, (_, index) => index + 1));
+  assert.deepEqual(content.species.map(({ internalId }) => internalId), Array.from({ length: 221 }, (_, index) => index + 1));
   assert.equal(new Set(content.species.map(({ id }) => id)).size, content.species.length);
   assert.ok(content.species.every((species) => species.description.length > 20));
 });
 
-test("catalog rarity and type coverage remain balanced", () => {
+test("catalog rarity and type coverage match the v45 roster", () => {
   const rarityCounts = Object.fromEntries(["common", "uncommon", "rare", "epic", "legendary"].map((rarity) => [rarity, content.species.filter((species) => species.rarity === rarity).length]));
-  assert.deepEqual(rarityCounts, { common: 40, uncommon: 30, rare: 24, epic: 4, legendary: 4 });
+  assert.deepEqual(rarityCounts, { common: 74, uncommon: 77, rare: 59, epic: 7, legendary: 4 });
   for (const type of GAME_TYPES) assert.ok(content.species.filter((species) => species.types.includes(type)).length >= 7, `${type} is underrepresented`);
 });
 
@@ -34,7 +35,7 @@ test("the Exchange Crest guardians are distinct legendary game species", () => {
 });
 
 test("proposed families become sequential, stronger evolution paths", () => {
-  assert.equal(content.evolutions.length, 38);
+  assert.equal(content.evolutions.length, 107);
   const cindlet = content.species.find(({ id }) => id === "cindlet")!;
   const kilnback = content.species.find(({ id }) => id === "kilnback")!;
   const pyroclastor = content.species.find(({ id }) => id === "pyroclastor")!;

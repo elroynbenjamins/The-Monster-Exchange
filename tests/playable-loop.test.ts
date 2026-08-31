@@ -1,15 +1,18 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { SeededRandom, addMonsterToPlayer, attemptCapture, buyListing, byId, captureChance, content, createListing, createMonster, createNewGame, generateWildEncounter } from "../src/index.ts";
+import { STARTER_SPECIES_IDS, SeededRandom, attemptCapture, buyListing, byId, captureChance, content, createListing, createMonster, createNewGame, generateWildEncounter, recordSpeciesSeen, selectStarter } from "../src/index.ts";
 
-test("new game can receive a persistent starter", () => {
+test("new game offers five starters, records all as seen, and catches only the selection", () => {
   let state = createNewGame("Mira", 100, content.contentVersion);
-  const species = byId(content.species, "mossveil");
-  const starter = createMonster(species, new SeededRandom(100), { day: 1, ownerId: "player" });
-  state = addMonsterToPlayer(state, starter, true);
-  assert.deepEqual(state.player.monsterIds, [starter.id]);
-  assert.deepEqual(state.player.activeTeamIds, [starter.id]);
-  assert.equal(state.monsters[starter.id]?.ownerId, "player");
+  state = selectStarter(state, "joltmeer", content, new SeededRandom(100));
+  assert.deepEqual(STARTER_SPECIES_IDS, ["sprigbara", "cindlet", "rifflin", "joltmeer", "rimeket"]);
+  assert.equal(state.player.selectedStarterSpeciesId, "joltmeer");
+  assert.equal(state.player.monsterIds.length, 1);
+  assert.deepEqual(state.player.activeTeamIds, state.player.monsterIds);
+  assert.equal(state.monsters[state.player.monsterIds[0]!]?.speciesId, "joltmeer");
+  assert.deepEqual(STARTER_SPECIES_IDS.map((id) => state.player.discoveryBySpecies[id]), ["SEEN", "SEEN", "SEEN", "CAUGHT", "SEEN"]);
+  assert.throws(() => selectStarter(state, "cindlet", content, new SeededRandom(101)), /already been selected/i);
+  assert.throws(() => selectStarter(createNewGame("Invalid", 23, content.contentVersion), "mossveil", content, new SeededRandom(7)), /not a starter choice/i);
 });
 
 test("weaker wild monsters are easier to capture", () => {
@@ -27,6 +30,7 @@ test("buying a listing transfers the individual and Crowns", () => {
   const monster = createMonster(species, rng, { day: 1, ownerId: "npc-trader" });
   const listing = createListing(monster, "npc-trader", 300, 1, 3, rng);
   state = { ...state, market: { ...state.market, listings: [listing] } };
+  state = recordSpeciesSeen(state, "voltgrazer");
   const purchased = buyListing(state, listing.id);
   assert.equal(purchased.player.crowns, 450);
   assert.equal(purchased.monsters[monster.id]?.ownerId, "player");

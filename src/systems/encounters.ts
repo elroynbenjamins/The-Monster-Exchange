@@ -2,6 +2,7 @@ import type { MonsterIndividual, SpeciesDefinition } from "../core/types.ts";
 import type { RandomSource } from "../core/random.ts";
 import type { ZoneDefinition } from "../content/definitions.ts";
 import { createMonster } from "./monsters.ts";
+import { recordSpeciesSeen, type GameState } from "../game/state.ts";
 
 export interface WildEncounter {
   monster: MonsterIndividual;
@@ -12,6 +13,10 @@ export interface WildEncounter {
   revealedTraitIds: readonly string[];
   exactPotential?: number;
   isBoss: boolean;
+}
+
+export function recordWildEncounterSighting(state: GameState, encounter: WildEncounter): GameState {
+  return recordSpeciesSeen(state, encounter.species.id);
 }
 
 export interface EncounterEnvironment {

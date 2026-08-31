@@ -51,7 +51,7 @@ for (const evolution of content.evolutions) {
   if (from && to) {
     const fromBudget = from.baseStats.hp + from.baseStats.attack + from.baseStats.defense + from.baseStats.speed;
     const toBudget = to.baseStats.hp + to.baseStats.attack + to.baseStats.defense + to.baseStats.speed;
-    if (to.evolutionStage !== from.evolutionStage + 1 || to.evolutionLineLength !== from.evolutionLineLength) errors.push(`${evolution.id}: stages are not sequential`);
+    if (to.evolutionStage <= from.evolutionStage || to.evolutionLineId !== from.evolutionLineId) errors.push(`${evolution.id}: invalid evolution progression`);
     if (toBudget <= fromBudget) errors.push(`${evolution.id}: evolved form must have a larger core stat budget`);
   }
   for (const [name, value] of Object.entries(evolution.requirements)) {

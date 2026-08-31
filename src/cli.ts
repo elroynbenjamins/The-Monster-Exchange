@@ -3,9 +3,9 @@ import { createInterface } from "node:readline/promises";
 import { stdin as input, stdout as output } from "node:process";
 import { join } from "node:path";
 import {
-  EXPEDITION_APPROACHES, SeededRandom, activeTeamCaptureBonus, addMonsterToPlayer, appraiseMonster, attemptCapture, byId, changeInventory, content, createMonster,
+  EXPEDITION_APPROACHES, STARTER_SPECIES_IDS, SeededRandom, activeTeamCaptureBonus, addMonsterToPlayer, appraiseMonster, attemptCapture, byId, changeInventory, content, createMonster,
   abandonContract, acceptContract, advanceWorldDay, applyBattleAction, availableRecipes, browseMarketListings, buyListing, calculateExpeditionPreparation, challengeTrainer, chooseAiAction, claimBreedingJob, claimContract, completedContractNames, conductSpeciesStudy, constructBuilding, contractProgressPercent, craftRecipe, createBattle, createNewGame, depositHomebaseResource, estimateTrainerDifficulty, evolveOwnedMonster, finishExpedition, gainSpeciesResearch, generateBossEncounter, generateWildEncounter, initializeTrainers, listPlayerMonster, listingValueLabel, loadGame, maximumCraftableQuantity, nextActor, provideFieldCare, recordContractProgress, renameOwnedMonster, resolveExpeditionNode, trainerRelationshipTier,
-  availablePlayerRoutes, cityServices, enterMajorCity, equipMonsterItems, equipMonsterSkills, leaveCity, majorCityForRegion, researchLabLevel, routeDestination, saveGame, setActiveTeam, setReducedMotion, setThemePreference, settleBattleProgression, startBreeding, startExpeditionRun, travelPlayer, upgradeBuilding, type GameState,
+  availablePlayerRoutes, cityServices, enterMajorCity, equipMonsterItems, equipMonsterSkills, leaveCity, majorCityForRegion, researchLabLevel, routeDestination, saveGame, selectStarter, setActiveTeam, setReducedMotion, setThemePreference, settleBattleProgression, startBreeding, startExpeditionRun, travelPlayer, upgradeBuilding, type GameState,
   validActions, type BattleAction, type ExpeditionApproach, type WildEncounter,
 } from "./index.ts";
 
@@ -108,12 +108,11 @@ async function newGame(): Promise<GameState> {
   console.log("\nTHE MONSTER EXCHANGE — Greenreach Field Office\n");
   const name = await ui.question("Manager name: ");
   let state = createNewGame(name, Date.now() & 0xffff_ffff, content.contentVersion);
-  const choices = [byId(content.species, "mossveil"), byId(content.species, "voltgrazer")];
+  const choices = STARTER_SPECIES_IDS.map((id) => byId(content.species, id));
   console.log("\nChoose your first partner:");
   choices.forEach((species, index) => console.log(`${index + 1}. ${species.name} — ${species.types.join(" / ")} · ${species.tags.join(", ")}`));
   const selection = await askNumber("> ", 1, choices.length);
-  const starter = createMonster(choices[selection - 1]!, new SeededRandom(state.world.seed), { day: 1, level: 5, ownerId: state.player.id, qualityBias: 0.12 });
-  state = addMonsterToPlayer(state, starter, true);
+  state = selectStarter(state, choices[selection - 1]!.id, content, new SeededRandom(state.world.seed));
   await saveGame(savePath, state);
   return state;
 }
@@ -326,7 +325,7 @@ async function manageMarketplace(state: GameState): Promise<GameState> {
   console.log(`Exchange appraisal: ${appraisal} Crowns · ${listingValueLabel(listing.askingPrice, appraisal).toUpperCase()} · Asking price is ${Math.abs(difference)} Crowns ${difference <= 0 ? "below" : "above"} appraisal.`);
   console.log("1. Purchase  2. Back");
   if (await askNumber("> ", 1, 2) === 2) return state;
-  try { return buyListing(state, listing.id); } catch (error) { console.log(error instanceof Error ? error.message : error); return state; }
+  try { return buyListing(state, listing.id, content.species); } catch (error) { console.log(error instanceof Error ? error.message : error); return state; }
 }
 
 function showInventory(state: GameState): void {

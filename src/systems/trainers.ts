@@ -1,6 +1,6 @@
 import type { GameContent } from "../content/definitions.ts";
 import type { RandomSource } from "../core/random.ts";
-import type { GameState } from "../game/state.ts";
+import { recordSpeciesSeen, type GameState } from "../game/state.ts";
 import { createMonster } from "./monsters.ts";
 import { applyBattleAction, chooseAiAction, createBattle, nextActor } from "./battle-engine.ts";
 import { grantMonsterXp, settleBattleProgression } from "../game/commands.ts";
@@ -57,6 +57,8 @@ export function challengeTrainer(state: GameState, trainerId: string, content: G
   const playerMonsters = state.player.activeTeamIds.map((id) => state.monsters[id]!).filter(Boolean);
   if (!playerMonsters.length) throw new Error("Choose an active team before challenging a trainer.");
   const enemyMonsters = trainer.monsterIds.map((id) => state.monsters[id]!).filter(Boolean);
+  let sightedState = state;
+  for (const monster of enemyMonsters) sightedState = recordSpeciesSeen(sightedState, monster.speciesId);
   let battle = createBattle(playerMonsters, enemyMonsters, content, Object.fromEntries(playerMonsters.map((monster) => [monster.id, state.conditions[monster.id]?.hpRatio ?? 1])));
   let turns = 0;
   while (battle.result === "ongoing" && turns < 500) {
@@ -71,7 +73,7 @@ export function challengeTrainer(state: GameState, trainerId: string, content: G
     conditions[unit.id] = { ...current, hpRatio: unit.hp / unit.maxHp };
   }
   const playerWon = battle.result === "player-victory";
-  let next = settleBattleProgression({ ...state, conditions }, battle, content).state;
+  let next = settleBattleProgression({ ...sightedState, conditions }, battle, content).state;
   const rewardCrowns = playerWon ? definition.challengeRewardCrowns : 0;
   next = {
     ...next,

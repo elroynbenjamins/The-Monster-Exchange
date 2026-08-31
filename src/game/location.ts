@@ -6,10 +6,10 @@ import type { GameState } from "./state.ts";
 import { advanceWorldDay } from "./world-tick.ts";
 
 const MAJOR_CITY_BY_REGION: Readonly<Record<string, string>> = {
-  greenreach: "hearthbrook", frostmarch: "glacierhold", stormpeak: "thunderwatch",
-  stonehollow: "stonehollow", aurelia: "aurelia", "iron-dominion": "steelgate",
-  "mistwater-coast": "saltwharf", mirefen: "bogmoor", dragonspine: "drakoria",
-  "crystal-depths": "luminspire", "the-deep": "abyssal-point", rift: "nullspire",
+  greenreach: "willowmere", frostmarch: "rimegate", stormpeak: "thunderrest",
+  stonehollow: "cairnstead", aurelia: "crownspire", "iron-dominion": "ferrum-gate",
+  "mistwater-coast": "tidemark", mirefen: "fenwatch", dragonspine: "ashenhold",
+  "crystal-depths": "lumenfall", "the-deep": "blacktide", rift: "seamwatch",
 };
 
 const FALLBACK_SERVICES: readonly CityPlaceCapability[] = ["market", "arena", "monster-storage", "clinic", "workshop", "breeding", "expedition", "transport"];
@@ -27,7 +27,7 @@ export function enterMajorCity(state: GameState): GameState {
   const cityId = majorCityForRegion(state.player.location.regionId);
   if (!cityId) throw new Error("This region has no major city.");
   const cityMap = mapById(`city-${cityId}`);
-  if (cityMap.unlockId && !state.world.unlockedMapIds.includes(cityMap.unlockId)) throw new Error("This city is still locked.");
+  if (cityMap.unlockId && ![...state.world.unlockedMapIds, ...state.world.storyFlags].includes(cityMap.unlockId)) throw new Error("This city is still locked.");
   return { ...state, player: { ...state.player, location: { ...state.player.location, cityId } } };
 }
 
@@ -41,7 +41,7 @@ export function availablePlayerRoutes(state: GameState) {
 
 export function travelPlayer(state: GameState, routeId: string, content: GameContent): GameState {
   if (state.activeExpedition) throw new Error("Finish or retreat from the expedition before travelling.");
-  const access = { unlockIds: new Set(state.world.unlockedMapIds) };
+  const access = { unlockIds: new Set([...state.world.unlockedMapIds, ...state.world.storyFlags]) };
   const result = travelRegion({ regionId: state.player.location.regionId, day: state.world.day, crowns: state.player.crowns }, routeId, access);
   if (result.status !== "travelled") {
     const messages = { "unknown-route": "Unknown route.", "wrong-origin": "That route does not depart from here.", locked: "That route is still locked.", "insufficient-crowns": "Not enough Crowns for this journey." };

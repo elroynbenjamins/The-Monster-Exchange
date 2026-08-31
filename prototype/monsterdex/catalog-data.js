@@ -119,8 +119,8 @@ window.MONSTERDEX_SPECIES = [
   },
   {
     "catalogNumber": 8,
-    "id": "rillfin",
-    "name": "Rillfin",
+    "id": "rifflin",
+    "name": "Rifflin",
     "types": [
       "water"
     ],

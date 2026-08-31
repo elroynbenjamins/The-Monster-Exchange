@@ -14,7 +14,7 @@ export type MapNavigationResult =
   | { status: "place-selected"; state: MapNavigationState; hotspot: MapHotspotDefinition }
   | { status: "locked" | "awaiting-upload" | "no-hotspot"; state: MapNavigationState; map?: InteractiveMapDefinition; hotspot?: MapHotspotDefinition };
 
-export function createMapNavigation(startMapId = "continent-heartland"): MapNavigationState {
+export function createMapNavigation(startMapId = "continent-ardenfall"): MapNavigationState {
   mapById(startMapId);
   return { currentMapId: startMapId, history: [] };
 }

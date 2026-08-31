@@ -63,8 +63,8 @@ test("breeding uses nest capacity, time, fees, and creates a claimable offspring
 
 test("evolution preserves identity and unlocks evolved species skills", () => {
   let { state, a } = ownedPair();
-  state = { ...state, monsters: { ...state.monsters, [a.id]: { ...state.monsters[a.id]!, level: 20, potential: 70 } } };
-  state = evolveOwnedMonster(state, a.id, byId(content.evolutions, "mossveil-to-canopyre"), content);
+  state = { ...state, monsters: { ...state.monsters, [a.id]: { ...state.monsters[a.id]!, level: 20, potential: 70, wins: 8 } } };
+  state = evolveOwnedMonster(state, a.id, byId(content.evolutions, "mossveil-to-canopyre"), content, { environmentTags: ["bloom-protected-grove"] });
   assert.equal(state.monsters[a.id]?.speciesId, "canopyre");
   assert.ok(state.monsters[a.id]?.knownSkillIds.includes("canopy-surge"));
 });

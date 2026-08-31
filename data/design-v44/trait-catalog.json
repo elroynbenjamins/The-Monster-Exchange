@@ -1,0 +1,267 @@
+[
+  {
+    "Trait ID": "TRT_001",
+    "Trait Name": "Quickfoot",
+    "Category": "Combat",
+    "Rarity": "Common",
+    "Positive/Negative": "Positive",
+    "Numeric Effect": "+6% Speed",
+    "Economic Effect": null,
+    "Inheritance Chance Modifier": "0%",
+    "Notes": "Simple early trait."
+  },
+  {
+    "Trait ID": "TRT_002",
+    "Trait Name": "Heavyset",
+    "Category": "Combat",
+    "Rarity": "Common",
+    "Positive/Negative": "Mixed",
+    "Numeric Effect": "+8% Defense; -4% Speed",
+    "Economic Effect": null,
+    "Inheritance Chance Modifier": "0%",
+    "Notes": "Tradeoff trait."
+  },
+  {
+    "Trait ID": "TRT_003",
+    "Trait Name": "Deep Lungs",
+    "Category": "Combat",
+    "Rarity": "Uncommon",
+    "Positive/Negative": "Positive",
+    "Numeric Effect": "+10 Energy cap",
+    "Economic Effect": null,
+    "Inheritance Chance Modifier": "0%",
+    "Notes": "Useful for skill-heavy builds."
+  },
+  {
+    "Trait ID": "TRT_004",
+    "Trait Name": "Efficient Metabolism",
+    "Category": "Production",
+    "Rarity": "Uncommon",
+    "Positive/Negative": "Positive",
+    "Numeric Effect": null,
+    "Economic Effect": "+12% passive material yield",
+    "Inheritance Chance Modifier": "+3%",
+    "Notes": "Creates producer-market demand."
+  },
+  {
+    "Trait ID": "TRT_005",
+    "Trait Name": "Wasteful Eater",
+    "Category": "Production",
+    "Rarity": "Common",
+    "Positive/Negative": "Negative",
+    "Numeric Effect": null,
+    "Economic Effect": "+10% upkeep cost",
+    "Inheritance Chance Modifier": "-2%",
+    "Notes": "Can lower market value despite good combat stats."
+  },
+  {
+    "Trait ID": "TRT_006",
+    "Trait Name": "Studious",
+    "Category": "Research",
+    "Rarity": "Uncommon",
+    "Positive/Negative": "Positive",
+    "Numeric Effect": null,
+    "Economic Effect": "+10% research contribution",
+    "Inheritance Chance Modifier": "+2%",
+    "Notes": "Research utility."
+  },
+  {
+    "Trait ID": "TRT_007",
+    "Trait Name": "Skittish",
+    "Category": "Combat",
+    "Rarity": "Common",
+    "Positive/Negative": "Negative",
+    "Numeric Effect": "-8% AI aggression; +4% Speed",
+    "Economic Effect": null,
+    "Inheritance Chance Modifier": "0%",
+    "Notes": "AI profile modifier."
+  },
+  {
+    "Trait ID": "TRT_008",
+    "Trait Name": "Stubborn",
+    "Category": "Combat",
+    "Rarity": "Uncommon",
+    "Positive/Negative": "Mixed",
+    "Numeric Effect": "+12% status resistance; -5% switch preference",
+    "Economic Effect": null,
+    "Inheritance Chance Modifier": "+1%",
+    "Notes": "Defensive identity."
+  },
+  {
+    "Trait ID": "TRT_009",
+    "Trait Name": "Pack Bond",
+    "Category": "Combat",
+    "Rarity": "Rare",
+    "Positive/Negative": "Positive",
+    "Numeric Effect": "+6% Attack beside same evolution line",
+    "Economic Effect": null,
+    "Inheritance Chance Modifier": "+2%",
+    "Notes": "Team-building trait."
+  },
+  {
+    "Trait ID": "TRT_010",
+    "Trait Name": "Solo Hunter",
+    "Category": "Combat",
+    "Rarity": "Rare",
+    "Positive/Negative": "Positive",
+    "Numeric Effect": "+8% Attack when adjacent allies do not share type",
+    "Economic Effect": null,
+    "Inheritance Chance Modifier": "+1%",
+    "Notes": "Alternative team identity."
+  },
+  {
+    "Trait ID": "TRT_011",
+    "Trait Name": "Gentle Temper",
+    "Category": "Breeding",
+    "Rarity": "Common",
+    "Positive/Negative": "Positive",
+    "Numeric Effect": null,
+    "Economic Effect": "Breeding recovery -8%",
+    "Inheritance Chance Modifier": "+3%",
+    "Notes": "Breeder utility."
+  },
+  {
+    "Trait ID": "TRT_012",
+    "Trait Name": "Dominant Gene",
+    "Category": "Breeding",
+    "Rarity": "Rare",
+    "Positive/Negative": "Positive",
+    "Numeric Effect": null,
+    "Economic Effect": "Selected trait inheritance +8%",
+    "Inheritance Chance Modifier": "+8%",
+    "Notes": "Subject to inheritance cap."
+  },
+  {
+    "Trait ID": "TRT_013",
+    "Trait Name": "Fragile",
+    "Category": "Combat",
+    "Rarity": "Common",
+    "Positive/Negative": "Negative",
+    "Numeric Effect": "-8% Defense",
+    "Economic Effect": null,
+    "Inheritance Chance Modifier": "-1%",
+    "Notes": "Straight negative trait."
+  },
+  {
+    "Trait ID": "TRT_014",
+    "Trait Name": "Thick Hide",
+    "Category": "Combat",
+    "Rarity": "Uncommon",
+    "Positive/Negative": "Positive",
+    "Numeric Effect": "+7% Defense",
+    "Economic Effect": null,
+    "Inheritance Chance Modifier": "0%",
+    "Notes": "Tank premium."
+  },
+  {
+    "Trait ID": "TRT_015",
+    "Trait Name": "Energetic",
+    "Category": "Combat",
+    "Rarity": "Uncommon",
+    "Positive/Negative": "Positive",
+    "Numeric Effect": "+8% Energy gain",
+    "Economic Effect": null,
+    "Inheritance Chance Modifier": "0%",
+    "Notes": "Skill cycling."
+  },
+  {
+    "Trait ID": "TRT_016",
+    "Trait Name": "Slow Starter",
+    "Category": "Combat",
+    "Rarity": "Common",
+    "Positive/Negative": "Negative",
+    "Numeric Effect": "-12% Speed first action; +4% thereafter",
+    "Economic Effect": null,
+    "Inheritance Chance Modifier": "0%",
+    "Notes": "Tactical identity."
+  },
+  {
+    "Trait ID": "TRT_017",
+    "Trait Name": "Clutch",
+    "Category": "Combat",
+    "Rarity": "Rare",
+    "Positive/Negative": "Positive",
+    "Numeric Effect": "+12% damage below 30% HP",
+    "Economic Effect": null,
+    "Inheritance Chance Modifier": "+1%",
+    "Notes": "Bounded comeback trait."
+  },
+  {
+    "Trait ID": "TRT_018",
+    "Trait Name": "Calm Under Pressure",
+    "Category": "Combat",
+    "Rarity": "Rare",
+    "Positive/Negative": "Positive",
+    "Numeric Effect": "+10% resistance to Daze/Fear/AI disruption",
+    "Economic Effect": null,
+    "Inheritance Chance Modifier": "+1%",
+    "Notes": "Competitive value."
+  },
+  {
+    "Trait ID": "TRT_019",
+    "Trait Name": "Lustrous",
+    "Category": "Collector",
+    "Rarity": "Rare",
+    "Positive/Negative": "Positive",
+    "Numeric Effect": null,
+    "Economic Effect": "Collector value +12%",
+    "Inheritance Chance Modifier": "+1%",
+    "Notes": "Economic/cosmetic desirability."
+  },
+  {
+    "Trait ID": "TRT_020",
+    "Trait Name": "Rare Shedding",
+    "Category": "Production",
+    "Rarity": "Rare",
+    "Positive/Negative": "Positive",
+    "Numeric Effect": null,
+    "Economic Effect": "Rare-drop chance +5 percentage points",
+    "Inheritance Chance Modifier": "+2%",
+    "Notes": "Does not affect legendary materials."
+  },
+  {
+    "Trait ID": "TRT_021",
+    "Trait Name": "Hardy Breeder",
+    "Category": "Breeding",
+    "Rarity": "Uncommon",
+    "Positive/Negative": "Positive",
+    "Numeric Effect": null,
+    "Economic Effect": "Breeding recovery -12%",
+    "Inheritance Chance Modifier": "+2%",
+    "Notes": "Useful without altering Potential."
+  },
+  {
+    "Trait ID": "TRT_022",
+    "Trait Name": "Poor Fertility",
+    "Category": "Breeding",
+    "Rarity": "Common",
+    "Positive/Negative": "Negative",
+    "Numeric Effect": null,
+    "Economic Effect": "Breeding recovery +20%",
+    "Inheritance Chance Modifier": "-4%",
+    "Notes": "Negative breeder trait."
+  },
+  {
+    "Trait ID": "TRT_023",
+    "Trait Name": "Long-Lived",
+    "Category": "Breeding",
+    "Rarity": "Rare",
+    "Positive/Negative": "Positive",
+    "Numeric Effect": null,
+    "Economic Effect": "Longer prime breeding age window",
+    "Inheritance Chance Modifier": "+2%",
+    "Notes": "Age remains metadata."
+  },
+  {
+    "Trait ID": "TRT_024",
+    "Trait Name": "Territorial",
+    "Category": "Exploration",
+    "Rarity": "Uncommon",
+    "Positive/Negative": "Mixed",
+    "Numeric Effect": "+10% Alpha intimidation; -5% switch willingness",
+    "Economic Effect": null,
+    "Inheritance Chance Modifier": "0%",
+    "Notes": "Exploration + AI identity."
+  }
+]
+

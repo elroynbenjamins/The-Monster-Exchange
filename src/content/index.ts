@@ -1,13 +1,10 @@
 import type { GameContent } from "./definitions.ts";
 import { CATALOG_EVOLUTIONS, CATALOG_PASSIVES, CATALOG_SKILLS, CATALOG_SPECIES, speciesPoolForZone } from "./monster-catalog.ts";
+import { GENERATED_V45_TRAITS } from "./generated-v45.ts";
 
 export const content: GameContent = {
-  contentVersion: 3,
-  traits: [
-    { id: "hardy", name: "Hardy", statModifiers: { hp: 0.1 }, inheritable: true },
-    { id: "keen-senses", name: "Keen Senses", statModifiers: { speed: 0.06 }, marketModifier: 0.04, inheritable: true },
-    { id: "patient", name: "Patient", statModifiers: { defense: 0.06 }, inheritable: true },
-  ],
+  contentVersion: 45,
+  traits: GENERATED_V45_TRAITS,
   skills: [
     ...CATALOG_SKILLS,
     { id: "root-lash", name: "Root Lash", type: "grass", power: 42, energyCost: 20, cooldown: 0, target: "enemy" },
@@ -28,12 +25,7 @@ export const content: GameContent = {
     { id: "fear", name: "Fear", duration: 2, maxStacks: 1, tick: "after-action", attackModifier: -0.15 },
     { id: "confusion", name: "Confusion", duration: 2, maxStacks: 1, tick: "after-action" },
   ],
-  passives: [
-    ...CATALOG_PASSIVES,
-    { id: "dew-fed", name: "Dew Fed", statModifiers: { defense: 0.08 } },
-    { id: "living-canopy", name: "Living Canopy", teamShieldPercent: 0.06 },
-    { id: "storm-fed", name: "Storm Fed", statModifiers: { speed: 0.08 } },
-  ],
+  passives: CATALOG_PASSIVES,
   synergies: [
     { id: "pack-instinct", name: "Pack Instinct", minimumMembers: 2, requiredTags: { beast: 2 }, statModifiers: { speed: 0.05 }, displayText: "Two active Beast monsters gain +5% Speed." },
     { id: "verdant-harmony", name: "Verdant Harmony", minimumMembers: 2, requiredTypes: { grass: 1, fairy: 1 }, statModifiers: { defense: 0.04 }, displayText: "Active Grass and Fairy members gain +4% Defense." },

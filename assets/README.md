@@ -1,6 +1,6 @@
 # Pixel-art asset contract
 
-Art is placeholder-only in this repository. References are stable strings and missing files should render a development checkerboard.
+Monster artwork has been intentionally removed while the replacement set is produced. Missing monster art should render a development checkerboard. Existing map assets remain temporary until the new world, region, and city map set arrives.
 
 Use lowercase kebab-case and this structure:
 

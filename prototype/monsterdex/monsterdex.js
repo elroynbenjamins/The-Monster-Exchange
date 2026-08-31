@@ -1,5 +1,4 @@
 const species = window.MONSTERDEX_SPECIES ?? [];
-const artPath = (entry, kind) => `../../assets/pixel/monsterdex/${kind === "portrait" ? "portraits" : "cards"}/${String(entry.catalogNumber).padStart(3,"0")}--${entry.id}--${kind}.png`;
 const readJson = (key, fallback) => { try { return JSON.parse(localStorage.getItem(key) ?? "") ?? fallback; } catch { return fallback; } };
 const records = new Map(Object.entries(readJson("monsterdex-demo-records", {})));
 const favorites = new Set(readJson("monsterdex-favorites", []));
@@ -24,7 +23,7 @@ function saveCollection() {
   localStorage.setItem("monsterdex-favorites", JSON.stringify([...favorites]));
   localStorage.setItem("monsterdex-preferences", JSON.stringify(preferences));
 }
-function setCardArt(node, entry, kind = "card") { node.style.setProperty("--art", `url('${artPath(entry, kind)}')`); }
+function setCardArt(node) { node.style.removeProperty("--art"); }
 function family(entry) {
   const first = entry.catalogNumber - entry.evolutionStage + 1;
   return species.filter(({ catalogNumber }) => catalogNumber >= first && catalogNumber < first + entry.evolutionLineLength);

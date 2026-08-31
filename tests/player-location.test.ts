@@ -4,13 +4,13 @@ import { content } from "../src/content/index.ts";
 import { availablePlayerRoutes, cityServices, enterMajorCity, leaveCity, travelPlayer } from "../src/game/location.ts";
 import { createNewGame } from "../src/game/state.ts";
 
-test("new keepers begin in Hearthbrook and can move between city and region", () => {
+test("new keepers begin in Willowmere and can move between city and region", () => {
   const initial = createNewGame("Keeper", 90, content.contentVersion);
-  assert.deepEqual(initial.player.location, { regionId: "greenreach", cityId: "hearthbrook" });
+  assert.deepEqual(initial.player.location, { regionId: "greenreach", cityId: "willowmere" });
   const outside = leaveCity(initial);
   assert.deepEqual(outside.player.location, { regionId: "greenreach" });
-  assert.equal(enterMajorCity(outside).player.location.cityId, "hearthbrook");
-  assert.ok(cityServices("hearthbrook").includes("market"));
+  assert.equal(enterMajorCity(outside).player.location.cityId, "willowmere");
+  assert.ok(cityServices("willowmere").includes("market"));
 });
 
 test("regional travel charges Crowns, advances the living world, and clears city location", () => {

@@ -1,0 +1,14 @@
+{
+  "designVersion": 45,
+  "sourceWorkbookVersion": "Monster Exchange Master Design Database v45 - Restored Middle Evolutions & 221 Card Roster",
+  "totalSpecies": 221,
+  "totalSkills": 110,
+  "totalPassives": 221,
+  "totalEvolutionPaths": 107,
+  "totalTraitPoolRows": 1312,
+  "totalEcologyRows": 221,
+  "totalObtainabilityRows": 221,
+  "totalMarketBaselineRows": 221,
+  "repairBasis": "Restored middle-evolution rows inherit family trait weights; ecology uses authored species descriptions; obtainability is evolution-only; market values use standard uncommon stage-2 factors.",
+  "sourceFile": "Monster Exchange Master Design Database v45 - Restored Middle Evolutions & 221 Card Roster"
+}
