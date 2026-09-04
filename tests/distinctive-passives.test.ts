@@ -19,9 +19,9 @@ function switchBattle(reserveSpeciesId: string) {
   return { state: forceNext(state, outgoing.id), outgoing, reserve };
 }
 
-test("all 221 approved passives are canonical runtime definitions", () => {
-  assert.equal(content.passives.length, 221);
-  assert.equal(new Set(content.passives.map(({ sourceId }) => sourceId)).size, 221);
+test("all 244 v47 passives are canonical runtime definitions", () => {
+  assert.equal(content.passives.length, 244);
+  assert.equal(new Set(content.passives.map(({ sourceId }) => sourceId)).size, 244);
   for (const species of content.species) {
     const passive = content.passives.find(({ id }) => id === species.passiveId);
     assert.ok(passive?.effectText, `${species.name} passive is missing`);

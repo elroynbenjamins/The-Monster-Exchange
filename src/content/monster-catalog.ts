@@ -1,13 +1,14 @@
 import type { EvolutionDefinition, PassiveDefinition, SkillDefinition } from "./definitions.ts";
 import { GAME_TYPES, type GameType, type Rarity, type SpeciesDefinition, type Stats } from "../core/types.ts";
-import { GENERATED_V45_CONCEPTS, GENERATED_V45_EVOLUTIONS, GENERATED_V45_INTEGRATIONS, GENERATED_V45_MARKET_VALUES, GENERATED_V45_PASSIVES, GENERATED_V45_STATS } from "./generated-v45.ts";
+import { GENERATED_V47_CONCEPTS, GENERATED_V47_EVOLUTIONS, GENERATED_V47_INTEGRATIONS, GENERATED_V47_MARKET_VALUES, GENERATED_V47_PASSIVES, GENERATED_V47_STATS } from "./generated-v47.ts";
 
 export interface MonsterConcept {
   internalId: number;
   dexNumber: number;
   catalogNumber: number;
   name: string;
-  types: readonly [GameType, GameType?];
+  types: readonly [GameType] | readonly [GameType, GameType];
+  battleRole: SpeciesDefinition["battleRole"];
   rarity: Rarity;
   description: string;
   stage: number;
@@ -120,7 +121,7 @@ const LEGACY_MONSTER_CONCEPTS = [
   {"catalogNumber":102,"name":"Tempestyr","types":["electric","dragon"],"rarity":"legendary","description":"The lightning-antlered guardian of decisive exchange. Its teal body stores storm current while its golden crest flashes whenever a bargain will reshape the lives on both sides.","stage":1,"totalStages":1,"lineId":"tempestyr"},
 ] as const;
 
-export const MONSTER_CONCEPTS: readonly MonsterConcept[] = GENERATED_V45_CONCEPTS.map((concept) => ({
+export const MONSTER_CONCEPTS: readonly MonsterConcept[] = GENERATED_V47_CONCEPTS.map((concept) => ({
   ...concept,
   catalogNumber: concept.dexNumber,
 })) as readonly MonsterConcept[];
@@ -253,7 +254,7 @@ function statBudget(concept: MonsterConcept): number {
 }
 
 function buildStats(concept: MonsterConcept): Stats {
-  const canonical = GENERATED_V45_STATS[slug(concept.name) as keyof typeof GENERATED_V45_STATS];
+  const canonical = GENERATED_V47_STATS[slug(concept.name) as keyof typeof GENERATED_V47_STATS];
   if (canonical) return canonical;
   const profiles = concept.types.map((type) => TYPE_PROFILE[type]);
   const profile = [0, 1, 2, 3].map((index) => profiles.reduce((sum, values) => sum + values[index], 0) / profiles.length);
@@ -298,7 +299,7 @@ const LEGACY_CATALOG_EVOLUTIONS: readonly EvolutionDefinition[] = [...conceptsBy
   }),
 );
 
-export const CATALOG_EVOLUTIONS: readonly EvolutionDefinition[] = GENERATED_V45_EVOLUTIONS;
+export const CATALOG_EVOLUTIONS: readonly EvolutionDefinition[] = GENERATED_V47_EVOLUTIONS;
 
 export const CATALOG_SKILLS: readonly SkillDefinition[] = [...GAME_TYPES.flatMap((type) => {
   const [basicName, advancedName] = TYPE_SKILL_NAMES[type];
@@ -312,7 +313,7 @@ export const CATALOG_SKILLS: readonly SkillDefinition[] = [...GAME_TYPES.flatMap
   { id: "crest-thunderbolt", name: "Crest Thunderbolt", type: "electric", power: 82, energyCost: 55, cooldown: 3, target: "enemy", statusId: "shock", statusChance: 0.4 },
 ];
 
-export const CATALOG_PASSIVES: readonly PassiveDefinition[] = GENERATED_V45_PASSIVES;
+export const CATALOG_PASSIVES: readonly PassiveDefinition[] = GENERATED_V47_PASSIVES;
 
 export const CATALOG_SPECIES: readonly SpeciesDefinition[] = MONSTER_CONCEPTS.map((concept) => {
   const id = slug(concept.name);
@@ -334,12 +335,12 @@ export const CATALOG_SPECIES: readonly SpeciesDefinition[] = MONSTER_CONCEPTS.ma
     sourceSkillIds: [], sourcePassiveId: "",
     evolutionIds: CATALOG_EVOLUTIONS.filter((evolution) => evolution.fromSpeciesId === id).map(({ id: evolutionId }) => evolutionId),
     habitats: habitatFor(concept.types),
-    baseMarketValue: GENERATED_V45_MARKET_VALUES[id as keyof typeof GENERATED_V45_MARKET_VALUES]
+    baseMarketValue: GENERATED_V47_MARKET_VALUES[id as keyof typeof GENERATED_V47_MARKET_VALUES]
       ?? Math.round(RARITY_VALUE[concept.rarity] * (1 + (concept.stage - 1) * 0.28)),
     weeklyMaterialValue: 0,
     artId: `monsters/${id}/${id}--base--idle--right`,
   };
-  const integration = GENERATED_V45_INTEGRATIONS[id as keyof typeof GENERATED_V45_INTEGRATIONS];
+  const integration = GENERATED_V47_INTEGRATIONS[id as keyof typeof GENERATED_V47_INTEGRATIONS];
   return { ...generated, ...integration, passiveId: integration.sourcePassiveId.toLowerCase().replace(/_/g, "-"), ...SPECIES_OVERRIDES[id] };
 });
 

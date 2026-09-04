@@ -1,9 +1,15 @@
 import { readFile, writeFile } from "node:fs/promises";
 
-const root = new URL("../data/design-v45/", import.meta.url);
-const output = new URL("../src/content/generated-v45.ts", import.meta.url);
+const root = new URL("../data/design-v47/", import.meta.url);
+const output = new URL("../src/content/generated-v47.ts", import.meta.url);
 const read = async (name) => JSON.parse(await readFile(new URL(name, root), "utf8"));
 const slug = (value) => value.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+const numberFromText = (value) => {
+  if (typeof value === "number" && Number.isFinite(value)) return value;
+  if (typeof value !== "string") return undefined;
+  const match = value.replace(/\.(?=\d{3}(?:\D|$))/g, "").replace(",", ".").match(/-?\d+(?:\.\d+)?/);
+  return match ? Number(match[0]) : undefined;
+};
 
 const [catalog, stats, dexRows, dexCatalog, paths, markets, traitCatalog, traitPools, obtainability, learnsets, passives] = await Promise.all([
   read("species-catalog.json"), read("species-combat-stats.json"), read("full-dex-order.json"),
@@ -11,7 +17,12 @@ const [catalog, stats, dexRows, dexCatalog, paths, markets, traitCatalog, traitP
   read("trait-catalog.json"), read("species-trait-pools.json"), read("obtainability-matrix.json"),
   read("species-skill-learnsets.json"), read("species-passives.json"),
 ]);
-const validDex = dexRows.filter((row) => Number.isInteger(row["Dex #"]) && Number.isInteger(row["Internal Species ID"]));
+const integer = (value) => {
+  const parsed = Number(value);
+  return Number.isInteger(parsed) ? parsed : undefined;
+};
+const validDex = dexRows.map((row) => ({ ...row, "Dex #": integer(row["Dex #"]), "Internal Species ID": integer(row["Internal Species ID"]) }))
+  .filter((row) => row["Dex #"] !== undefined && row["Internal Species ID"] !== undefined);
 const dexById = new Map(validDex.map((row) => [row["Internal Species ID"], row["Dex #"]]));
 const dexDescription = new Map(dexCatalog.map((row) => [row.Species, row["Dex Description"]]));
 const combatRoleById = new Map(stats.map((row) => [row["Monster ID"], String(row["Battle Role"] ?? "Balanced").toLowerCase()]));
@@ -40,7 +51,7 @@ const concepts = catalog.map((row) => {
 const statsById = Object.fromEntries(stats.map((row) => [slug(row.Species), {
   hp: row["Base HP"], attack: row["Base Attack"], defense: row["Base Defense"], speed: row["Base Speed"], energy: row["Base Energy"],
 }]));
-const marketById = Object.fromEntries(markets.map((row) => [slug(row.Species), row["Baseline Species Value"]]));
+const marketById = Object.fromEntries(markets.map((row) => [slug(row.Species), numberFromText(row["Baseline Species Value"])]));
 const zoneByRegion = {
   Greenreach: "greenreach-meadow", Stormpeak: "stormpeak-foothills", Frostmarch: "frostmarch-glacial-shelf",
   Stonehollow: "stonehollow-quarries", Aurelia: "aurelia-riverbank", "Iron Dominion": "iron-dominion-slagfields",
@@ -60,7 +71,7 @@ const integrations = Object.fromEntries(catalog.map((row) => {
     sourceTraitIds: traitPools.filter((candidate) => candidate["Monster ID"] === id && candidate.Eligible !== "No").map((candidate) => candidate["Trait ID"]),
     sourceSkillIds: learnsets.filter((candidate) => candidate["Monster ID"] === id).map((candidate) => candidate["Skill ID"]),
     sourcePassiveId: passives.find((candidate) => candidate["Monster ID"] === id)?.["Passive ID"],
-    habitats, weeklyMaterialValue: market?.["Weekly Passive Material Value"] ?? 0,
+    habitats, weeklyMaterialValue: numberFromText(market?.["Weekly Passive Material Value"]) ?? 0,
     obtainability: {
       wildCatchable: obtain?.["Ordinary Wild?"] === "Yes", evolutionOnly: obtain?.["Evolution Only?"] === "Yes",
       directHatch: obtain?.["Evolution Only?"] !== "Yes", tradeable: obtain?.["Auction Eligible?"] !== "No",
@@ -107,13 +118,13 @@ const evolutions = paths.map((row) => {
   return { id: `${fromSpeciesId}-to-${toSpeciesId}`, fromSpeciesId, toSpeciesId, requirements };
 });
 
-const source = `// Generated from Monster Exchange Master Design Database v45. Do not edit by hand.\n` +
-  `export const GENERATED_V45_CONCEPTS = ${JSON.stringify(concepts, null, 2)} as const;\n\n` +
-  `export const GENERATED_V45_STATS = ${JSON.stringify(statsById, null, 2)} as const;\n\n` +
-  `export const GENERATED_V45_MARKET_VALUES = ${JSON.stringify(marketById, null, 2)} as const;\n\n` +
-  `export const GENERATED_V45_INTEGRATIONS = ${JSON.stringify(integrations, null, 2)} as const;\n\n` +
-  `export const GENERATED_V45_TRAITS = ${JSON.stringify(generatedTraits, null, 2)} as const;\n\n` +
-  `export const GENERATED_V45_PASSIVES = ${JSON.stringify(generatedPassives, null, 2)} as const;\n\n` +
-  `export const GENERATED_V45_EVOLUTIONS = ${JSON.stringify(evolutions, null, 2)} as const;\n`;
+const source = `// Generated from Monster Exchange Master Design Database v47. Do not edit by hand.\n` +
+  `export const GENERATED_V47_CONCEPTS = ${JSON.stringify(concepts, null, 2)} as const;\n\n` +
+  `export const GENERATED_V47_STATS = ${JSON.stringify(statsById, null, 2)} as const;\n\n` +
+  `export const GENERATED_V47_MARKET_VALUES = ${JSON.stringify(marketById, null, 2)} as const;\n\n` +
+  `export const GENERATED_V47_INTEGRATIONS = ${JSON.stringify(integrations, null, 2)} as const;\n\n` +
+  `export const GENERATED_V47_TRAITS = ${JSON.stringify(generatedTraits, null, 2)} as const;\n\n` +
+  `export const GENERATED_V47_PASSIVES = ${JSON.stringify(generatedPassives, null, 2)} as const;\n\n` +
+  `export const GENERATED_V47_EVOLUTIONS = ${JSON.stringify(evolutions, null, 2)} as const;\n`;
 await writeFile(output, source, "utf8");
-console.log(`Generated ${concepts.length} v45 species with ${validDex.length} Dex mappings.`);
+console.log(`Generated ${concepts.length} v47 species with ${validDex.length} Dex mappings.`);

@@ -16,6 +16,7 @@ export interface MarketBrowseOptions {
 
 export function browseMarketListings(state: GameState, options: MarketBrowseOptions = {}): readonly MarketplaceListing[] {
   const listings = state.market.listings.filter((listing) => listing.sellerId !== state.player.id)
+    .filter((listing) => listing.expiresOnDay > state.world.day)
     .filter((listing) => !options.speciesId || listing.monster.speciesId === options.speciesId)
     .filter((listing) => options.maximumPrice === undefined || listing.askingPrice <= options.maximumPrice)
     .filter((listing) => options.minimumPotential === undefined || listing.monster.potential >= options.minimumPotential)
@@ -33,6 +34,8 @@ export function listingValueLabel(askingPrice: number, appraisal: number): "barg
 export function buyListing(state: GameState, listingId: string, speciesDefinitions: readonly SpeciesDefinition[] = []): GameState {
   const listing = state.market.listings.find(({ id }) => id === listingId);
   if (!listing) throw new Error("Listing is no longer available.");
+  if (listing.expiresOnDay <= state.world.day) throw new Error("Listing has expired.");
+  if (!Number.isSafeInteger(listing.askingPrice) || listing.askingPrice <= 0) throw new Error("Invalid listing price.");
   if (listing.sellerId === state.player.id) throw new Error("You cannot buy your own listing.");
   const species = speciesDefinitions.find(({ id }) => id === listing.monster.speciesId);
   if (species?.obtainability?.tradeable === false || isCrestGuardianSpeciesId(listing.monster.speciesId)) throw new Error("This species cannot be bought on the Exchange.");
@@ -53,6 +56,17 @@ export function buyListing(state: GameState, listingId: string, speciesDefinitio
 }
 
 export function purchasePrice(listing: MarketplaceListing): number { return listing.askingPrice; }
+
+export function cancelPlayerListing(state: GameState, listingId: string): GameState {
+  const listing = state.market.listings.find(item => item.id === listingId);
+  if (!listing || listing.sellerId !== state.player.id) throw new Error("Your listing is no longer available.");
+  return {
+    ...state,
+    monsters: { ...state.monsters, [listing.monster.id]: listing.monster },
+    player: { ...state.player, monsterIds: [...new Set([...state.player.monsterIds, listing.monster.id])] },
+    market: { ...state.market, listings: state.market.listings.filter(item => item.id !== listingId) },
+  };
+}
 
 export function listPlayerMonster(state: GameState, monsterId: string, askingPrice: number, durationDays: number, rng: RandomSource, speciesDefinitions: readonly SpeciesDefinition[] = []): GameState {
   if (!state.player.monsterIds.includes(monsterId)) throw new Error("You do not own this monster.");

@@ -1,0 +1,11 @@
+{
+  "expo": {
+    "name": "The Monster Exchange",
+    "slug": "the-monster-exchange",
+    "version": "0.1.0",
+    "orientation": "portrait",
+    "platforms": ["android"],
+    "userInterfaceStyle": "dark",
+    "android": { "package": "com.elroybenjamins.themonsterexchange", "versionCode": 1 }
+  }
+}

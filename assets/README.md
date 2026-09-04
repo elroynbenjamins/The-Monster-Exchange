@@ -1,6 +1,6 @@
 # Pixel-art asset contract
 
-Monster artwork has been intentionally removed while the replacement set is produced. Missing monster art should render a development checkerboard. Existing map assets remain temporary until the new world, region, and city map set arrives.
+Monster combat artwork remains intentionally absent while the replacement set is produced. The v47 Monsterdex has a complete set of 244 normalized card assets, including six accepted concept cards retained under `monsterdex/source-accepted/` for reproducible builds. Existing map assets remain temporary until the new world, region, and city map set arrives.
 
 Use lowercase kebab-case and this structure:
 

@@ -1,0 +1,21 @@
+import React from 'react';
+import { Text, View } from 'react-native';
+import type { GameState } from '../src/game/state.ts';
+import { availableRecipes, maximumCraftableQuantity } from '../src/game/commands.ts';
+import { content } from '../src/content/index.ts';
+import { Button, Panel, s } from './ui';
+import { speciesName, type Confirm } from './screens';
+
+export function BaseServices({state,confirm}:{state:GameState;confirm:Confirm}) {
+  const expansionCost=200*(state.homebase.slotCount-2);
+  const foundation=state.world.storyFlags.includes('STORY_FIRST_CAPTURE')&&state.homebase.buildings.some(b=>b.status==='active');
+  return <><Panel><Text style={s.subtitle}>Your pack</Text><Text style={s.muted}>Actual carried items. Equipment effects apply only when equipped.</Text><ItemStrip items={{crowns:state.player.crowns,...state.player.inventory}}/></Panel><Panel><Text style={s.subtitle}>Base stores</Text><ItemStrip items={state.homebase.resources}/></Panel>
+    <Panel><Text style={s.subtitle}>A place to call home</Text><Text style={s.muted}>Finish the capture lesson and complete your first facility. Reward: 40 timber, 20 stone, 15 herbs, delivered to base stores.</Text><Button title={state.world.storyFlags.includes('STORY_FOUNDATION_REWARD')?'Reward claimed':'Claim foundation reward'} disabled={!foundation||state.world.storyFlags.includes('STORY_FOUNDATION_REWARD')} onPress={()=>confirm('Claim foundation reward?','Receive building supplies once.',{kind:'claim-foundation'})}/></Panel>
+    <Panel><Text style={s.subtitle}>Inventory → base stores</Text><Text style={s.muted}>Deposits move supplies out of your pack. Crafting and field care use your pack, not base stores.</Text>{['timber','stone','herbs'].map(resource=><View key={resource} style={s.row}><ItemIcon id={resource}/><Text style={s.text}>{resource}: {state.player.inventory[resource]??0} in pack</Text><Button title={`Deposit 5 ${resource}`} disabled={(state.player.inventory[resource]??0)<5} onPress={()=>confirm('Deposit supplies?',`Move 5 ${resource} from your pack into base stores.`,{kind:'deposit',resourceId:resource,amount:5})}/></View>)}</Panel>
+    <Panel><Text style={s.subtitle}>Estate expansion</Text><Text style={s.muted}>Unlock additional capacity for the five facility types.</Text><Button title={state.homebase.slotCount>=5?'All plots unlocked':`Unlock plot ${state.homebase.slotCount+1} · ${expansionCost} C`} disabled={state.homebase.slotCount>=5||state.player.crowns<expansionCost} onPress={()=>confirm('Expand the estate?',`Spend ${expansionCost} Crowns for one permanent building slot.`,{kind:'expand-base'})}/></Panel>
+    <Panel><Text style={s.subtitle}>Workshop recipes</Text>{availableRecipes(state,content).length===0&&<Text style={s.muted}>Complete a Field Workshop to unlock recipes.</Text>}{availableRecipes(state,content).map(recipe=><View key={recipe.id} style={{gap:6}}><ItemStrip items={recipe.outputs}/><Text style={s.text}>{recipe.name}</Text><ItemStrip items={recipe.inputs} available={state.player.inventory}/><Text style={s.muted}>{Object.entries(recipe.inputs).map(([id,n])=>`${n} ${id}`).join(' · ')}</Text><Button title={`Craft ${recipe.name}`} disabled={maximumCraftableQuantity(state,recipe.id,content)<1} onPress={()=>confirm('Craft one item?',`Consume ${Object.entries(recipe.inputs).map(([id,n])=>`${n} ${id}`).join(', ')} from your pack.`,{kind:'craft',recipeId:recipe.id})}/></View>)}</Panel>
+    <Panel><Text style={s.subtitle}>Field care</Text>{state.player.monsterIds.map(id=>{const condition=state.conditions[id]??{hpRatio:1,stamina:100};return <View key={id} style={{gap:6}}><Text style={s.text}>{speciesName(state.monsters[id].speciesId)} · HP {Math.round(condition.hpRatio*100)}% · stamina {condition.stamina}</Text><Button title="Treat · 1 pack herb" disabled={(condition.hpRatio>=1&&condition.stamina>=100)||(state.player.inventory.herbs??0)<1} onPress={()=>confirm('Provide field care?','Use one herb from your pack. An active clinic improves its effect.',{kind:'care',monsterId:id})}/></View>})}</Panel>
+    <Button title="Rest one day" onPress={()=>confirm('Advance one day?','Construction, recovery and markets advance together.',{kind:'rest'})}/>
+  </>;
+}
+import { ItemStrip, ItemIcon } from './ItemVisuals';

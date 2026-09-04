@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>The Monster Exchange — World Navigation</title>
+  <link rel="stylesheet" href="/prototype/world-map/world-map.css">
+  <link rel="stylesheet" href="/assets/styles/android-ui.css">
+</head>
+<body>
+  <main class="world-shell" aria-label="World navigation">
+    <header class="topbar">
+      <div>
+        <p class="eyebrow">Exchange Guild Navigation</p>
+        <h1>World Map</h1>
+      </div>
+      <div class="resources" aria-label="Travel resources">
+        <a href="/prototype/welcome/">Replay introduction</a>
+        <span><b id="dayValue">Day 1</b></span>
+        <span>◆ <b id="crownsValue">250</b> Crowns</span>
+        <button id="unlockToggle" class="ghost-button" type="button">Preview Veydris unlock</button>
+      </div>
+    </header>
+
+    <nav class="breadcrumbs" aria-label="Map breadcrumbs">
+      <button type="button" data-crumb="world">World</button><span>›</span>
+      <button type="button" data-crumb="continent" id="continentCrumb">Ardenfall</button><span>›</span>
+      <strong id="regionCrumb">Greenreach</strong>
+    </nav>
+
+    <section class="navigation-layout">
+      <aside class="destination-panel" aria-labelledby="destinationTitle">
+        <div class="panel-heading">
+          <p class="eyebrow">Destinations</p>
+          <h2 id="destinationTitle">Regions</h2>
+        </div>
+        <div class="continent-tabs" role="tablist" aria-label="Continents">
+          <button class="active" type="button" data-continent="ardenfall" role="tab">Ardenfall</button>
+          <button type="button" data-continent="veydris" role="tab">Veydris <span id="lockGlyph">🔒</span></button>
+        </div>
+        <div id="destinationList" class="destination-list"></div>
+        <div class="legend" aria-label="Transport legend">
+          <span><i class="road"></i>Road</span><span><i class="rail"></i>Rail</span>
+          <span><i class="ferry"></i>Ferry</span><span><i class="airship"></i>Airship</span>
+        </div>
+      </aside>
+
+      <section class="map-stage" id="mapStage" aria-label="Interactive world map">
+        <img src="../../assets/pixel/maps/continents/continent--exchange-network--world-map.png" alt="Pixel-art world map of Ardenfall and Veydris" draggable="false">
+        <svg id="routeLayer" class="route-layer" viewBox="0 0 1000 600" preserveAspectRatio="none" aria-hidden="true"></svg>
+        <div id="hotspotLayer" class="hotspot-layer"></div>
+        <p class="map-help">Select a region or use Tab and Enter. Connected routes brighten automatically.</p>
+      </section>
+
+      <aside class="region-panel" aria-live="polite">
+        <div class="region-hero" id="regionHero">
+          <span id="regionIcon">🌿</span>
+          <div><p id="regionContinent">Ardenfall</p><h2 id="regionName">Greenreach</h2></div>
+        </div>
+        <p id="regionDescription" class="region-description"></p>
+        <dl class="region-stats">
+          <div><dt>Major city</dt><dd id="regionCity"></dd></div>
+          <div><dt>Danger</dt><dd id="regionDanger"></dd></div>
+          <div><dt>Status</dt><dd id="regionStatus"></dd></div>
+        </dl>
+        <section class="travel-options" aria-labelledby="travelTitle">
+          <h3 id="travelTitle">Travel options</h3>
+          <div id="routeOptions"></div>
+        </section>
+        <div id="travelSummary" class="travel-summary"></div>
+        <button id="travelButton" class="travel-button" type="button">Travel here</button>
+        <button id="zoomButton" class="secondary-button" type="button">Open region map</button>
+      </aside>
+    </section>
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  </main>
+  <script type="module" src="/prototype/world-map/world-map.js"></script>
+</body>
+</html>

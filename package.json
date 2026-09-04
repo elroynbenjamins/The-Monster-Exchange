@@ -12,6 +12,13 @@
     "check": "node --experimental-strip-types scripts/validate-content.ts",
     "audit:design": "node --experimental-strip-types scripts/audit-design-v18.ts",
     "monsterdex": "node --experimental-strip-types scripts/serve-monsterdex.ts"
+    ,"world-map": "npm run build:battle && node --experimental-strip-types scripts/serve-world-map.ts",
+    "build:battle": "node scripts/build-battle-browser.mjs",
+    "game": "npm run start --prefix mobile",
+    "android": "npm run android --prefix mobile",
+    "build:native-assets": "node --experimental-strip-types scripts/build-native-assets.ts",
+    "build:native-cards": "node scripts/build-native-cards.mjs",
+    "preview": "npm run world-map"
   },
   "engines": {
     "node": ">=22.6"

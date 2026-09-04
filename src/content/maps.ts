@@ -2,7 +2,7 @@ export type MapLevel = "continent" | "region" | "city";
 export type MapAssetStatus = "ready" | "awaiting-upload";
 export type CityPlaceCapability =
   | "government" | "market" | "arena" | "monster-storage" | "clinic"
-  | "breeding" | "workshop" | "expedition" | "transport";
+  | "breeding" | "workshop" | "expedition" | "transport" | "inn" | "research" | "unique";
 
 export interface NormalizedMapBounds { x: number; y: number; width: number; height: number; }
 
@@ -115,9 +115,35 @@ const CITY_PLACES: Readonly<Record<string, readonly MapHotspotDefinition[]>> = {
   ],
 };
 
+const CITY_LAYOUT = [
+  { x: 0.45, y: 0.10, width: 0.10, height: 0.12 }, { x: 0.20, y: 0.24, width: 0.12, height: 0.12 },
+  { x: 0.68, y: 0.24, width: 0.12, height: 0.12 }, { x: 0.12, y: 0.46, width: 0.12, height: 0.12 },
+  { x: 0.44, y: 0.39, width: 0.12, height: 0.12 }, { x: 0.76, y: 0.46, width: 0.12, height: 0.12 },
+  { x: 0.22, y: 0.66, width: 0.12, height: 0.12 }, { x: 0.50, y: 0.66, width: 0.12, height: 0.12 },
+  { x: 0.72, y: 0.72, width: 0.12, height: 0.12 },
+] as const;
+const canonicalCityPlaces = (cityId: string, labels: readonly string[]): readonly MapHotspotDefinition[] => {
+  const capabilities: readonly CityPlaceCapability[] = ["unique", "market", "arena", "inn", "monster-storage", "transport", "research", "breeding", "workshop"];
+  return labels.map((label, index) => place(cityId, label.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, ""), label, capabilities[index], CITY_LAYOUT[index]));
+};
+const CANONICAL_CITY_PLACES: Readonly<Record<string, readonly MapHotspotDefinition[]>> = {
+  rimegate: canonicalCityPlaces("rimegate", ["Aurora Observatory", "Rime Exchange", "White Road Arena", "Hearth Inn", "Cold Vault", "Sled & Coach Terminal", "Climate Station", "Frost Pens", "Coldforge Hall"]),
+  thunderrest: canonicalCityPlaces("thunderrest", ["Weather Beacon", "Storm Exchange", "Thunder Crown Arena", "Peak Lodge", "Storm Vault", "Skyrail Terminal", "Resonance Station", "Cliff Roosts", "Coil Workshop"]),
+  willowmere: canonicalCityPlaces("willowmere", ["Orchard Registry", "Willow Exchange", "Orchard Trial Arena", "Willow Inn", "Keeper's Vault", "Coach Yard", "Field Ecology Desk", "Pasture Nursery", "Craft Lodge"]),
+  cairnstead: canonicalCityPlaces("cairnstead", ["Survey Guild", "Stone Exchange", "Faultline Arena", "Cairn Rest", "Deepcell Vault", "Oreline Station", "Geology Annex", "Burrow Pens", "Forge Cooperative"]),
+  "ferrum-gate": canonicalCityPlaces("ferrum-gate", ["Freight Futures Board", "Ferrum Exchange", "Foundry Crucible", "Railman's Rest", "Iron Vault", "Continental Rail & Airship Hub", "Industrial Research Bureau", "Works Pens", "Foundry Complex"]),
+  crownspire: canonicalCityPlaces("crownspire", ["Grand Exchange Floor", "Crown Exchange", "Crown Exhibition Arena", "Grand Crown Inn", "Royal Menagerie Vault", "Central Transit Concourse", "Royal Research Institute", "Pedigree Court", "Artisan Quarter"]),
+  tidemark: canonicalCityPlaces("tidemark", ["Auction Pier", "Tidemark Exchange", "Tideglass Arena", "Harbor Inn", "Tidepens", "Grand Harbor", "Marine Field Lab", "Reef Hatchery", "Dockworks"]),
+  fenwatch: canonicalCityPlaces("fenwatch", ["Conservation Office", "Fen Exchange", "Drowned Grove Arena", "Lantern Inn", "Stilt Vault", "Causeway Depot", "Wetland Lab", "Bog Nursery", "Apothecary Works"]),
+  ashenhold: canonicalCityPlaces("ashenhold", ["Hunt Registry", "Ashen Exchange", "Ashen Relic Arena", "Cinder Lodge", "Basalt Vault", "Expedition Gate", "Fossil & Volcanic Institute", "Ash Pens", "Relic Forge"]),
+  lumenfall: canonicalCityPlaces("lumenfall", ["Archive Exchange", "Lumen Exchange", "Resonance Archive Arena", "Lumen Rest", "Prism Vault", "Crystal Lift Nexus", "Worldseam Institute", "Resonance Nursery", "Crystalworks"]),
+  blacktide: canonicalCityPlaces("blacktide", ["Deep Auction House", "Blacktide Exchange", "Black Current Arena", "Pressure Inn", "Hadal Vault", "Submersible Dock", "Abyssal Lab", "Pressure Pens", "Salvage Works"]),
+  seamwatch: canonicalCityPlaces("seamwatch", ["Worldseam Control", "Seam Exchange", "Worldseam Arena", "Anchor Rest", "Sealed Vault", "Anomaly Transit Ring", "Containment Institute", "Restricted Nursery", "Stabilizer Workshop"]),
+};
+
 const readyCity = (id: string, name: string, parentMapId: string, unlockId?: string): InteractiveMapDefinition => ({
   id: canonicalMapId(`city-${id}`), name: CITY_ALIASES[id]?.[1] ?? name, level: "city", parentMapId: canonicalMapId(parentMapId), assetId: `maps/cities/city--${id}--map`,
-  assetStatus: "ready", unlockId: unlockId ? canonicalMapId(unlockId) : undefined, hotspots: CITY_PLACES[id] ?? [],
+  assetStatus: "ready", unlockId: unlockId ? canonicalMapId(unlockId) : undefined, hotspots: CANONICAL_CITY_PLACES[id] ?? CITY_PLACES[id] ?? [],
 });
 
 export const interactiveMaps: readonly InteractiveMapDefinition[] = [
@@ -148,27 +174,27 @@ export const interactiveMaps: readonly InteractiveMapDefinition[] = [
   readyRegion("frostmarch", "Frostmarch", "continent-heartland", "glacierhold", "Glacierhold", { x: 0.28, y: 0.34, width: 0.44, height: 0.28 }),
   readyRegion("stormpeak", "Stormpeak", "continent-heartland", "thunderwatch", "Thunderwatch", { x: 0.34, y: 0.32, width: 0.34, height: 0.25 }),
   readyRegion("greenreach", "Greenreach", "continent-heartland", "hearthbrook", "Hearthbrook", { x: 0.31, y: 0.34, width: 0.39, height: 0.29 }),
+  readyRegion("stonehollow", "Stonehollow", "continent-heartland", "stonehollow", "Cairnstead", { x: 0.45, y: 0.38, width: 0.16, height: 0.17 }),
   readyRegion("iron-dominion", "Iron Dominion", "continent-heartland", "steelgate", "Steelgate", { x: 0.10, y: 0.22, width: 0.43, height: 0.33 }),
   readyRegion("aurelia", "Aurelia", "continent-heartland", "aurelia", "Aurelia", { x: 0.18, y: 0.23, width: 0.64, height: 0.43 }),
   readyRegion("mistwater-coast", "Mistwater Coast", "continent-heartland", "saltwharf", "Saltwharf", { x: 0.25, y: 0.28, width: 0.48, height: 0.29 }),
   readyRegion("mirefen", "Mirefen", "continent-heartland", "bogmoor", "Bogmoor", { x: 0.29, y: 0.29, width: 0.43, height: 0.29 }),
-  pendingMap("region-stonehollow", "Stonehollow", "region", "continent-heartland"),
   readyRegion("dragonspine", "Dragonspine", "continent-frontier", "drakoria", "Drakoria", { x: 0.29, y: 0.28, width: 0.43, height: 0.34 }, "late-game-continent"),
   readyRegion("crystal-depths", "Crystal Depths", "continent-frontier", "luminspire", "Luminspire", { x: 0.31, y: 0.34, width: 0.39, height: 0.25 }, "late-game-continent"),
   readyRegion("the-deep", "The Deep", "continent-frontier", "abyssal-point", "Abyssal Point", { x: 0.25, y: 0.30, width: 0.50, height: 0.31 }, "late-game-continent"),
   readyRegion("rift", "The Rift", "continent-frontier", "nullspire", "Nullspire", { x: 0.34, y: 0.31, width: 0.34, height: 0.28 }, "late-game-continent"),
-  readyCity("aurelia", "Aurelia", "region-aurelia"),
-  readyCity("stonehollow", "Stonehollow", "region-stonehollow"),
-  readyCity("drakoria", "Drakoria", "region-dragonspine", "late-game-continent"),
-  readyCity("steelgate", "Steelgate", "region-iron-dominion"),
-  readyCity("thunderwatch", "Thunderwatch", "region-stormpeak"),
-  readyCity("glacierhold", "Glacierhold", "region-frostmarch"),
-  pendingMap("city-hearthbrook", "Hearthbrook", "city", "region-greenreach"),
-  pendingMap("city-saltwharf", "Saltwharf", "city", "region-mistwater-coast"),
-  pendingMap("city-bogmoor", "Bogmoor", "city", "region-mirefen"),
-  pendingMap("city-luminspire", "Luminspire", "city", "region-crystal-depths", "late-game-continent"),
-  pendingMap("city-abyssal-point", "Abyssal Point", "city", "region-the-deep", "late-game-continent"),
-  pendingMap("city-nullspire", "Nullspire", "city", "region-rift", "late-game-continent"),
+  readyCity("rimegate", "Rimegate", "region-frostmarch"),
+  readyCity("thunderrest", "Thunderrest", "region-stormpeak"),
+  readyCity("willowmere", "Willowmere", "region-greenreach"),
+  readyCity("cairnstead", "Cairnstead", "region-stonehollow"),
+  readyCity("ferrum-gate", "Ferrum Gate", "region-iron-dominion"),
+  readyCity("crownspire", "Crownspire", "region-aurelia"),
+  readyCity("tidemark", "Tidemark", "region-mistwater-coast"),
+  readyCity("fenwatch", "Fenwatch", "region-mirefen"),
+  readyCity("ashenhold", "Ashenhold", "region-dragonspine", "late-game-continent"),
+  readyCity("lumenfall", "Lumenfall", "region-crystal-depths", "late-game-continent"),
+  readyCity("blacktide", "Blacktide", "region-the-deep", "late-game-continent"),
+  readyCity("seamwatch", "Seamwatch", "region-rift", "late-game-continent"),
 ];
 
 export function mapById(id: string): InteractiveMapDefinition {

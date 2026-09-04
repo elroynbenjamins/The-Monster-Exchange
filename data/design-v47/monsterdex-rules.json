@@ -1,0 +1,110 @@
+[
+  {
+    "State / Rule": "UNKNOWN",
+    "List Display": "#ID ???",
+    "Name": "Hidden as ???",
+    "Portrait": "Dark silhouette / locked art",
+    "Types": "Hidden",
+    "Dex Description": "Hidden",
+    "Habitat / Details": "Hidden",
+    "Counters": "seenCount=0; caughtCount=0",
+    "Market Effect": "Cannot buy on normal public market",
+    "Implementation / Save Rule": "Persist explicit discoveryStatus=UNKNOWN; rumors/listings never upgrade it."
+  },
+  {
+    "State / Rule": "SEEN",
+    "List Display": "#ID Species Name + Seen marker",
+    "Name": "Visible",
+    "Portrait": "Revealed portrait / silhouette",
+    "Types": "Visible",
+    "Dex Description": "Locked until CAUGHT",
+    "Habitat / Details": "First-seen region/source only",
+    "Counters": "seenCount>=1; caughtCount=0 allowed",
+    "Market Effect": "Normal public-market purchase unlocked, subject to licences/story/rarity restrictions",
+    "Implementation / Save Rule": "Wild visual confirmation, opposing trainer battle, boss battle or scripted sanctuary sighting can set SEEN. Catching/acquiring completes the entry."
+  },
+  {
+    "State / Rule": "CAUGHT",
+    "List Display": "#ID Species Name + caught marker",
+    "Name": "Visible",
+    "Portrait": "Full portrait/card",
+    "Types": "Visible",
+    "Dex Description": "Visible short entry",
+    "Habitat / Details": "Full known habitat/evolution/research detail",
+    "Counters": "seenCount; caughtCount; ownedCount",
+    "Market Effect": "Market rules unchanged; caught state never bypasses special trade restrictions",
+    "Implementation / Save Rule": "Capture, breeding result, evolution result, legal acquisition or Crest bond sets CAUGHT."
+  },
+  {
+    "State / Rule": "PROGRESS COUNTERS",
+    "List Display": "Header: Seen X/212 | Caught Y/212",
+    "Name": "n/a",
+    "Portrait": "n/a",
+    "Types": "n/a",
+    "Dex Description": "n/a",
+    "Habitat / Details": "Filter by region/type/status",
+    "Counters": "seenSpeciesTotal + caughtSpeciesTotal",
+    "Market Effect": "n/a",
+    "Implementation / Save Rule": "Count unique species statuses, not encounter totals."
+  },
+  {
+    "State / Rule": "SEEN SOURCES",
+    "List Display": "Immediate reveal animation",
+    "Name": "Reveal",
+    "Portrait": "Reveal",
+    "Types": "Reveal",
+    "Dex Description": "Reveal",
+    "Habitat / Details": "Record firstSeenRegion/day/source",
+    "Counters": "Increment seenCount on valid encounters",
+    "Market Effect": "Unlock buy gate at first valid sighting",
+    "Implementation / Save Rule": "Valid: wild encounter, trainer/boss battle, sanctioned sanctuary encounter, direct field observation."
+  },
+  {
+    "State / Rule": "DOES NOT COUNT AS SEEN",
+    "List Display": "Keep ???",
+    "Name": "Hidden",
+    "Portrait": "Hidden",
+    "Types": "Hidden",
+    "Dex Description": "Hidden",
+    "Habitat / Details": "Rumor may show region clue only",
+    "Counters": "No counter change",
+    "Market Effect": "Still cannot buy",
+    "Implementation / Save Rule": "Market listing, auction preview, rumor text, price chart or another player's reference does not count."
+  },
+  {
+    "State / Rule": "CREST GUARDIANS",
+    "List Display": "??? until sanctuary sighting",
+    "Name": "Reveal on story sighting",
+    "Portrait": "Reveal on sighting",
+    "Types": "Reveal on sighting",
+    "Dex Description": "Reveal on sighting",
+    "Habitat / Details": "Sanctuary details after SEEN",
+    "Counters": "Bond changes CAUGHT",
+    "Market Effect": "Never public-market eligible",
+    "Implementation / Save Rule": "Aurevine/Tempestyr: sanctuary sighting=SEEN; successful bond=CAUGHT; one of each per save; cannot sell or breed."
+  },
+  {
+    "State / Rule": "SAVE MIGRATION",
+    "List Display": "Preserve prior progress",
+    "Name": "n/a",
+    "Portrait": "n/a",
+    "Types": "n/a",
+    "Dex Description": "n/a",
+    "Habitat / Details": "n/a",
+    "Counters": "n/a",
+    "Market Effect": "n/a",
+    "Implementation / Save Rule": "If legacy researchLevel>0, seed SEEN; owned species seed CAUGHT. Do not downgrade existing players."
+  },
+  {
+    "State / Rule": "DISPLAY RULE",
+    "List Display": "Numbered scrollable catalog",
+    "Name": "Status-dependent",
+    "Portrait": "Status-dependent",
+    "Types": "Status-dependent",
+    "Dex Description": "Status-dependent",
+    "Habitat / Details": "Status-dependent",
+    "Counters": "Seen/Caught badges",
+    "Market Effect": "n/a",
+    "Implementation / Save Rule": "Mobile list/grid should feel familiar to monster collectors but use original Monster Exchange UI, art and terminology."
+  }
+]

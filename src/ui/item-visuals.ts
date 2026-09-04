@@ -1,0 +1,6 @@
+export const ITEM_VISUALS:Readonly<Record<string,{name:string;cell:number;description:string}>>={
+ timber:{name:'Timber',cell:0,description:'Building and crafting material.'},stone:{name:'Stone',cell:1,description:'Building and crafting material.'},herbs:{name:'Herbs',cell:2,description:'Used for field care, construction and crafting.'},crowns:{name:'Crowns',cell:3,description:'Earned currency for trade and expansion.'},
+ 'field-capsule':{name:'Field Capsule',cell:4,description:'Consumed on each capture attempt.'},'research-notes':{name:'Research Notes',cell:5,description:'Used for studies and advanced equipment.'},'training-band':{name:'Training Band',cell:6,description:'Equipment that improves Attack.'},'guard-plate':{name:'Guard Plate',cell:7,description:'Equipment that improves Defense at a Speed cost.'},
+ 'vital-charm':{name:'Vital Charm',cell:8,description:'Equipment that improves maximum HP.'},'focus-coil':{name:'Focus Coil',cell:9,description:'Equipment that improves Energy.'},'trail-harness':{name:'Trail Harness',cell:10,description:'Equipment that reduces expedition stamina use.'},'capture-lens':{name:'Capture Lens',cell:11,description:'Equipment that improves capture chance.'},
+};
+export const itemName=(id:string)=>ITEM_VISUALS[id]?.name??id.replace(/-/g,' ');

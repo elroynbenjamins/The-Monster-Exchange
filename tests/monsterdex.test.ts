@@ -1,24 +1,36 @@
 import assert from "node:assert/strict";
+import { existsSync, readFileSync } from "node:fs";
 import test from "node:test";
 import { content } from "../src/content/index.ts";
+import { GENERATED_CARD_ASSETS } from "../src/content/generated-card-assets.ts";
 import { SeededRandom } from "../src/core/random.ts";
 import { createNewGame, recordSpeciesCaught, recordSpeciesSeen } from "../src/game/state.ts";
 import { addMonsterToPlayer } from "../src/game/state.ts";
 import { adjacentMonsterdexEntry, buildMonsterdexEntries, cardAssetId, filterMonsterdex, monsterdexEvolutionFamily, monsterdexProgress, nextMonsterdexMilestone, portraitAssetId, sortMonsterdex } from "../src/systems/monsterdex.ts";
 import { createMonster } from "../src/systems/monsters.ts";
 
-test("Monsterdex art remains unset until replacement assets arrive", () => {
-  assert.equal(cardAssetId(1, "mossveil"), undefined);
-  assert.equal(cardAssetId(90, "stormscribe"), undefined);
+test("Monsterdex card assets resolve only for matching v47 species", () => {
+  assert.equal(cardAssetId(1, "mossveil"), "monsterdex/cards/001--mossveil--card.png");
+  assert.equal(cardAssetId(90, "stormscribe"), "monsterdex/cards/090--stormscribe--card.png");
   assert.equal(portraitAssetId(1, "mossveil"), undefined);
   assert.equal(cardAssetId(91, "later-species"), undefined);
 });
 
-test("Monsterdex entries tolerate the temporary absence of art", () => {
+test("all supplied v47 cards exist at one normalized size", () => {
+  assert.equal(Object.keys(GENERATED_CARD_ASSETS).length, 244);
+  for (const { cardAssetId: assetId } of Object.values(GENERATED_CARD_ASSETS)) {
+    const path = `assets/pixel/${assetId}`;
+    assert.equal(existsSync(path), true, `${assetId} is missing`);
+    const header = readFileSync(path).subarray(0, 24);
+    assert.deepEqual([header.readUInt32BE(16), header.readUInt32BE(20)], [384, 480], `${assetId} is not normalized`);
+  }
+});
+
+test("Monsterdex entries expose normalized cards while portraits remain replaceable", () => {
   const state = createNewGame("Art Keeper", 6, content.contentVersion);
   const entries = buildMonsterdexEntries(content.species.filter(({ internalId }) => internalId <= 90), state);
   for (const entry of entries) {
-    assert.equal(entry.cardAssetId, undefined);
+    assert.equal(entry.cardAssetId, `monsterdex/cards/${String(entry.species.internalId).padStart(3, "0")}--${entry.species.id}--card.png`);
     assert.equal(entry.portraitAssetId, undefined);
   }
 });

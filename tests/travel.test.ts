@@ -19,6 +19,6 @@ test("routes are bidirectional and late-game crossings remain locked", () => {
 });
 
 test("city transport labels connect map interaction to regional travel", () => {
-  assert.equal(isTransportPlace("aurelia-docks"), true);
-  assert.equal(isTransportPlace("stonehollow-market"), false);
+  assert.equal(isTransportPlace("crownspire-central-transit-concourse"), true);
+  assert.equal(isTransportPlace("cairnstead-stone-exchange"), false);
 });

@@ -1,0 +1,105 @@
+/* Android-first interaction layer shared by all playable prototypes. */
+@media (max-width:760px) {
+  html { min-width:320px; min-height:100%; -webkit-text-size-adjust:100%; }
+  body { min-height:100dvh; overscroll-behavior-y:none; padding-left:env(safe-area-inset-left); padding-right:env(safe-area-inset-right); }
+  button, a, input, select { touch-action:manipulation; }
+  button, select, input { min-height:48px; }
+
+  /* World, region, and city navigation */
+  .world-shell { min-height:100dvh; padding:max(5px,env(safe-area-inset-top)) 5px max(12px,env(safe-area-inset-bottom)); }
+  .world-shell .topbar { min-height:auto; align-items:center; flex-direction:row; padding:9px 11px; }
+  .world-shell .topbar .eyebrow { display:none; }
+  .world-shell .topbar h1 { font-size:20px; }
+  .world-shell .resources { font-size:10px; gap:6px; }
+  .world-shell .resources span:first-child { display:none; }
+  .world-shell .ghost-button { min-height:44px; padding:6px 9px; }
+  .breadcrumbs { margin:5px 0; min-height:42px; overflow-x:auto; white-space:nowrap; }
+  .breadcrumbs button, .breadcrumbs a { display:inline-flex; align-items:center; min-height:36px; }
+  .navigation-layout { min-height:0; }
+  .destination-panel { padding:10px; overflow:visible; }
+  /* Preserve the coordinate plane used by image, routes, and hotspots. */
+  .map-stage { aspect-ratio:16/9; border-width:1px; }
+  .region-stage, .city-stage { aspect-ratio:3/2; }
+  .map-stage>img, .region-stage>img, .city-stage>img { object-fit:fill; }
+  .region-panel { padding:12px; }
+  .destination-list { display:flex; gap:7px; overflow-x:auto; scroll-snap-type:x mandatory; padding-bottom:5px; }
+  .destination { flex:0 0 72%; min-height:56px; scroll-snap-align:start; }
+  .continent-tabs button, .travel-button, .secondary-button, .border-exit, .back-link { min-height:48px; }
+  .region-hotspot, .facility-hotspot { width:44px; height:44px; }
+  .site-hotspot { min-width:44px; height:44px; padding:0 12px; }
+  .site-label, .facility-label, .legend { display:none; }
+  .map-help { width:92%; white-space:normal; text-align:center; font-size:9px; }
+  .toast { bottom:calc(14px + env(safe-area-inset-bottom)); width:calc(100% - 24px); text-align:center; }
+  .region-description { min-height:0; }
+  .directory-search input { min-height:48px; }
+
+  /* Monsterdex */
+  .app-shell { min-height:100dvh; padding:max(10px,env(safe-area-inset-top)) 10px calc(72px + env(safe-area-inset-bottom)); }
+  .app-shell .topbar { padding:6px 2px 14px; }
+  .app-shell .topbar h1 { font-size:2rem; }
+  .app-shell .progress { font-size:.7rem; }
+  .controls { gap:8px; }
+  .controls label { min-width:0; }
+  .controls .icon-button { position:static; }
+  .icon-button { width:48px; height:48px; }
+  .quick-actions { display:flex; overflow-x:auto; flex-wrap:nowrap; scroll-snap-type:x mandatory; padding-bottom:8px; }
+  .quick-actions button { flex:0 0 auto; scroll-snap-align:start; }
+  .results-heading { position:sticky; top:0; z-index:3; padding:10px 4px; margin:0; background:color-mix(in srgb,var(--bg) 94%,transparent); backdrop-filter:blur(10px); }
+  .detail-layout { gap:18px; padding:calc(56px + env(safe-area-inset-top)) 14px calc(24px + env(safe-area-inset-bottom)); }
+  .detail-card { width:min(250px,calc(100% - 96px)); }
+  .close-button { top:calc(8px + env(safe-area-inset-top)); width:48px; height:48px; }
+  .step-button { top:210px; width:48px; height:48px; }
+  .detail-actions { display:grid; grid-template-columns:1fr 1fr; }
+  .detail-actions button:first-child { grid-column:1/-1; }
+  .card-grid, .compact .card-grid { gap:8px; }
+  .favorite-star { width:40px; height:40px; }
+  .combat-card { flex-basis:96px; }
+
+  /* Battle: portrait battlefield with thumb-reachable bottom actions. */
+  .battle-shell { padding-bottom:104px; }
+  .battle-shell .topbar { align-items:center; margin-bottom:8px; }
+  .battle-shell .topbar .eyebrow { display:none; }
+  .battle-shell .topbar h1 { font-size:1.3rem; }
+  .battle-shell .topbar nav a { min-height:44px; display:grid; place-items:center; padding:8px 10px; }
+  .battlefield { min-height:52dvh; max-height:570px; border-radius:12px; }
+  .fighter { bottom:10px; width:48%; height:calc(52dvh - 28px); max-height:500px; }
+  .fighter.player { left:1%; }
+  .fighter.enemy { right:1%; }
+  .hud { top:4px; width:96%; min-height:57px; padding:8px; }
+  .hud strong { font-size:.95rem; max-width:120px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .hud small { font-size:.56rem; }
+  .hud b { font-size:.7rem; }
+  .health { top:66px; width:88%; height:11px; }
+  .hp-copy { top:82px; font-size:.62rem; }
+  .sprite-anchor { inset:78px 0 14px; }
+  .monster-sprite { width:min(96%,220px); }
+  .shadow { bottom:12px; }
+  .versus { top:29%; width:38px; height:38px; font-size:.8rem; }
+  .battle-console { position:fixed; z-index:20; left:0; right:0; bottom:0; margin:0; padding:10px max(10px,env(safe-area-inset-right)) calc(10px + env(safe-area-inset-bottom)) max(10px,env(safe-area-inset-left)); grid-template-columns:1fr; border-width:1px 0 0; border-radius:16px 16px 0 0; box-shadow:0 -10px 32px #000a; }
+  .match-setup .selectors { display:flex; }
+  .battle-log { grid-column:1; min-height:36px; padding:6px 10px; font-size:.78rem; }
+  .actions { grid-template-columns:repeat(3,1fr); gap:6px; }
+  .actions button { min-height:48px; padding:8px 4px; font-size:.7rem; }
+  .actions #hitPreview, .actions #defeatPreview { display:none; }
+  .motion-note { display:none; }
+}
+
+/* Training UI remains accessible on phones, including matchup selection. */
+.match-setup { grid-column:1/-1; }
+.match-setup summary { min-height:48px; padding:12px 4px; cursor:pointer; }
+.match-setup label { min-width:0; }
+#skillActions { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px; grid-column:1/-1; }
+.battle-console .actions { grid-template-columns:1fr; }
+.battle-console button:disabled { opacity:.5; cursor:wait; }
+.effects { position:absolute; top:112px; left:4%; right:4%; color:#dfc084; font:11px system-ui; }
+.particle.leaf { border-radius:0 80% 0 80%; background:#79d369; }
+.particle.flower { border-radius:35%; background:#f2a0d2; }
+@media(max-width:760px) {
+  .battle-shell { padding-bottom:300px; }
+  .battle-console { max-height:48dvh; overflow-y:auto; }
+  .battle-console .actions button:last-child { grid-column:auto; }
+  .battle-console .actions #resetBattle { grid-column:1/-1; }
+  .effects { top:112px; font-size:10px; }
+  .hp-copy { white-space:normal; left:4%; right:4%; }
+  .favorite-star { min-width:48px; }
+}

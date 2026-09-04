@@ -2,8 +2,8 @@ import json
 from pathlib import Path
 from openpyxl import load_workbook
 
-SOURCE = Path(".codex-tmp/design-v45.xlsx")
-OUTPUT = Path("data/design-v45")
+SOURCE = Path(r"C:\Users\elroy\Downloads\Monster Exchange Master Design Database v47 - 244 Species Release QA & Combat Integration.xlsx")
+OUTPUT = Path("data/design-v47")
 SHEETS = {
     "Species Catalog": "species-catalog.json",
     "Species Combat Stats": "species-combat-stats.json",
@@ -35,6 +35,6 @@ for sheet_name, filename in SHEETS.items():
         if not any(value is not None and value != "" for value in row):
             continue
         records.append({header: row[index] if index < len(row) else None for index, header in enumerate(headers)})
-    (OUTPUT / filename).write_text(json.dumps(records, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+    (OUTPUT / filename).write_text(json.dumps(records, indent=2, ensure_ascii=False, default=str) + "\n", encoding="utf-8")
     counts[sheet_name] = len(records)
 print(json.dumps(counts, indent=2))

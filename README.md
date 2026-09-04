@@ -1,5 +1,11 @@
 # The Monster Exchange
 
+## Production target: native Android phones
+
+The game is **not a website or WebView wrapper**. The native React Native client lives in `mobile/` and renders Android controls directly. `prototype/` and its browser servers are historical design/test references, not the production game. See [native Android implementation](docs/design/native-android.md) for setup, supplied UI-pack guidance, scope, and verification limits.
+
+Native client commands: `npm install --prefix mobile`, `npm run start --prefix mobile` (Android development client), or `npm run android --prefix mobile` (local native build, requires Android SDK/JDK). Existing root scripts run simulation tests and historical previews only.
+
 Canonical application/package identifier: `com.elroybenjamins.themonsterexchange`. Android, iOS, and future distribution builds must keep this identifier unchanged; shared metadata lives in `app.config.json` and `src/config/app.ts`.
 
 Google Play release documentation: [Privacy Policy](PRIVACY.md) · [Data safety and release checklist](docs/GOOGLE_PLAY_DATA_SAFETY.md). The current declaration assumes the shipped build remains offline and contains no analytics, ads, accounts, cloud services, payments, or third-party data-collection SDKs.

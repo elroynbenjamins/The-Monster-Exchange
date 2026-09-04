@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <title>The Monster Exchange — Battle Arena</title>
+  <link rel="stylesheet" href="/prototype/battle/battle.css">
+  <link rel="stylesheet" href="/assets/styles/android-ui.css">
+  <link rel="stylesheet" href="/prototype/battle/save.css">
+</head>
+<body>
+  <main class="battle-shell" aria-label="Battle arena">
+    <header class="topbar">
+      <div><p class="eyebrow">Exchange League Exhibition</p><h1>Battle Arena</h1></div>
+      <nav><a href="/prototype/monsterdex/">Monsterdex</a><a href="/prototype/world-map/">World map</a></nav>
+    </header>
+
+    <section class="battlefield" id="battlefield" aria-label="Interactive monster battle">
+      <div class="weather" aria-hidden="true"></div>
+      <article class="fighter player" data-side="player">
+        <div class="hud"><div><strong id="playerName"></strong><small id="playerTypes"></small></div><b>Lv. 18</b></div>
+        <div class="health"><i id="playerHealth"></i></div><span class="hp-copy" id="playerHpCopy"></span><small class="effects" id="playerEffects"></small>
+        <div class="sprite-anchor"><img id="playerSprite" class="monster-sprite" alt=""></div>
+        <div class="shadow"></div><div class="particles" id="playerParticles"></div>
+      </article>
+
+      <div class="versus" aria-hidden="true">VS</div>
+
+      <article class="fighter enemy" data-side="enemy">
+        <div class="hud"><div><strong id="enemyName"></strong><small id="enemyTypes"></small></div><b>Lv. 18</b></div>
+        <div class="health"><i id="enemyHealth"></i></div><span class="hp-copy" id="enemyHpCopy"></span><small class="effects" id="enemyEffects"></small>
+        <div class="sprite-anchor"><img id="enemySprite" class="monster-sprite" alt=""></div>
+        <div class="shadow"></div><div class="particles" id="enemyParticles"></div>
+      </article>
+    </section>
+
+    <section class="battle-console">
+      <details class="match-setup"><summary>Training matchup</summary><div class="selectors">
+        <label>Your monster<select id="playerSelect"></select></label>
+        <label>Opponent<select id="enemySelect"></select></label>
+      </div></details>
+      <div class="battle-log" id="battleLog" role="status" aria-live="polite">Choose an action.</div>
+      <p id="saveStatus" class="save-status" role="status">Loading saved battle…</p>
+      <div class="actions" aria-label="Battle actions">
+        <div id="skillActions"></div>
+        <button id="resetBattle">New battle</button>
+      </div>
+    </section>
+    <p class="motion-note">Four production poses · CSS motion · type particles · automatic enemy mirroring</p>
+  </main>
+  <dialog id="restartDialog" aria-labelledby="restartTitle" aria-describedby="restartDescription">
+    <h2 id="restartTitle">Start a new battle?</h2>
+    <p id="restartDescription">This replaces the training battle saved on this device. Campaign progress is unaffected.</p>
+    <form method="dialog"><button value="cancel" autofocus>Keep current battle</button><button value="restart">Start new battle</button></form>
+  </dialog>
+  <script type="module" src="/prototype/battle/battle.js"></script>
+</body>
+</html>

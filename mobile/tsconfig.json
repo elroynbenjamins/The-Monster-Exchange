@@ -1,0 +1,6 @@
+{
+  "extends": "expo/tsconfig.base",
+  "compilerOptions": { "strict": true, "allowImportingTsExtensions": true, "noEmit": true },
+  "include": ["**/*.ts", "**/*.tsx", "../src/**/*.ts"],
+  "exclude": ["node_modules", "../src/cli.ts", "../src/demo.ts", "../src/index.ts", "../src/game/save.ts"]
+}

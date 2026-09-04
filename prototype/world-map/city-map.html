@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>The Monster Exchange — City Navigation</title>
+  <link rel="stylesheet" href="/prototype/world-map/world-map.css">
+  <link rel="stylesheet" href="/prototype/world-map/region-map.css">
+  <link rel="stylesheet" href="/prototype/world-map/city-map.css">
+  <link rel="stylesheet" href="/assets/styles/android-ui.css">
+</head>
+<body>
+  <main class="world-shell" aria-label="City navigation">
+    <header class="topbar">
+      <div><p class="eyebrow">Exchange Guild Navigation</p><h1 id="pageTitle">City Map</h1></div>
+      <div class="resources"><span><b>Day 1</b></span><span>◆ <b>250</b> Crowns</span><a class="ghost-button map-link" href="/prototype/world-map/">World map</a></div>
+    </header>
+    <nav class="breadcrumbs" aria-label="Map breadcrumbs">
+      <a href="/prototype/world-map/">World</a><span>›</span><a href="/prototype/world-map/" id="continentCrumb"></a><span>›</span><a id="regionCrumb"></a><span>›</span><strong id="cityCrumb"></strong>
+    </nav>
+    <section class="navigation-layout city-layout">
+      <aside class="destination-panel" aria-labelledby="facilityListTitle">
+        <div class="panel-heading"><p class="eyebrow">City directory</p><h2 id="facilityListTitle">Facilities</h2></div>
+        <label class="directory-search"><span>Filter facilities</span><input id="facilitySearch" type="search" placeholder="Market, arena, research…"></label>
+        <div id="facilityList" class="destination-list"></div>
+      </aside>
+      <section class="map-stage city-stage" id="cityStage" aria-label="Interactive city map">
+        <img id="cityImage" alt="" draggable="false">
+        <div id="facilityHotspotLayer" class="hotspot-layer"></div>
+        <p class="map-help">Choose a city district. Labels and actions remain editable game data.</p>
+      </section>
+      <aside class="region-panel" aria-live="polite">
+        <div class="region-hero"><span id="facilityIcon">◆</span><div><p id="facilityKind"></p><h2 id="facilityName"></h2></div></div>
+        <p id="cityRole" class="region-description"></p>
+        <dl class="region-stats"><div><dt>City</dt><dd id="facilityCity"></dd></div><div><dt>Region</dt><dd id="facilityRegion"></dd></div><div><dt>Service</dt><dd id="facilityService"></dd></div></dl>
+        <div id="facilitySummary" class="travel-summary"></div>
+        <button id="facilityAction" class="travel-button" type="button">Open facility</button>
+        <a id="backToRegion" class="secondary-button map-link back-link">Back to region</a>
+      </aside>
+    </section>
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  </main>
+  <script type="module" src="/prototype/world-map/city-map.js"></script>
+</body>
+</html>

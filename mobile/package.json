@@ -1,0 +1,20 @@
+{
+  "name": "monster-exchange-android",
+  "private": true,
+  "version": "0.1.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "expo start --android",
+    "android": "expo run:android",
+    "typecheck": "tsc --noEmit",
+    "bundle:android": "expo export --platform android --output-dir dist"
+  },
+  "dependencies": {
+    "expo": "~55.0.0",
+    "react": "19.2.0",
+    "react-native": "0.83.10",
+    "react-native-safe-area-context": "~5.6.2",
+    "@react-native-async-storage/async-storage": "2.2.0"
+  },
+  "devDependencies": { "typescript": "~5.9.2", "@types/react": "~19.2.0" }
+}

@@ -4,7 +4,7 @@ import { content } from "../src/content/index.ts";
 import { SeededRandom } from "../src/core/random.ts";
 import { createMonster } from "../src/systems/monsters.ts";
 
-const expandedIds = [213, 214, 215, 216, 217, 218, 219, 220, 221];
+const expandedIds = Array.from({ length: 32 }, (_, index) => index + 213);
 
 test("expanded roster IDs have authored integration records without runtime fallbacks", () => {
   for (const internalId of expandedIds) {
@@ -15,7 +15,7 @@ test("expanded roster IDs have authored integration records without runtime fall
     assert.ok(species.sourceTraitIds.length > 0, `${species.name}: source traits`);
     assert.ok(species.sourceSkillIds.length > 0, `${species.name}: source learnset`);
     assert.match(species.sourcePassiveId, /^PAS_\d+$/, `${species.name}: source passive`);
-    assert.ok(species.weeklyMaterialValue > 0, `${species.name}: material economy`);
+    assert.ok(Number.isFinite(species.weeklyMaterialValue) && species.weeklyMaterialValue >= 0, `${species.name}: material economy`);
     assert.ok(species.baseMarketValue > 0, `${species.name}: market`);
     assert.ok(species.obtainability, `${species.name}: obtainability`);
     const monster = createMonster(species, new SeededRandom(internalId), { day: 1 });
@@ -24,14 +24,19 @@ test("expanded roster IDs have authored integration records without runtime fall
   }
 });
 
-test("restored middle evolutions are obtainable through evolution but excluded from ordinary encounters", () => {
+test("v47 obtainability rules distinguish rare wild middle stages from evolution-only Emberrook", () => {
   for (const id of ["hailhorn", "gloamfawn"]) {
     const species = content.species.find((candidate) => candidate.id === id)!;
     assert.equal(species.evolutionStage, 2);
-    assert.equal(species.obtainability?.evolutionOnly, true);
-    assert.equal(species.obtainability?.wildCatchable, false);
+    assert.equal(species.obtainability?.evolutionOnly, false);
+    assert.equal(species.obtainability?.wildCatchable, true);
     assert.ok(content.evolutions.some(({ toSpeciesId }) => toSpeciesId === id));
     assert.ok(content.evolutions.some(({ fromSpeciesId }) => fromSpeciesId === id));
-    assert.ok(content.zones.every((zone) => zone.speciesPool.every(({ speciesId }) => speciesId !== id)));
   }
+  const emberrook = content.species.find(({ id }) => id === "emberrook")!;
+  assert.equal(emberrook.evolutionStage, 2);
+  assert.equal(emberrook.obtainability?.evolutionOnly, true);
+  assert.equal(emberrook.obtainability?.wildCatchable, false);
+  assert.ok(content.evolutions.some(({ toSpeciesId }) => toSpeciesId === "emberrook"));
+  assert.ok(content.evolutions.some(({ fromSpeciesId }) => fromSpeciesId === "emberrook"));
 });

@@ -1,0 +1,1940 @@
+{
+  "pack": "monster-exchange-battle-sprites-v1",
+  "canvasSizes": [
+    128,
+    256
+  ],
+  "sourceFacing": "left",
+  "poses": [
+    "idle",
+    "attack",
+    "hit",
+    "defeated"
+  ],
+  "lines": [
+    {
+      "id": "sprigbara_line",
+      "sheet": "sprite-sheets/01-sprigbara-fenbara-crownbara.png",
+      "monsters": [
+        {
+          "id": "sprigbara",
+          "types": [
+            "grass"
+          ],
+          "stage": 1
+        },
+        {
+          "id": "fenbara",
+          "types": [
+            "grass"
+          ],
+          "stage": 2
+        },
+        {
+          "id": "crownbara",
+          "types": [
+            "grass",
+            "fairy"
+          ],
+          "stage": 3
+        }
+      ]
+    },
+    {
+      "id": "cindlet_line",
+      "sheet": "sprite-sheets/02-cindlet-kilnback-pyroclastor.png",
+      "monsters": [
+        {
+          "id": "cindlet",
+          "types": [
+            "fire"
+          ],
+          "stage": 1
+        },
+        {
+          "id": "kilnback",
+          "types": [
+            "fire",
+            "rock"
+          ],
+          "stage": 2
+        },
+        {
+          "id": "pyroclastor",
+          "types": [
+            "fire",
+            "steel"
+          ],
+          "stage": 3
+        }
+      ]
+    },
+    {
+      "id": "rifflin_line",
+      "sheet": "sprite-sheets/03-rifflin-brookotl-brineveil.png",
+      "monsters": [
+        {
+          "id": "rifflin",
+          "types": [
+            "water"
+          ],
+          "stage": 1
+        },
+        {
+          "id": "brookotl",
+          "types": [
+            "water"
+          ],
+          "stage": 2
+        },
+        {
+          "id": "brineveil",
+          "types": [
+            "water",
+            "ghost"
+          ],
+          "stage": 3
+        }
+      ]
+    },
+    {
+      "id": "joltmeer_line",
+      "sheet": "sprite-sheets/04-joltmeer-voltbrace-tempestark.png",
+      "monsters": [
+        {
+          "id": "joltmeer",
+          "types": [
+            "electric"
+          ],
+          "stage": 1
+        },
+        {
+          "id": "voltbrace",
+          "types": [
+            "electric",
+            "fighting"
+          ],
+          "stage": 2
+        },
+        {
+          "id": "tempestark",
+          "types": [
+            "electric",
+            "fighting"
+          ],
+          "stage": 3
+        }
+      ]
+    },
+    {
+      "id": "rimeket_line",
+      "sheet": "sprite-sheets/05-rimeket-duskrime-nocthyrme.png",
+      "monsters": [
+        {
+          "id": "rimeket",
+          "types": [
+            "ice"
+          ],
+          "stage": 1
+        },
+        {
+          "id": "duskrime",
+          "types": [
+            "ice",
+            "dark"
+          ],
+          "stage": 2
+        },
+        {
+          "id": "nocthyrme",
+          "types": [
+            "ice",
+            "dark"
+          ],
+          "stage": 3
+        }
+      ]
+    },
+    {
+      "id": "budmote_line",
+      "sheet": "sprite-sheets/06-budmote-crownbloom.png",
+      "monsters": [
+        {
+          "id": "budmote",
+          "types": [
+            "grass",
+            "fairy"
+          ],
+          "stage": 1
+        },
+        {
+          "id": "crownbloom",
+          "types": [
+            "grass",
+            "fairy"
+          ],
+          "stage": 2
+        }
+      ]
+    },
+    {
+      "id": "fuzzvolt_line",
+      "sheet": "sprite-sheets/07-fuzzvolt-loomspark.png",
+      "monsters": [
+        {
+          "id": "fuzzvolt",
+          "types": [
+            "electric",
+            "bug"
+          ],
+          "stage": 1
+        },
+        {
+          "id": "loomspark",
+          "types": [
+            "electric",
+            "bug"
+          ],
+          "stage": 2
+        }
+      ]
+    },
+    {
+      "id": "bramblejaw_line",
+      "sheet": "sprite-sheets/08-bramblejaw-thicketyr.png",
+      "monsters": [
+        {
+          "id": "bramblejaw",
+          "types": [
+            "grass",
+            "dark"
+          ],
+          "stage": 1
+        },
+        {
+          "id": "thicketyr",
+          "types": [
+            "grass",
+            "dark"
+          ],
+          "stage": 2
+        }
+      ]
+    },
+    {
+      "id": "knucklebud_line",
+      "sheet": "sprite-sheets/09-knucklebud-burlbrute.png",
+      "monsters": [
+        {
+          "id": "knucklebud",
+          "types": [
+            "fighting"
+          ],
+          "stage": 1
+        },
+        {
+          "id": "burlbrute",
+          "types": [
+            "fighting",
+            "grass"
+          ],
+          "stage": 2
+        }
+      ]
+    },
+    {
+      "id": "quillop_line",
+      "sheet": "sprite-sheets/10-quillop-scribetail.png",
+      "monsters": [
+        {
+          "id": "quillop",
+          "types": [
+            "normal"
+          ],
+          "stage": 1
+        },
+        {
+          "id": "scribetail",
+          "types": [
+            "normal",
+            "psychic"
+          ],
+          "stage": 2
+        }
+      ]
+    },
+    {
+      "id": "frondle_line",
+      "sheet": "sprite-sheets/11-frondle-thornloom.png",
+      "monsters": [
+        {
+          "id": "frondle",
+          "types": [
+            "grass",
+            "bug"
+          ],
+          "stage": 1
+        },
+        {
+          "id": "thornloom",
+          "types": [
+            "grass",
+            "bug"
+          ],
+          "stage": 2
+        }
+      ]
+    },
+    {
+      "id": "coilbud_line",
+      "sheet": "sprite-sheets/12-coilbud-dynamoira.png",
+      "monsters": [
+        {
+          "id": "coilbud",
+          "types": [
+            "electric",
+            "grass"
+          ],
+          "stage": 1
+        },
+        {
+          "id": "dynamoira",
+          "types": [
+            "electric",
+            "grass"
+          ],
+          "stage": 2
+        }
+      ]
+    },
+    {
+      "id": "tusslegrub_line",
+      "sheet": "sprite-sheets/13-tusslegrub-rooklimb.png",
+      "monsters": [
+        {
+          "id": "tusslegrub",
+          "types": [
+            "bug"
+          ],
+          "stage": 1
+        },
+        {
+          "id": "rooklimb",
+          "types": [
+            "bug",
+            "fighting"
+          ],
+          "stage": 2
+        }
+      ]
+    },
+    {
+      "id": "drowseed_line",
+      "sheet": "sprite-sheets/14-drowseed-somnaloak.png",
+      "monsters": [
+        {
+          "id": "drowseed",
+          "types": [
+            "grass"
+          ],
+          "stage": 1
+        },
+        {
+          "id": "somnaloak",
+          "types": [
+            "grass",
+            "psychic"
+          ],
+          "stage": 2
+        }
+      ]
+    },
+    {
+      "id": "mossfist_line",
+      "sheet": "sprite-sheets/15-mossfist-grovegrip.png",
+      "monsters": [
+        {
+          "id": "mossfist",
+          "types": [
+            "fighting"
+          ],
+          "stage": 1
+        },
+        {
+          "id": "grovegrip",
+          "types": [
+            "fighting",
+            "grass"
+          ],
+          "stage": 2
+        }
+      ]
+    },
+    {
+      "id": "reedblade_line",
+      "sheet": "sprite-sheets/16-reedblade-thornscythe-ferramantis.png",
+      "monsters": [
+        {
+          "id": "reedblade",
+          "types": [
+            "bug"
+          ],
+          "stage": 1
+        },
+        {
+          "id": "thornscythe",
+          "types": [
+            "bug"
+          ],
+          "stage": 2
+        },
+        {
+          "id": "ferramantis",
+          "types": [
+            "bug",
+            "steel"
+          ],
+          "stage": 3
+        }
+      ]
+    },
+    {
+      "id": "tumblet_single",
+      "sheet": "sprite-sheets/17-tumblet.png",
+      "monsters": [
+        {
+          "id": "tumblet",
+          "types": [
+            "normal",
+            "ground"
+          ],
+          "stage": 1
+        }
+      ]
+    },
+    {
+      "id": "burrowbeak_single",
+      "sheet": "sprite-sheets/18-burrowbeak.png",
+      "monsters": [
+        {
+          "id": "burrowbeak",
+          "types": [
+            "normal",
+            "ground"
+          ],
+          "stage": 1
+        }
+      ]
+    },
+    {
+      "id": "mirthmew_single",
+      "sheet": "sprite-sheets/19-mirthmew.png",
+      "monsters": [
+        {
+          "id": "mirthmew",
+          "types": [
+            "fairy",
+            "normal"
+          ],
+          "stage": 1
+        }
+      ]
+    },
+    {
+      "id": "runebuck_single",
+      "sheet": "sprite-sheets/20-runebuck.png",
+      "monsters": [
+        {
+          "id": "runebuck",
+          "types": [
+            "psychic",
+            "grass"
+          ],
+          "stage": 1
+        }
+      ]
+    },
+    {
+      "id": "simiri_branch_line",
+      "sheet": "sprite-sheets/21-simiri-branch-evolutions.png",
+      "evolutionType": "branching",
+      "monsters": [
+        {
+          "id": "simiri",
+          "types": [
+            "normal"
+          ],
+          "stage": 1
+        },
+        {
+          "id": "cinderimi",
+          "types": [
+            "normal",
+            "fire"
+          ],
+          "stage": 2,
+          "branch": "fire"
+        },
+        {
+          "id": "brookimi",
+          "types": [
+            "normal",
+            "water"
+          ],
+          "stage": 2,
+          "branch": "water"
+        },
+        {
+          "id": "bramblemi",
+          "types": [
+            "normal",
+            "grass"
+          ],
+          "stage": 2,
+          "branch": "grass"
+        },
+        {
+          "id": "voltimiri",
+          "types": [
+            "normal",
+            "electric"
+          ],
+          "stage": 2,
+          "branch": "electric"
+        },
+        {
+          "id": "rimeiri",
+          "types": [
+            "normal",
+            "ice"
+          ],
+          "stage": 2,
+          "branch": "ice"
+        },
+        {
+          "id": "omeniri",
+          "types": [
+            "normal",
+            "ghost"
+          ],
+          "stage": 2,
+          "branch": "ghost"
+        },
+        {
+          "id": "noctimiri",
+          "types": [
+            "normal",
+            "dark"
+          ],
+          "stage": 2,
+          "branch": "dark"
+        },
+        {
+          "id": "alloymiri",
+          "types": [
+            "normal",
+            "steel"
+          ],
+          "stage": 2,
+          "branch": "steel"
+        },
+        {
+          "id": "oraciri",
+          "types": [
+            "normal",
+            "psychic"
+          ],
+          "stage": 2,
+          "branch": "psychic"
+        }
+      ]
+    },
+    {
+      "id": "mossveil_line",
+      "sheet": "sprite-sheets/22-mossveil-canopyre.png",
+      "monsters": [
+        {
+          "id": "mossveil",
+          "types": [
+            "grass",
+            "poison"
+          ],
+          "stage": 1
+        },
+        {
+          "id": "canopyre",
+          "types": [
+            "grass",
+            "fairy"
+          ],
+          "stage": 2
+        }
+      ]
+    },
+    {
+      "id": "pebblit_line",
+      "sheet": "sprite-sheets/23-pebblit-cairnox.png",
+      "monsters": [
+        {
+          "id": "pebblit",
+          "types": [
+            "rock"
+          ],
+          "stage": 1
+        },
+        {
+          "id": "cairnox",
+          "types": [
+            "rock",
+            "fighting"
+          ],
+          "stage": 2
+        }
+      ]
+    },
+    {
+      "id": "dunelet_line",
+      "sheet": "sprite-sheets/24-dunelet-mirrormaw.png",
+      "monsters": [
+        {
+          "id": "dunelet",
+          "types": [
+            "ground"
+          ],
+          "stage": 1
+        },
+        {
+          "id": "mirrormaw",
+          "types": [
+            "ground",
+            "psychic"
+          ],
+          "stage": 2
+        }
+      ]
+    },
+    {
+      "id": "dustlet_line",
+      "sheet": "sprite-sheets/25-dustlet-siroccoil.png",
+      "monsters": [
+        {
+          "id": "dustlet",
+          "types": [
+            "ground",
+            "flying"
+          ],
+          "stage": 1
+        },
+        {
+          "id": "siroccoil",
+          "types": [
+            "ground",
+            "flying"
+          ],
+          "stage": 2
+        }
+      ]
+    },
+    {
+      "id": "gravvel_line",
+      "sheet": "sprite-sheets/26-gravvel-faultusk.png",
+      "monsters": [
+        {
+          "id": "gravvel",
+          "types": [
+            "rock",
+            "ground"
+          ],
+          "stage": 1
+        },
+        {
+          "id": "faultusk",
+          "types": [
+            "rock",
+            "ground"
+          ],
+          "stage": 2
+        }
+      ]
+    },
+    {
+      "id": "shardpang_line",
+      "sheet": "sprite-sheets/27-shardpang-ferrapine.png",
+      "monsters": [
+        {
+          "id": "shardpang",
+          "types": [
+            "ground"
+          ],
+          "stage": 1
+        },
+        {
+          "id": "ferrapine",
+          "types": [
+            "ground",
+            "steel"
+          ],
+          "stage": 2
+        }
+      ]
+    },
+    {
+      "id": "knubback_line",
+      "sheet": "sprite-sheets/28-knubback-rampartail-forgeclub.png",
+      "monsters": [
+        {
+          "id": "knubback",
+          "types": [
+            "rock"
+          ],
+          "stage": 1
+        },
+        {
+          "id": "rampartail",
+          "types": [
+            "rock"
+          ],
+          "stage": 2
+        },
+        {
+          "id": "forgeclub",
+          "types": [
+            "rock",
+            "steel"
+          ],
+          "stage": 3
+        }
+      ]
+    },
+    {
+      "id": "rootsnuff_line",
+      "sheet": "sprite-sheets/29-rootsnuff-termibreak.png",
+      "monsters": [
+        {
+          "id": "rootsnuff",
+          "types": [
+            "fighting"
+          ],
+          "stage": 1
+        },
+        {
+          "id": "termibreak",
+          "types": [
+            "fighting",
+            "rock"
+          ],
+          "stage": 2
+        }
+      ]
+    },
+    {
+      "id": "burrowarden_single",
+      "sheet": "sprite-sheets/30-burrowarden.png",
+      "monsters": [
+        {
+          "id": "burrowarden",
+          "types": [
+            "ground",
+            "rock"
+          ],
+          "stage": 1
+        }
+      ]
+    },
+    {
+      "id": "dustsnout_line",
+      "sheet": "sprite-sheets/31-dustsnout-bellroam-echonaris.png",
+      "monsters": [
+        {
+          "id": "dustsnout",
+          "types": [
+            "normal"
+          ],
+          "stage": 1
+        },
+        {
+          "id": "bellroam",
+          "types": [
+            "normal",
+            "psychic"
+          ],
+          "stage": 2
+        },
+        {
+          "id": "echonaris",
+          "types": [
+            "psychic"
+          ],
+          "stage": 3
+        }
+      ]
+    },
+    {
+      "id": "tidepup_line",
+      "sheet": "sprite-sheets/32-tidepup-reefhowl.png",
+      "monsters": [
+        {
+          "id": "tidepup",
+          "types": [
+            "water"
+          ],
+          "stage": 1
+        },
+        {
+          "id": "reefhowl",
+          "types": [
+            "water",
+            "rock"
+          ],
+          "stage": 2
+        }
+      ]
+    },
+    {
+      "id": "brinibble_line",
+      "sheet": "sprite-sheets/33-brinibble-steamvat.png",
+      "monsters": [
+        {
+          "id": "brinibble",
+          "types": [
+            "water"
+          ],
+          "stage": 1
+        },
+        {
+          "id": "steamvat",
+          "types": [
+            "water",
+            "fire"
+          ],
+          "stage": 2
+        }
+      ]
+    },
+    {
+      "id": "emberfin_line",
+      "sheet": "sprite-sheets/34-emberfin-anemflare.png",
+      "monsters": [
+        {
+          "id": "emberfin",
+          "types": [
+            "water"
+          ],
+          "stage": 1
+        },
+        {
+          "id": "anemflare",
+          "types": [
+            "water",
+            "fire"
+          ],
+          "stage": 2
+        }
+      ]
+    },
+    {
+      "id": "clawtide_line",
+      "sheet": "sprite-sheets/35-clawtide-pugilcrab.png",
+      "monsters": [
+        {
+          "id": "clawtide",
+          "types": [
+            "water"
+          ],
+          "stage": 1
+        },
+        {
+          "id": "pugilcrab",
+          "types": [
+            "water",
+            "fighting"
+          ],
+          "stage": 2
+        }
+      ]
+    },
+    {
+      "id": "drizzlepod_line",
+      "sheet": "sprite-sheets/36-drizzlepod-noxitide.png",
+      "monsters": [
+        {
+          "id": "drizzlepod",
+          "types": [
+            "water",
+            "poison"
+          ],
+          "stage": 1
+        },
+        {
+          "id": "noxitide",
+          "types": [
+            "water",
+            "poison"
+          ],
+          "stage": 2
+        }
+      ]
+    },
+    {
+      "id": "prismjab_line",
+      "sheet": "sprite-sheets/37-prismjab-caviclub-spectrafist.png",
+      "monsters": [
+        {
+          "id": "prismjab",
+          "types": [
+            "fighting"
+          ],
+          "stage": 1
+        },
+        {
+          "id": "caviclub",
+          "types": [
+            "fighting",
+            "electric"
+          ],
+          "stage": 2
+        },
+        {
+          "id": "spectrafist",
+          "types": [
+            "fighting",
+            "electric"
+          ],
+          "stage": 3
+        }
+      ]
+    },
+    {
+      "id": "chimeshell_single",
+      "sheet": "sprite-sheets/38-chimeshell.png",
+      "monsters": [
+        {
+          "id": "chimeshell",
+          "types": [
+            "water",
+            "psychic"
+          ],
+          "stage": 1
+        }
+      ]
+    },
+    {
+      "id": "voltspur_single",
+      "sheet": "sprite-sheets/39-voltspur.png",
+      "monsters": [
+        {
+          "id": "voltspur",
+          "types": [
+            "water",
+            "electric"
+          ],
+          "stage": 1
+        }
+      ]
+    },
+    {
+      "id": "mucklet_line",
+      "sheet": "sprite-sheets/40-mucklet-bogcrumbler.png",
+      "monsters": [
+        {
+          "id": "mucklet",
+          "types": [
+            "poison",
+            "water"
+          ],
+          "stage": 1
+        },
+        {
+          "id": "bogcrumbler",
+          "types": [
+            "poison",
+            "ground"
+          ],
+          "stage": 2
+        }
+      ]
+    },
+    {
+      "id": "tundrusk_line",
+      "sheet": "sprite-sheets/41-tundrusk-paleolith-glacimast.png",
+      "monsters": [
+        {
+          "id": "tundrusk",
+          "types": [
+            "ice"
+          ],
+          "stage": 1
+        },
+        {
+          "id": "paleolith",
+          "types": [
+            "ice"
+          ],
+          "stage": 2
+        },
+        {
+          "id": "glacimast",
+          "types": [
+            "ice",
+            "ground"
+          ],
+          "stage": 3
+        }
+      ]
+    },
+    {
+      "id": "pufflece_line",
+      "sheet": "sprite-sheets/42-pufflece-loomstride-aurawool.png",
+      "monsters": [
+        {
+          "id": "pufflece",
+          "types": [
+            "normal"
+          ],
+          "stage": 1
+        },
+        {
+          "id": "loomstride",
+          "types": [
+            "normal"
+          ],
+          "stage": 2
+        },
+        {
+          "id": "aurawool",
+          "types": [
+            "normal",
+            "ice"
+          ],
+          "stage": 3
+        }
+      ]
+    },
+    {
+      "id": "craghush_line",
+      "sheet": "sprite-sheets/43-craghush-rimeclaw-whitewroth.png",
+      "monsters": [
+        {
+          "id": "craghush",
+          "types": [
+            "ice"
+          ],
+          "stage": 1
+        },
+        {
+          "id": "rimeclaw",
+          "types": [
+            "ice",
+            "fighting"
+          ],
+          "stage": 2
+        },
+        {
+          "id": "whitewroth",
+          "types": [
+            "ice",
+            "fighting"
+          ],
+          "stage": 3
+        }
+      ]
+    },
+    {
+      "id": "voltgazer_line",
+      "sheet": "sprite-sheets/44-voltgazer-tempestride.png",
+      "monsters": [
+        {
+          "id": "voltgazer",
+          "types": [
+            "electric",
+            "ground"
+          ],
+          "stage": 1
+        },
+        {
+          "id": "tempestride",
+          "types": [
+            "electric",
+            "ground"
+          ],
+          "stage": 2
+        }
+      ]
+    },
+    {
+      "id": "skyrill_line",
+      "sheet": "sprite-sheets/45-skyrill-galecrest.png",
+      "monsters": [
+        {
+          "id": "skyrill",
+          "types": [
+            "flying",
+            "normal"
+          ],
+          "stage": 1
+        },
+        {
+          "id": "galecrest",
+          "types": [
+            "flying",
+            "dragon"
+          ],
+          "stage": 2
+        }
+      ]
+    },
+    {
+      "id": "cloudrim_single",
+      "sheet": "sprite-sheets/46-cloudrim.png",
+      "monsters": [
+        {
+          "id": "cloudrim",
+          "types": [
+            "flying",
+            "electric"
+          ],
+          "stage": 1
+        }
+      ]
+    },
+    {
+      "id": "kitespine_single",
+      "sheet": "sprite-sheets/47-kitespine.png",
+      "monsters": [
+        {
+          "id": "kitespine",
+          "types": [
+            "dragon",
+            "flying"
+          ],
+          "stage": 1
+        }
+      ]
+    },
+    {
+      "id": "arcwren_line",
+      "sheet": "sprite-sheets/48-arcwren-stormscribe.png",
+      "monsters": [
+        {
+          "id": "arcwren",
+          "types": [
+            "electric",
+            "flying"
+          ],
+          "stage": 1
+        },
+        {
+          "id": "stormscribe",
+          "types": [
+            "electric",
+            "flying"
+          ],
+          "stage": 2
+        }
+      ]
+    },
+    {
+      "id": "skydisc_line",
+      "sheet": "sprite-sheets/49-skydisc-aetheray.png",
+      "monsters": [
+        {
+          "id": "skydisc",
+          "types": [
+            "flying"
+          ],
+          "stage": 1
+        },
+        {
+          "id": "aetheray",
+          "types": [
+            "flying",
+            "psychic"
+          ],
+          "stage": 2
+        }
+      ]
+    },
+    {
+      "id": "sparkspine_single",
+      "sheet": "sprite-sheets/50-sparkspine.png",
+      "monsters": [
+        {
+          "id": "sparkspine",
+          "types": [
+            "electric",
+            "normal"
+          ],
+          "stage": 1
+        }
+      ]
+    },
+    {
+      "id": "duneskip_line",
+      "sheet": "sprite-sheets/51-duneskip-springarc.png",
+      "monsters": [
+        {
+          "id": "duneskip",
+          "types": [
+            "normal"
+          ],
+          "stage": 1
+        },
+        {
+          "id": "springarc",
+          "types": [
+            "electric",
+            "normal"
+          ],
+          "stage": 2
+        }
+      ]
+    },
+    {
+      "id": "sootsnip_line",
+      "sheet": "sprite-sheets/53-sootsnip-cauterwing.png",
+      "monsters": [
+        {
+          "id": "sootsnip",
+          "types": [
+            "fire",
+            "bug"
+          ],
+          "stage": 1
+        },
+        {
+          "id": "cauterwing",
+          "types": [
+            "fire",
+            "bug"
+          ],
+          "stage": 2
+        }
+      ]
+    },
+    {
+      "id": "cinderskink_line",
+      "sheet": "sprite-sheets/54-cinderskink-ashmaul-vulcarodo.png",
+      "monsters": [
+        {
+          "id": "cinderskink",
+          "types": [
+            "poison"
+          ],
+          "stage": 1
+        },
+        {
+          "id": "ashmaul",
+          "types": [
+            "poison",
+            "fire"
+          ],
+          "stage": 2
+        },
+        {
+          "id": "vulcarodo",
+          "types": [
+            "poison",
+            "dragon"
+          ],
+          "stage": 3
+        }
+      ]
+    },
+    {
+      "id": "sandscuttle_line",
+      "sheet": "sprite-sheets/55-sandscuttle-shardscorp.png",
+      "monsters": [
+        {
+          "id": "sandscuttle",
+          "types": [
+            "poison"
+          ],
+          "stage": 1
+        },
+        {
+          "id": "shardscorp",
+          "types": [
+            "poison",
+            "rock"
+          ],
+          "stage": 2
+        }
+      ]
+    },
+    {
+      "id": "sickletue_line",
+      "sheet": "sprite-sheets/56-sickletue-quillrend-crescentyr.png",
+      "monsters": [
+        {
+          "id": "sickletue",
+          "types": [
+            "fighting"
+          ],
+          "stage": 1
+        },
+        {
+          "id": "quillrend",
+          "types": [
+            "fighting"
+          ],
+          "stage": 2
+        },
+        {
+          "id": "crescentyr",
+          "types": [
+            "fighting",
+            "rock"
+          ],
+          "stage": 3
+        }
+      ]
+    },
+    {
+      "id": "spinewry_line",
+      "sheet": "sprite-sheets/57-spinewry-thornmirage.png",
+      "monsters": [
+        {
+          "id": "spinewry",
+          "types": [
+            "rock"
+          ],
+          "stage": 1
+        },
+        {
+          "id": "thornmirage",
+          "types": [
+            "rock",
+            "poison"
+          ],
+          "stage": 2
+        }
+      ]
+    },
+    {
+      "id": "glintad_line",
+      "sheet": "sprite-sheets/58-glintad-facetoad.png",
+      "monsters": [
+        {
+          "id": "glintad",
+          "types": [
+            "psychic"
+          ],
+          "stage": 1
+        },
+        {
+          "id": "facetoad",
+          "types": [
+            "psychic",
+            "rock"
+          ],
+          "stage": 2
+        }
+      ]
+    },
+    {
+      "id": "prismink_line",
+      "sheet": "sprite-sheets/59-prismink-veilscale-chromavex.png",
+      "monsters": [
+        {
+          "id": "prismink",
+          "types": [
+            "psychic"
+          ],
+          "stage": 1
+        },
+        {
+          "id": "veilscale",
+          "types": [
+            "psychic"
+          ],
+          "stage": 2
+        },
+        {
+          "id": "chromavex",
+          "types": [
+            "psychic",
+            "poison"
+          ],
+          "stage": 3
+        }
+      ]
+    },
+    {
+      "id": "hummcrest_line",
+      "sheet": "sprite-sheets/60-hummcrest-resonadon-voltchorus.png",
+      "monsters": [
+        {
+          "id": "hummcrest",
+          "types": [
+            "psychic"
+          ],
+          "stage": 1
+        },
+        {
+          "id": "resonadon",
+          "types": [
+            "psychic"
+          ],
+          "stage": 2
+        },
+        {
+          "id": "voltchorus",
+          "types": [
+            "psychic",
+            "electric"
+          ],
+          "stage": 3
+        }
+      ]
+    },
+    {
+      "id": "umbrelloom_line",
+      "sheet": "sprite-sheets/62-umbrelloom-abyssbell.png",
+      "monsters": [
+        {
+          "id": "umbrelloom",
+          "types": [
+            "ghost"
+          ],
+          "stage": 1
+        },
+        {
+          "id": "abyssbell",
+          "types": [
+            "ghost",
+            "water"
+          ],
+          "stage": 2
+        }
+      ]
+    },
+    {
+      "id": "riftjaw_single",
+      "sheet": "sprite-sheets/63-riftjaw.png",
+      "monsters": [
+        {
+          "id": "riftjaw",
+          "types": [
+            "dark",
+            "steel"
+          ],
+          "stage": 1
+        }
+      ]
+    },
+    {
+      "id": "eonbriar_single",
+      "sheet": "sprite-sheets/64-eonbriar.png",
+      "monsters": [
+        {
+          "id": "eonbriar",
+          "types": [
+            "grass",
+            "dragon"
+          ],
+          "stage": 1
+        }
+      ]
+    },
+    {
+      "id": "wraithjelly_single",
+      "sheet": "sprite-sheets/65-wraithjelly.png",
+      "monsters": [
+        {
+          "id": "wraithjelly",
+          "types": [
+            "electric",
+            "ghost"
+          ],
+          "stage": 1
+        }
+      ]
+    },
+    {
+      "id": "tapshade_line",
+      "sheet": "sprite-sheets/66-tapshade-knucklemurmur-hexfinger.png",
+      "monsters": [
+        {
+          "id": "tapshade",
+          "types": [
+            "dark"
+          ],
+          "stage": 1
+        },
+        {
+          "id": "knucklemurmur",
+          "types": [
+            "dark"
+          ],
+          "stage": 2
+        },
+        {
+          "id": "hexfinger",
+          "types": [
+            "dark",
+            "psychic"
+          ],
+          "stage": 3
+        }
+      ]
+    },
+    {
+      "id": "riftwarden_single",
+      "sheet": "sprite-sheets/67-riftwarden.png",
+      "monsters": [
+        {
+          "id": "riftwarden",
+          "types": [
+            "ghost",
+            "dragon"
+          ],
+          "stage": 1
+        }
+      ]
+    },
+    {
+      "id": "aurevine_single",
+      "sheet": "sprite-sheets/68-aurevine.png",
+      "monsters": [
+        {
+          "id": "aurevine",
+          "types": [
+            "grass",
+            "fairy"
+          ],
+          "stage": 1
+        }
+      ]
+    },
+    {
+      "id": "tempestyr_single",
+      "sheet": "sprite-sheets/69-tempestyr.png",
+      "monsters": [
+        {
+          "id": "tempestyr",
+          "types": [
+            "electric",
+            "dragon"
+          ],
+          "stage": 1
+        }
+      ]
+    },
+    {
+      "id": "starburrow_line",
+      "sheet": "sprite-sheets/61-starburrow-sensecrown.png",
+      "monsters": [
+        {
+          "id": "starburrow",
+          "types": [
+            "psychic"
+          ],
+          "stage": 1
+        },
+        {
+          "id": "sensecrown",
+          "types": [
+            "psychic",
+            "ground"
+          ],
+          "stage": 2
+        }
+      ]
+    },
+    {
+      "id": "clearcroak_line",
+      "sheet": "sprite-sheets/70-clearcroak-vitrawisp.png",
+      "monsters": [
+        {
+          "id": "clearcroak",
+          "types": [
+            "ghost"
+          ],
+          "stage": 1
+        },
+        {
+          "id": "vitrawisp",
+          "types": [
+            "ghost",
+            "poison"
+          ],
+          "stage": 2
+        }
+      ]
+    },
+    {
+      "id": "gleamgulper_single",
+      "sheet": "sprite-sheets/71-gleamgulper.png",
+      "monsters": [
+        {
+          "id": "gleamgulper",
+          "types": [
+            "fairy",
+            "water"
+          ],
+          "stage": 1
+        }
+      ]
+    },
+    {
+      "id": "prismite_single",
+      "sheet": "sprite-sheets/72-prismite.png",
+      "monsters": [
+        {
+          "id": "prismite",
+          "types": [
+            "rock",
+            "fairy"
+          ],
+          "stage": 1
+        }
+      ]
+    },
+    {
+      "id": "asterolith_single",
+      "sheet": "sprite-sheets/73-asterolith.png",
+      "monsters": [
+        {
+          "id": "asterolith",
+          "types": [
+            "rock",
+            "psychic"
+          ],
+          "stage": 1
+        }
+      ]
+    },
+    {
+      "id": "deepmaw_single",
+      "sheet": "sprite-sheets/74-deepmaw.png",
+      "monsters": [
+        {
+          "id": "deepmaw",
+          "types": [
+            "water",
+            "dark"
+          ],
+          "stage": 1
+        }
+      ]
+    },
+    {
+      "id": "aetherbale_single",
+      "sheet": "sprite-sheets/75-aetherbale.png",
+      "monsters": [
+        {
+          "id": "aetherbale",
+          "types": [
+            "water",
+            "psychic"
+          ],
+          "stage": 1
+        }
+      ]
+    },
+    {
+      "id": "nightwake_single",
+      "sheet": "sprite-sheets/76-nightwake.png",
+      "monsters": [
+        {
+          "id": "nightwake",
+          "types": [
+            "water",
+            "dark"
+          ],
+          "stage": 1
+        }
+      ]
+    },
+    {
+      "id": "brinehorn_line",
+      "sheet": "sprite-sheets/77-brinehorn-aurorwhal.png",
+      "monsters": [
+        {
+          "id": "brinehorn",
+          "types": [
+            "water"
+          ],
+          "stage": 1
+        },
+        {
+          "id": "aurorwhal",
+          "types": [
+            "water",
+            "ice"
+          ],
+          "stage": 2
+        }
+      ]
+    },
+    {
+      "id": "kelpskein_line",
+      "sheet": "sprite-sheets/78-kelpskein-wraithfrond.png",
+      "monsters": [
+        {
+          "id": "kelpskein",
+          "types": [
+            "ghost"
+          ],
+          "stage": 1
+        },
+        {
+          "id": "wraithfrond",
+          "types": [
+            "ghost",
+            "water"
+          ],
+          "stage": 2
+        }
+      ]
+    },
+    {
+      "id": "needlesnout_line",
+      "sheet": "sprite-sheets/79-needlesnout-riftrostrum.png",
+      "monsters": [
+        {
+          "id": "needlesnout",
+          "types": [
+            "dark"
+          ],
+          "stage": 1
+        },
+        {
+          "id": "riftrostrum",
+          "types": [
+            "dark",
+            "water"
+          ],
+          "stage": 2
+        }
+      ]
+    },
+    {
+      "id": "ashwing_line",
+      "sheet": "sprite-sheets/52-ashwing-emberrook-solvulture.png",
+      "monsters": [
+        {
+          "id": "ashwing",
+          "types": [
+            "fire",
+            "flying"
+          ],
+          "stage": 1
+        },
+        {
+          "id": "emberrook",
+          "types": [
+            "fire",
+            "flying"
+          ],
+          "stage": 2
+        },
+        {
+          "id": "solvulture",
+          "types": [
+            "fire",
+            "flying"
+          ],
+          "stage": 3
+        }
+      ]
+    },
+    {
+      "id": "terradrake_single",
+      "sheet": "sprite-sheets/80-terradrake.png",
+      "monsters": [
+        {
+          "id": "terradrake",
+          "types": [
+            "ground",
+            "dragon"
+          ],
+          "stage": 1
+        }
+      ]
+    },
+    {
+      "id": "abysswyrm_single",
+      "sheet": "sprite-sheets/81-abysswyrm.png",
+      "monsters": [
+        {
+          "id": "abysswyrm",
+          "types": [
+            "water",
+            "dragon"
+          ],
+          "stage": 1
+        }
+      ]
+    },
+    {
+      "id": "umbralisk_single",
+      "sheet": "sprite-sheets/82-umbralisk.png",
+      "monsters": [
+        {
+          "id": "umbralisk",
+          "types": [
+            "dark",
+            "dragon"
+          ],
+          "stage": 1
+        }
+      ]
+    },
+    {
+      "id": "scarabrex_single",
+      "sheet": "sprite-sheets/83-scarabrex.png",
+      "monsters": [
+        {
+          "id": "scarabrex",
+          "types": [
+            "bug",
+            "dragon"
+          ],
+          "stage": 1
+        }
+      ]
+    },
+    {
+      "id": "warmaw_single",
+      "sheet": "sprite-sheets/84-warmaw.png",
+      "monsters": [
+        {
+          "id": "warmaw",
+          "types": [
+            "fighting",
+            "dragon"
+          ],
+          "stage": 1
+        }
+      ]
+    },
+    {
+      "id": "hearthscale_single",
+      "sheet": "sprite-sheets/85-hearthscale.png",
+      "monsters": [
+        {
+          "id": "hearthscale",
+          "types": [
+            "normal",
+            "dragon"
+          ],
+          "stage": 1
+        }
+      ]
+    },
+    {
+      "id": "moonjackal_single",
+      "sheet": "sprite-sheets/86-moonjackal.png",
+      "monsters": [
+        {
+          "id": "moonjackal",
+          "types": [
+            "fairy",
+            "dark"
+          ],
+          "stage": 1
+        }
+      ]
+    },
+    {
+      "id": "frostbasil_single",
+      "sheet": "sprite-sheets/87-frostbasil.png",
+      "monsters": [
+        {
+          "id": "frostbasil",
+          "types": [
+            "fairy",
+            "ice"
+          ],
+          "stage": 1
+        }
+      ]
+    },
+    {
+      "id": "petalnix_single",
+      "sheet": "sprite-sheets/88-petalnix.png",
+      "monsters": [
+        {
+          "id": "petalnix",
+          "types": [
+            "fairy",
+            "grass"
+          ],
+          "stage": 1
+        }
+      ]
+    },
+    {
+      "id": "starimp_single",
+      "sheet": "sprite-sheets/89-starimp.png",
+      "monsters": [
+        {
+          "id": "starimp",
+          "types": [
+            "fairy",
+            "electric"
+          ],
+          "stage": 1
+        }
+      ]
+    },
+    {
+      "id": "lullacorn_single",
+      "sheet": "sprite-sheets/90-lullacorn.png",
+      "monsters": [
+        {
+          "id": "lullacorn",
+          "types": [
+            "fairy",
+            "psychic"
+          ],
+          "stage": 1
+        }
+      ]
+    },
+    {
+      "id": "wispmoth_single",
+      "sheet": "sprite-sheets/91-wispmoth.png",
+      "monsters": [
+        {
+          "id": "wispmoth",
+          "types": [
+            "fairy",
+            "bug"
+          ],
+          "stage": 1
+        }
+      ]
+    },
+    {
+      "id": "tidebelle_single",
+      "sheet": "sprite-sheets/92-tidebelle.png",
+      "monsters": [
+        {
+          "id": "tidebelle",
+          "types": [
+            "fairy",
+            "water"
+          ],
+          "stage": 1
+        }
+      ]
+    },
+    {
+      "id": "gleamgoyle_single",
+      "sheet": "sprite-sheets/93-gleamgoyle.png",
+      "monsters": [
+        {
+          "id": "gleamgoyle",
+          "types": [
+            "fairy",
+            "rock"
+          ],
+          "stage": 1
+        }
+      ]
+    }
+  ],
+  "pathTemplate": "sprites/{size}/{monsterId}/{pose}.png"
+}

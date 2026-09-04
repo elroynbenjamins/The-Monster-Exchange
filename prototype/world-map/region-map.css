@@ -1,0 +1,13 @@
+.map-link{display:inline-flex;align-items:center;justify-content:center;text-decoration:none}
+.breadcrumbs a{color:#dbc78d;text-decoration:none}
+.region-stage{aspect-ratio:3/2}
+.region-stage>img{filter:saturate(.9) brightness(.72)}
+.site-hotspot{position:absolute;translate:-50% -50%;min-width:34px;height:34px;padding:0 9px;border:2px solid #ecd27e;border-radius:18px;background:#0a1115dd;box-shadow:0 0 0 3px #0008,0 0 15px #e5b75277;cursor:pointer;font:700 12px system-ui,sans-serif;transition:.18s}
+.site-hotspot:hover,.site-hotspot:focus-visible,.site-hotspot.selected{z-index:4;outline:none;background:#a16b14;border-color:#fff0b0;scale:1.15}
+.site-hotspot[data-kind="city"]{background:#286aaedb}.site-hotspot[data-kind="arena"]{background:#9a4b18db}.site-hotspot[data-kind="expedition"]{background:#572a8cdb}
+.site-label{position:absolute;translate:-50% 19px;padding:3px 6px;white-space:nowrap;border:1px solid #786233;background:#071017e8;color:#f4e7bd;font:10px system-ui,sans-serif;pointer-events:none}
+.region-route{fill:none;stroke:#edcf78;stroke-width:3;stroke-dasharray:7 6;opacity:.45;vector-effect:non-scaling-stroke;filter:drop-shadow(0 0 2px #000)}
+.border-panel{margin-top:18px;padding-top:14px;border-top:1px solid #37434a}.border-panel h3{font-size:15px;color:#e6c97d}.border-exit{display:flex;justify-content:space-between;gap:8px;width:100%;padding:8px 2px;border:0;border-top:1px solid #263139;background:transparent;color:#d4dbde;text-decoration:none;cursor:pointer;font:12px system-ui,sans-serif}.border-exit:hover,.border-exit:focus-visible{outline:none;color:#f2d98f;background:#182129}.border-exit small{color:#90a1aa}
+.back-link{margin-top:8px}
+@media(max-width:1400px){.region-layout .region-panel{display:block;grid-column:auto}.region-layout{grid-template-columns:220px minmax(480px,1fr) 280px}}
+@media(max-width:1050px){.region-layout{display:flex;flex-direction:column}.region-layout .destination-panel{order:2}.region-layout .region-stage{order:1}.region-layout .region-panel{order:3}}

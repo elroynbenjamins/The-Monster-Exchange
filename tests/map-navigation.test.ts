@@ -22,16 +22,16 @@ test("late-game continent and its regions require an explicit unlock", () => {
   assert.equal(openMap(state, "continent-veydris", lateGame).status, "opened");
 });
 
-test("major cities are clickable and report their pending city-map upload", () => {
+test("major cities are clickable and open their generated city maps", () => {
   const state = { currentMapId: "region-rift", history: ["continent-veydris"] };
   const result = activateMapPoint(state, 0.5, 0.45, lateGame);
-  assert.equal(result.status, "awaiting-upload");
+  assert.equal(result.status, "opened");
   assert.equal(result.map?.id, "city-seamwatch");
 });
 
 test("ready city maps expose selectable gameplay places", () => {
   const state = { currentMapId: "city-crownspire", history: ["continent-ardenfall", "region-aurelia"] };
-  const result = activateMapPoint(state, 0.8, 0.4, earlyGame);
+  const result = activateMapPoint(state, 0.72, 0.28, earlyGame);
   assert.equal(result.status, "place-selected");
   if (result.status === "place-selected") assert.equal(result.hotspot.capability, "arena");
 });

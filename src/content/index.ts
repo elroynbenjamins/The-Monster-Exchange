@@ -1,10 +1,10 @@
 import type { GameContent } from "./definitions.ts";
 import { CATALOG_EVOLUTIONS, CATALOG_PASSIVES, CATALOG_SKILLS, CATALOG_SPECIES, speciesPoolForZone } from "./monster-catalog.ts";
-import { GENERATED_V45_TRAITS } from "./generated-v45.ts";
+import { GENERATED_V47_TRAITS } from "./generated-v47.ts";
 
 export const content: GameContent = {
-  contentVersion: 45,
-  traits: GENERATED_V45_TRAITS,
+  contentVersion: 47,
+  traits: GENERATED_V47_TRAITS,
   skills: [
     ...CATALOG_SKILLS,
     { id: "root-lash", name: "Root Lash", type: "grass", power: 42, energyCost: 20, cooldown: 0, target: "enemy" },

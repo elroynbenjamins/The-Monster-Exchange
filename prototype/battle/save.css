@@ -1,0 +1,6 @@
+.save-status { color: #bfd4d1; font-size: .8rem; margin: 6px 0; }
+dialog { color: #f4ead6; background: #142b31; border: 1px solid #bc9b57; border-radius: 16px; padding: 24px; width: min(440px, calc(100vw - 32px)); box-sizing: border-box; }
+dialog::backdrop { background: #020c14cc; }
+dialog h2 { margin-top: 0; }
+dialog form { display: grid; gap: 12px; }
+dialog button { min-height: 48px; padding: 12px; border-radius: 10px; font: inherit; }

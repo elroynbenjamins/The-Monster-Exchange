@@ -102,6 +102,7 @@ export function setActiveTeam(state: GameState, monsterIds: readonly string[]): 
 export function equipMonsterSkills(state: GameState, monsterId: string, skillIds: readonly string[]): GameState {
   const monster = state.monsters[monsterId];
   if (!monster || monster.ownerId !== state.player.id) throw new Error("You do not own this monster.");
+  if (state.activeExpedition?.route.teamIds.includes(monsterId)) throw new Error("Skills cannot change during an expedition.");
   if (skillIds.length > 3 || new Set(skillIds).size !== skillIds.length) throw new Error("Equip up to three unique skills.");
   if (skillIds.some((id) => !monster.knownSkillIds.includes(id))) throw new Error("A monster can only equip known skills.");
   return { ...state, monsters: { ...state.monsters, [monsterId]: { ...monster, equippedSkillIds: [...skillIds] } } };

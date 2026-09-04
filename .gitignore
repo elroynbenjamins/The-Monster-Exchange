@@ -7,3 +7,5 @@ Thumbs.db
 *.log
 .local/
 .codex-tmp/
+.expo/
+mobile/android/

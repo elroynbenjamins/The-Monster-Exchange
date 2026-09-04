@@ -1,4 +1,5 @@
 import type { SpeciesDefinition } from "../core/types.ts";
+import { GENERATED_CARD_ASSETS } from "../content/generated-card-assets.ts";
 import type { GameState, SpeciesDiscoveryStatus } from "../game/state.ts";
 
 export type MonsterdexStatus = SpeciesDiscoveryStatus;
@@ -39,9 +40,8 @@ export type MonsterdexSort = "number" | "name" | "rarity" | "research";
 const RARITY_ORDER: Readonly<Record<SpeciesDefinition["rarity"], number>> = { common: 0, uncommon: 1, rare: 2, epic: 3, legendary: 4 };
 
 export function cardAssetId(catalogNumber: number, speciesId: string): string | undefined {
-  void catalogNumber;
-  void speciesId;
-  return undefined;
+  const asset = GENERATED_CARD_ASSETS[speciesId as keyof typeof GENERATED_CARD_ASSETS];
+  return asset?.internalId === catalogNumber ? asset.cardAssetId : undefined;
 }
 
 export function portraitAssetId(catalogNumber: number, speciesId: string): string | undefined {

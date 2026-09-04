@@ -17,7 +17,7 @@ export function appraiseMonster(monster: MonsterIndividual, species: SpeciesDefi
 }
 
 export function createListing(monster: MonsterIndividual, sellerId: string, askingPrice: number, day: number, durationDays: number, rng: RandomSource): MarketplaceListing {
-  if (askingPrice <= 0 || durationDays <= 0) throw new Error("Listing price and duration must be positive.");
+  if (!Number.isSafeInteger(askingPrice) || askingPrice <= 0 || !Number.isSafeInteger(durationDays) || durationDays <= 0) throw new Error("Listing price and duration must be positive whole numbers.");
   if (monster.ownerId !== sellerId) throw new Error("Seller does not own this monster.");
   return { id: createId("listing", rng), monster, sellerId, askingPrice, listedOnDay: day, expiresOnDay: day + durationDays };
 }
